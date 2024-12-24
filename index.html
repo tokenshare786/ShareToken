@@ -74,10 +74,24 @@
   <button class="button" onclick="explore()">立即探索</button>
 
   <script>
-    function connectWallet() {
-      alert("連接電子錢包功能尚未實現！");
-      // 此處可以集成如 MetaMask 的電子錢包連接邏輯
+  async function connectWallet() {
+  if (typeof window.ethereum !== 'undefined') {
+    try {
+      // 請求用戶授權連接電子錢包
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      
+      // 顯示成功連接的錢包地址
+      alert(`成功連接！您的錢包地址是：${accounts[0]}`);
+    } catch (error) {
+      // 用戶拒絕授權或其他錯誤
+      alert('連接電子錢包失敗：' + error.message);
     }
+  } else {
+    // 如果瀏覽器中未檢測到電子錢包
+    alert('未檢測到電子錢包！請安裝 MetaMask 或其他兼容的錢包擴展。');
+  }
+}
+
 
     function explore() {
       alert("探索功能尚未實現！");
