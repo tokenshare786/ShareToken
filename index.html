@@ -3,44 +3,90 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>科技感網頁</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <title>Share Token - Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    /* 基本樣式 */
     body {
       margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, #FFEDD5, #FDE68A);
+      color: #333;
+    }
+    header {
+      background-color: #FFA726;
       color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      padding: 20px;
+      text-align: center;
+      font-size: 1.5em;
+      font-weight: 600;
+    }
+    .container {
+      padding: 20px;
+      text-align: center;
     }
     h1 {
       font-size: 2.5em;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
+      margin: 20px 0;
+      color: #F57C00;
+    }
+    p {
+      font-size: 1.2em;
+      margin: 10px 0;
+      color: #6D4C41;
+    }
+    .button-group {
+      margin: 30px 0;
     }
     .button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      border: 2px solid #00d9ff;
-      color: #00d9ff;
-      background: transparent;
+      background-color: #FFB74D;
+      border: none;
+      padding: 12px 20px;
+      margin: 10px;
       font-size: 1em;
+      font-weight: 600;
+      color: white;
+      border-radius: 8px;
       cursor: pointer;
-      transition: all 0.3s ease-in-out;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
     .button:hover {
-      background: #00d9ff;
-      color: #000;
+      transform: scale(1.05);
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    footer {
+      margin-top: 40px;
+      background-color: #FFA726;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+    a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
     }
   </style>
 </head>
 <body>
-  <h1>未來科技網頁</h1>
-  <p>打造屬於你的專屬網站</p>
-  <button class="button">立即探索</button>
+  <header>
+    Welcome to Share Token!
+  </header>
+
+  <div class="container">
+    <h1>Empowering Your Digital Assets</h1>
+    <p>Join a growing community of token holders and enjoy seamless transactions.</p>
+
+    <div class="button-group">
+      <button class="button" onclick="location.href='https://app.sharetoken.com/swap'">Swap</button>
+      <button class="button" onclick="location.href='https://app.sharetoken.com/stake'">Stake</button>
+      <button class="button" onclick="location.href='https://app.sharetoken.com/farm'">Farm</button>
+      <button class="button" onclick="location.href='https://docs.sharetoken.com'">Learn More</button>
+    </div>
+  </div>
+
+  <footer>
+    © 2024 Share Token | <a href="https://twitter.com/sharetoken">Twitter</a> | <a href="https://github.com/sharetoken">GitHub</a>
+  </footer>
 </body>
 </html>
