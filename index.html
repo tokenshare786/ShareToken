@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ShareToken is Coming！</title>
+  <title>科技感網頁</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
@@ -17,10 +17,36 @@
       justify-content: center;
       height: 100vh;
     }
+    header {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      padding: 10px 20px;
+    }
+    .wallet-button {
+      padding: 10px 15px;
+      border: 2px solid #00d9ff;
+      color: #00d9ff;
+      background: transparent;
+      font-size: 0.9em;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.3s ease-in-out;
+    }
+    .wallet-button:hover {
+      background: #00d9ff;
+      color: #000;
+    }
     h1 {
       font-size: 2.5em;
       text-transform: uppercase;
       letter-spacing: 0.1em;
+    }
+    p {
+      margin-top: 10px;
+      font-size: 1.2em;
     }
     .button {
       margin-top: 20px;
@@ -39,8 +65,24 @@
   </style>
 </head>
 <body>
-  <h2>ShareToken</h2>
-  <p>Enrich your life！</p>
-  <button class="button">立即探索</button>
+  <header>
+    <button class="wallet-button" onclick="connectWallet()">電子錢包登入</button>
+  </header>
+
+  <h1>未來科技網頁</h1>
+  <p>打造屬於你的專屬網站</p>
+  <button class="button" onclick="explore()">立即探索</button>
+
+  <script>
+    function connectWallet() {
+      alert("連接電子錢包功能尚未實現！");
+      // 此處可以集成如 MetaMask 的電子錢包連接邏輯
+    }
+
+    function explore() {
+      alert("探索功能尚未實現！");
+      // 將探索按鈕與其他頁面或功能連接
+    }
+  </script>
 </body>
 </html>
