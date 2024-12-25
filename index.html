@@ -214,6 +214,7 @@
             }   
     // 監聽帳號變化
     ethereum.on('accountsChanged', (accounts) => {
+    alert('accountsChanged');
       if (accounts.length > 0) {
         console.log('Account changed:', accounts[0]);
         updateAccountUI(accounts[0]);
