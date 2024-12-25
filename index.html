@@ -189,8 +189,10 @@
   <header>
     <h1>ShareToken</h1>
     <div>
-      <button class="button" id="walletButton" onclick="connectWallet()">Login</button>
-         <script>
+      <button class="button" id="walletButton" onclick="connectWallet()">Login</button>         
+    </div>
+  </header>
+  <script>
             async function connectWallet() {
             if (typeof window.ethereum !== 'undefined') {
               try {
@@ -210,9 +212,6 @@
                    //alert('未檢測到電子錢包！請安裝 MetaMask 或其他兼容的錢包擴展。');
             }
         </script>
-    </div>
-  </header>
-
   <div class="notification">
     <span>The ShareToken white paper has been released, please check for details..</span>
     <a href="#">Details</a>
