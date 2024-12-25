@@ -203,7 +203,7 @@
                  } catch (error) {
                    // 用戶拒絕授權或其他錯誤
                    //alert('連接電子錢包失敗：' + error.message);
-                   walletButton.textContent = `error.message`;
+                   walletButton.textContent = `Error: ${error.message}`;
                  }
             } else {
                    // 如果瀏覽器中未檢測到電子錢包
