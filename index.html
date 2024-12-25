@@ -32,10 +32,19 @@
       text-transform: capitalize;
     }
 
-    .qr-code {
-      width: 24px;
-      height: 24px;
-      background: url('https://via.placeholder.com/24') no-repeat center/cover;
+    .button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: 2px solid #00d9ff;
+      color: #00d9ff;
+      background: transparent;
+      font-size: 1em;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+    }
+    .button:hover {
+      background: #00d9ff;
+      color: #000;
     }
 
     .notification {
@@ -179,27 +188,26 @@
   <header>
     <h1>ShareToken</h1>
     <div>
-      <button class="login" id="walletButton" onclick="connectWallet()">電子錢包登入</button>
-
-  <script>
-  async function connectWallet() {
-  if (typeof window.ethereum !== 'undefined') {
-    try {
-      // 請求用戶授權連接電子錢包
-      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });      
-      // 顯示成功連接的錢包地址
-      //alert(`成功連接！您的錢包地址是：${accounts[0]}`);
-      const walletButton = document.getElementById('walletButton');
-      walletButton.textContent = `${accounts[0].substring(0, 2)}...${accounts[0].slice(-4)}`;
-    } catch (error) {
-      // 用戶拒絕授權或其他錯誤
-      //alert('連接電子錢包失敗：' + error.message);
-      walletButton.textContent = `error.message`;
-    }
-  } else {
-    // 如果瀏覽器中未檢測到電子錢包
-    //alert('未檢測到電子錢包！請安裝 MetaMask 或其他兼容的錢包擴展。');
-  }
+      <button class="button" id="walletButton" onclick="connectWallet()">Login</button>
+         <script>
+            async function connectWallet() {
+            if (typeof window.ethereum !== 'undefined') {
+              try {
+                   // 請求用戶授權連接電子錢包
+                   const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });      
+                   // 顯示成功連接的錢包地址
+                   //alert(`成功連接！您的錢包地址是：${accounts[0]}`);
+                   const walletButton = document.getElementById('walletButton');
+                   walletButton.textContent = `${accounts[0].substring(0, 2)}...${accounts[0].slice(-4)}`;
+                 } catch (error) {
+                   // 用戶拒絕授權或其他錯誤
+                   //alert('連接電子錢包失敗：' + error.message);
+                   walletButton.textContent = `error.message`;
+                 }
+           } else {
+                   // 如果瀏覽器中未檢測到電子錢包
+                   //alert('未檢測到電子錢包！請安裝 MetaMask 或其他兼容的錢包擴展。');
+            }
     </div>
   </header>
 
