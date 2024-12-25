@@ -213,20 +213,19 @@
               }
             }   
     // 監聽帳號變化
-    ethereum.on('accountsChanged', (accounts) => {
-    alert('accountsChanged');
+    ethereum.on('accountsChanged', (accounts) => {    
       if (accounts.length > 0) {
         console.log('Account changed:', accounts[0]);
+        //alert('accountsChanged');
         updateAccountUI(accounts[0]);
       } else {
         console.log('No accounts available');
       }
     });
-
     // 更新頁面上的帳號顯示
     function updateAccountUI(account) {
       const walletButton = document.getElementById('walletButton');
-      walletButton.textContent = `${accounts[0].substring(0, 2)}...${accounts[0].slice(-4)}`;
+      walletButton.textContent = `${account.substring(0, 2)}...${account.slice(-4)}`;
     }
         </script>
   <div class="notification">
