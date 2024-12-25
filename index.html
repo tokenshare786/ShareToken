@@ -211,7 +211,22 @@
                    // 如果瀏覽器中未檢測到電子錢包
                    alert('Login failed！Please try again via MetaMask.');
               }
-            }    
+            }   
+    // 監聽帳號變化
+    ethereum.on('accountsChanged', (accounts) => {
+      if (accounts.length > 0) {
+        console.log('Account changed:', accounts[0]);
+        updateAccountUI(accounts[0]);
+      } else {
+        console.log('No accounts available');
+      }
+    });
+
+    // 更新頁面上的帳號顯示
+    function updateAccountUI(account) {
+      const walletButton = document.getElementById('walletButton');
+      walletButton.textContent = `${accounts[0].substring(0, 2)}...${accounts[0].slice(-4)}`;
+    }
         </script>
   <div class="notification">
     <span>The ShareToken white paper has been released, please check for details..</span>
