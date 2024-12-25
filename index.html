@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobile Layout</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #000;
+      color: #fff;
+      padding: 16px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      text-transform: capitalize;
+    }
+
+    .qr-code {
+      width: 24px;
+      height: 24px;
+      background: url('https://via.placeholder.com/24') no-repeat center/cover;
+    }
+
+    .notification {
+      background-color: #1a1a1a;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .notification a {
+      color: #1e90ff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .card {
+      background-color: #1a1a1a;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    .card h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .card p {
+      margin-top: 8px;
+      font-size: 0.9rem;
+      color: #9e9e9e;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 16px;
+    }
+
+    .buttons button {
+      flex: 1;
+      margin: 0 4px;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .buttons button:first-child {
+      background-color: #fff;
+      color: #000;
+    }
+
+    .buttons button:last-child {
+      background-color: #4a4a4a;
+      color: #fff;
+    }
+
+    .progress-card {
+      background-color: #1a1a1a;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    .progress-card p {
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+
+    .progress {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .progress .steps {
+      display: flex;
+      gap: 8px;
+    }
+
+    .steps span {
+      width: 16px;
+      height: 16px;
+      background-color: #ff4500;
+      border-radius: 50%;
+    }
+
+    .credit-score-card {
+      background-color: #1a1a1a;
+      padding: 16px;
+      border-radius: 8px;
+    }
+
+    .credit-score-card h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .credit-score-card p {
+      color: #9e9e9e;
+      font-size: 0.9rem;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #333;
+    }
+
+    footer a {
+      color: #fff;
+      font-size: 0.9rem;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    .footer-icon {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>home</h1>
+    <div class="qr-code"></div>
+  </header>
+
+  <div class="notification">
+    <span>Your One debit card is being personalized.</span>
+    <a href="#">Details</a>
+  </div>
+
+  <div class="card">
+    <h2>one cash</h2>
+    <p>Debit balance: $5.00</p>
+    <p>Savings balance: $1.00</p>
+    <div class="buttons">
+      <button>Add money</button>
+      <button>Move money</button>
+    </div>
+  </div>
+
+  <div class="progress-card">
+    <p>$25 setup bonus</p>
+    <div class="progress">
+      <p>Next: Make a purchase</p>
+      <div class="steps">
+        <span></span>
+        <span></span>
+        <span style="background-color: #4a4a4a;"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="credit-score-card">
+    <h2>715</h2>
+    <p>Updated 7 hours ago</p>
+  </div>
+
+  <footer>
+    <a href="#">
+      <img src="https://via.placeholder.com/24" alt="icon" class="footer-icon">
+      Home
+    </a>
+    <a href="#">
+      <img src="https://via.placeholder.com/24" alt="icon" class="footer-icon">
+      Discover
+    </a>
+    <a href="#">
+      <img src="https://via.placeholder.com/24" alt="icon" class="footer-icon">
+      Profile
+    </a>
+  </footer>
+</body>
+</html>
