@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>實時聊天界面</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 500px;
+      padding: 20px;
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .step {
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: #292929;
+      border-radius: 8px;
+      text-align: left;
+    }
+
+    .step h2 {
+      font-size: 18px;
+      margin: 0 0 8px;
+    }
+
+    .step p {
+      font-size: 14px;
+      color: #b0b0b0;
+      margin: 0;
+    }
+
+    .button {
+      display: block;
+      width: 100%;
+      padding: 12px 0;
+      margin: 10px 0;
+      background-color: #007aff;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .button:hover {
+      background-color: #005bb5;
+    }
+
+    .back-icon {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      cursor: pointer;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    .back-icon svg {
+      margin-right: 8px;
+      fill: #ffffff;
+    }
+
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+    }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #292929;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
+      display: none;
+      z-index: 1001;
+    }
+
+    .popup h2 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="back-icon" onclick="goBack()">
+    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px">
+      <path d="M0 0h24v24H0V0z" fill="none"/>
+      <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+    </svg>
+    返回上一頁
+  </div>
+
+  <div class="container">
+    <h1>連線指引</h1>
+
+    <div class="step">
+      <h2>步驟一</h2>
+      <p>請點擊「新增資金」，並確認金額無誤。</p>
+    </div>
+
+    <div class="step">
+      <h2>步驟二</h2>
+      <p>完成資金新增後，點擊「移動資金」以開始處理。</p>
+    </div>
+
+    <div class="step">
+      <h2>步驟三</h2>
+      <p>所有準備完成後，系統將建立連線。</p>
+    </div>
+
+    <button class="button" onclick="showPopup()">開始連線</button>
+  </div>
+
+  <div class="popup-overlay" id="popup-overlay"></div>
+
+  <div class="popup" id="popup">
+    <h2>連線成功</h2>
+    <p>開始對話...</p>
+    <button class="button" style="background-color: #00c853;" onclick="closePopup()">關閉</button>
+  </div>
+
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+
+    function showPopup() {
+      document.getElementById('popup-overlay').style.display = 'block';
+      document.getElementById('popup').style.display = 'block';
+    }
+
+    function closePopup() {
+      document.getElementById('popup-overlay').style.display = 'none';
+      document.getElementById('popup').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
