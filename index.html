@@ -189,6 +189,7 @@
       <button class="walletbutton" id="walletButton" onclick="connectWallet()">Login</button>  
     </div>
   </header>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
            // 在 JavaScript 部分加入以下程式碼
            function getParameterByName(name, url) {
@@ -269,7 +270,7 @@
       <p>Just updated</p>
     </div>
     <div>
-      <h2>715</h2>
+      <h2 id="bitcoin-price" >715</h2>
     </div>
   </div>
 
@@ -300,6 +301,17 @@
               // 如果 linkcode 沒有值，則隱藏顯示物件
               linkcodeDisplay.style.display = "none";
    }
+  // get Market price of bitcoin
+  const apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd';
+
+        axios.get(apiUrl)
+          .then(response => {
+            const bitcoinPrice = response.data.bitcoin.usd;
+            document.getElementById('bitcoin-price').textContent = `${bitcoinPrice} USD`;
+          })
+          .catch(error => {
+            console.error('Error fetching bitcoin price:', error);
+          });    
 </script>
   
 </body>
