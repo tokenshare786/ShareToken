@@ -189,7 +189,7 @@
       <button class="walletbutton" id="walletButton" onclick="connectWallet()">Login</button>  
     </div>
   </header>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>  
   <script>
            // 在 JavaScript 部分加入以下程式碼
            function getParameterByName(name, url) {
@@ -303,16 +303,21 @@
    }
   // get Market price of bitcoin
   const apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd';
+        function fetchBitcoinPrice() {
+            axios.get(apiUrl)
+                .then(response => {
+                    const bitcoinPrice = response.data.bitcoin.usd;
+                    const formattedPrice = bitcoinPrice.toLocaleString(); // 格式化为本地格式
+                    document.getElementById('bitcoin-price').textContent = `${formattedPrice} USD`;                  
+                })
+                .catch(error => {
+                    console.error('Error fetching:', error);
+                });
+        }
 
-        axios.get(apiUrl)
-          .then(response => {
-            const bitcoinPrice = response.data.bitcoin.usd;
-            document.getElementById('bitcoin-price').textContent = `${bitcoinPrice} USD`;
-          })
-          .catch(error => {
-            console.error('Error fetching bitcoin price:', error);
-          });    
-</script>
-  
+        // 初次載入時即獲取價格，之後每 5 秒更新一次
+        fetchBitcoinPrice();
+        setInterval(fetchBitcoinPrice, 5000);   
+</script>  
 </body>
 </html>
