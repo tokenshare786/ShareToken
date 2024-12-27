@@ -1,99 +1,170 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>P2P Chat</title>
+  <title>友善界面</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    textarea, input { width: 100%; margin-bottom: 10px; }
-    textarea { height: 100px; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #ffffff;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .step {
+      margin-bottom: 20px;
+      background-color: #1e1e1e;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .step h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .step p {
+      margin: 5px 0 0;
+      font-size: 14px;
+      color: #b0b0b0;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .button {
+      padding: 10px 20px;
+      background-color: #007aff;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .button:hover {
+      background-color: #005bb5;
+    }
+
+    .back-icon {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      color: #ffffff;
+      font-size: 16px;
+    }
+
+    .back-icon svg {
+      margin-right: 8px;
+      fill: #ffffff;
+    }
+
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      text-align: center;
+    }
+
+    .popup h2 {
+      margin: 0 0 10px;
+    }
+
+    .popup .button {
+      background-color: #00c853;
+      margin-top: 15px;
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+
+    .show {
+      display: block;
+    }
   </style>
 </head>
 <body>
-  <h1>P2P Real-Time Chat</h1>
-  <div>
-    <textarea id="localDescription" placeholder="Local Description (Offer/Answer)" readonly></textarea>
-    <button onclick="createOffer()">Create Offer</button>
-    <button onclick="createAnswer()">Create Answer</button>
+  <div class="container">
+    <div class="back-icon" onclick="goBack()">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px">
+        <path d="M0 0h24v24H0V0z" fill="none"/>
+        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+      </svg>
+      返回上一頁
+    </div>
+
+    <h1>連線指引</h1>
+
+    <div class="step">
+      <h2>步驟一</h2>
+      <p>請點擊「新增資金」，並確認金額無誤。</p>
+    </div>
+
+    <div class="step">
+      <h2>步驟二</h2>
+      <p>完成資金新增後，點擊「移動資金」以開始處理。</p>
+    </div>
+
+    <div class="step">
+      <h2>步驟三</h2>
+      <p>所有準備完成後，系統將建立連線。</p>
+    </div>
+
+    <div class="buttons">
+      <button class="button" onclick="showPopup()">開始連線</button>
+      <button class="button" onclick="alert('尚未完成步驟！')">跳過</button>
+    </div>
   </div>
-  <div>
-    <textarea id="remoteDescription" placeholder="Paste Remote Description Here"></textarea>
-    <button onclick="setRemoteDescription()">Set Remote Description</button>
-  </div>
-  <div>
-    <textarea id="messages" placeholder="Chat messages" readonly></textarea>
-    <input id="messageInput" placeholder="Type a message">
-    <button onclick="sendMessage()">Send</button>
+
+  <!-- 彈跳視窗 -->
+  <div class="overlay" id="overlay"></div>
+  <div class="popup" id="popup">
+    <h2>連線成功</h2>
+    <p>開始對話...</p>
+    <button class="button" onclick="closePopup()">關閉</button>
   </div>
 
   <script>
-    const peerConnection = new RTCPeerConnection();
-    const dataChannel = peerConnection.createDataChannel("chat");
-    const messages = document.getElementById("messages");
-    const messageInput = document.getElementById("messageInput");
-
-    // Handle incoming messages
-    dataChannel.onmessage = (event) => {
-      messages.value += `Remote: ${event.data}\n`;
-    };
-
-    // Handle data channel open and close
-    dataChannel.onopen = () => console.log("Data channel is open");
-    dataChannel.onclose = () => console.log("Data channel is closed");
-
-    // Add ICE candidates
-    peerConnection.onicecandidate = (event) => {
-      if (event.candidate) {
-        console.log("New ICE candidate:", event.candidate);
-      } else {
-        document.getElementById("localDescription").value = JSON.stringify(peerConnection.localDescription);
-      }
-    };
-
-    // Receive data channel from remote peer
-    peerConnection.ondatachannel = (event) => {
-      const receiveChannel = event.channel;
-      receiveChannel.onmessage = (e) => {
-        messages.value += `Remote: ${e.data}\n`;
-      };
-      receiveChannel.onopen = () => console.log("Receive channel is open");
-      receiveChannel.onclose = () => console.log("Receive channel is closed");
-    };
-
-    // Create an offer
-    async function createOffer() {
-      const offer = await peerConnection.createOffer();
-      await peerConnection.setLocalDescription(offer);
-      console.log("Offer created:", offer);
+    function goBack() {
+      window.history.back();
     }
 
-    // Create an answer
-    async function createAnswer() {
-      const answer = await peerConnection.createAnswer();
-      await peerConnection.setLocalDescription(answer);
-      console.log("Answer created:", answer);
+    function showPopup() {
+      document.getElementById('overlay').classList.add('show');
+      document.getElementById('popup').classList.add('show');
     }
 
-    // Set remote description
-    async function setRemoteDescription() {
-      const remoteDescription = document.getElementById("remoteDescription").value;
-      if (!remoteDescription) return alert("Paste remote description first!");
-      const desc = new RTCSessionDescription(JSON.parse(remoteDescription));
-      await peerConnection.setRemoteDescription(desc);
-      console.log("Remote description set");
-    }
-
-    // Send a message
-    function sendMessage() {
-      const message = messageInput.value;
-      if (dataChannel.readyState === "open") {
-        dataChannel.send(message);
-        messages.value += `You: ${message}\n`;
-        messageInput.value = "";
-      } else {
-        alert("Data channel is not open yet!");
-      }
+    function closePopup() {
+      document.getElementById('overlay').classList.remove('show');
+      document.getElementById('popup').classList.remove('show');
     }
   </script>
 </body>
