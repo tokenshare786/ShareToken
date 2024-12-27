@@ -181,7 +181,7 @@
     
   </style>
 </head>
-<body>
+<body onload="autoFunction()">
   <header>
     <span class="material-symbols-outlined">lunch_dining</span>
     <h1>ShareToken</h1>
@@ -190,6 +190,25 @@
     </div>
   </header>
   <script>
+    // 在 JavaScript 部分加入以下程式碼
+function getParameterByName(name, url) {
+  if (!url) url = window.location.href;
+  name = name.replace(/[\[\]]/g, '\\$&');
+  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+      results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+// 取得 linkcode 參數
+var linkcode = getParameterByName('linkcode');
+alert(`Welcome！`+ linkcode);
+    
+// 將 linkcode 顯示在一個 HTML 元素中
+//var welcomeMessage = document.getElementById('welcomeMessage');
+//welcomeMessage.textContent = "Welcome！ " + linkcode;
+    
             async function connectWallet() {
             if (typeof window.ethereum !== 'undefined') {
               try {
