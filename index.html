@@ -302,13 +302,17 @@
               linkcodeDisplay.style.display = "none";
    }
   // get Market price of bitcoin
-  const apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd';
+  const tokenID = '0xcb933C2356460D7493182C1f1352B153CfCf5AAd'; // 替換成您的 Token ID
+  const apiUrl = `https://api.coingecko.com/api/v3/simple/price?ids=${tokenID}&vs_currencies=usd`;
+  //const apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd';
         function fetchBitcoinPrice() {
             axios.get(apiUrl)
                 .then(response => {
-                    const bitcoinPrice = response.data.bitcoin.usd;
-                    const formattedPrice = bitcoinPrice.toLocaleString(); // 格式化为本地格式
-                    document.getElementById('bitcoin-price').textContent = `${formattedPrice} USD`;                  
+                    const price = response.data[tokenID].usd;
+                    const formattedPrice = price.toLocaleString('en-US', { minimumFractionDigits: 5 }); // 格式化為美國英語，保留兩位小數
+                    //const bitcoinPrice = response.data.bitcoin.usd;
+                    //const formattedPrice = bitcoinPrice.toLocaleString(); // 格式化为本地格式
+                    document.getElementById('bitcoin-price').textContent = `DCoin：${formattedPrice} USDT`;                  
                 })
                 .catch(error => {
                     console.error('Error fetching:', error);
