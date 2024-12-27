@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P2P Chat</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    textarea, input { width: 100%; margin-bottom: 10px; }
+    textarea { height: 100px; }
+  </style>
+</head>
+<body>
+  <h1>Real-Time Chat</h1>
+  <div>
+    <textarea id="localDescription" placeholder="Local Description (Offer/Answer)" readonly></textarea>
+    <button onclick="createOffer()">Create Offer</button>
+    <button onclick="createAnswer()">Create Answer</button>
+  </div>
+  <div>
+    <textarea id="remoteDescription" placeholder="Paste Remote Description Here"></textarea>
+    <button onclick="setRemoteDescription()">Set Remote Description</button>
+  </div>
+  <div>
+    <textarea id="messages" placeholder="Chat messages" readonly></textarea>
+    <input id="messageInput" placeholder="Type a message">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <script>
+    const peerConnection = new RTCPeerConnection({
+      iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
+    });
+
+    const dataChannel = peerConnection.createDataChannel("chat");
+    const messages = document.getElementById("messages");
+    const messageInput = document.getElementById("messageInput");
+
+    let iceCandidates = [];
+
+    // Handle incoming messages
+    dataChannel.onmessage = (event) => {
+      messages.value += `Remote: ${event.data}\n`;
+    };
+
+    // Handle data channel open and close
+    dataChannel.onopen = () => console.log("Data channel is open");
+    dataChannel.onclose = () => console.log("Data channel is closed");
+
+    // Collect ICE candidates
+    peerConnection.onicecandidate = (event) => {
+      if (event.candidate) {
+        iceCandidates.push(event.candidate);
+      } else {
+        // ICE gathering is complete
+        document.getElementById("localDescription").value = JSON.stringify({
+          description: peerConnection.localDescription,
+          candidates: iceCandidates
+        });
+      }
+    };
+
+    // Receive data channel from remote peer
+    peerConnection.ondatachannel = (event) => {
+      const receiveChannel = event.channel;
+      receiveChannel.onmessage = (e) => {
+        messages.value += `Remote: ${e.data}\n`;
+      };
+      receiveChannel.onopen = () => console.log("Receive channel is open");
+      receiveChannel.onclose = () => console.log("Receive channel is closed");
+    };
+
+    // Create an offer
+    async function createOffer() {
+      const offer = await peerConnection.createOffer();
+      await peerConnection.setLocalDescription(offer);
+      console.log("Offer created:", offer);
+    }
+
+    // Create an answer
+    async function createAnswer() {
+      const answer = await peerConnection.createAnswer();
+      await peerConnection.setLocalDescription(answer);
+      console.log("Answer created:", answer);
+    }
+
+    // Set remote description and add ICE candidates
+    async function setRemoteDescription() {
+      const remoteData = document.getElementById("remoteDescription").value;
+      if (!remoteData) return alert("Paste remote description first!");
+
+      const { description, candidates } = JSON.parse(remoteData);
+      await peerConnection.setRemoteDescription(description);
+
+      for (const candidate of candidates) {
+        await peerConnection.addIceCandidate(candidate);
+      }
+      console.log("Remote description and ICE candidates set");
+    }
+
+    // Send a message
+    function sendMessage() {
+      const message = messageInput.value;
+      if (dataChannel.readyState === "open") {
+        dataChannel.send(message);
+        messages.value += `You: ${message}\n`;
+        messageInput.value = "";
+      } else {
+        alert("Data channel is not open yet!");
+      }
+    }
+  </script>
+</body>
+</html>
