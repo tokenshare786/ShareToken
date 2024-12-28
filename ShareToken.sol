@@ -10,7 +10,6 @@ contract ShareToken is ERC20, Ownable {
     using SafeMath for uint256;
     using Strings for string;
     address private _owner;
-    uint8 private _decimal;
     uint256 private constant INITIAL_SUPPLY = 100_000 * 10** 8;
     struct Holder {
         address referrer;
@@ -41,7 +40,9 @@ contract ShareToken is ERC20, Ownable {
         uint256 maxClaims;        // 最大領取次數
         uint256 claimCount;       // 已被領取次數
         address creator;          // 紅包發起人
-        uint8 eligibleType;    // 領取資格 (0: 自己粉絲, 1: 無介紹人, 2: 粉絲+無介紹人, 3: 所有人)
+        uint8 eligibleType;       // 領取資格 0~2
+        string desc;
+        string imgUrl;  
         uint256 startTime;        // 發起紅包的時間
         bool isActive;            // 是否啟用
     }
@@ -58,11 +59,14 @@ contract ShareToken is ERC20, Ownable {
         uint256 reward
     );
     event reCreated(uint256 indexed id, address indexed creator, uint256 totalAmount, uint256 maxClaims);
-    event reClaimed(uint256 indexed id, address indexed claimer, uint256 amount, address indexed referrer);
+    event reClaimed(uint256 indexed id, address indexed claimer, uint256 amount, address indexed creator);
     constructor() ERC20("ShareToken", "SHARE") Ownable(msg.sender) {
         _owner = msg.sender;
-        _mint(msg.sender, INITIAL_SUPPLY);
-        _decimal = 8;
+        _mint(msg.sender, INITIAL_SUPPLY);        
+    }
+    // 定義 decimals 函數
+    function decimals() public view virtual override returns (uint8) {
+        return 8;
     }
     //檢視自己現有的推薦碼
     function getMyRefCode() public view returns (string memory) {
@@ -79,21 +83,26 @@ contract ShareToken is ERC20, Ownable {
         {
                     return 2;
         }
+        // 刪除舊的 refCode 的映射 (如果存在)
+        string memory oldrefCode = holders[msg.sender].refCode;
+        if(refCodeOwners[oldrefCode] != address(0)){
+            delete refCodeOwners[oldrefCode];
+        }    
         // 轉換推薦碼為小寫，避免大小寫重複
         string memory lowerRefCode = toLower(refCode);
-        if(  // "Referral code already exists" delete it;
+        if(  // "Referral code already used by another holder" 
              refCodeOwners[lowerRefCode] != address(0))             
         {
-             delete refCodeOwners[lowerRefCode];             
+             return 3;             
         }                    
         // 扣除設定推薦碼的費用
         _burn(msg.sender, costToEdit);
         // 設定新的推薦碼
         holders[msg.sender].refCode = lowerRefCode;
-        refCodeOwners[refCode] = msg.sender;
-        return 3;
+        refCodeOwners[lowerRefCode] = msg.sender;
+        return 0;
     }
-    /// @dev 將推薦碼轉換為小寫
+    /// dev 將推薦碼轉換為小寫
     function toLower(string memory str) public pure returns (string memory) {
         bytes memory strBytes = bytes(str);
         for (uint256 i = 0; i < strBytes.length; i++) {
@@ -294,10 +303,14 @@ contract ShareToken is ERC20, Ownable {
         return holders[msg.sender].referrerReward;
     }
 // 發起紅包
-    function setRedEnvelope(uint256 totalShare, uint256 countRE, uint8 eligibleType) external {
-        require(totalShare >= countRE * MinSharePerRE, "At least 100 SHARE each");
-        require(eligibleType <= 2, "Invalid eligible type");
-        require(balanceOf(msg.sender) >= totalShare, "Insufficient balance");
+    function setRedEnvelope(uint256 totalShare, uint256 countRE, uint8 eligibleType, string memory _desc, string memory _url) external returns(bool) {
+        uint sum = countRE * MinSharePerRE ;
+        uint256 minShare= 200 > sum ? 200 : sum;
+        if(totalShare < minShare || //"At least 100 SHARE each");
+        eligibleType > 2 || //"Invalid eligible type");
+        balanceOf(msg.sender) < totalShare  || //"Insufficient balance");
+        holders[msg.sender].isDisabled)
+        { return false;}
         // 扣除紅包金額
         _transfer(msg.sender, address(this), totalShare);
         // 記錄紅包信息
@@ -309,12 +322,30 @@ contract ShareToken is ERC20, Ownable {
             claimCount: 0,
             creator: msg.sender,
             eligibleType: eligibleType,
+            desc:_desc,
+            imgUrl:_url,
             startTime: block.timestamp,
             isActive: true
         });
         myRE[msg.sender].push(reID);
         activeREs.push(reID);    
         emit reCreated(reID, msg.sender, totalShare, countRE);
+        return true;
+    }
+    //
+     // 設定或編輯推薦碼
+    function updateMyRE (uint256 id,uint8 _type,string memory data) external returns(bool){
+        reInfo storage re = redEnvelopes[id];
+        if(re.creator == msg.sender){
+            if(_type == 1){
+                redEnvelopes[id].desc=data;
+                return true;
+            }else if(_type==2){
+                redEnvelopes[id].desc=data;
+                return true;
+            }         
+        }
+        return false;
     }
     // 領取紅包
     function claimRedEnvelope(string memory linkcode,uint256 id) external returns (bool){
@@ -357,7 +388,7 @@ contract ShareToken is ERC20, Ownable {
         // 發送紅包金額
         _transfer(address(this), msg.sender, claimAmount);
         // 必須是新增的推薦人 referrer 才不會是 address(0)
-        emit reClaimed(id, msg.sender, claimAmount, referrer);
+        emit reClaimed(id, msg.sender, claimAmount, re.creator);
         return true;
     }
     // 檢查紅包領取資格
