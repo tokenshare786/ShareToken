@@ -242,7 +242,7 @@ contract ShareToken is ERC20, Ownable {
         uint256 referrerReward = balanceOf(addr).mul(referrerPercentage).div(100); // 1% to referrer
         _mint(msg.sender, holderReward);
         //更新累加領過的空投總數
-        holders[addr].holderReward.add(holderReward);
+        holders[addr].holderReward = holders[addr].holderReward.add(holderReward);
         //更新上次領取時間
         holders[addr].lastClaimedAirdrop = block.timestamp; 
         //addr is holder,Reward is for holder
@@ -253,7 +253,7 @@ contract ShareToken is ERC20, Ownable {
               referrer != address(0)) {
               _mint(referrer, referrerReward);            
               emit AirdropClaimed(addr, referrer, referrerReward);
-              holders[referrer].referrerReward.add(referrerReward);
+              holders[referrer].referrerReward = holders[referrer].referrerReward.add(referrerReward);
         }
         //Succeed to claim the airDrop"
         return 4;
