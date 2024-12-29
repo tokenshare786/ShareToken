@@ -10,7 +10,7 @@ contract ShareToken is ERC20, Ownable {
     using SafeMath for uint256;
     using Strings for string;
     address private _owner;
-    uint256 private constant INITIAL_SUPPLY = 100_000 * 10** 8;
+    uint256 private constant INITIAL_SUPPLY = 100_000 * 10**18;
     struct Holder {
         address referrer;
         uint256 holderReward;
@@ -29,8 +29,8 @@ contract ShareToken is ERC20, Ownable {
     uint256 public holderPercentage = 3;
     uint256 public referrerPercentage = 1;
     uint256 public ownerPercentage = 1;
-    uint256 public costToEdit = 200 * 10**8;
-    uint256 public minReferralAmount = 100 * 10**8;
+    uint256 public costToEdit = 200 * 10**18;
+    uint256 public minReferralAmount = 100 * 10**18;
     bool public airdropEnabled = false;
     mapping(string => address) public refCodeOwners;
     mapping(address => address[]) public myfans;
@@ -44,29 +44,35 @@ contract ShareToken is ERC20, Ownable {
         string desc;
         string imgUrl;  
         uint256 startTime;        // 發起紅包的時間
-        bool isActive;            // 是否啟用
+        bool isActive ;            // 是否啟用
     }
     mapping(uint256 => reInfo) public redEnvelopes;
     uint256[] private activeREs; // 存放目前有效紅包的 ID 集合
     mapping(address => uint256[]) public myRE;
-    uint256 public constant MinSharePerRE = 100 * 10 ** 8;
-    uint256 public reID=0;    
+    uint256 public MinSharePerRE = 100 * 10 ** 18;
+    uint256 public MinREshare = 200 * 10 ** 18;    
+    uint256 public reID=0;   
+    //推薦關係建立的事件 
     event refSet(address indexed holder, address indexed referer);
+    //空投開始的事件
     event AirdropStarted(uint256 indexed airDropCount);
+    //領取空投的事件
     event AirdropClaimed(
         address indexed holder,        
         address indexed receiver,
         uint256 reward
     );
+    //有人創造了一個紅包發起事件
     event reCreated(uint256 indexed id, address indexed creator, uint256 totalAmount, uint256 maxClaims);
+    //有人領走一個紅包
     event reClaimed(uint256 indexed id, address indexed claimer, uint256 amount, address indexed creator);
     constructor() ERC20("ShareToken", "SHARE") Ownable(msg.sender) {
         _owner = msg.sender;
-        _mint(msg.sender, INITIAL_SUPPLY);        
+        _mint(msg.sender, INITIAL_SUPPLY);                     
     }
     // 定義 decimals 函數
     function decimals() public view virtual override returns (uint8) {
-        return 8;
+        return 18;
     }
     //檢視自己現有的推薦碼
     function getMyRefCode() public view returns (string memory) {
@@ -97,8 +103,9 @@ contract ShareToken is ERC20, Ownable {
         }                    
         // 扣除設定推薦碼的費用
         _burn(msg.sender, costToEdit);
-        // 設定新的推薦碼
-        holders[msg.sender].refCode = lowerRefCode;
+        // 設定新的推薦碼，推薦碼允許大小寫存在
+        holders[msg.sender].refCode = refCode;
+        //在refCodeOwners 映射裏一律儲存推薦碼的小寫，這樣才好比對不致混淆
         refCodeOwners[lowerRefCode] = msg.sender;
         return 0;
     }
@@ -122,15 +129,14 @@ contract ShareToken is ERC20, Ownable {
         bytes memory codeBytes = bytes(refCode);
         for (uint256 i = 0; i < codeBytes.length; i++) {
             bytes1 char = codeBytes[i];
+            // 检查字符是否为合法字符
             if (
-                (char < 0x30 || char > 0x39) && // 不是 '0'-'9'
-                (char < 0x41 || (char > 0x5A && char < 0x61) || char > 0x7A) &&
-                // 不是 'A'-'Z' 或 'a'-'z'
-                (char != 0x5F) && // 不是 '_'
-                (char != 0x2D) && // 不是 '-'
-                (char != 0x40) // 不是 '@'
+                !(char >= 0x30 && char <= 0x39) && // 0-9
+                !(char >= 0x41 && char <= 0x5A) && // A-Z
+                !(char >= 0x61 && char <= 0x7A) && // a-z
+                !(char == 0x2D || char == 0x5F || char == 0x40) // -, _, @
             ) {
-                return false;
+                            return false;
             }
         }
         return true;
@@ -164,7 +170,7 @@ contract ShareToken is ERC20, Ownable {
             holders[recipient].referrer == address(0)
         ) {
             address sender = _msgSender();
-            // 確保 Sender 非合約地址且未被排除
+            // 確保 Sender 非合約地址
             if (
                 !isContract(sender) 
             ) {
@@ -213,7 +219,7 @@ contract ShareToken is ERC20, Ownable {
         emit AirdropStarted(airDropCount);
     }
     //get datas of latest airdrop
-    function getAirDrop() public view returns (uint256,uint256,uint256) {
+    function getAirDropInfo() public view returns (uint256,uint256,uint256) {
         return (airDropCount,airDropStartTime,airDropDuration);
     }
 
@@ -235,21 +241,25 @@ contract ShareToken is ERC20, Ownable {
         uint256 holderReward = balanceOf(addr).mul(holderPercentage).div(100); // 3% of holder's balance
         uint256 referrerReward = balanceOf(addr).mul(referrerPercentage).div(100); // 1% to referrer
         _mint(msg.sender, holderReward);
+        //更新累加領過的空投總數
         holders[addr].holderReward.add(holderReward);
-        holders[addr].lastClaimedAirdrop = block.timestamp; //更新上次領取時間
-        //holder is receiver,Reward is for holder
+        //更新上次領取時間
+        holders[addr].lastClaimedAirdrop = block.timestamp; 
+        //addr is holder,Reward is for holder
         emit AirdropClaimed(addr, addr, holderReward);
+        //holder's referrer will have refferrerReward
         address referrer = holders[addr].referrer;
-        if (  //holder is not receiver,Reward is for Referrer
+        if (  
               referrer != address(0)) {
               _mint(referrer, referrerReward);            
               emit AirdropClaimed(addr, referrer, referrerReward);
               holders[referrer].referrerReward.add(referrerReward);
         }
-        return 4;//"Eligible to claim"
+        //Succeed to claim the airDrop"
+        return 4;
     }
 
-    // Claim airdrop
+    // Claim airdrop,holder no need to keyin address for security consideration
     function claimAirdrop() public returns (uint8) {
         uint8 result = toClaimAirdrop(msg.sender);
         return result;
@@ -279,12 +289,21 @@ contract ShareToken is ERC20, Ownable {
    
     //Owner setup minReferralAmount
     function setMinReferralAmount(uint256 _amount) external onlyOwner {
-         require( _amount > 10 , "Should > 10");        
+         require( _amount > 0 , "Should > 0");        
          minReferralAmount = _amount;
     }
+    //Owner setup REshare
+    function setMinSharePerRE(bool istotal ,uint256 _amount) external onlyOwner {
+         require( _amount > 0 , "Should > 0"); 
+         if(!istotal) {
+            MinSharePerRE = _amount;
+         } else{
+            MinREshare = _amount;
+         }          
+    } 
     //Owner setup costToEdit
     function setCostToEdit(uint256 _amount) external onlyOwner {
-         require( _amount > 10 , "Should > 10");        
+         require( _amount > 0 , "Should > 0");        
          costToEdit = _amount;
     } 
     //how many shares I have rewarded via airdrop as a holder
@@ -295,14 +314,15 @@ contract ShareToken is ERC20, Ownable {
     function getReferrerRward() public view returns (uint256) {
         return holders[msg.sender].referrerReward;
     }
+    
 // 發起紅包
     function setRedEnvelope(uint256 totalShare, uint256 countRE, uint8 eligibleType, string memory _desc, string memory _url) external returns(bool) {
         uint sum = countRE * MinSharePerRE ;
-        uint256 minShare= 200 > sum ? 200 : sum;
-        if(totalShare < minShare || //"At least 100 SHARE each");
-        eligibleType > 2 || //"Invalid eligible type");
-        balanceOf(msg.sender) < totalShare  || //"Insufficient balance");
-        holders[msg.sender].isDisabled)
+        uint256 minShare= MinREshare > sum ? MinREshare : sum;
+        if(totalShare < minShare ||             //"At least SHARE each");
+        eligibleType > 2 || eligibleType < 0 || //"Invalid eligible type");
+        balanceOf(msg.sender) < totalShare ||   //"Insufficient balance");
+        holders[msg.sender].isDisabled )
         { return false;}
         // 扣除紅包金額
         _transfer(msg.sender, address(this), totalShare);
@@ -327,13 +347,13 @@ contract ShareToken is ERC20, Ownable {
     }
     //
      // 設定或編輯推薦碼
-    function updateMyRE (uint256 id,uint8 _type,string memory data) external returns(bool){
+    function updateMyRE (uint256 id,bool isdesc,string memory data) external returns(bool){
         reInfo storage re = redEnvelopes[id];
-        if(re.creator == msg.sender){
-            if(_type == 1){
+        if(re.creator == msg.sender  && bytes(data).length>0){
+            if(isdesc){
                 re.desc=data;
                 return true;
-            }else if(_type==2){
+            }else {
                 re.imgUrl=data;
                 return true;
             }         
@@ -344,7 +364,7 @@ contract ShareToken is ERC20, Ownable {
     function claimRedEnvelope(string memory linkcode,uint256 id) external returns (bool){
         reInfo storage re = redEnvelopes[id];
         if(
-            re.isActive || re.claimCount >= re.maxClaims || !checkEligibility(linkcode,re)
+            !re.isActive || re.claimCount >= re.maxClaims || !checkEligibility(linkcode,re)
         ){
             return false;
         }
@@ -367,7 +387,7 @@ contract ShareToken is ERC20, Ownable {
             if(bytes(linkcode).length == 0) {            
                 referrer = re.creator;
             } else{
-                address rcOwner = refCodeOwners[linkcode];
+                address rcOwner = refCodeOwners[toLower(linkcode)];
                 if(rcOwner != address(0)){                      
                       referrer = rcOwner;
                 }else{
@@ -386,18 +406,19 @@ contract ShareToken is ERC20, Ownable {
     }
     // 檢查紅包領取資格
     function checkEligibility(string memory linkcode,reInfo memory re) internal view returns(bool){
-        string memory refcode = holders[msg.sender].refCode;
+        //string memory refcode = holders[msg.sender].refCode;
+        address linkcodeOwner = refCodeOwners[toLower(linkcode)];
         address referrer = holders[msg.sender].referrer ;
         if (        re.eligibleType == 0 && // 自己現有粉絲，加上無推薦人並且是無推薦碼或是發紅包者的推薦碼
                     ( referrer == re.creator ||
                       ( referrer == address(0) &&
-                        (bytes(linkcode).length == 0 || keccak256(bytes(linkcode)) == keccak256(bytes(refcode)))
+                        (bytes(linkcode).length == 0 || linkcodeOwner == re.creator )
                       )
                     )
                      ||
                     (re.eligibleType == 1 && // 無推薦人，並且是無推薦碼或是發紅包者的推薦碼
                      ( referrer == address(0) &&
-                       (bytes(linkcode).length == 0 || keccak256(bytes(linkcode)) == keccak256(bytes(refcode)))
+                       (bytes(linkcode).length == 0 || linkcodeOwner == re.creator )
                      )
                     )
                      ||
@@ -427,9 +448,8 @@ contract ShareToken is ERC20, Ownable {
         uint256[] memory myIds = myRE[msg.sender];
         reInfo[] memory result;  
         for (uint256 i = 0; i < myIds.length; i++) {
-            uint256 id = myIds[i];
-            reInfo storage envelope = redEnvelopes[id];
-            result[i]=envelope;
+            uint256 id = myIds[i];            
+            result[i] = redEnvelopes[id];
         }
         return result;
     }
@@ -465,7 +485,7 @@ contract ShareToken is ERC20, Ownable {
             holder.nickname = data;
         }else if(_type==2){
             holder.description = data;
-        }else if(_type==2){
+        }else if(_type==3){
             holder.imgUrl = data;
         }
         return true;       
