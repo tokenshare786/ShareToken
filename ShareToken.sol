@@ -4,12 +4,11 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "@openzeppelin/contracts/utils/Strings.sol";
+//import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract ShareToken is ERC20, Ownable {
     using SafeMath for uint256;
-    using Strings for string;
-    address private _owner;
+    //using Strings for string;
     uint256 private constant INITIAL_SUPPLY = 100_000 * 10**18;
     struct Holder {
         address referrer;
@@ -23,15 +22,15 @@ contract ShareToken is ERC20, Ownable {
         bool isDisabled;
     }
     mapping(address => Holder) public holders;
-    uint256 public airDropCount = 0;
-    uint256 public airDropStartTime;
-    uint256 public airDropDuration = 72 hours;
-    uint256 public holderPercentage = 3;
-    uint256 public referrerPercentage = 1;
-    uint256 public ownerPercentage = 1;
-    uint256 public costToEdit = 200 * 10**18;
-    uint256 public minReferralAmount = 100 * 10**18;
-    bool public airdropEnabled = false;
+    uint256 public adCount = 0;
+    uint256 public adStartTime;
+    uint256 public adDuration = 72 hours;
+    uint256 public holderPercent = 3;
+    uint256 public referrerPercent = 1;
+    uint256 public ownerPercent = 1;
+    uint256 public cost_Edit = 200 * 10**18;
+    uint256 public minRefAmount = 100 * 10**18;
+    bool public adEnabled = false;
     mapping(string => address) public refCodeOwners;
     mapping(address => address[]) public myfans;
     struct reInfo {
@@ -40,13 +39,13 @@ contract ShareToken is ERC20, Ownable {
         uint256 maxClaims;        // 最大領取次數
         uint256 claimCount;       // 已被領取次數
         address creator;          // 紅包發起人
-        uint8 eligibleType;       // 領取資格 0~2
+        uint8 eligiType;       // 領取資格 0~2
         string desc;
         string imgUrl;  
         uint256 startTime;        // 發起紅包的時間
         bool isActive ;            // 是否啟用
     }
-    mapping(uint256 => reInfo) public redEnvelopes;
+    mapping(uint256 => reInfo) public redEnv;
     uint256[] private activeREs; // 存放目前有效紅包的 ID 集合
     mapping(address => uint256[]) public myRE;
     uint256 public MinSharePerRE = 100 * 10 ** 18;
@@ -55,7 +54,7 @@ contract ShareToken is ERC20, Ownable {
     //推薦關係建立的事件 
     event refSet(address indexed holder, address indexed referer);
     //空投開始的事件
-    event AirdropStarted(uint256 indexed airDropCount);
+    event AirdropStarted(uint256 indexed adCount);
     //領取空投的事件
     event AirdropClaimed(
         address indexed holder,        
@@ -67,8 +66,8 @@ contract ShareToken is ERC20, Ownable {
     //有人領走一個紅包
     event reClaimed(uint256 indexed id, address indexed claimer, uint256 amount, address indexed creator);
     constructor() ERC20("ShareToken", "SHARE") Ownable(msg.sender) {
-        _owner = msg.sender;
-        _mint(msg.sender, INITIAL_SUPPLY);                     
+        //_owner = msg.sender;
+        _mint(msg.sender, INITIAL_SUPPLY); 
     }
     // 定義 decimals 函數
     function decimals() public view virtual override returns (uint8) {
@@ -81,7 +80,7 @@ contract ShareToken is ERC20, Ownable {
     // 設定或編輯推薦碼
     function setMyRefCode(string memory refCode) external returns(uint8){
         if(  // "Insufficient SHARE"
-             balanceOf(msg.sender) < costToEdit )
+             balanceOf(msg.sender) < cost_Edit )
         {
                    return 1;
         }else if(  // "Invalid format"
@@ -102,7 +101,7 @@ contract ShareToken is ERC20, Ownable {
              return 3;             
         }                    
         // 扣除設定推薦碼的費用
-        _burn(msg.sender, costToEdit);
+        _burn(msg.sender, cost_Edit);
         // 設定新的推薦碼，推薦碼允許大小寫存在
         holders[msg.sender].refCode = refCode;
         //在refCodeOwners 映射裏一律儲存推薦碼的小寫，這樣才好比對不致混淆
@@ -165,7 +164,7 @@ contract ShareToken is ERC20, Ownable {
         bool result = super.transfer(recipient, amount);
         // 建立自動推薦邏輯
         if (
-            amount >= minReferralAmount &&
+            amount >= minRefAmount &&
             result &&
             holders[recipient].referrer == address(0)
         ) {
@@ -210,36 +209,36 @@ contract ShareToken is ERC20, Ownable {
     }
     //Owner set a new round of airdrop
     function startAirdrop() public onlyOwner {
-        require(!airdropEnabled, "Airdrop enabled");
-        uint256 ownerReward = totalSupply().mul(ownerPercentage).div(100);
+        require(!adEnabled, "Airdrop enabled");
+        uint256 ownerReward = totalSupply().mul(ownerPercent).div(100);
         _mint(owner(),ownerReward );
-        airDropCount++;
-        airDropStartTime = block.timestamp;
-        airdropEnabled = true;
-        emit AirdropStarted(airDropCount);
+        adCount++;
+        adStartTime = block.timestamp;
+        adEnabled = true;
+        emit AirdropStarted(adCount);
     }
     //get datas of latest airdrop
     function getAirDropInfo() public view returns (uint256,uint256,uint256) {
-        return (airDropCount,airDropStartTime,airDropDuration);
+        return (adCount,adStartTime,adDuration);
     }
 
     function toClaimAirdrop(address addr) internal returns  (uint8) {
         if (  //not enabled
-            !airdropEnabled) 
+            !adEnabled) 
         {
             return 1;
         }else if (  //Airdrop expired
-                    block.timestamp > airDropStartTime + airDropDuration) 
+                    block.timestamp > adStartTime + adDuration) 
         {
-                    airdropEnabled = false;
+                    adEnabled = false;
                     return 2;
         }else if (  //Already claimed airdrop
-                    holders[addr].lastClaimedAirdrop > airDropStartTime) 
+                    holders[addr].lastClaimedAirdrop > adStartTime) 
         {
                     return 3; 
         }
-        uint256 holderReward = balanceOf(addr).mul(holderPercentage).div(100); // 3% of holder's balance
-        uint256 referrerReward = balanceOf(addr).mul(referrerPercentage).div(100); // 1% to referrer
+        uint256 holderReward = balanceOf(addr).mul(holderPercent).div(100); // 3% of holder's balance
+        uint256 referrerReward = balanceOf(addr).mul(referrerPercent).div(100); // 1% to referrer
         _mint(msg.sender, holderReward);
         //更新累加領過的空投總數
         holders[addr].holderReward = holders[addr].holderReward.add(holderReward);
@@ -264,63 +263,57 @@ contract ShareToken is ERC20, Ownable {
         uint8 result = toClaimAirdrop(msg.sender);
         return result;
     }
-    //Owner setup AirDrop Duration
-    function setAirDropDuration(uint256 _duration) external onlyOwner {
-         require(_duration > 86400, "must greater than 86400");
-         require(!airdropEnabled,"Airdrop still going.");
-         airDropDuration=_duration;
-    }
-    //Owner setup holderPercentage
-    function setRewardPercentage(uint256 _type , uint256 _percentage ) external onlyOwner returns(bool) {
-         if(_percentage < 1 || _percentage >4 || airdropEnabled ){
+    //Owner setup holderPercent
+    function setRewardPercentage(uint256 _type , uint8 _percentage ) external onlyOwner returns(bool) {
+         if(_percentage < 1 || _percentage >4 || adEnabled ){
             return false;
          }
          if( _type == 1 ){
-            holderPercentage = _percentage;
+            holderPercent = _percentage;
          } else if( _type == 2 ){
-            referrerPercentage = _percentage;
+            referrerPercent = _percentage;
          } else if( _type == 3 ){
-            ownerPercentage = _percentage;
+            ownerPercent = _percentage;
          }else{
             return false;
          }
          return true;
     }
    
-    //Owner setup minReferralAmount
-    function setMinReferralAmount(uint256 _amount) external onlyOwner {
-         require( _amount > 0 , "Should > 0");        
-         minReferralAmount = _amount;
-    }
-    //Owner setup REshare
-    function setMinSharePerRE(bool istotal ,uint256 _amount) external onlyOwner {
-         require( _amount > 0 , "Should > 0"); 
-         if(!istotal) {
+    //Owner setup minRefAmount
+    function setParameter(uint8 _type,uint256 _amount) external onlyOwner returns(bool){
+         if( _amount <= 0){
+              return false;
+         }       
+         if(_type == 1){
+            minRefAmount = _amount;
+         }else if(_type == 2){
             MinSharePerRE = _amount;
-         } else{
+         }else if(_type == 3){
             MinREshare = _amount;
-         }          
-    } 
-    //Owner setup costToEdit
-    function setCostToEdit(uint256 _amount) external onlyOwner {
-         require( _amount > 0 , "Should > 0");        
-         costToEdit = _amount;
-    } 
+         }else if(_type == 4){
+            cost_Edit = _amount;
+         }else if(_type == 5 && !adEnabled && _amount >=86400){
+            adDuration = _amount;
+         }else{
+            return false;
+         }
+         return true;
+    }
     //how many shares I have rewarded via airdrop as a holder
-    function getHolderRward() public view returns (uint256) {
+    function getReward(bool isref) public view returns (uint256) {
+        if(isref){
+            return holders[msg.sender].referrerReward;
+        }
         return holders[msg.sender].holderReward;
-    }
-    //how many shares I have rewarded via airdrop as a referrer
-    function getReferrerRward() public view returns (uint256) {
-        return holders[msg.sender].referrerReward;
-    }
+    }   
     
 // 發起紅包
-    function setRedEnvelope(uint256 totalShare, uint256 countRE, uint8 eligibleType, string memory _desc, string memory _url) external returns(bool) {
+    function setRedredE(uint256 totalShare, uint256 countRE, uint8 eligiType, string memory _desc, string memory _url) external returns(bool) {
         uint sum = countRE * MinSharePerRE ;
         uint256 minShare= MinREshare > sum ? MinREshare : sum;
         if(totalShare < minShare ||             //"At least SHARE each");
-        eligibleType > 2 || eligibleType < 0 || //"Invalid eligible type");
+        eligiType > 2 || eligiType < 0 || //"Invalid eligible type");
         balanceOf(msg.sender) < totalShare ||   //"Insufficient balance");
         holders[msg.sender].isDisabled )
         { return false;}
@@ -328,13 +321,13 @@ contract ShareToken is ERC20, Ownable {
         _transfer(msg.sender, address(this), totalShare);
         // 記錄紅包信息
         reID++;
-        redEnvelopes[reID] = reInfo({
+        redEnv[reID] = reInfo({
             totalAmount: totalShare,
             claimedAmount: 0,
             maxClaims: countRE,
             claimCount: 0,
             creator: msg.sender,
-            eligibleType: eligibleType,
+            eligiType: eligiType,
             desc:_desc,
             imgUrl:_url,
             startTime: block.timestamp,
@@ -348,7 +341,7 @@ contract ShareToken is ERC20, Ownable {
     //
      // 設定或編輯推薦碼
     function updateMyRE (uint256 id,bool isdesc,string memory data) external returns(bool){
-        reInfo storage re = redEnvelopes[id];
+        reInfo storage re = redEnv[id];
         if(re.creator == msg.sender  && bytes(data).length>0){
             if(isdesc){
                 re.desc=data;
@@ -361,17 +354,17 @@ contract ShareToken is ERC20, Ownable {
         return false;
     }
     // 領取紅包
-    function claimRedEnvelope(string memory linkcode,uint256 id) external returns (bool){
-        reInfo storage re = redEnvelopes[id];
+    function claimRedredE(string memory linkcode,uint256 id) external returns (bool){
+        reInfo storage re = redEnv[id];
         if(
-            !re.isActive || re.claimCount >= re.maxClaims || !checkEligibility(linkcode,re)
+            !re.isActive || re.claimCount >= re.maxClaims || !checkEligible(linkcode,re)
         ){
             return false;
         }
         // 設定隨機金額（紅包隨機分配）
-        uint256 remainingAmount = re.totalAmount.sub(re.claimedAmount);
-        uint256 remainingClaims = re.maxClaims.sub(re.claimCount);
-        uint256 claimAmount = remainingClaims == 1 ? remainingAmount : randomAmount(remainingAmount, remainingClaims);
+        uint256 remainsAmt = re.totalAmount.sub(re.claimedAmount);
+        uint256 remainClaims = re.maxClaims.sub(re.claimCount);
+        uint256 claimAmount = remainClaims == 1 ? remainsAmt : randomAmt(remainsAmt, remainClaims);
         // 更新紅包狀態
         re.claimedAmount += claimAmount;
         re.claimCount++;
@@ -405,24 +398,24 @@ contract ShareToken is ERC20, Ownable {
         return true;
     }
     // 檢查紅包領取資格
-    function checkEligibility(string memory linkcode,reInfo memory re) internal view returns(bool){
+    function checkEligible(string memory linkcode,reInfo memory re) internal view returns(bool){
         //string memory refcode = holders[msg.sender].refCode;
         address linkcodeOwner = refCodeOwners[toLower(linkcode)];
         address referrer = holders[msg.sender].referrer ;
-        if (        re.eligibleType == 0 && // 自己現有粉絲，加上無推薦人並且是無推薦碼或是發紅包者的推薦碼
+        if (        re.eligiType == 0 && // 自己現有粉絲，加上無推薦人並且是無推薦碼或是發紅包者的推薦碼
                     ( referrer == re.creator ||
                       ( referrer == address(0) &&
                         (bytes(linkcode).length == 0 || linkcodeOwner == re.creator )
                       )
                     )
                      ||
-                    (re.eligibleType == 1 && // 無推薦人，並且是無推薦碼或是發紅包者的推薦碼
+                    (re.eligiType == 1 && // 無推薦人，並且是無推薦碼或是發紅包者的推薦碼
                      ( referrer == address(0) &&
                        (bytes(linkcode).length == 0 || linkcodeOwner == re.creator )
                      )
                     )
                      ||
-                    re.eligibleType == 2  // Any subscriber                        
+                    re.eligiType == 2  // Any subscriber                        
             ) {
                   return true;
             }  
@@ -439,9 +432,9 @@ contract ShareToken is ERC20, Ownable {
         }
     }
     // 設定隨機紅包金額
-    function randomAmount(uint256 remainingAmount, uint256 remainingClaims) private view returns (uint256) {
-        uint256 maxAmount = remainingAmount.div(remainingClaims).mul(2); // 最大分配金額（可調整）
-        return uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender))) % maxAmount + 1;
+    function randomAmt(uint256 remainsAmt, uint256 remainClaims) private view returns (uint256) {
+        uint256 maxAmt = remainsAmt.div(remainClaims).mul(2); // 最大分配金額（可調整）
+        return uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender))) % maxAmt + 1;
     }
     //Holder Check My RE
     function getMyRE() public view returns (reInfo[] memory) {
@@ -449,7 +442,7 @@ contract ShareToken is ERC20, Ownable {
         reInfo[] memory result;  
         for (uint256 i = 0; i < myIds.length; i++) {
             uint256 id = myIds[i];            
-            result[i] = redEnvelopes[id];
+            result[i] = redEnv[id];
         }
         return result;
     }
@@ -459,12 +452,12 @@ contract ShareToken is ERC20, Ownable {
         uint256 count=0;
         for (uint256 i = 0; i < activeREs.length; i++) {
             uint256 id = activeREs[i];
-            reInfo storage envelope = redEnvelopes[id];
+            reInfo storage redE = redEnv[id];
            
             if ( // 根據資格類型檢查
-                 checkEligibility(linkcode,envelope)
+                 checkEligible(linkcode,redE)
             ) {
-                    result[count]=envelope;
+                    result[count]=redE;
                     count++;
             }          
         }
@@ -473,12 +466,12 @@ contract ShareToken is ERC20, Ownable {
     //Holder edit personal profile
     function editMyProfile(uint8 _type,string memory data) public returns (bool) {
         // 檢查用戶是否持有足夠的代幣
-        if(balanceOf(msg.sender) < costToEdit)
+        if(balanceOf(msg.sender) < cost_Edit)
         {
             return false;
         }
         // 燃燒代幣
-        _burn(msg.sender, costToEdit);
+        _burn(msg.sender, cost_Edit);
         // 更新用戶資料
         Holder storage holder=holders[msg.sender];
         if(_type==1){
@@ -496,10 +489,17 @@ contract ShareToken is ERC20, Ownable {
         return (holders[_holder]);
     }
     //get all address I have referred
-    function getMyfansAdress() public view returns(address[] memory){
+    function getMyfansAdd() public view returns(address[] memory){
         return myfans[msg.sender];        
     }
-    function getMyFansCount() external view returns (uint256) {
-        return myfans[msg.sender].length;
+    //function getMyFansCount() external view returns (uint256) {
+    //    return myfans[msg.sender].length;
+    //}
+    function getReCount() external view returns (uint256) {
+        return reID;
+    }
+    //get specific holder's profile
+    function getSpecificRE(uint256 reid) public view returns(reInfo memory re){
+        return (redEnv[reid]);
     }
 }
