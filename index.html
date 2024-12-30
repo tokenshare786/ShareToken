@@ -321,14 +321,15 @@
                     //await window.ethereum.request({ method: "eth_requestAccounts" });
                     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' }); 
                     holder = accounts[0];
+                    updateAccountUI(holder);
                     // 使用 MetaMask 提供的 provider 初始化 Web3
                     web3 = new Web3(window.ethereum);
                     // 初始化智能合約
                     contract = new web3.eth.Contract(contractABI, contractAddress);
                     console.log("Web3 和合約初始化完成！");
                 } catch (error) {
-                    alert("初始化 Web3失敗：" + error);
-                    console.error("無法連接錢包:", error);
+                    alert("initiate Web3 failed：" + error);
+                    console.error("initiate Web3 failed", error);
                 }
             } else {
                 alert("請安裝 MetaMask！");
