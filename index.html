@@ -420,18 +420,13 @@
     try {
         // 查询指定 holder 的推荐关系
         const events = await contract.getPastEvents("refSet", {
-            filter: { holder: holderAddress }, // 过滤条件：指定 holder
-            fromBlock: 0,                      // 起始区块（可调整）
-            toBlock: "latest",                 // 结束区块
-        });
-
-        if (events.length === 0) {
-            console.log("未找到推荐记录");
-            return null;
-        }
+            filter: { referer: holderAddress }, // 过滤条件：指定 holder
+            fromBlock: 0,                       // 起始区块（可调整）
+            toBlock: "latest",                  // 结束区块
+        });      
         document.getElementById('fans_count').textContent = `${events.length} `;
     } catch (error) {
-        console.error("获取推荐人數失败:", error);
+        console.error("查詢推荐人數失败:", error);
         return null;
     }
 }
