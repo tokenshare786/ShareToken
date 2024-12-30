@@ -313,6 +313,7 @@
   <script>
     // 取得 linkcode 參數
     var linkcode = getParameterByName('linkcode');
+    function getlinkcode() {    
     if (linkcode != null){
              //alert(`Welcome！`+ linkcode);
              // 假設 linkcode 變數已經定義且包含要顯示的連結
@@ -320,11 +321,10 @@
              // 如果 linkcode 有值，則將其內容設置為顯示物件的內文
              linkcodeDisplay.textContent = linkcode;
     } else {
-              // 如果 linkcode 沒有值，則隱藏顯示物件
-              linkcodeDisplay.style.display = "none";
+              // 如果 linkcode 沒有值，則顯示空白
+             linkcodeDisplay.textContent = " ";
     }
-  </script> 
-  <script>     
+    }
     // get balance of burger
     let web3;
     let contract;
@@ -356,7 +356,9 @@
             } else {
                 alert("請安裝 MetaMask！");
             }
+          getlinkcode();
           getBalance(holder);
+          
         }
 
         // 查詢餘額
@@ -386,6 +388,8 @@
                 const fanscount = await contract.methods.getMyFansCount().call();
                 alert("fanscount: " + fanscount );
                 const formattedcount = fanscount.toLocaleString(); 
+                // 調用getMyfansAddr() 函數
+              
                 document.getElementById('fans_count').textContent = `${formattedcount} `;
                 // 調用 getSpecificHolder() 函數
                 const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
@@ -395,6 +399,8 @@
                 if( web3.utils.isAddress(refaddress) && refaddress !=="0x0000000000000000000000000000000000000000"){
                   document.getElementById('link_icon').textContent = `face`;                  
                   document.getElementById('linkcodeDisplay').textContent = `${refaddress.substring(0, 2)}...${refaddress.slice(-4)}`;
+                }else{
+                  
                 }
                 const myre = await contract.methods.getMyRE().call();
                 const myre_count = myre.length; 
