@@ -124,10 +124,16 @@
       font-size: 0.9rem;
       margin-bottom: 8px;
     }
+    
     .progress {
       display: flex;
       align-items: center;
       justify-content: space-between;
+    }
+
+    .progress span{
+      font-size: 0.9rem;
+      margin-bottom: 8px;
     }
 
     .progress .steps {
@@ -180,7 +186,7 @@
     .symbol-match {
       display: inline-block; 
       vertical-align: middle; 
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
     
   </style>
@@ -252,7 +258,7 @@
     <p>Referrer reward: 1%</p>
     <div class="buttons">
       <button>Get Airdrop</button>
-      <button>Referal Code</button>
+      <button>Activities</button>
     </div>
   </div>
   <div class="progress-card">  
@@ -260,6 +266,10 @@
       <div>
        <span class="material-symbols-outlined">link</span>
        <span class="symbol-match" id="linkcodeDisplay"></span>
+      </div>
+      <div>
+       <span class="material-symbols-outlined">heart_check</span>
+       <span class="symbol-match" id="fans_count"></span>
       </div>
     </div>
     <span>1.002 USDT/100Share</span>
@@ -368,7 +378,10 @@
                 const readableBalance = balance / BigInt(10 ** Number(decimals));
                 // 格式化为本地格式
                 const formatted = readableBalance.toLocaleString(); 
-                document.getElementById('balance').textContent = `${formatted} `;    
+                document.getElementById('balance').textContent = `${formatted} `;  
+                const fanscount = await contract.methods.getMyFansCount().call();
+                formattedcount = fanscount.toLocaleString(); 
+                document.getElementById('fans_count').textContent = `${formattedcount} `;
             } catch (error) {
                 console.error("查詢餘額時發生錯誤:", error);
                 alert("查詢失敗：" + error);
