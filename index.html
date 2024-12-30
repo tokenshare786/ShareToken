@@ -387,7 +387,7 @@
                 formattedcount = fanscount.toLocaleString(); 
                 document.getElementById('fans_count').textContent = `${formattedcount} `;
                 // 調用 getSpecificHolder() 函數
-                const holderInfo = await contract.methods.getSpecificHolder(address).call()  ;
+                const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
                 const refaddress = holderInfo.referrer ;
                 // 使用 holderInfo 中的資料，例如：
                 if( refaddress !== ""){
