@@ -388,9 +388,10 @@
                 const fanscount = await contract.methods.getMyFansCount().call();
                 //alert("fanscount: " + fanscount );
                 const formattedcount = fanscount.toLocaleString(); 
-                // 調用getMyfansAddr() 函數
+                // 調用 myfans 映射
+                alert("holder:" + holder );
                 const fans = await contract.methods.myfans(holder).call();
-                const myfanscount = fans.length;
+                const myfanscount = fans.length;              
                 alert("myfans:" + myfanscount );
                 document.getElementById('fans_count').textContent = `${myfanscount} `;
                 // 調用 getSpecificHolder() 函數
