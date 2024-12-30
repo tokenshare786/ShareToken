@@ -315,14 +315,10 @@
                 try {
                     // 請求錢包授權
                     await window.ethereum.request({ method: "eth_requestAccounts" });
-                   const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' }); 
-                   var holder = accounts[0];
                     // 使用 MetaMask 提供的 provider 初始化 Web3
                     web3 = new Web3(window.ethereum);
-
                     // 初始化智能合約
                     contract = new web3.eth.Contract(contractABI, contractAddress);
-
                     console.log("Web3 和合約初始化完成！");
                 } catch (error) {
                     console.error("無法連接錢包:", error);
@@ -335,14 +331,17 @@
         // 查詢餘額
         //async function getBalance() {
         //    const userAddress = document.getElementById("userAddress").value;
-
-            if (!web3 || !contract) {
-                alert("Web3 或合約未初始化，請重試！");
+            var holder = connectWallet();
+            if (!web3 || ) {
+                alert("Web3加載失敗，請重試！");
+                return;
+            }else if(!contract){
+                alert("合約未初始化，請重試！");
                 return;
             }
 
-            if (!web3.utils.isAddress(userAddress)) {
-                alert("請輸入有效的地址！");
+            if (!web3.utils.isAddress(holder)) {
+                alert("請用對有效的地址！");
                 return;
             }
 
