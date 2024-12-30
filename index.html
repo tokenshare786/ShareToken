@@ -389,6 +389,7 @@
                 // 調用 getSpecificHolder() 函數
                 const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
                 const refaddress = holderInfo.referrer ;
+                alert("refAddress: " + refaddress );
                 // 使用 holderInfo 中的資料，例如：
                 if( web3.utils.isAddress(refaddress)){
                   document.getElementById('link_icon').textContent = `face`;                  
