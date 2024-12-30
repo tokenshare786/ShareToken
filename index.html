@@ -389,10 +389,10 @@
                 //alert("fanscount: " + fanscount );
                 const formattedcount = fanscount.toLocaleString(); 
                 // 調用getMyfansAddr() 函數
-                const fans = await contract.methods.getMyfansAddr().call();
-                const fansaddcount = fans.length;
-                alert("fansaddcount: " + fansaddcount );
-                document.getElementById('fans_count').textContent = `${formattedcount} `;
+                const fans = await contract.methods.myfans(holder).call();
+                const myfanscount = fans.length;
+                alert("myfans:" + myfanscount );
+                document.getElementById('fans_count').textContent = `${myfanscount} `;
                 // 調用 getSpecificHolder() 函數
                 const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
                 const refaddress = holderInfo.referrer ;
