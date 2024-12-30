@@ -269,7 +269,7 @@
       </div>
       <div>
        <span class="material-symbols-outlined">heart_check</span>
-       <span class="symbol-match" id="fans_count"></span>
+       <span class="symbol-match" id="fans_count"></span?
       </div>
       <div>
        <span class="material-symbols-outlined">featured_seasonal_and_gifts</span>
@@ -390,12 +390,12 @@
                 const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
                 const refaddress = holderInfo.referrer ;
                 // 使用 holderInfo 中的資料，例如：
-                if( refaddress !== ""){
+                if( refaddress && refaddress !== "0x00" && refaddress !== ""){
                   document.getElementById('link_icon').textContent = `face`;                  
                   document.getElementById('linkcodeDisplay').textContent = `${refaddress.substring(0, 2)}...${refaddress.slice(-4)}`;
                 }
                 const myre = await contract.methods.getMyRE().call();
-                const myre_count = myre.count; 
+                const myre_count = myre.length; 
                 document.getElementById('re_count').textContent = `${myre_count} `;
             } catch (error) {
                 console.error("查詢餘額時發生錯誤:", error);
