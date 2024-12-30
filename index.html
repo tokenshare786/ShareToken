@@ -188,36 +188,7 @@
     <div>
       <button class="walletbutton" id="walletButton" onclick="connectWallet()">Login</button>  
     </div>
-  </header>
-  <script>    
-    //發起空投事件
-    async function startAirDrop() {
-      try {
-        const balance = await contract.methods.startAirdrop().call();
-        document.getElementById("balance").innerText = `Balance: ${balance}`;
-      } catch (error) {
-        console.error("Error fetching balance:", error);
-      }
-    }
-
-    // 獲取餘額
-    async function getBalance() {
-      if (!contract || !userAccount) {
-        alert("Please connect your wallet first.");
-        return;
-      }
-
-      try {
-        
-      } catch (error) {
-        console.error("Error fetching balance:", error);
-      }
-    }
-
-    // 按鈕事件
-    //document.getElementById("connectWallet").addEventListener("click", initWeb3);
-    //document.getElementById("getBalance").addEventListener("click", getBalance);
-  </script>
+  </header>  
 
   <script>
            // 在 JavaScript 部分加入以下程式碼
