@@ -287,12 +287,9 @@
   </a>
   </footer>
   <script>
-    alert(`Welcome1234！`);
-  </script> 
-  <script>  
-  // 取得 linkcode 參數
+    //alert(`Welcome1234！`);
+    // 取得 linkcode 參數
   var linkcode = getParameterByName('linkcode');
-  //alert(`Welcome！`+ linkcode);
   if (linkcode != null){
              //alert(`Welcome！`+ linkcode);
              // 假設 linkcode 變數已經定義且包含要顯示的連結
@@ -303,6 +300,9 @@
               // 如果 linkcode 沒有值，則隱藏顯示物件
               linkcodeDisplay.style.display = "none";
    }
+  </script> 
+  <script>  
+  
   // get balance of burger，以下這個 try 會先執行
     let web3;
     let contract;
