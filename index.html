@@ -225,6 +225,7 @@
         console.log('Account changed:', accounts[0]);
         //alert('accountsChanged');
         updateAccountUI(accounts[0]);
+        getBalance(holder);
       } else {
         console.log('No accounts available');
       }
@@ -302,7 +303,7 @@
   </script> 
   <script>     
     // get balance of burger
-    var holder;
+
     let web3;
     let contract;
     // 合約地址和 ABI
@@ -313,6 +314,7 @@
 
     // 加載 Web3
         async function initialize() {
+            var holder;
             if (typeof window.ethereum !== "undefined") {
                 try {
                     // 請求錢包授權
@@ -331,12 +333,11 @@
             } else {
                 alert("請安裝 MetaMask！");
             }
-        //}
+          getBalance(holder);
+        }
 
         // 查詢餘額
-        //async function getBalance() {
-            //const userAddress = document.getElementById("userAddress").value;    
-            //alert("So far!");  
+        async function getBalance(holder) {
             if (!web3) {
                 alert("Web3加載失敗，請重試！");
                 return;
@@ -351,6 +352,7 @@
             try {
                 // 調用 balanceOf 函數
                 const balance = await contract.methods.balanceOf(holder).call();
+                const readableBalance = balance/ Math.pow(10, 18);
                 const formatted = balance.toLocaleString(); // 格式化为本地格式
                 document.getElementById('balance').textContent = `${formatted} `;    
             } catch (error) {
