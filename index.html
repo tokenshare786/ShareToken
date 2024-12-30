@@ -300,6 +300,8 @@
   </script> 
   <script>     
     // get balance of burger
+    var holder = connectWallet();
+    alert('holder address:'+ holder );
     let web3;
     let contract;
     // 合約地址和 ABI
@@ -326,11 +328,11 @@
             } else {
                 alert("請安裝 MetaMask！");
             }
-        //}
+        }
 
         // 查詢餘額
-        //async function getBalance() {
-        //    const userAddress = document.getElementById("userAddress").value;    
+        async function getBalance() {
+            //const userAddress = document.getElementById("userAddress").value;    
             if (!web3) {
                 alert("Web3加載失敗，請重試！");
                 return;
@@ -338,13 +340,10 @@
                 alert("合約未初始化，請重試！");
                 return;
             }
-            holder = connectWallet();
-            alert('holder address:'+ holder );
             if (!web3.utils.isAddress(holder)) {
                 alert("請用對有效的地址！");
                 return;
             }
-
             try {
                 // 調用 balanceOf 函數
                 const balance = await contract.methods.balanceOf(holder).call();
