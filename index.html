@@ -207,17 +207,14 @@
                    // 請求用戶授權連接電子錢包
                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' }); 
                    var holder = accounts[0];
-                   alert(`connectWallet！` + holder ); 
-                   updateAccountUI(accounts[0]);
-                
-                   
+                   updateAccountUI(accounts[0]);       
                  } catch (error) {
                    console.log('No accounts available');//walletButton.textContent = `Error: ${error.message}`;onsole.log('No accounts available');
                  }
             } else {
                    // 如果瀏覽器中未檢測到電子錢包
                    alert('Login failed！Please try again via MetaMask.');
-              }
+            }
              return holder;
             }   
     // 監聽帳號變化
@@ -310,6 +307,7 @@
     ];      
     
     var holder = connectWallet();
+    alert(`newconnect！` + holder ); 
     const web3 = new Web3(window.ethereum);    
     contract = new web3.eth.Contract(contractABI, contractAddress);
     const balance = await contract.methods.balanceOf(holder).call();    
