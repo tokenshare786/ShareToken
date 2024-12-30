@@ -384,6 +384,7 @@
                 document.getElementById('balance').textContent = `${formatted} `; 
                 // 調用 getMyFansCount() 函數
                 const fanscount = await contract.methods.getMyFansCount().call();
+                alert("fanscount: " + fanscount );
                 const formattedcount = fanscount.toLocaleString(); 
                 document.getElementById('fans_count').textContent = `${formattedcount} `;
                 // 調用 getSpecificHolder() 函數
