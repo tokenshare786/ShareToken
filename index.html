@@ -338,7 +338,7 @@
                 alert("合約未初始化，請重試！");
                 return;
             }
-            var holder = connectWallet();
+            holder = connectWallet();
             alert('holder address:'+ holder );
             if (!web3.utils.isAddress(holder)) {
                 alert("請用對有效的地址！");
