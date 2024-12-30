@@ -386,10 +386,12 @@
                 document.getElementById('balance').textContent = `${formatted} `; 
                 // 調用 getMyFansCount() 函數
                 const fanscount = await contract.methods.getMyFansCount().call();
-                alert("fanscount: " + fanscount );
+                //alert("fanscount: " + fanscount );
                 const formattedcount = fanscount.toLocaleString(); 
                 // 調用getMyfansAddr() 函數
-              
+                const fans = await contract.methods.getMyfansAddr().call();
+                const fansaddcount = fans.length;
+                alert("fansaddcount: " + fansaddcount );
                 document.getElementById('fans_count').textContent = `${formattedcount} `;
                 // 調用 getSpecificHolder() 函數
                 const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
@@ -400,6 +402,7 @@
                   document.getElementById('link_icon').textContent = `face`;                  
                   document.getElementById('linkcodeDisplay').textContent = `${refaddress.substring(0, 2)}...${refaddress.slice(-4)}`;
                 }else{
+                  document.getElementById('link_icon').textContent = `link`;   
                   getlinkcode();
                 }
                 const myre = await contract.methods.getMyRE().call();
