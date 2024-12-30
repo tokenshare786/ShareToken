@@ -300,8 +300,7 @@
   </script> 
   <script>     
     // get balance of burger
-    var holder = connectWallet();
-    alert('holder address:'+ holder );
+    var holder;
     let web3;
     let contract;
     // 合約地址和 ABI
@@ -312,7 +311,6 @@
 
     // 加載 Web3
         async function initialize() {
-            var holder;
             if (typeof window.ethereum !== "undefined") {
                 try {
                     // 請求錢包授權
@@ -323,16 +321,18 @@
                     contract = new web3.eth.Contract(contractABI, contractAddress);
                     console.log("Web3 和合約初始化完成！");
                 } catch (error) {
+                    alert("初始化 Web3失敗：" + error);
                     console.error("無法連接錢包:", error);
                 }
             } else {
                 alert("請安裝 MetaMask！");
             }
-        }
+        //}
 
         // 查詢餘額
-        async function getBalance() {
+        //async function getBalance() {
             //const userAddress = document.getElementById("userAddress").value;    
+            await holder = connectWallet();
             if (!web3) {
                 alert("Web3加載失敗，請重試！");
                 return;
