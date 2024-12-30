@@ -255,7 +255,8 @@
     <p id="linkcodeDisplay" ></p>
     <p>1.002 USDT/100Share</p>
     <div class="progress">
-      <p>Get my referral code: 200 share</p>
+      <span>Bitcoin current price：</span>
+      <span id="bitcoin-price"></span>
       <div class="steps">
         <span></span>
         <span></span>
@@ -303,7 +304,6 @@
   </script> 
   <script>     
     // get balance of burger
-
     let web3;
     let contract;
     // 合約地址和 ABI
@@ -365,10 +365,8 @@
                 alert("查詢失敗：" + error);
             }
         }
-
         // 初始化
-        window.onload = initialize;
-    
+        window.onload = initialize;  
    
   </script> 
   <script>    
