@@ -354,11 +354,11 @@
                 // 調用 balanceOf 函數
                 const balance = await contract.methods.balanceOf(holder).call();
                 const readableBalance = balance / Math.pow(10, 18);
-                const formatted = readableBalance.toLocaleString(); // 格式化为本地格式
-                document.getElementById('balance').textContent = `${formatted} `;    
+                //const formatted = balance.toLocaleString(); // 格式化为本地格式
+                document.getElementById('balance').textContent = `${readableBalance} `;    
             } catch (error) {
                 console.error("查詢餘額時發生錯誤:", error);
-                alert("查詢失敗，請檢查輸入是否正確！");
+                alert("查詢失敗：" + error);
             }
         }
 
