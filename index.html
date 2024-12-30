@@ -353,9 +353,13 @@
             try {
                 // 調用 balanceOf 函數
                 const balance = await contract.methods.balanceOf(holder).call();
-                const readableBalance = balance / Math.pow(10, 18);
-                //const formatted = balance.toLocaleString(); // 格式化为本地格式
-                document.getElementById('balance').textContent = `${readableBalance} `;    
+                // 假設代幣有 18 位小數
+                const decimals = 18n; // 使用 BigInt 表示 18
+                // 將餘額轉換為人類可讀的格式
+                const readableBalance = balance / BigInt(10 ** Number(decimals));
+                // 格式化为本地格式
+                const formatted = readableBalance.toLocaleString(); 
+                document.getElementById('balance').textContent = `${formatted} `;    
             } catch (error) {
                 console.error("查詢餘額時發生錯誤:", error);
                 alert("查詢失敗：" + error);
