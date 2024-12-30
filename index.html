@@ -190,6 +190,8 @@
     </div>
   </header>  
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>  
+  <!-- 引入 Web3.js -->
+  <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
   <script>      
            // 取得推薦碼    
            function getParameterByName(name, url) {
@@ -332,8 +334,7 @@
         // 查詢餘額
         //async function getBalance() {
             //const userAddress = document.getElementById("userAddress").value;    
-            alert("So far!");          
-            //await holder = connectWallet();
+            alert("So far!");  
             if (!web3) {
                 alert("Web3加載失敗，請重試！");
                 return;
