@@ -191,6 +191,7 @@
   </header>  
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>  
   <script>
+           const holder; 
            // 取得推薦碼
            function getParameterByName(name, url) {
                if (!url) url = window.location.href;
@@ -205,14 +206,14 @@
             if (typeof window.ethereum !== 'undefined') {  
               try {
                    // 請求用戶授權連接電子錢包
-                   const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });   
-                   const walletButton = document.getElementById('walletButton');  
+                   const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' }); 
+                   holder = accounts[0];
+                   updateAccountUI(accounts[0]);
+                   //const walletButton = document.getElementById('walletButton');  
                    // 顯示成功連接的錢包地址
-                   walletButton.textContent = `${accounts[0].substring(0, 2)}...${accounts[0].slice(-4)}`;
+                   //walletButton.textContent = `${accounts[0].substring(0, 2)}...${accounts[0].slice(-4)}`;
                  } catch (error) {
-                   // 用戶拒絕授權或其他錯誤
-                   //alert('連接電子錢包失敗：' + error.message);
-                   walletButton.textContent = `Error: ${error.message}`;
+                   console.log('No accounts available');//walletButton.textContent = `Error: ${error.message}`;onsole.log('No accounts available');
                  }
             } else {
                    // 如果瀏覽器中未檢測到電子錢包
@@ -309,10 +310,10 @@
     ];  
     const web3 = new Web3(window.ethereum);    
     contract = new web3.eth.Contract(contractABI, contractAddress);
-    const balance = await contract.methods.balanceOf(account[0]).call();    
+    const balance = await contract.methods.balanceOf(holder).call();    
     document.getElementById("balance").innerText = `Burger: ${balance}`; 
     
-    alert(`Welcome7541234！`);   
+    alert(`Welcome75641234！`);   
   </script> 
   <script>  
 
