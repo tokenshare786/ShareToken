@@ -207,7 +207,7 @@
               try {
                    // 請求用戶授權連接電子錢包
                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' }); 
-                   holder = accounts[0];
+                   //holder = accounts[0];
                    updateAccountUI(accounts[0]);
                    //const walletButton = document.getElementById('walletButton');  
                    // 顯示成功連接的錢包地址
