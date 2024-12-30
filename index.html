@@ -192,7 +192,7 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>  
   <script>     
            var holder;
-
+     
            // 取得推薦碼    
            function getParameterByName(name, url) {
                if (!url) url = window.location.href;
@@ -209,6 +209,7 @@
                    // 請求用戶授權連接電子錢包
                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' }); 
                    holder = accounts[0];
+                   alert(`connectWallet！` + holder ); 
                    updateAccountUI(accounts[0]);
                    //const walletButton = document.getElementById('walletButton');  
                    // 顯示成功連接的錢包地址
