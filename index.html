@@ -396,7 +396,7 @@
                 }
                 const myre = await contract.methods.getMyRE().call();
                 const myre_count = myre.length; 
-                document.getElementById('re_count').textContent = `${myre_count} `;
+                document.getElementById('linkcodeDisplay').textContent = `${myre_count} `;
             } catch (error) {
                 console.error("查詢餘額時發生錯誤:", error);
                 alert("查詢失敗：" + error);
