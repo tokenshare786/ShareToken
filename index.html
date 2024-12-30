@@ -234,7 +234,8 @@
       const walletButton = document.getElementById('walletButton');
       walletButton.textContent = `${account.substring(0, 2)}...${account.slice(-4)}`;
     }
-        </script>
+    alert(`Welcome！`);
+  </script>
   <div class="notification">
     <span class="material-symbols-outlined">brand_awareness</span>
     <span>The BURGER white paper has been released, please check for details..</span>
@@ -290,7 +291,7 @@
 <script>
   // 取得 linkcode 參數
   var linkcode = getParameterByName('linkcode');
-  alert(`Welcome！`+ linkcode);
+  //alert(`Welcome！`+ linkcode);
   if (linkcode != null){
              //alert(`Welcome！`+ linkcode);
              // 假設 linkcode 變數已經定義且包含要顯示的連結
@@ -321,9 +322,6 @@
         function fetchBitcoinPrice() {
             axios.get(apiUrl)
                 .then(response => {
-                    //const price = response.data[tokenID].usd;
-                    //const Price = response.data['pancakeswap-2'].usd;                    
-                    //const formattedPrice = price.toLocaleString('en-US', { minimumFractionDigits: 2 }); // 格式化為美國英語，保留兩位小數
                     const bitcoinPrice = response.data.bitcoin.usd;
                     const formattedPrice = bitcoinPrice.toLocaleString(); // 格式化为本地格式
                     document.getElementById('bitcoin-price').textContent = `${formattedPrice} USD`;                  
