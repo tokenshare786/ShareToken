@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.26;
-
-contract ShareToken {   
+contract BurgerToken {   
     address public _owner;
     modifier onlyOwner() {
         require(msg.sender == _owner, "Only owner");
@@ -23,7 +22,8 @@ contract ShareToken {
         string description;
         string imgUrl;
         uint256 lastClaimedAD;
-        bool isDis;
+        bool isDistoStartRE;
+        bool isDistoRef;
     }
     mapping(address => Holder) public holders;
     uint256 public adCount = 0;
@@ -38,44 +38,45 @@ contract ShareToken {
     mapping(string => address) public refCodeOwners;
     mapping(address => address[]) public myfans;
     struct reInfo {
-        uint256 subAmt; // 紅包總share
-        uint256 claimedAmt; // 已領取share
-        uint256 maxClaims; // 最大領取次數
-        uint256 claimCount; // 已被領取次數
-        address creator; // 紅包發起人
-        uint8 eligiType; // 領取資格 0~2
+        uint256 subAmt; // Total shares of this event of RE 
+        uint256 claimedAmt; // Shares of Already claimed 
+        uint256 maxClaims; // Maximum Times could be claimed
+        uint256 claimCount; // Times of already claimed
+        address creator; // Who initiate the RE event
+        uint8 eligiType; // Who is eligible to claim the RE
         string desc;
         string imgUrl;
-        uint256 startTime; // 發起紅包的時間
-        bool isActive; // 是否啟用
+        uint256 startTime; 
+        bool isActive; // Still active
     }
     mapping(uint256 => reInfo) public redEnv;
-    uint256[] private activeREs; // 存放目前有效紅包的 ID 集合
+    // Stores the ID set of currently valid red envelopes
+    uint256[] private activeREs; 
     mapping(address => uint256[]) public myRE;
     uint256 public MinSharePerRE = 100 * 10**18;
     uint256 public MinREshare = 200 * 10**18;
     uint256 public reID = 0;
-    //推薦關係建立的事件
+    //Events for establishing recommended relationships
     event refSet(address indexed holder, address indexed referer);
-    // 事件
+    // Someone made a transfer
     event Transfer(address indexed from, address indexed to, uint256 value);
     event Approval(address indexed owner, address indexed spender, uint256 value);
-    //空投開始的事件
+    // Owner initiate a AirDrop event
     event ADStarted(uint256 indexed adCount);
-    //領取空投的事件
+    // Some holder claimed a airdrop
     event ADClaimed(
         address indexed holder,
         address indexed receiver,
         uint256 reward
     );
-    //有人創造了一個紅包發起事件
+    //Someone created a red envelope event
     event reCreated(
         uint256 indexed id,
         address indexed creator,
         uint256 subAmt,
         uint256 maxClaims
     );
-    //有人領走一個紅包
+    //Someone claimed a red envelope
     event reClaimed(
         uint256 indexed id,
         address indexed claimer,
@@ -86,17 +87,17 @@ contract ShareToken {
     constructor() {    
         _owner = msg.sender;    
         _mint(msg.sender, INITIAL_SUPPLY);
-       name = "ShareToken";
-       symbol = "SHARE";
+       name = "BURGER";
+       symbol = "BURGER";
        decimals = 18;
     }
 
-    //檢視自己現有的推薦碼
+    //Check holder's existing referral code
     function getMyRefCode() public view returns (string memory) {
         return holders[msg.sender].refCode;
     }
 
-    // 設定或編輯推薦碼
+    // Set or edit referral code
     function setMyRefCode(string memory refCode) external returns (uint8) {
         if (
             // "Insufficient SHARE"
@@ -109,12 +110,15 @@ contract ShareToken {
         ) {
             return 2;
         }
-        // 刪除舊的 refCode 的映射 (如果存在)
+
+        // Delete old mapping ofrefCode (if exists)
         string memory oldrefCode = holders[msg.sender].refCode;
         if (refCodeOwners[oldrefCode] != address(0)) {
             delete refCodeOwners[oldrefCode];
         }
-        // 轉換推薦碼為小寫，避免大小寫重複
+
+        // Convert the referral code to lowercase 
+        // avoid duplication of uppercase and lowercase letters
         string memory lowerRefCode = toLower(refCode);
         if (
             // "Referral code already used by another holder"
@@ -122,33 +126,32 @@ contract ShareToken {
         ) {
             return 3;
         }
-        // 扣除設定推薦碼的費用
+        // Deduct the fee for setting the referral code
         _burn(msg.sender, cost_Edit);
-        // 設定新的推薦碼，推薦碼允許大小寫存在
+        // Set a new referral code. The referral code can be case sensitive.
         holders[msg.sender].refCode = refCode;
-        //在refCodeOwners 映射裏一律儲存推薦碼的小寫，這樣才好比對不致混淆
+        //Always store referral codes in lowercase in the refCodeOwners map to avoid confusion.
         refCodeOwners[lowerRefCode] = msg.sender;
         return 0;
     }
 
-    /// dev 將推薦碼轉換為小寫
+    // Convert the referral code to lowercase 
     function toLower(string memory str) public pure returns (string memory) {
         bytes memory strBytes = bytes(str);
         for (uint256 i = 0; i < strBytes.length; i++) {
-            if (strBytes[i] >= 0x41 && strBytes[i] <= 0x5A) {
-                // 將大寫字元轉換為小寫
+            if (strBytes[i] >= 0x41 && strBytes[i] <= 0x5A) {                
                 strBytes[i] = bytes1(uint8(strBytes[i]) + 32);
             }
         }
         return string(strBytes);
     }
 
-    //驗證推薦碼格式是否有效 (僅允許 a~z, 0~9,-_@組合)
+    // Verify whether the referral code format is valid 
+    // (only a~z, 0~9,-_@ combinations are allowed)
     function isValidRefCode(string memory refCode) public pure returns (bool) {
         bytes memory codeBytes = bytes(refCode);
         for (uint256 i = 0; i < codeBytes.length; i++) {
             bytes1 char = codeBytes[i];
-            // 检查字符是否为合法字符
             if (
                 !(char >= 0x30 && char <= 0x39) && // 0-9
                 !(char >= 0x41 && char <= 0x5A) && // A-Z
@@ -161,7 +164,7 @@ contract ShareToken {
         return true;
     }
 
-    //排除流動性合約地址成為介紹人
+    //Exclude liquidity contract address from becoming an introducer
     function isContract(address addr) internal view returns (bool) {
         uint256 size;
         assembly {
@@ -170,8 +173,14 @@ contract ShareToken {
         return size > 0;
     }
 
-    function setDisabled(address account, bool isDis) external onlyOwner {
-        holders[account].isDis = isDis;
+    function setDisabled(address account, bool _disabled, bool isRef)
+     external onlyOwner {
+        if(isRef){
+        holders[account].isDistoStartRE = _disabled;
+        }else{
+            holders[account].isDistoRef = _disabled;
+        }
+
     }
 
     function transfer(address recipient, uint256 amount)
@@ -179,14 +188,15 @@ contract ShareToken {
     {
         toClaimAirdrop(recipient);
         bool result = _transfer(msg.sender, recipient, amount);
-        // 建立自動推薦邏輯
+        // Establishing automatic recommendation logic
         if (
             amount >= minRefAmount &&
             result &&
             holders[recipient].referrer == address(0) &&
-            !isContract(msg.sender)
+            // Make sure the Sender is not a contract address
+            !isContract(msg.sender) && !holders[msg.sender].isDistoRef
         ) {
-            // 確保 Sender 非合約地址
+            
             holders[recipient].referrer = msg.sender;
             myfans[msg.sender].push(recipient);
             emit refSet(recipient, msg.sender);
@@ -194,7 +204,7 @@ contract ShareToken {
         return result;
     }
 
-    // 手動設定介紹人
+    // Manually set referrer
     function setReferrer(string memory refCode) public returns (uint8) {
         address referrer = refCodeOwners[refCode];
         if (
@@ -203,8 +213,8 @@ contract ShareToken {
         ) {
             return 1;
         } else if (
-            //"Invalid code"
-            bytes(refCode).length == 0
+            // Invalid code or referrer is Disabled
+            bytes(refCode).length == 0 || holders[referrer].isDistoRef
         ) {
             return 2;
         } else if (
@@ -218,7 +228,7 @@ contract ShareToken {
         ) {
             return 4;
         }
-        // 設定介紹人
+        // Set referral
         holders[msg.sender].referrer = referrer;
         myfans[referrer].push(msg.sender);
         emit refSet(msg.sender, referrer);
@@ -251,7 +261,7 @@ contract ShareToken {
 
     function toClaimAirdrop(address addr) internal returns (uint8) {
         if (
-            //not enabled
+            //Airdrop not enabled
             !adEnabled
         ) {
             return 1;
@@ -262,7 +272,7 @@ contract ShareToken {
             adEnabled = false;
             return 2;
         } else if (
-            //Already claimed airdrop
+            //addr Already claimed airdrop
             holders[addr].lastClaimedAD > adStartTime
         ) {
             return 3;
@@ -270,13 +280,13 @@ contract ShareToken {
         uint256 holderReward = balanceOf[addr] * holderPercent /100; // 3% of holder's balance
         uint256 referReward = balanceOf[addr] * refPercent /100; // 1% to referrer
         _mint(msg.sender, holderReward);
-        //更新累加領過的空投總數
+        //Update the total number of airdrops received
         holders[addr].holderReward += holderReward ;
-        //更新上次領取時間
+        //Update last claimAirdrop time
         holders[addr].lastClaimedAD = block.timestamp;
         //addr is holder,Reward is for holder
         emit ADClaimed(addr, addr, holderReward);
-        //holder's referrer will have refferrerReward
+        //Holder's referrer will have refferrerReward
         address referrer = holders[addr].referrer;
         if (referrer != address(0)) {
             _mint(referrer, referReward);
@@ -314,7 +324,7 @@ contract ShareToken {
         return true;
     }
 
-    //Owner setup minRefAmount
+    //Owner setup Parameters
     function setParameter(uint8 _type, uint256 _amount)
         external
         onlyOwner
@@ -323,15 +333,22 @@ contract ShareToken {
         if (_amount <= 0) {
             return false;
         }
-        if (_type == 1) {
+        //
+        else if (_type == 1) {
+            // Set a minimum recommended transfer amount,100
             minRefAmount = _amount;
         } else if (_type == 2) {
+            // Set the minimum share that each red envelope should contain,100
             MinSharePerRE = _amount;
         } else if (_type == 3) {
+            // Set the minimum number of shares that should be included 
+            // when initiating a red envelope event
             MinREshare = _amount;
         } else if (_type == 4) {
+            // Set the number of shares required to edit data
             cost_Edit = _amount;
         } else if (_type == 5 && !adEnabled && _amount >= 86400) {
+            // Set airdrop duration
             adDuration = _amount;
         } else {
             return false;
@@ -347,8 +364,8 @@ contract ShareToken {
         return holders[msg.sender].holderReward;
     }
 
-    // 發起紅包
-    function setRedredE(
+    // initiating a red envelope event
+    function setRE(
         uint256 totalShare,
         uint256 countRE,
         uint8 eligiType,
@@ -362,13 +379,14 @@ contract ShareToken {
             eligiType > 2 ||
             eligiType < 0 || //"Invalid eligible type");
             balanceOf[msg.sender] < totalShare || //"Insufficient balance");
-            holders[msg.sender].isDis
+            holders[msg.sender].isDistoStartRE
+
         ) {
             return false;
         }
-        // 扣除紅包金額
+        // Transfer the total share of the red envelope to the contract address
         _transfer(msg.sender, address(this), totalShare);
-        // 記錄紅包信息
+        // Initialize a red envelope event
         reID++;
         redEnv[reID] = reInfo({
             subAmt: totalShare,
@@ -389,7 +407,7 @@ contract ShareToken {
     }
 
     //
-    // 設定或編輯推薦碼
+    // Set or edit my profile description and picture
     function updateMyRE(
         uint256 id,
         bool isdesc,
@@ -408,8 +426,8 @@ contract ShareToken {
         return false;
     }
 
-    // 領取紅包
-    function claimRedredE(string memory linkcode, uint256 id)
+    // Claim a redenvelope
+    function claimRE(string memory linkcode, uint256 id)
         external
         returns (bool)
     {
@@ -421,13 +439,13 @@ contract ShareToken {
         ) {
             return false;
         }
-        // 設定隨機金額（紅包隨機分配）
+        // Set a random amount (get a random share of the red envelope)
         uint256 remainsAmt = re.subAmt - re.claimedAmt;
         uint256 remainClaims = re.maxClaims - re.claimCount;
         uint256 claimAmount = remainClaims == 1
             ? remainsAmt
             : randomAmt(remainsAmt, remainClaims);
-        // 更新紅包狀態
+        // Update red envelope status
         re.claimedAmt += claimAmount;
         re.claimCount++;
         if (re.claimedAmt >= re.subAmt || re.claimCount >= re.maxClaims) {
@@ -435,9 +453,10 @@ contract ShareToken {
             _removeActiveRE(id);
         }
         address referrer;
-        // 設定介紹人：有連結碼時，推薦人為連結碼所有人，沒有連結碼，則推薦人為發紅包者
+        // Set the referrer: If there is a link code, the referrer is the link code owner. 
+        // If there is no link code, the referrer is the one who sends the red envelope.
         if (holders[msg.sender].referrer == address(0)) {
-            if (bytes(linkcode).length == 0) {
+            if (bytes(linkcode).length == 0 ) {
                 referrer = re.creator;
             } else {
                 address rcOwner = refCodeOwners[toLower(linkcode)];
@@ -451,14 +470,14 @@ contract ShareToken {
             myfans[referrer].push(msg.sender);
             emit refSet(msg.sender, referrer);
         }
-        // 發送紅包金額
+        // Send red envelope amount
         _transfer(address(this), msg.sender, claimAmount);
-        // 發送紅包領取的事件通知
+        // Send red envelope collection event notification
         emit reClaimed(id, msg.sender, claimAmount, re.creator);
         return true;
     }
 
-    // 檢查紅包領取資格
+    // Check eligibility for receiving red envelopes
     function checkEligible(string memory linkcode, reInfo memory re)
         internal
         view
@@ -467,24 +486,33 @@ contract ShareToken {
         //string memory refcode = holders[msg.sender].refCode;
         address linkcodeOwner = refCodeOwners[toLower(linkcode)];
         address referrer = holders[msg.sender].referrer;
-        if (
+        if (                            
+            // When the creator of the red envelope is set to 0, 
+            // it means that the holder of the recipient of the red envelope is already a fan of the sender, 
+            // or has no referral yet, and has no link to the referral code 
+            // or the owner of the referral code is the sender of the red envelope.
             (re.eligiType == 0 &&
                 (referrer == re.creator ||
                     (referrer == address(0) &&
                         (bytes(linkcode).length == 0 ||
-                            linkcodeOwner == re.creator)))) || // 自己現有粉絲，加上無推薦人並且是無推薦碼或是發紅包者的推薦碼
-            (re.eligiType == 1 && // 無推薦人，並且是無推薦碼或是發紅包者的推薦碼
+                            linkcodeOwner == re.creator)))) || 
+            // When the sender is set to 1, 
+            //it means that the holder who can receive the red envelope 
+            // must not have a referral yet, and there is no link to the referral code 
+            //or the referral code owner is the sender of the red envelope             
+            (re.eligiType == 1 &&             
                 (referrer == address(0) &&
                     (bytes(linkcode).length == 0 ||
                         linkcodeOwner == re.creator))) ||
-            re.eligiType == 2 // Any subscriber
+            // Any subscriber could claim the redenvelope
+            re.eligiType == 2 
         ) {
             return true;
         }
         return false;
     }
 
-    // 移除失效紅包
+    // Remove expired redenvelopes
     function _removeActiveRE(uint256 id) private {
         for (uint256 i = 0; i < activeREs.length; i++) {
             if (activeREs[i] == id) {
@@ -495,19 +523,19 @@ contract ShareToken {
         }
     }
 
-    // 設定隨機紅包金額
+    // Set random bonus amount
     function randomAmt(uint256 remainsAmt, uint256 remainClaims)
         private
         view
         returns (uint256)
     {
-        uint256 maxAmt = (remainsAmt / remainClaims) * 2; // 最大分配金額（可調整）
+        uint256 maxAmt = (remainsAmt / remainClaims) * 2; 
         return
             (uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender))) %
                 maxAmt) + 1;
     }
 
-    //Holder Check My RE
+    // Holder Check My RE
     function getMyRE() public view returns (reInfo[] memory) {
         uint256[] memory myIds = myRE[msg.sender];
         reInfo[] memory result;
@@ -518,7 +546,7 @@ contract ShareToken {
         return result;
     }
 
-    //Holder Check available RE
+    // Holder Check available RE
     function getAvailableRE(string memory linkcode)
         public
         view
@@ -531,7 +559,8 @@ contract ShareToken {
             reInfo storage redE = redEnv[id];
 
             if (
-                // 根據資格類型檢查
+                // Check whether you can receive the red envelope 
+                // based on the Holder's qualifications
                 checkEligible(linkcode, redE)
             ) {
                 result[count] = redE;
@@ -546,11 +575,11 @@ contract ShareToken {
         public
         returns (bool)
     {
-        // 檢查用戶是否持有足夠的代幣
+        // Check if the user holds enough tokens
         if (balanceOf[msg.sender] < cost_Edit) {
             return false;
         }
-        // 燃燒代幣
+        // Burning Tokens
         _burn(msg.sender, cost_Edit);
         // 更新用戶資料
         Holder storage holder = holders[msg.sender];
@@ -580,9 +609,9 @@ contract ShareToken {
         return myfans[msg.sender];
     }
 
-    //function getMyFansCount() external view returns (uint256) {
-    //    return myfans[msg.sender].length;
-    //}
+    function getMyFansCount() external view returns (uint256) {
+        return myfans[msg.sender].length;
+    }
     function getReCount() external view returns (uint256) {
         return reID;
     }
@@ -595,14 +624,15 @@ contract ShareToken {
     {
         return (redEnv[reid]);
     }
-    // 授權函數
+    
+    // Token Authorization Function
     function approve(address spender, uint256 value) public returns (bool success) {
         allowance[msg.sender][spender] = value;
         emit Approval(msg.sender, spender, value);
         return true;
     }
 
-    // 代幣轉移函數（用於授權後的轉移）
+    // Token transfer function (for transfer after authorization)
     function transferFrom(address from, address to, uint256 value) public returns (bool success) {
         require(balanceOf[from] >= value, "Insufficient balance");
         require(allowance[from][msg.sender] >= value, "Allowance exceeded");
