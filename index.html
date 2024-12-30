@@ -192,7 +192,7 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>  
   <script>     
            var holder;
-           alert(`Welcome78654！`); 
+
            // 取得推薦碼    
            function getParameterByName(name, url) {
                if (!url) url = window.location.href;
@@ -289,6 +289,7 @@
   </a>
   </footer>
   <script>
+    alert(`Welcome u78654！`); 
     // 取得 linkcode 參數
     var linkcode = getParameterByName('linkcode');
     if (linkcode != null){
@@ -312,13 +313,10 @@
     const web3 = new Web3(window.ethereum);    
     contract = new web3.eth.Contract(contractABI, contractAddress);
     const balance = await contract.methods.balanceOf(holder).call();    
-    document.getElementById("balance").innerText = `Burger: ${balance}`; 
-    
-    alert(`Welcome75641234！`);   
+    document.getElementById("balance").innerText = `Burger: ${balance}`;     
+    alert(`Welcome 65641234！`);   
   </script> 
   <script>  
-
-
   
   // get Market price of bitcoin
   const apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd';
