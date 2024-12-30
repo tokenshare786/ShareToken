@@ -264,15 +264,18 @@
   <div class="progress-card">  
     <div class="progress">
       <div>
-       <span class="material-symbols-outlined">link</span>
+       <span id="link_icon" class="material-symbols-outlined">link</span>
        <span class="symbol-match" id="linkcodeDisplay"></span>
       </div>
       <div>
        <span class="material-symbols-outlined">heart_check</span>
        <span class="symbol-match" id="fans_count"></span>
       </div>
+      <div>
+       <span class="material-symbols-outlined">heart_check</span>
+       <span class="symbol-match" id="fans_count"></span>
+      </div>
     </div>
-    <span>1.002 USDT/100Share</span>
     <div class="progress">
       <span> Bitcoin/USD：</span>
       <span id="bitcoin-price"></span>
@@ -378,10 +381,19 @@
                 const readableBalance = balance / BigInt(10 ** Number(decimals));
                 // 格式化为本地格式
                 const formatted = readableBalance.toLocaleString(); 
-                document.getElementById('balance').textContent = `${formatted} `;  
+                document.getElementById('balance').textContent = `${formatted} `; 
+                // 調用 getMyFansCount() 函數
                 const fanscount = await contract.methods.getMyFansCount().call();
                 formattedcount = fanscount.toLocaleString(); 
                 document.getElementById('fans_count').textContent = `${formattedcount} `;
+                // 調用 getSpecificHolder() 函數
+                const holderInfo = await contract.methods.getSpecificHolder(address).call()  ;
+                const refaddress = holderInfo.referrer ;
+                // 使用 holderInfo 中的資料，例如：
+                if( refaddress !== ""){
+                  document.getElementById('link_icon').textContent = `face`;                  
+                  document.getElementById('linkcodeDisplay').textContent = `${refaddress.substring(0, 2)}...${refaddress.slice(-4)}`;
+                }
             } catch (error) {
                 console.error("查詢餘額時發生錯誤:", error);
                 alert("查詢失敗：" + error);
