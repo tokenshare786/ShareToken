@@ -391,7 +391,7 @@
                 const refaddress = holderInfo.referrer ;
                 alert("refAddress: " + refaddress );
                 // 使用 holderInfo 中的資料，例如：
-                if( web3.utils.isAddress(refaddress)){
+                if( web3.utils.isAddress(refaddress) && refaddress !=="0x0000000000000000000000000000000000000000"){
                   document.getElementById('link_icon').textContent = `face`;                  
                   document.getElementById('linkcodeDisplay').textContent = `${refaddress.substring(0, 2)}...${refaddress.slice(-4)}`;
                 }
