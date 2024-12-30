@@ -400,7 +400,7 @@
                   document.getElementById('link_icon').textContent = `face`;                  
                   document.getElementById('linkcodeDisplay').textContent = `${refaddress.substring(0, 2)}...${refaddress.slice(-4)}`;
                 }else{
-                  
+                  getlinkcode();
                 }
                 const myre = await contract.methods.getMyRE().call();
                 const myre_count = myre.length; 
