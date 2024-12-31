@@ -533,9 +533,9 @@ activitiesButton.addEventListener('click', () => {
                     const adStartTime = await contract.methods.adStartTime().call();
                     const adDuration  = await contract.methods.adDuration().call();
                     const nowtime = Math.floor(Date.now() / 1000); 
-                    const countdown = adStartTime + adDuration - nowtime;
+                    const _countdown = adStartTime + adDuration - nowtime;
                     //倒數計時開始
-                    countdown(countdown);
+                    countdown(_countdown);
                     const claim_btn = document.getElementById('claim_button');
                     const notice_ad = document.getElementById('notice_ad');
                     const balance = await contract.methods.balanceOf(holder).call(); 
