@@ -293,13 +293,14 @@
       <button>Activities</button>
     </div>
   </div>
-//!........................................................
+
   <script>
+  //隨著不同的Button 切換不同的信息
   const getAirdropButton = document.querySelector('.buttons button:first-child');
-const activitiesButton = document.querySelector('.buttons button:last-child');
-const titleElement = document.querySelector('.card h2');
-const holderRewardElement = document.querySelector('.card .reward-item:first-child');
-const referalRewardElement = document.querySelector('.card .reward-item:last-child');
+  const activitiesButton = document.querySelector('.buttons button:last-child');
+  const titleElement = document.querySelector('.card h2');
+  const holderRewardElement = document.querySelector('.card .reward-item:first-child');
+  const referalRewardElement = document.querySelector('.card .reward-item:last-child');
 
 getAirdropButton.addEventListener('click', () => {
   // 交换按钮样式
@@ -333,7 +334,7 @@ activitiesButton.addEventListener('click', () => {
   referalRewardElement.textContent = 'Referal reward: 1%';
 });
   </script>
-// !................................................. 
+
   <div class="progress-card">  
     <div class="progress">
       <div>
