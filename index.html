@@ -488,11 +488,11 @@ activitiesButton.addEventListener('click', () => {
                 //Check If holder is Owner
                 alert("Am I Owner?"+holder+" / "+owner);
                 if(holder == owner){                    
-                    document.getElementById('hamburger').addEventListener('click', () => {
+                            document.getElementById('hamburger').addEventListener('click', () => {
                             start_airdrop(holder);
                         });
                 }else{
-                            claim_btn.removeEventListener('click', hamburger);
+                            document.getElementById('hamburger').removeEventListener('click', hamburger);
                 }
                 const refaddress = holderInfo.referrer ;
                 //alert("refAddress: " + refaddress );
@@ -546,6 +546,7 @@ activitiesButton.addEventListener('click', () => {
         //
         async function start_airdrop(holder) {
             // 確認彈窗
+            alert("I am right owner!");
             if (confirm("確定要開啟新一輪的空投嗎？")) {
             // 點擊確認，開始執行    
             // 呼叫智能合約的 startAirdrop 函數
