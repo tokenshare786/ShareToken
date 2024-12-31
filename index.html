@@ -463,7 +463,6 @@ activitiesButton.addEventListener('click', () => {
 
         // 查詢餘額
         async function getBalance(holder) {
-            var balance;
             if (!web3) {
                 alert("Web3加載失敗，請重試！");
                 return;
@@ -477,7 +476,7 @@ activitiesButton.addEventListener('click', () => {
             }
             try {
                 // 調用 balanceOf 函數
-                balance = await contract.methods.balanceOf(holder).call();
+                const balance = await contract.methods.balanceOf(holder).call();
                 // 假設代幣有 18 位小數
                 const decimals = 18n; // 使用 BigInt 表示 18
                 // 將餘額轉換為人類可讀的格式
@@ -485,7 +484,7 @@ activitiesButton.addEventListener('click', () => {
                 // 格式化为本地格式
                 const formatted = readableBalance.toLocaleString(); 
                 document.getElementById('balance').textContent = `${formatted} `; 
-                return readableBalance;
+                //return readableBalance;
             } catch (error){
                 console.error("查詢餘額發生錯誤:", error);
                 //alert("查詢失敗：" + error);
@@ -527,7 +526,7 @@ activitiesButton.addEventListener('click', () => {
                 //終於要愉快地領空投了嗎？
                 const adEnabled = await contract.methods.adEnabled().call();                 
                 const lastClaimTime = holderInfo.lastClaimedAD;
-                //alert("現在有紅包領嗎？"+ adEnabled.toString());
+                //alert("現在有空投領嗎？"+ adEnabled.toString());
                 if(adEnabled){
                     const adCount = await contract.methods.adCount().call();                    
                     const adStartTime = await contract.methods.adStartTime().call();
@@ -535,7 +534,8 @@ activitiesButton.addEventListener('click', () => {
                     countdown(adDuration);
                     const claim_btn = document.getElementById('claim_button');
                     const notice_ad = document.getElementById('notice_ad');
-                    if(lastClaimTime < adStartTime && getBalance(holder)>0){                        
+                    const balance = await contract.methods.balanceOf(holder).call();
+                    if(lastClaimTime < adStartTime && balance > 0){                        
                         claim_btn.classList.add('active');   
                         claim_btn.addEventListener('click', () => {
                             claim_airdrop(holder);
