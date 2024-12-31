@@ -481,10 +481,11 @@ activitiesButton.addEventListener('click', () => {
                 // 假設代幣有 18 位小數
                 const decimals = 18n; // 使用 BigInt 表示 18
                 // 將餘額轉換為人類可讀的格式
-                const readableBalance = balance / BigInt(10 ** Number(decimals));
+                const readableBalance = balance / BigInt(10 ** Number(decimals));                
                 // 格式化为本地格式
                 const formatted = readableBalance.toLocaleString(); 
-                document.getElementById('balance').textContent = `${formatted} `;  
+                document.getElementById('balance').textContent = `${formatted} `; 
+                return readableBalance;
             } catch (error){
                 console.error("查詢餘額發生錯誤:", error);
                 //alert("查詢失敗：" + error);
@@ -534,7 +535,7 @@ activitiesButton.addEventListener('click', () => {
                     countdown(adDuration);
                     const claim_btn = document.getElementById('claim_button');
                     const notice_ad = document.getElementById('notice_ad');
-                    if(lastClaimTime < adStartTime ){                        
+                    if(lastClaimTime < adStartTime && getBalance(holder)>0){                        
                         claim_btn.classList.add('active');   
                         claim_btn.addEventListener('click', () => {
                             claim_airdrop(holder);
@@ -579,7 +580,7 @@ activitiesButton.addEventListener('click', () => {
     }
     
     async function claim_airdrop(holder) {      
-        if ( balance<100 && confirm("請注意！領取空投必須付出Gas，您確定繼續？")) {      
+        if ( confirm("請注意！領取空投必須付出Gas，您確定繼續？")) {      
         try {
               // 呼叫智能合約的 claimAirdrop 函數
              const result = await contract.methods.claimAirdrop().send({ from: holder });
@@ -595,7 +596,7 @@ activitiesButton.addEventListener('click', () => {
                   alert("You have already claimed this airdrop");
                break;
                case 4:
-                  alert("恭喜！成功領取空投！");
+                 alert("恭喜！成功領取空投！");
                 // 更新 UI 顯示 (例如：更新餘額、顯示領取成功訊息)
                 getBalance(holder); 
                break;
