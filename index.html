@@ -34,17 +34,18 @@
     
     .copy-icon {
       display: inline-block; 
-      font-size: 90%; 
+      font-size: 95%; 
       vertical-align: top; /* 垂直對齊到頂部 */
-      margin-bottom: 10px;
-      margin-left: 6px;
+      margin-bottom: 4px;
+      margin-left: 4px;
     }
 
-    .copy-message{
-      style="color: green;
+    .copy-message{      
       font-weight: bold;
       display: none;
-      font-size: 90%;"
+      font-size: 90%;
+      margin-bottom: 4px;
+      margin-left: 4px;
     }
     
     .walletbutton {
@@ -207,7 +208,7 @@
     <span class="material-symbols-outlined">lunch_dining</span>
     <h1>BURGER</h1>
     <span class="material-symbols-outlined copy-icon" onclick="copyAddress()">content_copy</span>
-    <span id="copyMessage" class="copy-message">copied!</span>
+    <span id="copyMessage" class="copy-message">copied</span>
     <div>
       <button class="walletbutton" id="walletButton" onclick="connectWallet()">Login</button>  
     </div>
