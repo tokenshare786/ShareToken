@@ -113,28 +113,30 @@
 }
 
     .buttons {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 16px;
-    }
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+  text-align: inherit;
+}
 
-    .buttons button {
-      flex: 1;
-      text-align: center;
-      margin: 0 4px;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      cursor: pointer;
-      background-color: #4a4a4a;
-      color: #fff;
-    }
+.buttons button {
+  flex: 1;
+  text-align: center;
+  margin: 0 4px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  cursor: pointer;
+  background-color: #4a4a4a;
+  color: #fff;
+}
 
-    .buttons button.active {
-      background-color: #fff;
-      color: #000;
-    }
+.buttons button.active {
+  background-color: #fff;
+  color: #000;
+}
 
     .progress-card {
       background-color: #1a1a1a;
