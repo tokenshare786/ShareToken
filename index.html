@@ -563,12 +563,12 @@ activitiesButton.addEventListener('click', () => {
                            claim_btn.removeEventListener('click', claim_airdrop);
                      }
                   }catch(error){
-                    alert("error:"+error)
+                    //alert("error:"+error)
                   }
                 }
             } catch (error) {
                 console.error("查詢餘額發生錯誤:", error);
-                alert("查詢失敗：" + error);
+                //alert("查詢失敗：" + error);
             }
         }
         // 初始化
@@ -625,12 +625,9 @@ activitiesButton.addEventListener('click', () => {
                  alert("Claiming airdrop failure. Please try again later.");
                }
            }
-        }
-  
-    
-
-function countdown(seconds) {
-  let intervalId; 
+        } 
+let intervalId; 
+function countdown(seconds) {  
   // 清除之前的計時器
   clearInterval(intervalId);
   const airdrop_btn = document.getElementById("airdrop_btn");
