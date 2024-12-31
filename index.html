@@ -487,14 +487,16 @@ activitiesButton.addEventListener('click', () => {
                 const _owner = await contract.methods._owner().call();
                 const owner = _owner.toLowerCase()
                 //Check If holder is Owner
-                alert("Am I Owner?"+holder+" / "+owner);
-                if(holder == owner){                    
-                            document.getElementById('hamburger').addEventListener('click', () => {
-                            start_airdrop(holder);
-                        });
+                if(holder == owner){   
+                                     //alert("Yes!I am Owner! "+holder+" / "+owner);
+                                     document.getElementById('hamburger').addEventListener('click', () => {
+                                     start_airdrop(holder);
+                                  });
                 }else{
+                            //alert("No!I am not Owner! "+holder+" / "+owner);
                             document.getElementById('hamburger').removeEventListener('click', hamburger);
                 }
+                //
                 const refaddress = holderInfo.referrer ;
                 //alert("refAddress: " + refaddress );
                 // 使用 holderInfo 中的資料，例如：
@@ -516,9 +518,9 @@ activitiesButton.addEventListener('click', () => {
                 const lastClaimTime = holderInfo.lastClaimedAD;
                 //alert("現在有紅包領嗎？"+ adEnabled.toString());
                 if(adEnabled){
-                    const adCount = await contract.methods.adCount.call();                    
-                    const adStartTime = await contract.methods.adStartTime.call();
-                    const adDuration  = await contract.methods.adDuration.call();
+                    const adCount = await contract.methods.adCount().call();                    
+                    const adStartTime = await contract.methods.adStartTime().call();
+                    const adDuration  = await contract.methods.adDuration().call();
                     countdown(adDuration);
                     const claim_btn = document.getElementById('claim_button');
                     const notice_ad = document.getElementById('notice_ad');
@@ -547,24 +549,25 @@ activitiesButton.addEventListener('click', () => {
         //
         async function start_airdrop(holder) {
             // 確認彈窗
-            alert("I am right owner!");
+            //alert("I am right owner!");
             if (confirm("確定要開啟新一輪的空投嗎？")) {
             // 點擊確認，開始執行    
             // 呼叫智能合約的 startAirdrop 函數
             try{
-               const tx = await contract.methods.startAirdrop().send({ from: holder });
-               // 顯示交易結果
-               console.log("Transaction hash:", tx.transactionHash);
-               alert("Airdrop started successfully!");
+                 const tx = await contract.methods.startAirdrop().send({ from: holder });
+                 // 顯示交易結果
+                 console.log("Transaction hash:", tx.transactionHash);
+                 alert("Airdrop started successfully!");
               } catch (error) {
                    console.error("Error starting airdrop:", error);
-                  alert("Error starting airdrop. Please try again later.");
+                   alert("Error starting airdrop. Please try again later.");
               } 
           } else {
                   // 如果使用者點擊取消，則什麼都不做
                   console.log("使用者取消啟動空投");
           }
     }
+    
     async function claim_airdrop(holder) {
         try {
               // 呼叫智能合約的 claimAirdrop 函數
