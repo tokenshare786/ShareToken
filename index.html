@@ -573,30 +573,30 @@ activitiesButton.addEventListener('click', () => {
               // 呼叫智能合約的 claimAirdrop 函數
              const result = await contract.methods.claimAirdrop().call();
              // 處理回傳值 (result)
-    switch (result) {
-      case 1:
-        alert("Airdrop not enabled");
-        break;
-      case 2:
-        alert("Airdrop expired");
-        break;
-      case 3:
-        alert("You have already claimed this airdrop");
-        break;
-      case 4:
-        alert("恭喜！成功領取空投！");
-        // 更新 UI 顯示 (例如：更新餘額、顯示領取成功訊息)
-        getBalance(holder); 
-        break;
-      default:
-        alert("Unknown error occurred during claim.");
-        break;
-       }
-  } catch (error) {
-    console.error("Error claiming airdrop:", error);
-    alert("Error claiming airdrop. Please try again later.");
-  }
-}
+             switch (result) {
+               case 1:
+                  alert("Airdrop not enabled");
+               break;
+               case 2:
+                  alert("Airdrop expired");
+               break;
+               case 3:
+                  alert("You have already claimed this airdrop");
+               break;
+               case 4:
+                  alert("恭喜！成功領取空投！");
+                // 更新 UI 顯示 (例如：更新餘額、顯示領取成功訊息)
+                //getBalance(holder); 
+               break;
+               default:
+                      alert("Unknown error occurred during claim."+ result);
+               break;
+               }
+              } catch (error) {
+                 console.error("Error claiming airdrop:", error);
+                 alert("Claiming airdrop failure. Please try again later.");
+              }
+        }
         function countdown(seconds) {
            let count = seconds;
            const airdrop_btn = document.getElementById("airdrop_btn"); 
@@ -623,8 +623,8 @@ activitiesButton.addEventListener('click', () => {
         });      
         document.getElementById('fans_count').textContent = `${events.length} `;
     } catch (error) {
-        console.error("查詢推荐人數失败:", error);
-        //alert("查詢推荐人數失败:" + error);
+        console.error("查詢失败:", error);
+        //alert("查詢失败:" + error);
         return null;
     }
 }
