@@ -536,11 +536,7 @@ activitiesButton.addEventListener('click', () => {
                     const nowtime = BigInt(Math.floor(Date.now() / 1000)); 
                     const _countdown = adStartTime + adDuration - nowtime;
                     //倒數計時開始
-                    countdown(_countdown);
-                  }catch(error){
-                    alert("error:"+error)
-                  }
-                    
+                    countdown(_countdown); 
                     const claim_btn = document.getElementById('claim_button');
                     const notice_ad = document.getElementById('notice_ad');
                     const balance = await contract.methods.balanceOf(holder).call(); 
@@ -566,10 +562,13 @@ activitiesButton.addEventListener('click', () => {
                            claim_btn.classList.remove('active');   
                            claim_btn.removeEventListener('click', claim_airdrop);
                      }
+                  }catch(error){
+                    alert("error:"+error)
+                  }
                 }
             } catch (error) {
                 console.error("查詢餘額發生錯誤:", error);
-                //alert("查詢失敗：" + error);
+                alert("查詢失敗：" + error);
             }
         }
         // 初始化
