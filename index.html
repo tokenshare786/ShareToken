@@ -632,9 +632,9 @@ function countdown(seconds) {
   clearInterval(intervalId);
   const airdrop_btn = document.getElementById("airdrop_btn");
   let count = seconds;
-
+  
   intervalId = setInterval(() => {
-    airdrop_btn.textContent = count;
+    airdrop_btn.textContent = count.toLocaleString()+" secs";
     count--;
 
     if (count < 0) {
