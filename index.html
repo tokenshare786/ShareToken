@@ -484,7 +484,7 @@ activitiesButton.addEventListener('click', () => {
                 document.getElementById('balance').textContent = `${formatted} `;                 
                 // 調用 getSpecificHolder() 函數
                 const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
-                const _owner = await contract.methods._owner().call().toLowerCase();
+                const _owner = await contract.methods._owner().call();
                 const owner = _owner.toLowerCase()
                 //Check If holder is Owner
                 alert("Am I Owner?"+holder+" / "+owner);
