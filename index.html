@@ -116,7 +116,6 @@
   display: flex;
   justify-content: space-between;
   margin-top: 16px;
-  text-align: inherit;      
 }
 
 .buttons button {
@@ -131,6 +130,9 @@
   cursor: pointer;
   background-color: #4a4a4a;
   color: #fff;
+  display: flex; /* 关键：将按钮设置为 flexbox 布局 */
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
 }
 
 .buttons button.active {
