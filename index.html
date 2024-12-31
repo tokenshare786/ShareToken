@@ -195,10 +195,29 @@
   <header>
     <span class="material-symbols-outlined">lunch_dining</span>
     <h1>BURGER</h1>
+    <span class="material-symbols-outlined" onclick="copyAddress()">content_copy</span>
+    <span id="copyMessage" style="color: green; display: none;">copied!</span>
     <div>
       <button class="walletbutton" id="walletButton" onclick="connectWallet()">Login</button>  
     </div>
   </header>  
+  <script>
+        function copyAddress() {
+            // 获取合约地址文本
+            const contractAddress = "0xFD8D045A381690a943d2B48cEE1dD81eea23343C";             
+            navigator.clipboard.writeText(contractAddress)
+                .then(() => {                   
+                    const message = document.getElementById("copyMessage");
+                    message.style.display = "block";
+                    setTimeout(() => {
+                        message.style.display = "none";
+                    }, 2000);
+                })
+                .catch((err) => {
+                    console.error("copy failed:", err);
+                });
+        }
+    </script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>  
   <!-- 引入 Web3.js -->
   <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
@@ -383,16 +402,7 @@
                 const readableBalance = balance / BigInt(10 ** Number(decimals));
                 // 格式化为本地格式
                 const formatted = readableBalance.toLocaleString(); 
-                document.getElementById('balance').textContent = `${formatted} `; 
-                // 調用 getMyFansCount() 函數
-                //const fanscount = await contract.methods.getMyFansCount().call();
-                //alert("fanscount: " + fanscount );
-                //const formattedcount = fanscount.toLocaleString(); 
-                // 調用 myfans 映射
-                //alert("holder:" + holder );
-                //const fans = await contract.methods.myfans(holder).call();
-                //const myfanscount = fans.length;              
-                //alert("myfans:" + myfanscount );
+                document.getElementById('balance').textContent = `${formatted} `;                 
                 fetchReferer(holder);
                 // 調用 getSpecificHolder() 函數
                 const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
