@@ -436,7 +436,7 @@ activitiesButton.addEventListener('click', () => {
     
     // 加載 Web3
         async function initialize() {   
-            var holde;
+            var holder;
             if (typeof window.ethereum !== "undefined") {
                 try {
                     // 請求錢包授權
@@ -631,21 +631,7 @@ function countdown(seconds) {
     }
   }, 1000);
 }
-        function countdown(seconds) {
-           let count = seconds;
-           const airdrop_btn = document.getElementById("airdrop_btn"); 
-           const intervalId = setInterval(() => {
-           airdrop_btn.textContent = count;
-           count--;
-
-       if (count < 0) {
-       clearInterval(intervalId);
-       // 倒數結束後的處理，例如：
-       //alert("倒數結束！");
-        airdrop_btn.textContent = "Get AirDrop";
-    }
-  }, 1000); // 每秒更新一次
-}
+        
     async function fetchReferer(holderAddress) {
         //alert("查詢我總共推荐多少人數");
     try {
