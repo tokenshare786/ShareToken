@@ -456,6 +456,7 @@ activitiesButton.addEventListener('click', () => {
             }
           getlinkcode();
           getBalance(holder);
+          startup(holder);
           
         }
 
@@ -481,7 +482,13 @@ activitiesButton.addEventListener('click', () => {
                 const readableBalance = balance / BigInt(10 ** Number(decimals));
                 // 格式化为本地格式
                 const formatted = readableBalance.toLocaleString(); 
-                document.getElementById('balance').textContent = `${formatted} `;                 
+                document.getElementById('balance').textContent = `${formatted} `;  
+            }catch(error){
+              
+            }
+        }
+            function startup(holder){
+              try{
                 // 調用 getSpecificHolder() 函數
                 const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
                 const _owner = await contract.methods._owner().call();
@@ -586,7 +593,7 @@ activitiesButton.addEventListener('click', () => {
                case 4:
                   alert("恭喜！成功領取空投！");
                 // 更新 UI 顯示 (例如：更新餘額、顯示領取成功訊息)
-                //getBalance(holder); 
+                getBalance(holder); 
                break;
                default:
                       alert("Unknown error occurred during claim."+ result);
