@@ -533,12 +533,43 @@ activitiesButton.addEventListener('click', () => {
         }
         // 初始化
         window.onload = initialize;  
-  function countdown(seconds) {
-      let count = seconds;
-      const airdrop_btn = document.getElementById("airdrop_btn"); 
-      const intervalId = setInterval(() => {
-      airdrop_btn.textContent = count;
-      count--;
+    //
+    async function claim_airdrop() {
+  try {
+       // 呼叫智能合約的 claimAirdrop 函數
+    const result = await contract.methods.claimAirdrop().call();
+    // 處理回傳值 (result)
+    switch (result) {
+      case 1:
+        alert("Airdrop not enabled");
+        break;
+      case 2:
+        alert("Airdrop expired");
+        break;
+      case 3:
+        alert("You have already claimed this airdrop");
+        break;
+      case 4:
+        alert("恭喜！成功領取空投！!");
+        // 更新 UI 顯示 (例如：更新餘額、顯示領取成功訊息)
+        getBalance(holder); 
+        break;
+      default:
+        alert("Unknown error occurred during claim.");
+        break;
+    }
+
+  } catch (error) {
+    console.error("Error claiming airdrop:", error);
+    alert("Error claiming airdrop. Please try again later.");
+  }
+}
+        function countdown(seconds) {
+           let count = seconds;
+           const airdrop_btn = document.getElementById("airdrop_btn"); 
+           const intervalId = setInterval(() => {
+           airdrop_btn.textContent = count;
+           count--;
 
        if (count < 0) {
        clearInterval(intervalId);
