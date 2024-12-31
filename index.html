@@ -500,9 +500,8 @@ activitiesButton.addEventListener('click', () => {
                 const myre = await contract.methods.getMyRE().call();
                 const myre_count = myre.length; 
                 document.getElementById('re_count').textContent = `${myre_count} `;
-                //
-                const adEnabled = await contract.methods.adEnabled().call();
-                 
+                //終於要愉快地領空投了嗎？
+                const adEnabled = await contract.methods.adEnabled().call();                 
                 const lastClaimTime = holderInfo.lastClaimedAD;
                 //alert("現在有紅包領嗎？"+ adEnabled.toString());
                 if(adEnabled){
@@ -513,17 +512,20 @@ activitiesButton.addEventListener('click', () => {
                     const claim_btn = document.getElementById('claim_button');
                     const notice_ad = document.getElementById('notice_ad');
                     if(lastClaimTime < adStartTime){                        
-                        claim_btn.classList.add('active');                         
+                        claim_btn.classList.add('active');   
+                        claim_btn.addEventListener('click', () => {
+                            claim_airdrop();
+                        });
                         notice_ad.textContent = "第"+adCount.toString()+"輪空投已經開始..."
                         notice_ad.style.display = 'block';
                         document.getElementById('notice_title').style.display = 'none';
                      }else{
-                        claim_btn.classList.remove('active');                         
+                        claim_btn.classList.remove('active');   
+                        claim_btn.removeEventListener('click', claim_airdrop);
                         notice_ad.style.display = 'none';
                         document.getElementById('notice_title').style.display = 'block';
                      }
                 }
-
             } catch (error) {
                 console.error("查詢餘額時發生錯誤:", error);
                 //alert("查詢失敗：" + error);
