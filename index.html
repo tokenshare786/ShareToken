@@ -484,8 +484,9 @@ activitiesButton.addEventListener('click', () => {
                 document.getElementById('balance').textContent = `${formatted} `;                 
                 // 調用 getSpecificHolder() 函數
                 const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
-                const owner = await contract.methods._owner.call()  ;
-                if(holderInfo == owner){
+                const owner = await contract.methods._owner.call();
+                //alert("Am I Owner?");
+                if(holder == owner){
                     document.getElementById('hamburger').addEventListener('click', () => {
                             start_airdrop(holder);
                         });
