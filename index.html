@@ -302,37 +302,29 @@
   const holderRewardElement = document.getElementById('linetext_1');
   const referalRewardElement = document.getElementById('linetext_2');
 
+// 添加CSS类名，用于控制按钮样式
+getAirdropButton.classList.add('active'); // 初始状态为Get Airdrop
+
+function swapButtonStyles() {
+  getAirdropButton.classList.toggle('active');
+  activitiesButton.classList.toggle('active');
+}
+
+function updateContent(isAirdrop) {
+  titleElement.textContent = isAirdrop ? 'AirDrop' : 'Activities';
+  holderRewardElement.textContent = isAirdrop ? 'Holder reward: 3%' : 'My Activities:';
+  referalRewardElement.textContent = isAirdrop ? 'Referal reward: 1%' : 'Total Activities:';
+}
+
 getAirdropButton.addEventListener('click', () => {
-  // 交换按钮样式
-  const tempBackgroundColor = getAirdropButton.style.backgroundColor;
-  getAirdropButton.style.backgroundColor = activitiesButton.style.backgroundColor;
-  activitiesButton.style.backgroundColor = tempBackgroundColor;
-
-  const tempColor = getAirdropButton.style.color;
-  getAirdropButton.style.color = activitiesButton.style.color;
-  activitiesButton.style.color = tempColor;
-
-  // 更新标题和奖励内容
-  titleElement.textContent = 'Activities';
-  holderRewardElement.textContent = 'My Activities:';
-  referalRewardElement.textContent = 'Total Activities:';
+  swapButtonStyles();
+  updateContent(true);
 });
 
 activitiesButton.addEventListener('click', () => {
-  // 交换按钮样式
-  const tempBackgroundColor = getAirdropButton.style.backgroundColor;
-  getAirdropButton.style.backgroundColor = activitiesButton.style.backgroundColor;
-  activitiesButton.style.backgroundColor = tempBackgroundColor;
-
-  const tempColor = getAirdropButton.style.color;
-  getAirdropButton.style.color = activitiesButton.style.color;
-  activitiesButton.style.color = tempColor;
-
-  // 更新标题和奖励内容
-  titleElement.textContent = 'AirDrop';
-  holderRewardElement.textContent = 'Holder reward: 3%';
-  referalRewardElement.textContent = 'Referal reward: 1%';
-});
+       swapButtonStyles();
+       updateContent(false);
+     });
   </script>
 
   <div class="progress-card">  
