@@ -483,8 +483,9 @@ activitiesButton.addEventListener('click', () => {
                 // 格式化为本地格式
                 const formatted = readableBalance.toLocaleString(); 
                 document.getElementById('balance').textContent = `${formatted} `;  
-            }catch(error){
-              
+            } catch (error){
+                console.error("查詢餘額發生錯誤:", error);
+                //alert("查詢失敗：" + error);
             }
         }
             function startup(holder){
@@ -499,7 +500,7 @@ activitiesButton.addEventListener('click', () => {
                                      document.getElementById('hamburger').addEventListener('click', () => {
                                      start_airdrop(holder);
                                   });
-                }else{
+                } else {
                             //alert("No!I am not Owner! "+holder+" / "+owner);
                             document.getElementById('hamburger').removeEventListener('click', hamburger);
                 }
