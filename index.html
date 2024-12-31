@@ -496,9 +496,13 @@ activitiesButton.addEventListener('click', () => {
                 }
                 //Query how many fans I have
                 fetchReferer(holder);
+                //
                 const myre = await contract.methods.getMyRE().call();
                 const myre_count = myre.length; 
                 document.getElementById('re_count').textContent = `${myre_count} `;
+                //
+                const adEnabled = await contract.methods.adEnabled().call();
+                alert("現在有紅包領嗎？"+ adEnabled.toString());
             } catch (error) {
                 console.error("查詢餘額時發生錯誤:", error);
                 //alert("查詢失敗：" + error);
