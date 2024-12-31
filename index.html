@@ -571,7 +571,7 @@ activitiesButton.addEventListener('click', () => {
     async function claim_airdrop(holder) {
         try {
               // 呼叫智能合約的 claimAirdrop 函數
-             const result = await contract.methods.claimAirdrop().call();
+             const result = await contract.methods.claimAirdrop().send({ from: holder });
              // 處理回傳值 (result)
              switch (result) {
                case 1:
