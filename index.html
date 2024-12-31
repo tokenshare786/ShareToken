@@ -79,7 +79,7 @@
         align-items: center;
         line-height: 50px; /* 與高度相同 */
     }
-    .claim_button:hover {
+    .claim_button.active {
       background: #00d9ff;
       color: #000;
     }
@@ -314,11 +314,12 @@
   <div class="card">
     <div class="progress">
       <div>
+          <h2 id="notice_ad" style="display: none;"></h2>
           <h2 id="notice_title">AirDrop</h2>   
           <p class="reward-item" id="linetext_1">Holder reward: 3%</p>
           <p class="reward-item" id="linetext_2">Referal reward: 1%</p>
       </div>
-      <div class="claim_button" id="click_to_claim">Get</div>
+      <div class="claim_button" id="claim_button">Get</div>
     </div>
     <div class="buttons">
       <button class="buttons button.active" id="airdrop_btn">Get Airdrop</button>
@@ -326,7 +327,7 @@
     </div>
   </div>
 
-  <script>
+<script>
   //隨著不同的Button 切換不同的信息
   const getAirdropButton = document.getElementById('airdrop_btn');
   const activitiesButton = document.getElementById('activities_btn');
@@ -334,19 +335,18 @@
   const holderRewardElement = document.getElementById('linetext_1');
   const referalRewardElement = document.getElementById('linetext_2');
 
-// 添加CSS类名，用于控制按钮样式
-getAirdropButton.classList.add('active'); // 初始状态为Get Airdrop
+  getAirdropButton.classList.add('active'); 
 
-function swapButtonStyles() {
-  getAirdropButton.classList.toggle('active');
-  activitiesButton.classList.toggle('active');
-}
+  function swapButtonStyles() {
+    getAirdropButton.classList.toggle('active');
+    activitiesButton.classList.toggle('active');
+  }
 
-function updateContent(isAirdrop) {
-  titleElement.textContent = isAirdrop ? 'AirDrop' : 'Activities';
-  holderRewardElement.textContent = isAirdrop ? 'Holder reward: 3%' : 'My Activities:';
-  referalRewardElement.textContent = isAirdrop ? 'Referal reward: 1%' : 'Total Activities:';
-}
+  function updateContent(isAirdrop) {
+    titleElement.textContent = isAirdrop ? 'AirDrop' : 'Activities';
+    holderRewardElement.textContent = isAirdrop ? 'Holder reward: 3%' : 'My Activities:';
+    referalRewardElement.textContent = isAirdrop ? 'Referal reward: 1%' : 'Total Activities:';
+  }
 
 getAirdropButton.addEventListener('click', () => {
   swapButtonStyles();
@@ -502,7 +502,28 @@ activitiesButton.addEventListener('click', () => {
                 document.getElementById('re_count').textContent = `${myre_count} `;
                 //
                 const adEnabled = await contract.methods.adEnabled().call();
-                alert("現在有紅包領嗎？"+ adEnabled.toString());
+                 
+                const lastClaimTime = holderInfo.lastClaimedAD;
+                //alert("現在有紅包領嗎？"+ adEnabled.toString());
+                if(adEnabled){
+                    const adCount = await contract.methods.adCount.call();                    
+                    const adStartTime = await contract.methods.adStartTime.call();
+                    const adDuration  = await contract.methods.adDuration.call();
+                    countdown(adDuration);
+                    const claim_btn = document.getElementById('claim_button');
+                    const notice_ad = document.getElementById('notice_ad');
+                    if(lastClaimTime < adStartTime){                        
+                        claim_btn.classList.add('active');                         
+                        notice_ad.textContent = "第"+adCount.toString()+"輪空投已經開始..."
+                        notice_ad.style.display = 'block';
+                        document.getElementById('notice_title').style.display = 'none';
+                     }else{
+                        claim_btn.classList.remove('active');                         
+                        notice_ad.style.display = 'none';
+                        document.getElementById('notice_title').style.display = 'block';
+                     }
+                }
+
             } catch (error) {
                 console.error("查詢餘額時發生錯誤:", error);
                 //alert("查詢失敗：" + error);
@@ -510,6 +531,21 @@ activitiesButton.addEventListener('click', () => {
         }
         // 初始化
         window.onload = initialize;  
+  function countdown(seconds) {
+      let count = seconds;
+      const airdrop_btn = document.getElementById("airdrop_btn"); 
+      const intervalId = setInterval(() => {
+      airdrop_btn.textContent = count;
+      count--;
+
+       if (count < 0) {
+       clearInterval(intervalId);
+       // 倒數結束後的處理，例如：
+       //alert("倒數結束！");
+        airdrop_btn.textContent = "Get AirDrop";
+    }
+  }, 1000); // 每秒更新一次
+}
     async function fetchReferer(holderAddress) {
         //alert("查詢我總共推荐多少人數");
     try {
@@ -522,7 +558,7 @@ activitiesButton.addEventListener('click', () => {
         document.getElementById('fans_count').textContent = `${events.length} `;
     } catch (error) {
         console.error("查詢推荐人數失败:", error);
-        alert("查詢推荐人數失败:" + error);
+        //alert("查詢推荐人數失败:" + error);
         return null;
     }
 }
