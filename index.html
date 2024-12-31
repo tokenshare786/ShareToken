@@ -488,7 +488,7 @@ activitiesButton.addEventListener('click', () => {
                 //alert("查詢失敗：" + error);
             }
         }
-            function startup(holder){
+        async function startup(holder){
               try{
                 // 調用 getSpecificHolder() 函數
                 const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
