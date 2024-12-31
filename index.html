@@ -527,27 +527,39 @@ activitiesButton.addEventListener('click', () => {
                 const adEnabled = await contract.methods.adEnabled().call();                 
                 const lastClaimTime = holderInfo.lastClaimedAD;
                 //alert("現在有空投領嗎？"+ adEnabled.toString());
+                //當空投正在進行時
                 if(adEnabled){
                     const adCount = await contract.methods.adCount().call();                    
                     const adStartTime = await contract.methods.adStartTime().call();
                     const adDuration  = await contract.methods.adDuration().call();
-                    countdown(adDuration);
+                    const nowtime = Math.floor(Date.now() / 1000); 
+                    const countdown = adStartTime + adDuration - nowtime;
+                    //倒數計時開始
+                    countdown(countdown);
                     const claim_btn = document.getElementById('claim_button');
                     const notice_ad = document.getElementById('notice_ad');
-                    const balance = await contract.methods.balanceOf(holder).call();
-                    if(lastClaimTime < adStartTime && balance > 0){                        
-                        claim_btn.classList.add('active');   
-                        claim_btn.addEventListener('click', () => {
-                            claim_airdrop(holder);
-                        });
-                        notice_ad.textContent = "第"+adCount.toString()+"輪空投已經開始..."
-                        notice_ad.style.display = 'block';
-                        document.getElementById('notice_title').style.display = 'none';
-                     }else{
-                        claim_btn.classList.remove('active');   
-                        claim_btn.removeEventListener('click', claim_airdrop);
-                        notice_ad.style.display = 'none';
-                        document.getElementById('notice_title').style.display = 'block';
+                    const balance = await contract.methods.balanceOf(holder).call(); 
+                     //告示牌主題變了
+                     notice_ad.textContent = "第"+adCount.toString()+"輪空投已經開始..."
+                     notice_ad.style.display = 'block';
+                     document.getElementById('notice_title').style.display = 'none';
+                    //當Holder本輪尚未領過空投
+                    if(lastClaimTime < adStartTime ){   
+                        //當Holder的漢堡大於0時,Get按鈕啟動
+                        if(balance > 0){
+                              claim_btn.classList.add('active');   
+                              claim_btn.addEventListener('click', () => {
+                                    claim_airdrop(holder);
+                            });
+                        //當Holder的漢堡等於0時
+                        } else {
+                               claim_btn.classList.remove('active');   
+                               claim_btn.removeEventListener('click', claim_airdrop);
+                        }
+                     } else {
+                           //本輪已經領過空投
+                           claim_btn.classList.remove('active');   
+                           claim_btn.removeEventListener('click', claim_airdrop);
                      }
                 }
             } catch (error) {
