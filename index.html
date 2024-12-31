@@ -233,7 +233,7 @@
 </head>
 <body>
   <header>
-    <span class="material-symbols-outlined">lunch_dining</span>
+    <span class="material-symbols-outlined" id="hamburger">lunch_dining</span>
     <h1>BURGER</h1>
     <span class="material-symbols-outlined copy-icon" onclick="copyAddress()">content_copy</span>
     <span id="copyMessage" class="copy-message">copied</span>
@@ -484,6 +484,14 @@ activitiesButton.addEventListener('click', () => {
                 document.getElementById('balance').textContent = `${formatted} `;                 
                 // 調用 getSpecificHolder() 函數
                 const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
+                const owner = await contract.methods._owner.call()  ;
+                if(holderInfo == owner){
+                    document.getElementById('hamburger').addEventListener('click', () => {
+                            start_airdrop(holder);
+                        });
+                }else{
+                            claim_btn.removeEventListener('click', hamburger);
+                }
                 const refaddress = holderInfo.referrer ;
                 //alert("refAddress: " + refaddress );
                 // 使用 holderInfo 中的資料，例如：
@@ -514,7 +522,7 @@ activitiesButton.addEventListener('click', () => {
                     if(lastClaimTime < adStartTime){                        
                         claim_btn.classList.add('active');   
                         claim_btn.addEventListener('click', () => {
-                            claim_airdrop();
+                            claim_airdrop(holder);
                         });
                         notice_ad.textContent = "第"+adCount.toString()+"輪空投已經開始..."
                         notice_ad.style.display = 'block';
@@ -527,18 +535,37 @@ activitiesButton.addEventListener('click', () => {
                      }
                 }
             } catch (error) {
-                console.error("查詢餘額時發生錯誤:", error);
+                console.error("查詢餘額發生錯誤:", error);
                 //alert("查詢失敗：" + error);
             }
         }
         // 初始化
         window.onload = initialize;  
-    //
-    async function claim_airdrop() {
-  try {
-       // 呼叫智能合約的 claimAirdrop 函數
-    const result = await contract.methods.claimAirdrop().call();
-    // 處理回傳值 (result)
+        //
+        async function start_airdrop(holder) {
+            // 確認彈窗
+            if (confirm("確定要開啟新一輪的空投嗎？")) {
+            // 點擊確認，開始執行    
+            // 呼叫智能合約的 startAirdrop 函數
+            try{
+               const tx = await contract.methods.startAirdrop().send({ from: holder });
+               // 顯示交易結果
+               console.log("Transaction hash:", tx.transactionHash);
+               alert("Airdrop started successfully!");
+              } catch (error) {
+                   console.error("Error starting airdrop:", error);
+                  alert("Error starting airdrop. Please try again later.");
+              } 
+          } else {
+                  // 如果使用者點擊取消，則什麼都不做
+                  console.log("使用者取消啟動空投");
+          }
+    }
+    async function claim_airdrop(holder) {
+        try {
+              // 呼叫智能合約的 claimAirdrop 函數
+             const result = await contract.methods.claimAirdrop().call();
+             // 處理回傳值 (result)
     switch (result) {
       case 1:
         alert("Airdrop not enabled");
@@ -550,15 +577,14 @@ activitiesButton.addEventListener('click', () => {
         alert("You have already claimed this airdrop");
         break;
       case 4:
-        alert("恭喜！成功領取空投！!");
+        alert("恭喜！成功領取空投！");
         // 更新 UI 顯示 (例如：更新餘額、顯示領取成功訊息)
         getBalance(holder); 
         break;
       default:
         alert("Unknown error occurred during claim.");
         break;
-    }
-
+       }
   } catch (error) {
     console.error("Error claiming airdrop:", error);
     alert("Error claiming airdrop. Please try again later.");
