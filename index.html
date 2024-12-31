@@ -533,7 +533,7 @@ activitiesButton.addEventListener('click', () => {
                     const adCount = await contract.methods.adCount().call();                    
                     const adStartTime = await contract.methods.adStartTime().call();
                     const adDuration  = await contract.methods.adDuration().call();
-                    const nowtime = Math.floor(Date.now() / 1000); 
+                    const nowtime = BigInt(Math.floor(Date.now() / 1000)); 
                     const _countdown = adStartTime + adDuration - nowtime;
                     //倒數計時開始
                     countdown(_countdown);
