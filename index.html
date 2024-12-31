@@ -529,6 +529,7 @@ activitiesButton.addEventListener('click', () => {
                 alert("現在有空投領嗎？"+ adEnabled.toString());
                 //當空投正在進行時
                 if(adEnabled){
+                  try{
                     const adCount = await contract.methods.adCount().call();                    
                     const adStartTime = await contract.methods.adStartTime().call();
                     const adDuration  = await contract.methods.adDuration().call();
@@ -536,6 +537,10 @@ activitiesButton.addEventListener('click', () => {
                     const _countdown = adStartTime + adDuration - nowtime;
                     //倒數計時開始
                     countdown(_countdown);
+                  }catch(error){
+                    alert("error:"+error)
+                  }
+                    
                     const claim_btn = document.getElementById('claim_button');
                     const notice_ad = document.getElementById('notice_ad');
                     const balance = await contract.methods.balanceOf(holder).call(); 
