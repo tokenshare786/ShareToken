@@ -293,6 +293,47 @@
       <button>Activities</button>
     </div>
   </div>
+//!........................................................
+  <script>
+  const getAirdropButton = document.querySelector('.buttons button:first-child');
+const activitiesButton = document.querySelector('.buttons button:last-child');
+const titleElement = document.querySelector('.card h2');
+const holderRewardElement = document.querySelector('.card .reward-item:first-child');
+const referalRewardElement = document.querySelector('.card .reward-item:last-child');
+
+getAirdropButton.addEventListener('click', () => {
+  // 交换按钮样式
+  const tempBackgroundColor = getAirdropButton.style.backgroundColor;
+  getAirdropButton.style.backgroundColor = activitiesButton.style.backgroundColor;
+  activitiesButton.style.backgroundColor = tempBackgroundColor;
+
+  const tempColor = getAirdropButton.style.color;
+  getAirdropButton.style.color = activitiesButton.style.color;
+  activitiesButton.style.color = tempColor;
+
+  // 更新标题和奖励内容
+  titleElement.textContent = 'Activities';
+  holderRewardElement.textContent = 'My Activities:';
+  referalRewardElement.textContent = 'Total Activities:';
+});
+
+activitiesButton.addEventListener('click', () => {
+  // 交换按钮样式
+  const tempBackgroundColor = getAirdropButton.style.backgroundColor;
+  getAirdropButton.style.backgroundColor = activitiesButton.style.backgroundColor;
+  activitiesButton.style.backgroundColor = tempBackgroundColor;
+
+  const tempColor = getAirdropButton.style.color;
+  getAirdropButton.style.color = activitiesButton.style.color;
+  activitiesButton.style.color = tempColor;
+
+  // 更新标题和奖励内容
+  titleElement.textContent = 'AirDrop';
+  holderRewardElement.textContent = 'Holder reward: 3%';
+  referalRewardElement.textContent = 'Referal reward: 1%';
+});
+  </script>
+// !................................................. 
   <div class="progress-card">  
     <div class="progress">
       <div>
