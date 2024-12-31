@@ -93,22 +93,23 @@
     }
 
     .card {
-      background-color: #1a1a1a;
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
+    display: flex;
+    flex-direction: column;
+    background-color: #1a1a1a;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
 
-    .card h2 {
-      font-size: 1.25rem;
-      font-weight: 600;
-    }
+.card h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
 
-    .card p {
-      margin-top: 6px;
-      font-size: 0.9rem;
-      color: #9e9e9e;
-    }
+.reward-item {
+    margin: 0;
+    flex: 1;
+}
 
     .buttons {
       display: flex;
@@ -284,8 +285,8 @@
   </div>
   <div class="card">
     <h2>AirDrop</h2>
-    <p>Holder reward: 3%</p>
-    <p>Referrer reward: 1%</p>
+    <p class="reward-item">Holder reward: 3%</p>
+    <p class="reward-item">Referrer reward: 1%</p>
     <div class="buttons">
       <button>Get Airdrop</button>
       <button>Activities</button>
