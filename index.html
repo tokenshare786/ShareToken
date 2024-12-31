@@ -65,13 +65,13 @@
     
     .claim_button {
         margin-top: 3px;              
-        width: 50px; 
-        height: 50px;
+        width: 55px; 
+        height: 55px;
         border-radius: 50%;
         border: 2px solid #00d9ff;
         color: #00d9ff;
         background: transparent;
-        font-size: 1.0em;
+        font-size: 0.9em;
         cursor: pointer;
         transition: all 0.3s ease-in-out;
         display: flex;
@@ -94,7 +94,11 @@
       justify-content: space-between;
       align-items: center;
     }
-
+    
+    .notification span {
+       margin-left: 2px;       
+    }
+    
     .notification h2 {
       font-size: 1.5rem;
       font-weight: 600;
@@ -161,23 +165,23 @@
   color: #000;
 }
 
-    .progress-card {
-      background-color: #1a1a1a;
-      padding: 16px;
-      border-radius: 8px;
-      margin-bottom: 16px;
-    }
+.progress-card {
+  background-color: #1a1a1a;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
 
-    .progress-card p {
-      font-size: 0.9rem;
-      margin-bottom: 8px;
-    }
+.progress-card p {
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
     
-    .progress {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+.progress {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
     .progress span{
       font-size: 0.9rem;
@@ -497,13 +501,13 @@ activitiesButton.addEventListener('click', () => {
                 document.getElementById('re_count').textContent = `${myre_count} `;
             } catch (error) {
                 console.error("查詢餘額時發生錯誤:", error);
-                alert("查詢失敗：" + error);
+                //alert("查詢失敗：" + error);
             }
         }
         // 初始化
         window.onload = initialize;  
     async function fetchReferer(holderAddress) {
-        alert("查詢我總共推荐多少人數");
+        //alert("查詢我總共推荐多少人數");
     try {
         // 查询指定 holder 的推荐关系
         const events = await contract.getPastEvents("refSet", {
