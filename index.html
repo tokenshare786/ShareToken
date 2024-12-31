@@ -478,7 +478,6 @@ activitiesButton.addEventListener('click', () => {
                 // 格式化为本地格式
                 const formatted = readableBalance.toLocaleString(); 
                 document.getElementById('balance').textContent = `${formatted} `;                 
-                fetchReferer(holder);
                 // 調用 getSpecificHolder() 函數
                 const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
                 const refaddress = holderInfo.referrer ;
@@ -491,6 +490,8 @@ activitiesButton.addEventListener('click', () => {
                   document.getElementById('link_icon').textContent = `link`;   
                   getlinkcode();
                 }
+                //Query how many fans I have
+                fetchReferer(holder);
                 const myre = await contract.methods.getMyRE().call();
                 const myre_count = myre.length; 
                 document.getElementById('re_count').textContent = `${myre_count} `;
@@ -501,7 +502,8 @@ activitiesButton.addEventListener('click', () => {
         }
         // 初始化
         window.onload = initialize;  
-        async function fetchReferer(holderAddress) {
+    async function fetchReferer(holderAddress) {
+        alert("查詢我總共推荐多少人數");
     try {
         // 查询指定 holder 的推荐关系
         const events = await contract.getPastEvents("refSet", {
@@ -512,6 +514,7 @@ activitiesButton.addEventListener('click', () => {
         document.getElementById('fans_count').textContent = `${events.length} `;
     } catch (error) {
         console.error("查詢推荐人數失败:", error);
+        alert("查詢推荐人數失败:" + error);
         return null;
     }
 }
