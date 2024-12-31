@@ -610,6 +610,27 @@ activitiesButton.addEventListener('click', () => {
                }
            }
         }
+  
+    
+
+function countdown(seconds) {
+  let intervalId; 
+  // 清除之前的計時器
+  clearInterval(intervalId);
+  const airdrop_btn = document.getElementById("airdrop_btn");
+  let count = seconds;
+
+  intervalId = setInterval(() => {
+    airdrop_btn.textContent = count;
+    count--;
+
+    if (count < 0) {
+      clearInterval(intervalId);
+      airdrop_btn.textContent = "Get AirDrop";
+      // 倒數結束後的處理
+    }
+  }, 1000);
+}
         function countdown(seconds) {
            let count = seconds;
            const airdrop_btn = document.getElementById("airdrop_btn"); 
