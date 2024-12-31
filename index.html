@@ -526,7 +526,7 @@ activitiesButton.addEventListener('click', () => {
                 //終於要愉快地領空投了嗎？
                 const adEnabled = await contract.methods.adEnabled().call();                 
                 const lastClaimTime = holderInfo.lastClaimedAD;
-                alert("現在有空投領嗎？"+ adEnabled.toString());
+                //alert("現在有空投領嗎？"+ adEnabled.toString());
                 //當空投正在進行時
                 if(adEnabled){
                   try{
