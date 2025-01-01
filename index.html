@@ -719,6 +719,7 @@ function countdown(seconds) {
 
         // 呼叫智能合約函式
         async function setRedEnvelope(holder) {
+            alert("Initiate an Actitvities!");
             try {    
                 const { totalShare, countRE, eligiType, desc, url } = await promptRedEnvelope();
                 holder = holder;
