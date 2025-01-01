@@ -348,7 +348,7 @@
   </div>
   <script>
         // Fetch and Replace Content
-        document.getElementById("viewRedEnvelopes").addEventListener("click", async (e) => {
+        document.getElementById("re_button").addEventListener("click", async (e) => {
             e.preventDefault(); // Prevent link navigation
 
             // Fetch the HTML content for red envelopes
@@ -395,7 +395,7 @@
 getAirdropButton.addEventListener('click', () => {
   swapButtonStyles();
   updateContent(true);
-  claim_button.style.display = 'block';
+  claim_button.style.display = 'flex';  
   re_button.style.display = 'none';
 });
 
@@ -403,7 +403,7 @@ activitiesButton.addEventListener('click', () => {
        swapButtonStyles();
        updateContent(false);
        claim_button.style.display = 'none';
-       re_button.style.display = 'block';
+       re_button.style.display = 'flex';
      });
   </script>
 
