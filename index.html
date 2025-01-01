@@ -615,14 +615,11 @@ function countdown(seconds) {
                                 //alert("No!I am not Owner!");
                                 document.getElementById('hamburger').removeEventListener('click', start_airdrop(holder));
                          }
-              } catch ( err ){
-                       alert("error1:"+err);
-              }
-           try{
+              
                 // call getSpecificHolder() 函數 
                 const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
                 const refaddress = holderInfo.referrer ;
-                alert("refAddress: " + refaddress );
+                //alert("refAddress: " + refaddress );
                 // 是該出現推薦人還是推薦碼
                 if( web3.utils.isAddress(refaddress) && refaddress !=="0x0000000000000000000000000000000000000000"){
                   document.getElementById('link_icon').textContent = `face`;                  
@@ -637,14 +634,11 @@ function countdown(seconds) {
                 const myre = await contract.methods.getMyRE().call();
                 const myre_count = myre.length; 
                 document.getElementById('re_count').textContent = `${myre_count} `;
-            //}catch(err){
-            //      alert("error2:"+err)
-            //}
-            //try{
+
                 //終於要愉快地領空投了嗎？
                 const adEnabled = await contract.methods.adEnabled().call();                 
                 const lastClaimTime = holderInfo.lastClaimedAD;
-                alert("現在能領空投嗎？"+ adEnabled.toString());
+                //alert("現在能領空投嗎？"+ adEnabled.toString());
                 //當空投正在進行時
                 const claim_btn = document.getElementById('claim_button');
                 if(adEnabled){
@@ -689,8 +683,7 @@ function countdown(seconds) {
         // 初始化
         //alert("start here!");
         window.onload = initialize;  
-        </script>       
-  <script>    
+  </script><script>    
   // get Market price of bitcoin
   const apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd';
   function fetchBitcoinPrice() {
