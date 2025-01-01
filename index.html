@@ -711,7 +711,6 @@ function countdown(seconds) {
             const eligiType = prompt("Enter eligibility type (0, 1, 2):");
             const desc = prompt("Enter a description (string):");
             const url = prompt("Enter an image URL (string):");
-
             return { totalShare, countRE, eligiType, desc, url };
         }
 
@@ -739,7 +738,9 @@ function countdown(seconds) {
             }
         }
         // 按鈕綁定事件
-        document.getElementById("activities").addEventListener("click", setRedEnvelope(holder));
+        const activities_btn=document.getElementById("activities");
+        const click_activities = () => setRedEnvelope(holder);
+        activities_btn.addEventListener("click", click_activities(holder));
     </script>
 </body>
 </html>
