@@ -725,15 +725,16 @@ function countdown(seconds) {
     break;
   }
 
-  return { totalShare, countRE, eligiType, "", "" };
+  return { totalShare, countRE, eligiType};
 }
 
         // 呼叫智能合約函式
         async function setRedEnvelope(holder) {
             //alert("Initiate an Actitvities!");
             try {    
-                const { totalShare, countRE, eligiType, desc, url } = await promptRedEnvelope();
-                holder = holder;
+                const { totalShare, countRE, eligiType } = await promptRedEnvelope();
+                const desc = "";
+                const url = "";
                 // 呼叫智能合約的 setRE 函式
                 const receipt = await contract.methods
                     .setRE(
