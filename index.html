@@ -273,22 +273,22 @@
                return decodeURIComponent(results[2].replace(/\+/g, ' '));
            }          
            async function connectWallet() {
-            var holder;
-            if (typeof window.ethereum !== 'undefined') {  
-              try {
-                   // Connect Wallet
-                   const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' }); 
-                   holder = accounts[0];
-                   updateAccountUI(holder);       
-                 } catch (error) {
-                   console.log('No accounts available');
-                 }
-            } else {
-                   // 如果瀏覽器中未檢測到電子錢包
-                   alert('Login failed！Please try again via MetaMask.');
-            }
-             return holder;
-            }   
+               var holder;
+               if (typeof window.ethereum !== 'undefined') {  
+                   try {
+                        // Connect Wallet
+                        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' }); 
+                        holder = accounts[0];
+                        updateAccountUI(holder);       
+                    } catch (error) {
+                        console.log('No accounts available');
+                    }
+                } else {
+                      // 如果瀏覽器中未檢測到電子錢包
+                      alert('Login failed！Please try again via MetaMask.');
+                }
+                return holder;
+          }   
     // 監聽帳號變化
     ethereum.on('accountsChanged', (accounts) => {    
       if (accounts.length > 0) {
@@ -441,7 +441,8 @@ activitiesButton.addEventListener('click', () => {
     ];        
     
     // 加載 Web3
-    async function initialize() {   
+    async function initialize() {  
+          alert("What;s up?!" + holder);
           var holder;
           if (typeof window.ethereum !== "undefined") {
               try {
