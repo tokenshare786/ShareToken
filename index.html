@@ -435,10 +435,11 @@ activitiesButton.addEventListener('click', () => {
         //
         function disable_get_btn(){  
                 const claim_btn = document.getElementById('claim_button');
+                const clickHandler = () => claim_airdrop();
                 //change color
                 claim_btn.classList.remove('active');   
                 // disable click
-                claim_btn.removeEventListener('click', claim_airdrop());
+                claim_btn.removeEventListener('click', clickHandler);
         }
         async function start_airdrop(holder) {
             // 確認彈窗
@@ -661,7 +662,9 @@ function countdown(seconds) {
                         //當Holder的漢堡大於0時,Get按鈕啟動
                         if(balance > 0){
                               claim_btn.classList.add('active');  
-                              claim_btn.addEventListener('click', claim_airdrop(holder));
+                              // 定義事件處理函數，確保函數引用一致
+                              const clickHandler1 = () => claim_airdrop(holder);
+                              claim_btn.addEventListener('click', clickHandler1);
                               //claim_btn.addEventListener('click', () => {
                               //      claim_airdrop(holder);
                               //});
