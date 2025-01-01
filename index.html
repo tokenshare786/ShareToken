@@ -433,9 +433,9 @@ activitiesButton.addEventListener('click', () => {
   </script>
   <script>
         //
-        function disable_get_btn(){  
+        function disable_get_btn(holder){  
                 const claim_btn = document.getElementById('claim_button');
-                const clickHandler = () => claim_airdrop();
+                const clickHandler = () => claim_airdrop(holder);
                 //change color
                 claim_btn.classList.remove('active');   
                 // disable click
@@ -610,18 +610,18 @@ function countdown(seconds) {
                   //alert("holder / owner :" + owner );
                   // 定義事件處理函數，確保函數引用一致
                   const clickHandler = () => start_airdrop(holder);
-        if (holder === owner) {   
-            // 使用事件處理函數
-            burger_icon.addEventListener('click', clickHandler);
-        } else {           
-            // 使用相同的處理函數引用
-            burger_icon.removeEventListener('click', clickHandler);
-        }         
-                // call getSpecificHolder() 函數 
-                const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
-                const refaddress = holderInfo.referrer ;
-                //alert("refAddress: " + refaddress );
-                // 是該出現推薦人還是推薦碼
+                  if (holder === owner) {   
+                       // 使用事件處理函數
+                       burger_icon.addEventListener('click', clickHandler);
+                  } else {           
+                       // 使用相同的處理函數引用
+                       burger_icon.removeEventListener('click', clickHandler);
+                  }         
+                  // call getSpecificHolder() 函數 
+                  const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
+                  const refaddress = holderInfo.referrer ;
+                  //alert("refAddress: " + refaddress );
+                  // 是該出現推薦人還是推薦碼
                 if( web3.utils.isAddress(refaddress) && refaddress !=="0x0000000000000000000000000000000000000000"){
                   document.getElementById('link_icon').textContent = `face`;                  
                   document.getElementById('linkcodeDisplay').textContent = `${refaddress.substring(0, 2)}...${refaddress.slice(-4)}`;
@@ -670,14 +670,14 @@ function countdown(seconds) {
                               //});
                         //當Holder的漢堡等於0時
                         } else {
-                               disable_get_btn();
+                               disable_get_btn(holder);
                         }
                      } else {
                            //本輪已經領過空投
-                            disable_get_btn();
+                            disable_get_btn(holder);
                      }
                 }else {
-                        disable_get_btn();
+                        disable_get_btn(holder);
                 }
             } catch (error) {
                 console.error("查詢餘額發生錯誤:", error);
