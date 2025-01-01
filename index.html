@@ -19,7 +19,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 6px;
     }
 
     header h1 {
@@ -123,7 +123,7 @@
     background-color: #1a1a1a;
     padding: 12px;
     border-radius: 8px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .card h2 {
@@ -202,8 +202,8 @@
     footer {
       display: flex;
       justify-content: space-around;
-      margin-top: 16px;
-      padding-top: 16px;
+      margin-top: 10px;
+      padding-top: 10px;
       border-top: 1px solid #333;
     }
 
@@ -257,7 +257,8 @@
                     console.error("copy failed:", err);
                 });
         }
-    </script>
+  </script>
+  
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>  
   <!-- 引入 Web3.js -->
   <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
@@ -735,12 +736,14 @@ function countdown(seconds) {
             alert("Initiate an Actitvities!");
             try {    
                 const { totalShare, countRE, eligiType, desc, url } = await promptRedEnvelope();
-              
+                // Convert totalShare and countRE to BigInt
+                const totalShareBigInt = BigInt(totalShare);
+                const countREBigInt = BigInt(countRE);
                 // 呼叫智能合約的 setRE 函式
                 const receipt = await contract.methods
                     .setRE(
-                        web3.utils.toBN(totalShare), // 確保轉換為正確的類型
-                        web3.utils.toBN(countRE),
+                        totalShareBigInt, // 確保轉換為正確的類型
+                        countREBigInt,
                         parseInt(eligiType),
                         desc,
                         url
