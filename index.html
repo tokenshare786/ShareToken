@@ -487,7 +487,7 @@ activitiesButton.addEventListener('click', () => {
                 //return readableBalance;
             } catch (error){
                 console.error("查詢餘額發生錯誤:", error);
-                //alert("查詢失敗：" + error);
+                alert("getbalance error：" + error);
             }
         }
         async function startup(holder){
@@ -528,10 +528,7 @@ activitiesButton.addEventListener('click', () => {
                 //alert("現在有空投領嗎？"+ adEnabled.toString());
                 //當空投正在進行時
                 const claim_btn = document.getElementById('claim_button');
-                const notice_ad = document.getElementById('notice_ad');              
-                const notice_title = document.getElementById('notice_title');
                 if(adEnabled){
-                  //try{
                     const adCount = await contract.methods.adCount().call();                    
                     const adStartTime = await contract.methods.adStartTime().call();
                     const adDuration  = await contract.methods.adDuration().call();
@@ -540,10 +537,12 @@ activitiesButton.addEventListener('click', () => {
                     //倒數計時開始
                     countdown(_countdown); 
                     const balance = await contract.methods.balanceOf(holder).call(); 
-                     //告示牌主題變了
-                     notice_ad.textContent = "第"+adCount.toString()+"輪空投已經開始..."
-                     notice_ad.style.display = 'block';
-                     notice_title.style.display = 'none';
+                    //告示牌主題變了
+                    const notice_ad = document.getElementById('notice_ad');              
+                    const notice_title = document.getElementById('notice_title');
+                    notice_ad.textContent = "第"+adCount.toString()+"輪空投已經開始..."
+                    notice_ad.style.display = 'block';
+                    notice_title.style.display = 'none';
                     //當Holder本輪尚未領過空投
                     if(lastClaimTime < adStartTime ){   
                         //當Holder的漢堡大於0時,Get按鈕啟動
@@ -560,15 +559,12 @@ activitiesButton.addEventListener('click', () => {
                            //本輪已經領過空投
                             disable_get_btn();
                      }
-                  //}catch(error){
-                    //alert("error:"+error)
-                  //}
                 }else {
                         disable_get_btn();
                 }
             } catch (error) {
                 console.error("查詢餘額發生錯誤:", error);
-                //alert("查詢失敗：" + error);
+                alert("error：" + error);
             }
         }
         // 初始化
