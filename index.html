@@ -507,11 +507,12 @@ activitiesButton.addEventListener('click', () => {
                 //Check If holder is Owner
                 alert("holder / owner :" + owner );
                 if(holder == owner){   
-                                     // alert("Yes!I am Owner!");
+                                     alert("Yes!I am Owner!");
                                      document.getElementById('hamburger').addEventListener('click', () => {
                                      start_airdrop(holder);
                                   });
-                } else {                           
+                } else {           
+                            alert("No!I am not Owner!");
                             document.getElementById('hamburger').removeEventListener('click', start_airdrop);
                 }
                 //
