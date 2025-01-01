@@ -414,17 +414,21 @@ activitiesButton.addEventListener('click', () => {
     // 取得 linkcode 參數    
     var linkcode = getParameterByName('linkcode');
     alert("to get linkcode:" + linkcode);
-    function getlinkcode() {    
-    if (linkcode != null){
+    function getlinkcode() {  
+      try{
+          if (linkcode != null){
              alert(`Welcome！`+ linkcode);
              // 假設 linkcode 變數已經定義且包含要顯示的連結
              const linkcodeDisplay = document.getElementById('linkcodeDisplay');
              // 如果 linkcode 有值，則將其內容設置為顯示物件的內文
              linkcodeDisplay.textContent = linkcode;
-    } else {
+         } else {
               // 如果 linkcode 沒有值，則顯示空白
              linkcodeDisplay.textContent = " ";
-    }
+         }
+      }catch(err){
+        alert("error:"+err);
+      }   
       alert("It's OK!");
     }
   </script><script>
