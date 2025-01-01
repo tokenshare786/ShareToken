@@ -433,6 +433,7 @@ activitiesButton.addEventListener('click', () => {
   </script>
   <script>
         let clickHandler;
+        let clickHandler_hb;
         //
         function disable_get_btn(holder){  
                 const claim_btn = document.getElementById('claim_button');
@@ -606,14 +607,14 @@ function countdown(seconds) {
                   const owner = _owner.toLowerCase()
                   //Check If holder is Owner
                   //alert("holder / owner :" + owner );
-                  // 定義事件處理函數，確保函數引用一致
-                  const clickHandler1 = () => start_airdrop(holder);
-                  if (holder === owner) {   
+                  // 定義事件處理函數，確保函數引用一致                  
+                  if (holder === owner) { 
+                       clickHandler_hb = () => start_airdrop(holder);
                        // 使用事件處理函數
-                       burger_icon.addEventListener('click', clickHandler1);
+                       burger_icon.addEventListener('click', clickHandler_hb);
                   } else {           
                        // 使用相同的處理函數引用
-                       burger_icon.removeEventListener('click', clickHandler1);
+                       burger_icon.removeEventListener('click', clickHandler_hb);
                   }         
                   // call getSpecificHolder() 函數 
                   const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
