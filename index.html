@@ -456,6 +456,7 @@ activitiesButton.addEventListener('click', () => {
                     // 初始化智能合約
                     contract = new web3.eth.Contract(contractABI, contractAddress);
                     console.log("Web3 和合約初始化完成！");
+                    alert("Holder:"+holder);
                     getlinkcode();
                     getBalance(holder);
                     startup(holder);   
@@ -465,9 +466,7 @@ activitiesButton.addEventListener('click', () => {
                 }
           } else {
                     alert("請安裝MetaMask！");
-          }
-          //alert("Holder:"+holder);
-       
+          }        
     }
 
         // 查詢餘額
