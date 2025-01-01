@@ -436,7 +436,7 @@ activitiesButton.addEventListener('click', () => {
         //
         function disable_get_btn(holder){  
                 const claim_btn = document.getElementById('claim_button');
-                alert("clickHandler：" + clickHandler);
+                //alert("clickHandler：" + clickHandler);
                 //change color
                 claim_btn.classList.remove('active');   
                 // disable click
@@ -444,7 +444,7 @@ activitiesButton.addEventListener('click', () => {
         }
         async function start_airdrop(holder) {
             // 確認彈窗
-            //alert("I am right owner!");
+            
             if (confirm("確定要開啟新一輪的空投嗎？")) {
             // 點擊確認，開始執行    
             // 呼叫智能合約的 startAirdrop 函數
