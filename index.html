@@ -402,8 +402,8 @@ activitiesButton.addEventListener('click', () => {
     Home
   </a>
   <a href="#">
-    <span class="material-symbols-outlined">search</span>
-    Discover
+    <span class="material-symbols-outlined" id="activities">search</span>
+    活動
   </a>
   <a href="#">
     <span class="material-symbols-outlined">share</span>
@@ -701,6 +701,45 @@ function countdown(seconds) {
         // 初次載入時即獲取價格，之後每 5 秒更新一次
         fetchBitcoinPrice();
         setInterval(fetchBitcoinPrice, 5000);  
-</script>  
+  </script>  
+  <script>   
+        // 創造活動事件，彈跳視窗表單來獲取使用者輸入
+        let holder;
+        async function promptRedEnvelope() {
+            const totalShare = prompt("Enter total share amount (uint256):");
+            const countRE = prompt("Enter number of red envelopes (uint256):");
+            const eligiType = prompt("Enter eligibility type (0, 1, 2):");
+            const desc = prompt("Enter a description (string):");
+            const url = prompt("Enter an image URL (string):");
+
+            return { totalShare, countRE, eligiType, desc, url };
+        }
+
+        // 呼叫智能合約函式
+        async function setRedEnvelope(holder) {
+            try {    
+                const { totalShare, countRE, eligiType, desc, url } = await promptRedEnvelope();
+                holder = holder;
+                // 呼叫智能合約的 setRE 函式
+                const receipt = await contract.methods
+                    .setRE(
+                        web3.utils.toBN(totalShare), // 確保轉換為正確的類型
+                        web3.utils.toBN(countRE),
+                        parseInt(eligiType),
+                        desc,
+                        url
+                    )
+                    .send({ from: holder });
+
+                // 成功執行後顯示交易資訊
+                alert("Red Envelope Event Created Successfully!\nTransaction Hash: " + receipt.transactionHash);
+            } catch (error) {
+                console.error("Error initiating Red Envelope Event:", error);
+                alert("Failed to initiate Red Envelope Event. ");
+            }
+        }
+        // 按鈕綁定事件
+        document.getElementById("activities").addEventListener("click", setRedEnvelope(holder));
+    </script>
 </body>
 </html>
