@@ -442,15 +442,15 @@ activitiesButton.addEventListener('click', () => {
     
     // 加載 Web3
     async function initialize() {  
-          alert("What;s up?!" + holder);
+          //alert("What;s up?!" + holder);
           var holder;
           if (typeof window.ethereum !== "undefined") {
               try {
                     // 請求錢包授權
                     //await window.ethereum.request({ method: "eth_requestAccounts" });
-                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' }); 
-                    holder = accounts[0].toLowerCase();
-                    updateAccountUI(holder);
+                    //const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' }); 
+                    holder = connectWallet();
+                    //updateAccountUI(holder);
                     // 使用 MetaMask 提供的 provider 初始化 Web3
                     web3 = new Web3(window.ethereum);
                     // 初始化智能合約
@@ -463,7 +463,7 @@ activitiesButton.addEventListener('click', () => {
           } else {
                     alert("請安裝MetaMask！");
           }
-          alert("Holder:"+holder);
+          //alert("Holder:"+holder);
           getlinkcode();
           getBalance(holder);
           startup(holder);          
@@ -515,8 +515,8 @@ activitiesButton.addEventListener('click', () => {
                 }
                 //
                 const refaddress = holderInfo.referrer ;
-                //alert("refAddress: " + refaddress );
-                // 使用 holderInfo 中的資料，例如：
+                // alert("refAddress: " + refaddress );
+                // 是該出現推薦人還是推薦碼
                 if( web3.utils.isAddress(refaddress) && refaddress !=="0x0000000000000000000000000000000000000000"){
                   document.getElementById('link_icon').textContent = `face`;                  
                   document.getElementById('linkcodeDisplay').textContent = `${refaddress.substring(0, 2)}...${refaddress.slice(-4)}`;
