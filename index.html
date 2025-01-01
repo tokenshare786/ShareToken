@@ -430,7 +430,108 @@ activitiesButton.addEventListener('click', () => {
         alert("error:"+err);
       }        
     }
-  </script><script>
+  </script>
+  <script>
+        //
+        finction disable_get_btn(){  
+                const claim_btn = document.getElementById('claim_button');
+                //change color
+                claim_btn.classList.remove('active');   
+                // disable click
+                claim_btn.removeEventListener('click', claim_airdrop());
+        }
+        async function start_airdrop(holder) {
+            // 確認彈窗
+            //alert("I am right owner!");
+            if (confirm("確定要開啟新一輪的空投嗎？")) {
+            // 點擊確認，開始執行    
+            // 呼叫智能合約的 startAirdrop 函數
+            try{
+                 const tx = await contract.methods.startAirdrop().send({ from: holder });
+                 // 顯示交易結果
+                 console.log("Transaction hash:", tx.transactionHash);
+                 alert("Airdrop started successfully!");
+              } catch (error) {
+                   console.error("Error starting airdrop:", error);
+                   alert("Error starting airdrop. Please try again later.");
+              } 
+          } else {
+                  // 如果使用者點擊取消，則什麼都不做
+                  console.log("使用者取消啟動空投");
+          }
+    }
+    
+    async function claim_airdrop(holder) {      
+        if ( confirm("請注意！領取空投必須付出Gas，您確定繼續？")) {      
+        try {
+              // 呼叫智能合約的 claimAirdrop 函數
+              const result = await contract.methods.claimAirdrop().send({ from: holder });
+              disable_get_btn();
+              // 處理回傳值 (result)
+              switch (result) {
+                case 1:
+                     alert("Airdrop not enabled");
+                break;
+                case 2:
+                     alert("Airdrop expired");
+                break;
+                case 3:
+                     alert("You have already claimed this airdrop");
+                break;
+                case 4:
+                    alert("恭喜！成功領取空投！");
+                  // 更新 UI 顯示 (例如：更新餘額、顯示領取成功訊息)
+                 getBalance(holder); 
+                break;
+                default:
+                      alert("Unknown error occurred during claim."+ result);
+               break;
+               }
+              } catch (error) {
+                   console.error("Error claiming airdrop:", error);
+                   alert("Claiming airdrop failure.Try again later." + error);
+               }
+           }
+        } 
+let intervalId; 
+function countdown(seconds) {  
+  // 清除之前的計時器
+  clearInterval(intervalId);
+  const airdrop_btn = document.getElementById("airdrop_btn");
+  let count = seconds;
+  
+  intervalId = setInterval(() => {
+    airdrop_btn.textContent = count.toLocaleString()+" secs";
+    count--;
+
+    if (count < 0) {
+      clearInterval(intervalId);
+      airdrop_btn.textContent = "Get AirDrop";
+      // 倒數結束後的處理
+    }
+  }, 1000);
+}
+        
+    async function fetchReferer(holderAddress) {
+        //alert("查詢我總共推荐多少人數");
+    try {
+        // 查询指定 holder 的推荐关系
+        const events = await contract.getPastEvents("refSet", {
+            filter: { referer: holderAddress }, // 过滤条件：指定 holder
+            fromBlock: 0,                       // 起始区块（可调整）
+            toBlock: "latest",                  // 结束区块
+        });      
+        document.getElementById('fans_count').textContent = `${events.length} `;
+    } catch (error) {
+        console.error("查詢失败:", error);
+        //alert("查詢失败:" + error);
+        return null;
+    }
+}
+  </script>
+  
+  
+  <script>
     // get balance of burger
     let web3;
     let contract;
@@ -588,105 +689,8 @@ activitiesButton.addEventListener('click', () => {
         // 初始化
         //alert("start here!");
         window.onload = initialize;  
-        //</script><script>
-        //
-        finction disable_get_btn(){  
-                const claim_btn = document.getElementById('claim_button');
-                //change color
-                claim_btn.classList.remove('active');   
-                // disable click
-                claim_btn.removeEventListener('click', claim_airdrop());
-        }
-        async function start_airdrop(holder) {
-            // 確認彈窗
-            //alert("I am right owner!");
-            if (confirm("確定要開啟新一輪的空投嗎？")) {
-            // 點擊確認，開始執行    
-            // 呼叫智能合約的 startAirdrop 函數
-            try{
-                 const tx = await contract.methods.startAirdrop().send({ from: holder });
-                 // 顯示交易結果
-                 console.log("Transaction hash:", tx.transactionHash);
-                 alert("Airdrop started successfully!");
-              } catch (error) {
-                   console.error("Error starting airdrop:", error);
-                   alert("Error starting airdrop. Please try again later.");
-              } 
-          } else {
-                  // 如果使用者點擊取消，則什麼都不做
-                  console.log("使用者取消啟動空投");
-          }
-    }
-    
-    async function claim_airdrop(holder) {      
-        if ( confirm("請注意！領取空投必須付出Gas，您確定繼續？")) {      
-        try {
-              // 呼叫智能合約的 claimAirdrop 函數
-              const result = await contract.methods.claimAirdrop().send({ from: holder });
-              disable_get_btn();
-              // 處理回傳值 (result)
-              switch (result) {
-                case 1:
-                     alert("Airdrop not enabled");
-                break;
-                case 2:
-                     alert("Airdrop expired");
-                break;
-                case 3:
-                     alert("You have already claimed this airdrop");
-                break;
-                case 4:
-                    alert("恭喜！成功領取空投！");
-                  // 更新 UI 顯示 (例如：更新餘額、顯示領取成功訊息)
-                 getBalance(holder); 
-                break;
-                default:
-                      alert("Unknown error occurred during claim."+ result);
-               break;
-               }
-              } catch (error) {
-                   console.error("Error claiming airdrop:", error);
-                   alert("Claiming airdrop failure.Try again later." + error);
-               }
-           }
-        } 
-let intervalId; 
-function countdown(seconds) {  
-  // 清除之前的計時器
-  clearInterval(intervalId);
-  const airdrop_btn = document.getElementById("airdrop_btn");
-  let count = seconds;
-  
-  intervalId = setInterval(() => {
-    airdrop_btn.textContent = count.toLocaleString()+" secs";
-    count--;
-
-    if (count < 0) {
-      clearInterval(intervalId);
-      airdrop_btn.textContent = "Get AirDrop";
-      // 倒數結束後的處理
-    }
-  }, 1000);
-}
-        
-    async function fetchReferer(holderAddress) {
-        //alert("查詢我總共推荐多少人數");
-    try {
-        // 查询指定 holder 的推荐关系
-        const events = await contract.getPastEvents("refSet", {
-            filter: { referer: holderAddress }, // 过滤条件：指定 holder
-            fromBlock: 0,                       // 起始区块（可调整）
-            toBlock: "latest",                  // 结束区块
-        });      
-        document.getElementById('fans_count').textContent = `${events.length} `;
-    } catch (error) {
-        console.error("查詢失败:", error);
-        //alert("查詢失败:" + error);
-        return null;
-    }
-}
-
-  </script><script>    
+        </script>       
+  <script>    
   // get Market price of bitcoin
   const apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd';
   function fetchBitcoinPrice() {
