@@ -707,15 +707,26 @@ function countdown(seconds) {
         setInterval(fetchBitcoinPrice, 5000);  
   </script>  
   <script>   
-        // 創造活動事件，彈跳視窗表單來獲取使用者輸入
-        async function promptRedEnvelope() {
-            const totalShare = prompt("Total hamburgers to share:");
-            const countRE = prompt("To how many holders:");
-            const eligiType = prompt("Who is eligible (0, 1, 2):");
-            const desc = prompt("Description to share:");
-            const url = prompt("Source URL:");
-            return { totalShare, countRE, eligiType, desc, url };
-        }
+        
+    // 創造活動事件，彈跳視窗表單來獲取使用者輸入
+    async function promptRedEnvelope() {
+       let totalShare, countRE, eligiType, desc, url;
+       while (true) {
+            totalShare = prompt("Total hamburgers to share:");
+            if (totalShare === null) break; // 如果使用者按取消，則跳出迴圈
+
+            countRE = prompt("To how many holders:");
+            if (countRE === null) break;
+
+            eligiType = prompt("Who is eligible (0, 1, 2):");
+            if (eligiType === null) break;
+            
+    // 所有提示都完成，跳出迴圈
+    break;
+  }
+
+  return { totalShare, countRE, eligiType, "", "" };
+}
 
         // 呼叫智能合約函式
         async function setRedEnvelope(holder) {
