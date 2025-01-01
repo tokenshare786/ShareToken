@@ -436,6 +436,7 @@ activitiesButton.addEventListener('click', () => {
         //
         function disable_get_btn(holder){  
                 const claim_btn = document.getElementById('claim_button');
+                alert("clickHandler：" + clickHandler);
                 clickHandler = () => claim_airdrop(holder);
                 //change color
                 claim_btn.classList.remove('active');   
