@@ -500,8 +500,7 @@ activitiesButton.addEventListener('click', () => {
         }
         async function startup(holder){
               try{
-                // 調用 getSpecificHolder() 函數
-                const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
+                //                
                 const _owner = await contract.methods._owner().call();
                 const owner = _owner.toLowerCase()
                 //Check If holder is Owner
@@ -515,7 +514,8 @@ activitiesButton.addEventListener('click', () => {
                             alert("No!I am not Owner!");
                             document.getElementById('hamburger').removeEventListener('click', start_airdrop);
                 }
-                //
+                // 調用 getSpecificHolder() 函數 
+                const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
                 const refaddress = holderInfo.referrer ;
                 // alert("refAddress: " + refaddress );
                 // 是該出現推薦人還是推薦碼
