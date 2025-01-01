@@ -505,6 +505,7 @@ activitiesButton.addEventListener('click', () => {
                 const _owner = await contract.methods._owner().call();
                 const owner = _owner.toLowerCase()
                 //Check If holder is Owner
+                alert("holder / owner :" + owner );
                 if(holder == owner){   
                                      // Yes!I am Owner! 
                                      document.getElementById('hamburger').addEventListener('click', () => {
