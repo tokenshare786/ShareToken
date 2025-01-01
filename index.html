@@ -273,12 +273,13 @@
                return decodeURIComponent(results[2].replace(/\+/g, ' '));
            }          
            async function connectWallet() {
+            var holder;
             if (typeof window.ethereum !== 'undefined') {  
               try {
-                   // 請求用戶授權連接電子錢包
+                   // Connect Wallet
                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' }); 
-                   var holder = accounts[0];
-                   updateAccountUI(accounts[0]);       
+                   holder = accounts[0];
+                   updateAccountUI(holder);       
                  } catch (error) {
                    console.log('No accounts available');
                  }
