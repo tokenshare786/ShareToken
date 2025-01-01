@@ -498,12 +498,11 @@ activitiesButton.addEventListener('click', () => {
                 const owner = _owner.toLowerCase()
                 //Check If holder is Owner
                 if(holder == owner){   
-                                     //alert("Yes!I am Owner! "+holder+" / "+owner);
+                                     // Yes!I am Owner! 
                                      document.getElementById('hamburger').addEventListener('click', () => {
                                      start_airdrop(holder);
                                   });
-                } else {
-                            //alert("No!I am not Owner! "+holder+" / "+owner);
+                } else {                           
                             document.getElementById('hamburger').removeEventListener('click', hamburger);
                 }
                 //
@@ -528,8 +527,11 @@ activitiesButton.addEventListener('click', () => {
                 const lastClaimTime = holderInfo.lastClaimedAD;
                 //alert("現在有空投領嗎？"+ adEnabled.toString());
                 //當空投正在進行時
+                const claim_btn = document.getElementById('claim_button');
+                const notice_ad = document.getElementById('notice_ad');              
+                const notice_title = document.getElementById('notice_title');
                 if(adEnabled){
-                  try{
+                  //try{
                     const adCount = await contract.methods.adCount().call();                    
                     const adStartTime = await contract.methods.adStartTime().call();
                     const adDuration  = await contract.methods.adDuration().call();
@@ -537,13 +539,11 @@ activitiesButton.addEventListener('click', () => {
                     const _countdown = adStartTime + adDuration - nowtime;
                     //倒數計時開始
                     countdown(_countdown); 
-                    const claim_btn = document.getElementById('claim_button');
-                    const notice_ad = document.getElementById('notice_ad');
                     const balance = await contract.methods.balanceOf(holder).call(); 
                      //告示牌主題變了
                      notice_ad.textContent = "第"+adCount.toString()+"輪空投已經開始..."
                      notice_ad.style.display = 'block';
-                     document.getElementById('notice_title').style.display = 'none';
+                     notice_title.style.display = 'none';
                     //當Holder本輪尚未領過空投
                     if(lastClaimTime < adStartTime ){   
                         //當Holder的漢堡大於0時,Get按鈕啟動
@@ -554,17 +554,17 @@ activitiesButton.addEventListener('click', () => {
                             });
                         //當Holder的漢堡等於0時
                         } else {
-                               claim_btn.classList.remove('active');   
-                               claim_btn.removeEventListener('click', claim_airdrop);
+                               disable_get_btn();
                         }
                      } else {
                            //本輪已經領過空投
-                           claim_btn.classList.remove('active');   
-                           claim_btn.removeEventListener('click', claim_airdrop);
+                            disable_get_btn();
                      }
-                  }catch(error){
+                  //}catch(error){
                     //alert("error:"+error)
-                  }
+                  //}
+                }else {
+                        disable_get_btn();
                 }
             } catch (error) {
                 console.error("查詢餘額發生錯誤:", error);
@@ -574,6 +574,13 @@ activitiesButton.addEventListener('click', () => {
         // 初始化
         window.onload = initialize;  
         //
+        finction disable_get_btn(){  
+                const claim_btn = document.getElementById('claim_button');
+                //change color
+                claim_btn.classList.remove('active');   
+                // disable click
+                claim_btn.removeEventListener('click', claim_airdrop);
+        }
         async function start_airdrop(holder) {
             // 確認彈窗
             //alert("I am right owner!");
@@ -599,30 +606,31 @@ activitiesButton.addEventListener('click', () => {
         if ( confirm("請注意！領取空投必須付出Gas，您確定繼續？")) {      
         try {
               // 呼叫智能合約的 claimAirdrop 函數
-             const result = await contract.methods.claimAirdrop().send({ from: holder });
-             // 處理回傳值 (result)
-             switch (result) {
-               case 1:
-                  alert("Airdrop not enabled");
-               break;
-               case 2:
-                  alert("Airdrop expired");
-               break;
-               case 3:
-                  alert("You have already claimed this airdrop");
-               break;
-               case 4:
-                 alert("恭喜！成功領取空投！");
-                // 更新 UI 顯示 (例如：更新餘額、顯示領取成功訊息)
-                getBalance(holder); 
-               break;
-               default:
+              const result = await contract.methods.claimAirdrop().send({ from: holder });
+              disable_get_btn();
+              // 處理回傳值 (result)
+              switch (result) {
+                case 1:
+                     alert("Airdrop not enabled");
+                break;
+                case 2:
+                     alert("Airdrop expired");
+                break;
+                case 3:
+                     alert("You have already claimed this airdrop");
+                break;
+                case 4:
+                    alert("恭喜！成功領取空投！");
+                  // 更新 UI 顯示 (例如：更新餘額、顯示領取成功訊息)
+                 getBalance(holder); 
+                break;
+                default:
                       alert("Unknown error occurred during claim."+ result);
                break;
                }
               } catch (error) {
-                 console.error("Error claiming airdrop:", error);
-                 alert("Claiming airdrop failure. Please try again later.");
+                   console.error("Error claiming airdrop:", error);
+                   alert("Claiming airdrop failure.Try again later." + error);
                }
            }
         } 
