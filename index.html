@@ -449,7 +449,7 @@ activitiesButton.addEventListener('click', () => {
                     // 請求錢包授權
                     //await window.ethereum.request({ method: "eth_requestAccounts" });
                     //const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' }); 
-                    const holder = await connectWallet();
+                    const holder = await connectWallet().toLowerCase();
                     //updateAccountUI(holder);
                     // 使用 MetaMask 提供的 provider 初始化 Web3
                     web3 = new Web3(window.ethereum);
@@ -576,7 +576,7 @@ activitiesButton.addEventListener('click', () => {
             }
         }
         // 初始化
-        alert("start here!");
+        //alert("start here!");
         window.onload = initialize;  
       </script><script>
         //
