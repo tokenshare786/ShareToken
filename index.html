@@ -560,7 +560,7 @@ function countdown(seconds) {
                     //alert("Holder:"+holder);
                     getlinkcode();
                     getBalance(holder);
-                    startup(holder);   
+                    //startup(holder);   
                 } catch (error) {
                     alert("initiate Web3 failed：" + error);
                     console.error("initiate Web3 failed", error);
@@ -618,7 +618,7 @@ function countdown(seconds) {
                                 //alert("No!I am not Owner!");
                                 burger_icon.removeEventListener('click', start_airdrop(holder));
                          }
-                return;
+
                 // call getSpecificHolder() 函數 
                 const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
                 const refaddress = holderInfo.referrer ;
