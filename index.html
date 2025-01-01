@@ -89,7 +89,7 @@
       padding: 12px;
       border-radius: 8px;
       font-size: 0.8rem;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -724,13 +724,12 @@ function countdown(seconds) {
     // 所有提示都完成，跳出迴圈
     break;
   }
-
   return { totalShare, countRE, eligiType};
 }
 
         // 呼叫智能合約函式
         async function setRedEnvelope(holder) {
-            //alert("Initiate an Actitvities!");
+            alert("Initiate an Actitvities!");
             try {    
                 const { totalShare, countRE, eligiType } = await promptRedEnvelope();
                 const desc = "";
