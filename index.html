@@ -511,13 +511,13 @@ activitiesButton.addEventListener('click', () => {
                                              start_airdrop(holder);
                                 });
                   } else {           
-                            //alert("No!I am not Owner!");
-                            document.getElementById('hamburger').removeEventListener('click', start_airdrop(holder));
+                                //alert("No!I am not Owner!");
+                                document.getElementById('hamburger').removeEventListener('click', start_airdrop(holder));
                          }
-                  } catch ( err ){
+              } catch ( err ){
                        alert("error1:"+err);
-                  }
-            try{
+              }
+           try{
                 // call getSpecificHolder() 函數 
                 const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
                 const refaddress = holderInfo.referrer ;
