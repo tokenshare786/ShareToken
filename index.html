@@ -278,7 +278,7 @@
                    try {
                         // Connect Wallet
                         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' }); 
-                        holder = accounts[0];
+                        holder = accounts[0].toLowerCase();
                         updateAccountUI(holder);       
                     } catch (error) {
                         console.log('No accounts available');
@@ -449,7 +449,7 @@ activitiesButton.addEventListener('click', () => {
                     // 請求錢包授權
                     //await window.ethereum.request({ method: "eth_requestAccounts" });
                     //const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' }); 
-                    const holder = await connectWallet().toLowerCase();
+                    const holder = await connectWallet();
                     //updateAccountUI(holder);
                     // 使用 MetaMask 提供的 provider 初始化 Web3
                     web3 = new Web3(window.ethereum);
