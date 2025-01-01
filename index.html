@@ -437,7 +437,6 @@ activitiesButton.addEventListener('click', () => {
         function disable_get_btn(holder){  
                 const claim_btn = document.getElementById('claim_button');
                 alert("clickHandler：" + clickHandler);
-                clickHandler = () => claim_airdrop(holder);
                 //change color
                 claim_btn.classList.remove('active');   
                 // disable click
@@ -662,7 +661,7 @@ function countdown(seconds) {
                         if(balance > 0){
                               claim_btn.classList.add('active');  
                               // 定義事件處理函數，確保函數引用一致
-                              const clickHandler = () => claim_airdrop(holder);
+                              clickHandler = () => claim_airdrop(holder);
                               claim_btn.addEventListener('click', clickHandler);
                         //當Holder的漢堡等於0時
                         } else {
