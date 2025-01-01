@@ -83,6 +83,26 @@
       background: #00d9ff;
       color: #000;
     }
+    .re_button {
+        margin-top: 3px;              
+        width: 55px; 
+        height: 55px;
+        border-radius: 50%;
+        border: 2px solid ##ff4500;
+        color: ##ff4500;
+        background: transparent;
+        font-size: 0.9em;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        line-height: 50px; /* 與高度相同 */
+    }
+    .re_button.active {
+      background: ##ff4500;
+      color: ##ff4500;
+    }
     
     .notification {
       background-color: #1a1a1a;
@@ -304,14 +324,14 @@
       const walletButton = document.getElementById('walletButton');
       walletButton.textContent = `${account.substring(0, 2)}...${account.slice(-4)}`;
     }    
-  </script>
+  </script>  
   <div class="notification">
     <span class="material-symbols-outlined">brand_awareness</span>
     <span>The BURGER white paper has been released, please check for details..</span>
     <a href="#">Details</a>
   </div>
   <div class="card">
-    <div class="progress">
+    <div class="progress" id="content">
       <div>
           <h2 id="notice_ad" style="display: none;"></h2>
           <h2 id="notice_title">AirDrop</h2>   
@@ -319,15 +339,40 @@
           <p class="reward-item" id="linetext_2">Referal reward: 1%</p>
       </div>
       <div class="claim_button" id="claim_button">Get</div>
+      <div class="re_button" id="re_button">Get</div>
     </div>
     <div class="buttons">
       <button class="buttons button.active" id="airdrop_btn">Get Airdrop</button>
       <button class="buttons button" id="activities_btn">Activities</button>
     </div>
   </div>
+  <script>
+        // Fetch and Replace Content
+        document.getElementById("viewRedEnvelopes").addEventListener("click", async (e) => {
+            e.preventDefault(); // Prevent link navigation
 
+            // Fetch the HTML content for red envelopes
+            try {
+                const response = await fetch("red_envelopes.html"); // The new page with the envelope logic
+                const html = await response.text();
+
+                // Replace the content inside #content
+                document.getElementById("content").innerHTML = html;
+
+                // Load the script inside the fetched HTML (if any)
+                const script = document.createElement("script");
+                script.src = "red_envelopes.js"; // Your JavaScript logic for dynamic interaction
+                document.body.appendChild(script);
+            } catch (err) {
+                console.error("Error loading content:", err);
+                alert("Failed to load the red envelope page.");
+            }
+        });
+    </script>
 <script>
   //隨著不同的Button 切換不同的信息
+  const claim_button = document.getElementById('claim_button');
+  const re_button = document.getElementById('re_button');
   const getAirdropButton = document.getElementById('airdrop_btn');
   const activitiesButton = document.getElementById('activities_btn');
   const titleElement = document.getElementById('notice_title');
@@ -350,11 +395,15 @@
 getAirdropButton.addEventListener('click', () => {
   swapButtonStyles();
   updateContent(true);
+  claim_button.style.display = 'block';
+  re_button.style.display = 'none';
 });
 
 activitiesButton.addEventListener('click', () => {
        swapButtonStyles();
        updateContent(false);
+       claim_button.style.display = 'none';
+       re_button.style.display = 'block';
      });
   </script>
 
@@ -757,6 +806,53 @@ function countdown(seconds) {
                 alert("Failed to initiate Red Envelope Event." + error);
             }
         }        
+
+  async function getAvailableRE(linkcode) {
+    try {
+        // Get the current user's wallet address
+        const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+        const userAddress = accounts[0];
+
+        // Convert the string 'linkcode' to the appropriate format (if necessary)
+        const linkcodeHex = web3.utils.asciiToHex(linkcode);
+
+        // Call the contract's getAvailableRE function
+        const availableRE = await contract.methods
+            .getAvailableRE(linkcodeHex)
+            .call({ from: userAddress });
+
+        // Process and display the results
+        if (availableRE.length === 0) {
+            console.log("No available red envelopes.");
+            alert("No available red envelopes for the provided link code.");
+            return [];
+        }
+
+        // Map the results for better readability
+        const formattedRE = availableRE.map((re, index) => ({
+            id: index,
+            subAmt: re.subAmt,          // Total share of the red envelope
+            claimedAmt: re.claimedAmt,  // Amount already claimed
+            maxClaims: re.maxClaims,    // Maximum claims allowed
+            claimCount: re.claimCount,  // Current claim count
+            creator: re.creator,        // Creator of the red envelope
+            eligiType: re.eligiType,    // Eligibility type
+            desc: web3.utils.hexToAscii(re.desc), // Description
+            imgUrl: web3.utils.hexToAscii(re.imgUrl), // Image URL
+            startTime: re.startTime,    // Start time (timestamp)
+            isActive: re.isActive,      // Whether the red envelope is active
+        }));
+
+        console.log("Available Red Envelopes:", formattedRE);
+        alert(`Found ${formattedRE.length} available red envelopes.`);
+        return formattedRE;
+
+    } catch (error) {
+        console.error("Error fetching available red envelopes:", error);
+        alert("An error occurred while fetching available red envelopes. See console for details.");
+        return [];
+    }
+}
     </script>
 </body>
 </html>
