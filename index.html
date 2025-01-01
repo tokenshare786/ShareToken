@@ -709,17 +709,17 @@ function countdown(seconds) {
   <script>   
         // 創造活動事件，彈跳視窗表單來獲取使用者輸入
         async function promptRedEnvelope() {
-            const totalShare = prompt("Enter total share amount (uint256):");
-            const countRE = prompt("Enter number of red envelopes (uint256):");
-            const eligiType = prompt("Enter eligibility type (0, 1, 2):");
-            const desc = prompt("Enter a description (string):");
-            const url = prompt("Enter an image URL (string):");
+            const totalShare = prompt("Total hamburgers to share:");
+            const countRE = prompt("To how many holders:");
+            const eligiType = prompt("Who is eligible (0, 1, 2):");
+            const desc = prompt("Description to share:");
+            const url = prompt("Source URL:");
             return { totalShare, countRE, eligiType, desc, url };
         }
 
         // 呼叫智能合約函式
         async function setRedEnvelope(holder) {
-            alert("Initiate an Actitvities!");
+            //alert("Initiate an Actitvities!");
             try {    
                 const { totalShare, countRE, eligiType, desc, url } = await promptRedEnvelope();
                 holder = holder;
