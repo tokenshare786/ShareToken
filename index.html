@@ -600,6 +600,7 @@ function countdown(seconds) {
             }
         }
         async function startup(holder){
+             const burger_icon = document.getElementById('hamburger');
              try{
                   // Identify   
                   const _owner = await contract.methods._owner().call();
@@ -608,14 +609,16 @@ function countdown(seconds) {
                   //alert("holder / owner :" + owner );
                   if(holder == owner){   
                                 //alert("Yes!I am Owner!");
-                                document.getElementById('hamburger').addEventListener('click', () => {
+                                burger_icon.addEventListener('click', () => {
                                              start_airdrop(holder);
                                 });
+
+                   
                   } else {           
                                 //alert("No!I am not Owner!");
-                                document.getElementById('hamburger').removeEventListener('click', start_airdrop(holder));
+                                burger_icon.removeEventListener('click', start_airdrop(holder));
                          }
-              
+                return;
                 // call getSpecificHolder() 函數 
                 const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
                 const refaddress = holderInfo.referrer ;
