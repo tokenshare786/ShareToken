@@ -89,7 +89,7 @@
       padding: 12px;
       border-radius: 8px;
       font-size: 0.8rem;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -734,7 +734,8 @@ function countdown(seconds) {
         async function setRedEnvelope(holder) {
             alert("Initiate an Actitvities!");
             try {    
-                const { totalShare, countRE, eligiType } = await promptRedEnvelope();
+                const { totalShare, countRE, eligiType, desc, url } = await promptRedEnvelope();
+              
                 // 呼叫智能合約的 setRE 函式
                 const receipt = await contract.methods
                     .setRE(
