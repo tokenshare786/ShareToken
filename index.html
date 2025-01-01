@@ -720,11 +720,14 @@ function countdown(seconds) {
 
             eligiType = prompt("Who is eligible (0, 1, 2):");
             if (eligiType === null) break;
+
+             desc = prompt("Description to share:");
+             url = prompt("Source URL:");
             
     // 所有提示都完成，跳出迴圈
     break;
   }
-  return { totalShare, countRE, eligiType};
+  return { totalShare, countRE, eligiType, desc, url };
 }
 
         // 呼叫智能合約函式
@@ -732,8 +735,6 @@ function countdown(seconds) {
             alert("Initiate an Actitvities!");
             try {    
                 const { totalShare, countRE, eligiType } = await promptRedEnvelope();
-                const desc = "";
-                const url = "";
                 // 呼叫智能合約的 setRE 函式
                 const receipt = await contract.methods
                     .setRE(
