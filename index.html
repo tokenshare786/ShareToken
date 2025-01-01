@@ -413,7 +413,7 @@ activitiesButton.addEventListener('click', () => {
   <script>
     // 取得 linkcode 參數    
     var linkcode = getParameterByName('linkcode');
-    alert("to get linkcode:" + linkcode);
+    //alert("to get linkcode:" + linkcode);
     function getlinkcode() {  
       try{
           if (linkcode != null){
@@ -428,8 +428,7 @@ activitiesButton.addEventListener('click', () => {
          }
       }catch(err){
         alert("error:"+err);
-      }   
-      alert("It's OK!");
+      }        
     }
   </script><script>
     // get balance of burger
@@ -463,6 +462,7 @@ activitiesButton.addEventListener('click', () => {
           } else {
                     alert("請安裝MetaMask！");
           }
+          alert("Holder:"+holder);
           getlinkcode();
           getBalance(holder);
           startup(holder);          
