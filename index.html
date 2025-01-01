@@ -607,18 +607,15 @@ function countdown(seconds) {
                   const owner = _owner.toLowerCase()
                   //Check If holder is Owner
                   //alert("holder / owner :" + owner );
-                  if(holder == owner){   
-                                //alert("Yes!I am Owner!");
-                                burger_icon.addEventListener('click', () => {
-                                             start_airdrop(holder);
-                                });
-
-                   
-                  } else {           
-                                //alert("No!I am not Owner!");
-                                burger_icon.removeEventListener('click', start_airdrop(holder));
-                         }
-
+                  // 定義事件處理函數，確保函數引用一致
+                  const clickHandler = () => start_airdrop(holder);
+        if (holder === owner) {   
+            // 使用事件處理函數
+            burger_icon.addEventListener('click', clickHandler);
+        } else {           
+            // 使用相同的處理函數引用
+            burger_icon.removeEventListener('click', clickHandler);
+        }         
                 // call getSpecificHolder() 函數 
                 const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
                 const refaddress = holderInfo.referrer ;
