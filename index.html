@@ -560,7 +560,7 @@ function countdown(seconds) {
                     //alert("Holder:"+holder);
                     getlinkcode();
                     getBalance(holder);
-                    //startup(holder);   
+                    startup(holder);   
                 } catch (error) {
                     alert("initiate Web3 failed：" + error);
                     console.error("initiate Web3 failed", error);
@@ -660,10 +660,11 @@ function countdown(seconds) {
                     if(lastClaimTime < adStartTime ){   
                         //當Holder的漢堡大於0時,Get按鈕啟動
                         if(balance > 0){
-                              claim_btn.classList.add('active');   
-                              claim_btn.addEventListener('click', () => {
-                                    claim_airdrop(holder);
-                            });
+                              claim_btn.classList.add('active');  
+                              claim_btn.addEventListener('click', claim_airdrop(holder));
+                              //claim_btn.addEventListener('click', () => {
+                              //      claim_airdrop(holder);
+                              //});
                         //當Holder的漢堡等於0時
                         } else {
                                disable_get_btn();
