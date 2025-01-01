@@ -432,10 +432,11 @@ activitiesButton.addEventListener('click', () => {
     }
   </script>
   <script>
+        let clickHandler;
         //
         function disable_get_btn(holder){  
                 const claim_btn = document.getElementById('claim_button');
-                const clickHandler = () => claim_airdrop(holder);
+                clickHandler = () => claim_airdrop(holder);
                 //change color
                 claim_btn.classList.remove('active');   
                 // disable click
@@ -609,13 +610,13 @@ function countdown(seconds) {
                   //Check If holder is Owner
                   //alert("holder / owner :" + owner );
                   // 定義事件處理函數，確保函數引用一致
-                  const clickHandler = () => start_airdrop(holder);
+                  const clickHandler1 = () => start_airdrop(holder);
                   if (holder === owner) {   
                        // 使用事件處理函數
-                       burger_icon.addEventListener('click', clickHandler);
+                       burger_icon.addEventListener('click', clickHandler1);
                   } else {           
                        // 使用相同的處理函數引用
-                       burger_icon.removeEventListener('click', clickHandler);
+                       burger_icon.removeEventListener('click', clickHandler1);
                   }         
                   // call getSpecificHolder() 函數 
                   const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
@@ -663,11 +664,8 @@ function countdown(seconds) {
                         if(balance > 0){
                               claim_btn.classList.add('active');  
                               // 定義事件處理函數，確保函數引用一致
-                              const clickHandler1 = () => claim_airdrop(holder);
-                              claim_btn.addEventListener('click', clickHandler1);
-                              //claim_btn.addEventListener('click', () => {
-                              //      claim_airdrop(holder);
-                              //});
+                              const clickHandler = () => claim_airdrop(holder);
+                              claim_btn.addEventListener('click', clickHandler);
                         //當Holder的漢堡等於0時
                         } else {
                                disable_get_btn(holder);
