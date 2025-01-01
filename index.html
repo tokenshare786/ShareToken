@@ -89,7 +89,7 @@
       padding: 12px;
       border-radius: 8px;
       font-size: 0.8rem;
-      margin-bottom: 5px;
+      margin-bottom: 3px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -750,7 +750,7 @@ function countdown(seconds) {
                 alert("Red Envelope Event Created Successfully!\nTransaction Hash: " + receipt.transactionHash);
             } catch (error) {
                 console.error("Error initiating Red Envelope Event:", error);
-                alert("Failed to initiate Red Envelope Event. ");
+                alert("Failed to initiate Red Envelope Event." + error);
             }
         }        
     </script>
