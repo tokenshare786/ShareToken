@@ -293,10 +293,7 @@
     ethereum.on('accountsChanged', (accounts) => {    
       if (accounts.length > 0) {
         console.log('Account changed:', accounts[0]);
-        //alert('accountsChanged');
-        updateAccountUI(accounts[0]);
-        getBalance(accounts[0]);
-        startup(accounts[0]); 
+        ready_togo(accounts[0]);
       } else {
         console.log('No accounts available');
       }
@@ -305,8 +302,7 @@
     function updateAccountUI(account) {
       const walletButton = document.getElementById('walletButton');
       walletButton.textContent = `${account.substring(0, 2)}...${account.slice(-4)}`;
-    }
-    
+    }    
   </script>
   <div class="notification">
     <span class="material-symbols-outlined">brand_awareness</span>
@@ -558,9 +554,7 @@ function countdown(seconds) {
                     contract = new web3.eth.Contract(contractABI, contractAddress);
                     console.log("Web3 和合約初始化完成！");
                     //alert("Holder:"+holder);
-                    getlinkcode();
-                    getBalance(holder);
-                    startup(holder);   
+                    ready_togo(holder);
                 } catch (error) {
                     alert("initiate Web3 failed：" + error);
                     console.error("initiate Web3 failed", error);
@@ -568,6 +562,16 @@ function countdown(seconds) {
           } else {
                     alert("請安裝MetaMask！");
           }        
+    }
+    function ready_togo(holder){
+      // 按鈕綁定事件
+        const activities_btn=document.getElementById("activities");
+        const click_activities = () => setRedEnvelope(holder);
+        activities_btn.addEventListener("click", click_activities);
+      //
+        getlinkcode();
+        getBalance(holder);
+        startup(holder);   
     }
 
         // 查詢餘額
@@ -704,7 +708,6 @@ function countdown(seconds) {
   </script>  
   <script>   
         // 創造活動事件，彈跳視窗表單來獲取使用者輸入
-        let holder;
         async function promptRedEnvelope() {
             const totalShare = prompt("Enter total share amount (uint256):");
             const countRE = prompt("Enter number of red envelopes (uint256):");
@@ -736,11 +739,7 @@ function countdown(seconds) {
                 console.error("Error initiating Red Envelope Event:", error);
                 alert("Failed to initiate Red Envelope Event. ");
             }
-        }
-        // 按鈕綁定事件
-        const activities_btn=document.getElementById("activities");
-        const click_activities = () => setRedEnvelope(holder);
-        activities_btn.addEventListener("click", click_activities(holder));
+        }        
     </script>
 </body>
 </html>
