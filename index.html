@@ -506,13 +506,13 @@ activitiesButton.addEventListener('click', () => {
                   //Check If holder is Owner
                   //alert("holder / owner :" + owner );
                   if(holder == owner){   
-                                     alert("Yes!I am Owner!");
+                                     //alert("Yes!I am Owner!");
                                      document.getElementById('hamburger').addEventListener('click', () => {
                                      start_airdrop(holder);
                                   });
                   } else {           
-                            alert("No!I am not Owner!");
-                            document.getElementById('hamburger').removeEventListener('click', start_airdrop);
+                            //alert("No!I am not Owner!");
+                            document.getElementById('hamburger').removeEventListener('click', start_airdrop(holder));
                          }
              //} catch ( err ){
              //          alert("error1:"+err);
@@ -595,7 +595,7 @@ activitiesButton.addEventListener('click', () => {
                 //change color
                 claim_btn.classList.remove('active');   
                 // disable click
-                claim_btn.removeEventListener('click', claim_airdrop);
+                claim_btn.removeEventListener('click', claim_airdrop());
         }
         async function start_airdrop(holder) {
             // 確認彈窗
