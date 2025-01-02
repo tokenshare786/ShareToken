@@ -8,9 +8,9 @@ async function getAvailableRE(linkcode) {
         // 將輸入的 linkcode 轉換為十六進制
         const linkcodeHex = web3.utils.asciiToHex(linkcode);
 
-        // 調用智能合約的 getAvailableRE 函數
+        // 調用智能合約的 getSpecificRE 函數
         const availableRE = await contract.methods
-            .getAvailableRE(linkcodeHex)
+            .getSpecificRE(1)
             .call({ from: userAddress });
 
         // 載入結果頁面並顯示查詢結果
