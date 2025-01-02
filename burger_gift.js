@@ -3,9 +3,9 @@ _initial();
 async function _initial(){
 try {
         // 獲取當前用戶地址
-        //const holder = await connectWallet();  
+        const holder = await connectWallet();  
         //const linkcode = await getParameterByName('linkcode');       
-        const burgerBox = await getAvailableRE(linkcode);
+        const burgerBox = await getBalance(holder);
         alert("BurgerBox[1]:"+ burgerBox );
     } catch (error) {
         console.error("Error:", error);
