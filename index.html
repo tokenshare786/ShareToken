@@ -355,6 +355,7 @@
             try {
                 const response = await fetch("red_envelopes.html"); // The new page with the envelope logic
                 const html = await response.text();
+                alert("index try to get response.text()");
 
                 // Replace the content inside #content
                 document.getElementById("content").innerHTML = html;
@@ -816,18 +817,18 @@ async function setRedEnvelope(holder) {
             .send({ from: holder });
 
         // 获取交易哈希
-        const transactionHash = receipt.transactionHash;
+        //const transactionHash = receipt.transactionHash;
 
         // 成功执行后显示交易信息
         alert(
             "Return: " + JSON.stringify(receipt) +
-            "\nRed Envelope Created Successfully!" +
-            "\nTXHash: " + transactionHash
+            "\nRed Envelope Created Successfully!"
+            //+ "\nTXHash: " + transactionHash
         );
 
     } catch (error) {
         console.error("Error initiating Red Envelope Event:", error);
-        alert("Failed to initiate Red Envelope.\nError: " + error.message);
+        alert("Failed to share BURGER: " + error.message);
     }
 }
    
