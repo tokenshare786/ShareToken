@@ -897,21 +897,23 @@ try {
 
 
     // 格式化和显示结果
-    alert(`
-        Sub Amount: ${subAmtInEther} ETH
-        Claimed Amount: ${claimedAmtInEther} ETH
-        Max Claims: ${maxClaims}
-        Claim Count: ${claimCount}
-        Creator: ${redEnvelopeInfo.creator}
-        Eligible Type: ${redEnvelopeInfo.eligiType}
-        Description: ${redEnvelopeInfo.desc}
-        Image URL: ${redEnvelopeInfo.imgUrl}
-        Start Time: ${startTime}
-        Is Active: ${isActive}
-    `);
+    //alert(`
+    //    Sub Amount: ${subAmtInEther} ETH
+    //    Claimed Amount: ${claimedAmtInEther} ETH
+    //    Max Claims: ${maxClaims}
+    //    Claim Count: ${claimCount}
+    //    Creator: ${redEnvelopeInfo.creator}
+    //    Eligible Type: ${redEnvelopeInfo.eligiType}
+    //    Description: ${redEnvelopeInfo.desc}
+    //    Image URL: ${redEnvelopeInfo.imgUrl}
+    //    Start Time: ${startTime}
+    //    Is Active: ${isActive}
+    //);
+  return redEnvelopeInfo;
 } catch (error) {
     console.error("Error fetching red envelope info:", error);
     alert("Failed to fetch red envelope info. Error: " + error.message);
+  return [];
 }
 
 }
