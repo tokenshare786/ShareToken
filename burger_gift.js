@@ -51,7 +51,7 @@ async function loadburgerBoxPage(item) {
         content.appendChild(row);
 
         // 顯示表格
-        resultTable.hidden = false;
+        //resultTable.hidden = false;
     } catch (err) {
         console.error("Error loading content:", err);
         alert("Failed to load the red envelope page." + err);            
