@@ -1,4 +1,4 @@
-alert("What a wonderful burger！");
+//alert("What a wonderful burger！");
 _initial();
 
 async function _initial(){
