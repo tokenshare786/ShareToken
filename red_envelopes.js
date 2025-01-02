@@ -76,7 +76,7 @@ async function loadRedEnvelopesPage(data) {
 // 主流程：獲取 linkcode 並執行查詢
 window.onload = async function () {
     alert("red_envelope！Give me burgers！")
-    const linkcode = getParameterByName('linkcode');
+    //const linkcode = getParameterByName('linkcode');
     if (linkcode == null) {
         linkcode ="";
     }    
