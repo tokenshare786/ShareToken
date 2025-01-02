@@ -16,9 +16,8 @@ try {
         // 初始化智能合約
         contract = new web3.eth.Contract(contractABI, contractAddress);
         // 調用智能合約的 getSpecificRE 函數
-        const reid = 1;
-
-        const burgerBox = await contract.methods.redEnv(reid).call();
+        //const reid = 1;
+        const burgerBox = await contract.methods.reID().call();
         alert("BurgerBox[1]:"+ burgerBox );
     } catch (error) {
         console.error("Error:", error);
