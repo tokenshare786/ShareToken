@@ -880,33 +880,38 @@ async function setRedEnvelope(holder) {
 }
     // 獲取特定 holder 的紅包資訊
 async function getSpecificRE(reid) {
-    try {
-        // 確保 reid 是數字並轉換為 BigInt（如果必要）
-        const reidBigInt = BigInt(reid);
+    const reidBigInt = BigInt(reid);
 
-        // 呼叫合約函式
-        const redEnvelopeInfo = await contract.methods.getSpecificRE(reidBigInt).call();
+try {
+    // 调用合约函数
+    const redEnvelopeInfo = await contract.methods.getSpecificRE(reidBigInt).call();
 
-        // 格式化和顯示結果
-        console.log("Red Envelope Info:", redEnvelopeInfo);
-        alert(`
-            Sub Amount: ${web3.utils.fromWei(redEnvelopeInfo.subAmt, "ether")} ETH
-            Claimed Amount: ${web3.utils.fromWei(redEnvelopeInfo.claimedAmt, "ether")} ETH
-            Max Claims: ${redEnvelopeInfo.maxClaims}
-            Claim Count: ${redEnvelopeInfo.claimCount}
-            Creator: ${redEnvelopeInfo.creator}
-            Eligible Type: ${redEnvelopeInfo.eligiType}
-            Description: ${redEnvelopeInfo.desc}
-            Image URL: ${redEnvelopeInfo.imgUrl}
-            Start Time: ${new Date(redEnvelopeInfo.startTime * 1000).toLocaleString()}
-            Is Active: ${redEnvelopeInfo.isActive ? "Yes" : "No"}
-        `);
+    // 确保字段类型正确
+    const subAmtInEther = web3.utils.fromWei(redEnvelopeInfo.subAmt.toString(), "ether");
+    const claimedAmtInEther = web3.utils.fromWei(redEnvelopeInfo.claimedAmt.toString(), "ether");
+    const maxClaims = parseInt(redEnvelopeInfo.maxClaims, 10);
+    const claimCount = parseInt(redEnvelopeInfo.claimCount, 10);
+    const startTime = new Date(Number(redEnvelopeInfo.startTime) * 1000).toLocaleString();
+    const isActive = redEnvelopeInfo.isActive === "true" ? "Yes" : "No";
 
-        return redEnvelopeInfo;
-    } catch (error) {
-        console.error("Error fetching Red Envelope info:", error);
-        alert("Failed to fetch info.\nError: " + error.message);
-    }
+    // 格式化和显示结果
+    alert(`
+        Sub Amount: ${subAmtInEther} ETH
+        Claimed Amount: ${claimedAmtInEther} ETH
+        Max Claims: ${maxClaims}
+        Claim Count: ${claimCount}
+        Creator: ${redEnvelopeInfo.creator}
+        Eligible Type: ${redEnvelopeInfo.eligiType}
+        Description: ${redEnvelopeInfo.desc}
+        Image URL: ${redEnvelopeInfo.imgUrl}
+        Start Time: ${startTime}
+        Is Active: ${isActive}
+    `);
+} catch (error) {
+    console.error("Error fetching red envelope info:", error);
+    alert("Failed to fetch red envelope info. Error: " + error.message);
+}
+
 }
     </script>
 </body>
