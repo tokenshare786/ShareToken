@@ -892,7 +892,9 @@ try {
     const maxClaims = parseInt(redEnvelopeInfo.maxClaims, 10);
     const claimCount = parseInt(redEnvelopeInfo.claimCount, 10);
     const startTime = new Date(Number(redEnvelopeInfo.startTime) * 1000).toLocaleString();
-    const isActive = redEnvelopeInfo.isActive === "true" ? "Yes" : "No";
+    //const isActive = redEnvelopeInfo.isActive === "true" ? "Yes" : "No";
+     const isActive = redEnvelopeInfo.isActive === "true" || redEnvelopeInfo.isActive === true;
+
 
     // 格式化和显示结果
     alert(`
