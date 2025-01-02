@@ -13,7 +13,7 @@ try {
         if (reid) {
            re = await getSpecificRE(reid);
         }
-        await loadRedEnvelopesPage(re);     
+        await loadburgerBoxPage(re);     
         
     } catch (error) {
         console.error("Error:", error);
@@ -21,8 +21,8 @@ try {
     }
 }
 
-// Load Red Envelopes Page and Display a Single Result
-async function loadRedEnvelopePage(item) {
+// Load burgerBoxPage and Display a Single Result
+async function loadburgerBoxPage(item) {
     try {       
         const resultTable = document.getElementById("resultTable");
         const resultBody = document.getElementById("resultBody");
