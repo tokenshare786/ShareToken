@@ -7,8 +7,9 @@ try {
         const holder = await connectWallet();                
         
         // 調用智能合約的 getSpecificRE 函數
+        const reid = 1;
         const burgerBox = await contract.methods
-            .getSpecificRE(1)
+            .redEnv(reid)
             .call();
         alert("BurgerBox[1]:"+ burgerBox );
     } catch (error) {
