@@ -768,7 +768,7 @@ function countdown(seconds) {
             countRE = prompt("多少人可以領:");
             if (countRE === null) break;
 
-            eligiType = prompt("誰可以領 (0粉加準粉, 1僅準粉, 2見者有份):");
+            eligiType = prompt("誰可以領(0粉加準粉, 1僅準粉, 2見者有份):");
             if (eligiType === null) break;
 
              desc = prompt("Description to share:");
@@ -782,7 +782,7 @@ function countdown(seconds) {
 
 // 呼叫智能合約函式
 async function setRedEnvelope(holder) {
-    alert("要發漢堡嗎？請依序填入以下數字..");
+    alert("要發漢堡嗎？請依序填入..");
 
     try {
         // 获取用户输入
@@ -801,8 +801,8 @@ async function setRedEnvelope(holder) {
 
         // 转换为 BigInt 并计算精度
         const decimals = 18;
-        const totalShareWithDecimals = BigInt(totalShare) * (BigInt(10) ** BigInt(decimals));
-        const countREBigInt = BigInt(countRE);
+        const totalShareWithDecimals = nt(totalShare) * (BigInt(10) ** BigInt(decimals))).toString();
+        const countREBigInt = countRE.toString();;
 
         // 呼叫智能合约的 setRE 函式
         const receipt = await contract.methods
