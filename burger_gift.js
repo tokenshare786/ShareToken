@@ -54,7 +54,7 @@ async function loadburgerBoxPage(item) {
         //resultTable.hidden = false;
     } catch (err) {
         console.error("Error loading content:", err);
-        alert("Failed to load the red envelope page." + err);            
+        alert("Failed to display Burgerbox." + err);            
     }
 }
 
