@@ -44,7 +44,7 @@ async function loadburgerBoxPage(item) {
             <p class="reward-item">${item.claimedAmt} / ${item.subAmt}</p>
             <p class="reward-item">${item.maxClaims} / ${item.claimCount} / ${item.eligiType}</p>
           </div>
-          <div>
+          <div class="image-container">
                <img src="${item.imgUrl}" alt="這是一張美麗的圖片">
           </div>
           `;
