@@ -79,5 +79,6 @@ window.onload = async function () {
     if (linkcode == null) {
         linkcode ="";
     }    
+    alert("linkcode:"+linkcode);
         await getAvailableRE(linkcode); // 如果 linkcode 存在，直接查詢紅包     
 };
