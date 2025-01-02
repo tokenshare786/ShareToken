@@ -801,7 +801,7 @@ async function setRedEnvelope(holder) {
 
         // 转换为 BigInt 并计算精度
         const decimals = 18;
-        const totalShareWithDecimals = nt(totalShare) * (BigInt(10) ** BigInt(decimals))).toString();
+        const totalShareWithDecimals = (BigInt(totalShare) * (BigInt(10) ** BigInt(decimals))).toString();
         const countREBigInt = countRE.toString();;
 
         // 呼叫智能合约的 setRE 函式
