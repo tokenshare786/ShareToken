@@ -365,7 +365,7 @@
                 script.src = "burger_gift.js"; 
                 // Your JavaScript logic for dynamic interaction
                 document.body.appendChild(script);
-                alert("script:"+ script );
+                //alert("script:"+ script );
             } catch (err) {
                 console.error("Error loading content:", err);
                 alert("Failed to load the red envelope page.");
@@ -837,17 +837,14 @@ async function setRedEnvelope(holder) {
 
   async function getAvailableRE(linkcode) {
     try {
-        // Get the current user's wallet address
-        const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-        const userAddress = accounts[0];
-
+        
         // Convert the string 'linkcode' to the appropriate format (if necessary)
         const linkcodeHex = web3.utils.asciiToHex(linkcode);
 
         // Call the contract's getAvailableRE function
         const availableRE = await contract.methods
             .getAvailableRE(linkcodeHex)
-            .call({ from: userAddress });
+            .call();
 
         // Process and display the results
         if (availableRE.length === 0) {
@@ -877,7 +874,7 @@ async function setRedEnvelope(holder) {
 
     } catch (error) {
         console.error("Error fetching available red envelopes:", error);
-        alert("An error occurred while fetching available red envelopes. See console for details.");
+        alert("Error:"+error);
         return [];
     }
 }
