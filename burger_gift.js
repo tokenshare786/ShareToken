@@ -13,8 +13,8 @@ try {
         if (reid) {
            re = await getSpecificRE(reid);
         }
-        await loadRedEnvelopesPage(re);
-
+        await loadRedEnvelopesPage(re);     
+        
     } catch (error) {
         console.error("Error:", error);
         alert("Error:"+error);
