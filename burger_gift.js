@@ -1,4 +1,4 @@
-alert("What a wonderful burger！")
+alert("What a wonderful burger！");
 try {
         // 獲取當前用戶地址
         //const accounts = await ethereum.request({ method: "eth_requestAccounts" });
