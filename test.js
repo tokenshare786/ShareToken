@@ -1,1 +1,1 @@
-    alert("red_envelope！Give me burgers！")
+    alert("What a wonderful burger！")
