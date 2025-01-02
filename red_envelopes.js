@@ -15,6 +15,7 @@ async function getAvailableRE(linkcode) {
 
         // 載入結果頁面並顯示查詢結果
         await loadRedEnvelopesPage(availableRE);
+        alert("data process loading");
     } catch (error) {
         console.error("Error fetching available red envelopes:", error);
         alert("An error occurred while fetching available red envelopes.");
