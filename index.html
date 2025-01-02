@@ -762,13 +762,13 @@ function countdown(seconds) {
     async function promptRedEnvelope() {
        let totalShare, countRE, eligiType, desc, url;
        while (true) {
-            totalShare = prompt("Total hamburgers to share:");
+            totalShare = prompt("要發多少漢堡:");
             if (totalShare === null) break; // 如果使用者按取消，則跳出迴圈
 
-            countRE = prompt("To how many holders:");
+            countRE = prompt("多少人可以領:");
             if (countRE === null) break;
 
-            eligiType = prompt("Who is eligible (0, 1, 2):");
+            eligiType = prompt("誰可以領 (0粉加準粉, 1僅準粉, 2見者有份):");
             if (eligiType === null) break;
 
              desc = prompt("Description to share:");
@@ -780,32 +780,57 @@ function countdown(seconds) {
   return { totalShare, countRE, eligiType, desc, url };
 }
 
-        // 呼叫智能合約函式
-        async function setRedEnvelope(holder) {
-            alert("Initiate an Actitvities!");
-            try {    
-                const { totalShare, countRE, eligiType, desc, url } = await promptRedEnvelope();
-                // Convert totalShare and countRE to BigInt
-                const totalShareBigInt = BigInt(totalShare);
-                const countREBigInt = BigInt(countRE);
-                // 呼叫智能合約的 setRE 函式
-                const receipt = await contract.methods
-                    .setRE(
-                        totalShareBigInt, // 確保轉換為正確的類型
-                        countREBigInt,
-                        parseInt(eligiType),
-                        desc,
-                        url
-                    )
-                    .send({ from: holder });
+// 呼叫智能合約函式
+async function setRedEnvelope(holder) {
+    alert("要發漢堡嗎？請依序填入以下數字..");
 
-                // 成功執行後顯示交易資訊
-                alert("Red Envelope Event Created Successfully!\nTransaction Hash: " + receipt.transactionHash);
-            } catch (error) {
-                console.error("Error initiating Red Envelope Event:", error);
-                alert("Failed to initiate Red Envelope Event." + error);
-            }
-        }        
+    try {
+        // 获取用户输入
+        const { totalShare, countRE, eligiType, desc, url } = await promptRedEnvelope();
+
+        // 验证用户输入
+        if (isNaN(totalShare) || isNaN(countRE) || isNaN(eligiType)) {
+            alert("Invalid input. Please enter valid numbers.");
+            return;
+        }
+
+        if (parseInt(eligiType) < 0 || parseInt(eligiType) > 2) {
+            alert("Eligibility type must be between 0 and 2.");
+            return;
+        }
+
+        // 转换为 BigInt 并计算精度
+        const decimals = 18;
+        const totalShareWithDecimals = BigInt(totalShare) * (BigInt(10) ** BigInt(decimals));
+        const countREBigInt = BigInt(countRE);
+
+        // 呼叫智能合约的 setRE 函式
+        const receipt = await contract.methods
+            .setRE(
+                totalShareWithDecimals, // 转换后的代币数量
+                countREBigInt,          // 红包数量
+                parseInt(eligiType),    // 转换为整数类型
+                desc,                   // 描述
+                url                     // 图片 URL
+            )
+            .send({ from: holder });
+
+        // 获取交易哈希
+        const transactionHash = receipt.transactionHash;
+
+        // 成功执行后显示交易信息
+        alert(
+            "Return: " + JSON.stringify(receipt) +
+            "\nRed Envelope Created Successfully!" +
+            "\nTXHash: " + transactionHash
+        );
+
+    } catch (error) {
+        console.error("Error initiating Red Envelope Event:", error);
+        alert("Failed to initiate Red Envelope.\nError: " + error.message);
+    }
+}
+   
 
   async function getAvailableRE(linkcode) {
     try {
