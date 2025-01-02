@@ -23,20 +23,7 @@ try {
 
 // Load Red Envelopes Page and Display a Single Result
 async function loadRedEnvelopePage(item) {
-    try {
-        // 獲取 red_envelopes.html 的內容
-        const response = await fetch("red_envelopes.html");
-        const html = await response.text();
-
-        // 替換 #content 區域的內容
-        document.getElementById("content").innerHTML = html;
-
-        // 載入 red_envelopes.js（假設裡面有動態互動邏輯）
-        const script = document.createElement("script");
-        script.src = "red_envelopes.js";
-        document.body.appendChild(script);
-
-        // 顯示查詢結果（假設 red_envelopes.html 有 #resultTable 和 #resultBody）
+    try {       
         const resultTable = document.getElementById("resultTable");
         const resultBody = document.getElementById("resultBody");
 
