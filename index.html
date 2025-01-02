@@ -355,7 +355,7 @@
             try {
                 const response = await fetch("red_envelopes.html"); // The new page with the envelope logic
                 const html = await response.text();
-                alert("index try to get response.text()");
+                alert("html:"+ html );
 
                 // Replace the content inside #content
                 document.getElementById("content").innerHTML = html;
