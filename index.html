@@ -166,8 +166,8 @@
      }
 
      .image-container img {
-        max-width: 100px;
-        max-height: 100px;
+        max-width: 300px;
+        max-height: 300px;
         object-fit: cover; /* 保持圖片比例，填滿容器 */
       }
 
@@ -364,17 +364,8 @@
         // Fetch and Replace Content
         document.getElementById("re_button").addEventListener("click", async (e) => {
             e.preventDefault(); // Prevent link navigation
-
             // Fetch the HTML content for red envelopes
             try {
-                //const response = await fetch("red_envelopes.html"); // The new page with the envelope logic
-                //const html = await response.text();
-                //alert("html:"+ html );
-
-                // Replace the content inside #content
-                //document.getElementById("content").innerHTML = "";
-
-                // Load the script inside the fetched HTML (if any)
                 const script = document.createElement("script");
                 script.src = "burger_gift.js"; 
                 // Your JavaScript logic for dynamic interaction
