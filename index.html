@@ -138,30 +138,44 @@
     }
     
     .card {
-    display: flex;
-    flex-direction: column;
-    background-color: #1a1a1a;
-    padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 5px;
-}
+      display: flex;
+      flex-direction: column;
+      background-color: #1a1a1a;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 5px;
+      }
 
-.card h2 {
-    font-size: 1.25rem;
-    font-weight: 600;
-}
+    .card h2 {
+       font-size: 1.25rem;
+       font-weight: 600;
+     }
 
-.reward-item {
-    margin: 0;
-    color: #bbbbbb;
-    flex: 1;
-}
+     .reward-item {
+       margin: 0;
+       color: #bbbbbb;
+       flex: 1;
+     }
 
-.buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 16px;
-}
+     .image-container {
+       width: 100px;
+       height: 100px;
+       border-radius: 50%; /* 修圓角，50% 代表圓形 */
+       box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* 陰影效果 */
+       overflow: hidden; /* 隱藏超出部分 */
+     }
+
+     .image-container img {
+        max-width: 100px;
+        max-height: 100px;
+        object-fit: cover; /* 保持圖片比例，填滿容器 */
+      }
+
+      .buttons {
+         display: flex;
+         justify-content: space-between;
+         margin-top: 16px;
+       }
 
 .buttons button {
   flex: 1;
@@ -189,7 +203,7 @@
   background-color: #1a1a1a;
   padding: 16px;
   border-radius: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .progress-card p {
@@ -203,15 +217,15 @@
   justify-content: space-between;
 }
 
-    .progress span{
-      font-size: 0.9rem;
-      margin-bottom: 8px;
-    }
+.progress span{
+   font-size: 0.9rem;
+   margin-bottom: 8px;
+}
 
-    .progress .steps {
-      display: flex;
-      gap: 8px;
-    }
+.progress .steps {
+   display: flex;
+   gap: 8px;
+}
 
     .steps span {
       width: 16px;
@@ -353,12 +367,12 @@
 
             // Fetch the HTML content for red envelopes
             try {
-                const response = await fetch("red_envelopes.html"); // The new page with the envelope logic
-                const html = await response.text();
+                //const response = await fetch("red_envelopes.html"); // The new page with the envelope logic
+                //const html = await response.text();
                 //alert("html:"+ html );
 
                 // Replace the content inside #content
-                document.getElementById("content").innerHTML = html;
+                //document.getElementById("content").innerHTML = "";
 
                 // Load the script inside the fetched HTML (if any)
                 const script = document.createElement("script");
