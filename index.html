@@ -810,7 +810,7 @@ async function setRedEnvelope(holder) {
         // 转换为 BigInt 并计算精度
         const decimals = 18;
         const totalShareWithDecimals = (BigInt(totalShare) * (BigInt(10) ** BigInt(decimals))).toString();
-        const countREBigInt = countRE.toString();;
+        const countREBigInt = countRE.toString();
 
         // 呼叫智能合约的 setRE 函式
         const receipt = await contract.methods
@@ -902,8 +902,11 @@ try {
      const isActive = redEnvelopeInfo.isActive === "true" || redEnvelopeInfo.isActive === true;
     // 將描述轉換為 bytes
     redEnvelopeInfo.desc = web3.utils.utf8ToHex(redEnvelopeInfo.desc); 
-    redEnvelopeInfo.subAmt /= 10**18;
-    redEnvelopeInfo.claimedAmt /= 10**18;
+          // 转换为 BigInt 并计算精度
+    const decimals = 18;
+    redEnvelopeInfo.subAmt = (BigInt(redEnvelopeInfo.subAmt) / (BigInt(10) ** BigInt(decimals))).toString();        
+    redEnvelopeInfo.claimedAmt = (BigInt(redEnvelopeInfo.claimedAmt) / (BigInt(10) ** BigInt(decimals))).toString();     
+    
 
     // 格式化和显示结果
     //alert(`
