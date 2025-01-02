@@ -14,7 +14,7 @@ try {
 
         // 載入結果頁面並顯示查詢結果
         //await loadRedEnvelopesPage(availableRE);
-        alert("data process loading"+1);
+        alert("data process loading"+ specificR );
     } catch (error) {
         console.error("Error fetching available red envelopes:", error);
         alert("An error occurred while fetching available red envelopes.");
