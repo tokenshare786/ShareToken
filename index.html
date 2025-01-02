@@ -155,21 +155,7 @@
        margin: 0;
        color: #bbbbbb;
        flex: 1;
-     }
-
-     .image-container {
-       width: 200px;
-       height: 200px;
-       border-radius: 8px; /* 修圓角，50% 代表圓形 */
-       box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* 陰影效果 */
-       overflow: hidden; /* 隱藏超出部分 */
-     }
-
-     .image-container img {
-        max-width: 300px;
-        max-height: 300px;
-        object-fit: cover; /* 保持圖片比例，填滿容器 */
-      }
+     }     
 
       .buttons {
          display: flex;
@@ -263,6 +249,34 @@
       margin-bottom: 12px;
     }
     
+    .container {
+      display: flex; /* 使用 flexbox 布局 */
+      justify-content: space-between; /* 將內容水平分佈，兩端對齊 */
+    }
+
+    .image-container {
+       width: 200px;
+       height: 200px;
+       border-radius: 8px; /* 修圓角，50% 代表圓形 */
+       box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* 陰影效果 */
+       overflow: hidden; /* 隱藏超出部分 */
+     }
+
+     .image-container img {
+        max-width: 300px;
+        max-height: 300px;
+        object-fit: cover; /* 保持圖片比例，填滿容器 */
+      }
+
+    .text-container {
+      flex: 1; /* 讓文字部分佔用剩餘空間 */
+    }
+
+    .main-title {
+      font-size: 24px; /* 調整主標題字體大小 */
+      font-weight: bold;
+    }
+  
   </style>
 </head>
 <body>
