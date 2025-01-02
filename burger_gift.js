@@ -3,7 +3,9 @@ _initial();
 async function _initial(){
 try {
         // 獲取當前用戶地址
-        //const holder = await connectWallet();
+        const holder = await connectWallet();
+        alert("holder:"+ holder );
+
         //const output = await getBalance(holder);
 
         const linkcode = await getParameterByName('linkcode');
