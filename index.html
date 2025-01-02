@@ -355,7 +355,7 @@
             try {
                 const response = await fetch("red_envelopes.html"); // The new page with the envelope logic
                 const html = await response.text();
-                alert("html:"+ html );
+                //alert("html:"+ html );
 
                 // Replace the content inside #content
                 document.getElementById("content").innerHTML = html;
@@ -364,6 +364,7 @@
                 const script = document.createElement("script");
                 script.src = "red_envelopes.js"; // Your JavaScript logic for dynamic interaction
                 document.body.appendChild(script);
+                alert("script:"+ script );
             } catch (err) {
                 console.error("Error loading content:", err);
                 alert("Failed to load the red envelope page.");
