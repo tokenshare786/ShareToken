@@ -60,19 +60,19 @@ function reset(){
        card.innerHTML = "";
        card.innerHTML = `
             <div class="progress" id="content">
-      <div>
-          <h2 id="notice_ad" style="display: none;"></h2>
-          <h2 id="notice_title">AirDrop</h2>   
-          <p class="reward-item" id="linetext_1">Holder reward: 3%</p>
-          <p class="reward-item" id="linetext_2">Referal reward: 1%</p>
-      </div>
-      <div class="claim_button" id="claim_button">Get</div>
-      <div class="re_button" id="re_button">Get</div>
-    </div>
-    <div class="buttons">
-      <button class="buttons button.active" id="airdrop_btn">Get Airdrop</button>
-      <button class="buttons button" id="activities_btn">Activities</button>
-    </div>        
+               <div>
+                   <h2 id="notice_ad" style="display: none;"></h2>
+                   <h2 id="notice_title">AirDrop</h2>   
+                   <p class="reward-item" id="linetext_1">Holder reward: 3%</p>
+                   <p class="reward-item" id="linetext_2">Referal reward: 1%</p>
+                </div>
+                <div class="claim_button" id="claim_button">Get</div>
+                <div class="re_button" id="re_button">Get</div>
+             </div>
+            <div class="buttons">
+                 <button class="buttons button.active" id="airdrop_btn">Get Airdrop</button>
+                 <button class="buttons button" id="activities_btn">Activities</button>
+            </div>        
             `;
 }
 
