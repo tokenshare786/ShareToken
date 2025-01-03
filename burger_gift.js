@@ -25,27 +25,27 @@ async function loadburgerBoxPage(item) {
             //resultTable.hidden = true;
             return;
         }
-         const card = document.getElementById("card");
+         const card  = document.getElementById("card");
+         const content = document.getElementById("content");
          //content.innerHTML = "";
-        document.getElementById("content").style.display= "none";           
-        const row = document.createElement("div");
-        row.id = "burgerbox";        
-        row.classList.add("progress");
-        const startTime = new Date(Number(item.startTime) * 1000).toLocaleString();
-        
-        row.innerHTML = `
+         content.style.display= "none";           
+         const row = document.createElement("div");
+         row.id = "burgerbox";        
+         row.classList.add("progress");
+         const startTime = new Date(Number(item.startTime) * 1000).toLocaleString();        
+         row.innerHTML = `
             <div>
                  <h2>${web3.utils.hexToAscii(item.desc)}</h2>
                      <p class="reward-item">${item.claimedAmt} / ${item.subAmt}</p>
                      <p class="reward-item">${item.eligiType} : ${item.claimCount} /  ${item.maxClaims}</p>
                      <p class="reward-item">${startTime}</p>
-                     <p class="notification a" onclisk="reset()">Back</p>
+                     <p class="notification a" onclick="reset()">Back</p>
             </div>
             <div class="image-container">
                <img src="${item.imgUrl}" alt="photo">  
             </div>            
           `;
-           card.appendChild(row);           
+           card.innerHTML = row.innerHTML + content.innerHTML;           
 
     } catch (err) {
         console.error("Error loading content:", err);
