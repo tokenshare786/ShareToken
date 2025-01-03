@@ -251,7 +251,7 @@
     
     .container {
       all: unset; /* 清除上層可能的樣式 */
-      display: flex; /* 使用 flexbox 布局 */
+      display: block; /* 使用 flexbox 布局 */
       justify-content: space-between; /* 將內容水平分佈，兩端對齊 */
     }
 
@@ -922,11 +922,11 @@ try {
             fromBlock: 0,                       // 起始区块（可调整）
             toBlock: "latest",                  // 结束区块
         });     
-        alert("fans:"+events.length);
+        //alert("fans:"+events.length);
         document.getElementById('fans_count').textContent = `${events.length} `;
     } catch (error) {
         console.error("查詢失败:", error);
-        alert("查詢失败:" + JSON.stringify(error, null, 2));
+        alert("查詢失敗:" + error.message);
         return null;
     }
 }
