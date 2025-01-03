@@ -27,17 +27,8 @@ async function loadburgerBoxPage(item) {
         }
          const content = document.getElementById("content");
          content.innerHTML = ""
-        // 填充表格內容（只處理一個紅包）
-        //const row = document.createElement("div");
-        //row.classList.add("progress"); 
-        const formattedTime = item.startTime.toLocaleString('zh-TW', {
-              year: 'numeric',
-              month: '2-digit',
-              day: '2-digit',
-              hour: '2-digit',
-              minute: '2-digit',
-              hour12: false
-         });
+        const startTime = new Date(Number(redEnvelopeInfo.startTime) * 1000).toLocaleString();
+        
         content.innerHTML = `
             <div>
                  <h2>${web3.utils.hexToAscii(item.desc)}</h2>
