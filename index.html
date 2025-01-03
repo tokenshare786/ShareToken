@@ -484,7 +484,7 @@ activitiesButton.addEventListener('click', () => {
     活動
   </a>
   <a href="#">
-    <span class="material-symbols-outlined">share</span>
+    <span class="material-symbols-outlined" onclick="shareMyBurger()">share</span>
     Share
   </a>
   </footer>
@@ -962,6 +962,57 @@ try {
              }
              document.getElementById('fans_count').textContent = `${index}`;
          }
+    async function shareMyBurger() {
+    try {
+        // Check if Web3 is injected (Metamask or other wallet)
+        if (typeof window.ethereum === "undefined") {
+            alert("Please install a Web3 wallet like Metamask.");
+            return;
+        }
+
+        // Request account access
+        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+        const userAddress = accounts[0];
+        //Get my refCode
+        const refCode = await contract.methods.getMyRefCode().call();
+        //      
+        if (!refCode && refCode != "") {
+           //share my http://....?linkcode=refCode
+           alert("refCode："+ refCode);
+        } else {
+          
+          refCode = prompt("請輸入想要的推薦碼(A~Z,0~9,_-@)：");
+        }
+        // Call the setMyRefCode function
+        const result = await contract.methods.setMyRefCode(refCode).send({ from: userAddress });
+
+        alert("Transaction successful:", result);
+
+        // Check the return value to determine the result
+        const returnCode = result.events ? result.events.ReturnCode.returnValues[0] : null;
+
+        switch (returnCode) {
+            case "1":
+                alert("Insufficient SHARE to set or edit referral code.");
+                break;
+            case "2":
+                alert("Invalid referral code format.");
+                break;
+            case "3":
+                alert("Referral code already in use.");
+                break;
+            case "0":
+                alert("Referral code set successfully!");
+                break;
+            default:
+                alert("Unknown result. Please check your transaction.");
+        }
+    } catch (error) {
+        console.error("Error setting referral code:", error);
+        alert("Failed to set referral code: " + error.message);
+    }
+}
+
     </script>
 </body>
 </html>
