@@ -252,6 +252,7 @@
     .container {
       display: flex; /* 使用 flexbox 布局 */
       justify-content: space-between; /* 將內容水平分佈，兩端對齊 */
+      position: relative;
     }
 
     .image-container {
@@ -259,23 +260,25 @@
        height: 200px;
        border-radius: 8px; /* 修圓角，50% 代表圓形 */
        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* 陰影效果 */
-       overflow: hidden;  /* 隱藏超出部分 */
-       margin-left: 30;
+       overflow: hidden;  /* 隱藏超出部分 */ 
      }
 
      .image-container img {
         max-width: 300px;
         max-height: 300px;
         object-fit: cover; /* 保持圖片比例，填滿容器 */
+        position: absolute;
+        top: 0; /* 與父容器頂部對齊 */
+        right: 0; /* 靠右對齊 */
       }
 
-    .text-container {
-      flex: 1; /* 讓文字部分佔用剩餘空間 */
-    }
+      .text-container {
+       flex: 1; /* 讓文字部分佔用剩餘空間 */
+      }
 
-    .main-title {
-      font-size: 24px; /* 調整主標題字體大小 */
-      font-weight: bold;
+      .main-title {
+       font-size: 24px; /* 調整主標題字體大小 */
+       font-weight: bold;
     }
   
   </style>
