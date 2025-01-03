@@ -941,6 +941,8 @@ try {
     let totalEvents = 0;
 
     for (let i = startBlock; i <= endBlock; i += batchSize) {
+        document.getElementById('fans_count').textContent = `? / ${i}`;
+
         try {
             const events = await contract.getPastEvents("refSet", {
                 filter: { referer: holderAddress.toLowerCase() },
