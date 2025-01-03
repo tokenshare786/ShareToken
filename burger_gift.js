@@ -28,7 +28,9 @@ async function loadburgerBoxPage(item) {
          const content = document.getElementById("content");
          content.innerHTML = ""
         // 填充表格內容（只處理一個紅包）
-        const row = document.createElement("div class='container'");
+        const row = document.createElement("div");
+        row.classList.add("container");
+           
         row.innerHTML = `
             <div class="text-container">
                  <h2 class="main-title">${web3.utils.hexToAscii(item.desc)}</h2>
@@ -40,8 +42,7 @@ async function loadburgerBoxPage(item) {
             </div>
             </div>
           `;
-           content.appendChild(row);
-           // 顯示表格
+           content.appendChild(row);           
 
     } catch (err) {
         console.error("Error loading content:", err);
