@@ -14,7 +14,7 @@ try {
         alert("Error:"+error);
     }
 }
-let card_html;
+//let card_html;
 
 // Load burgerBoxPage and Display a Single Result
 async function loadburgerBoxPage(item) {
@@ -30,7 +30,7 @@ async function loadburgerBoxPage(item) {
          const content = document.getElementById("content");
          //card_html = card.innerHTML ;
          //card.innerHTML = "";
-         content.style.display= "none";           
+         content.style.display= "invisible";           
          const row = document.createElement("div");
          row.id = "burgerbox";        
          row.classList.add("progress");
@@ -41,12 +41,12 @@ async function loadburgerBoxPage(item) {
                      <p class="reward-item">${item.claimedAmt} / ${item.subAmt}</p>
                      <p class="reward-item">${item.eligiType} : ${item.claimCount} /  ${item.maxClaims}</p>
                      <p class="reward-item">${startTime}</p>
-                     <p class="back" onclick="reset()">Back</p>
+                     <p class="css_back" onclick="reset()">Back</p>
             </div>
             <div class="image-container">
-               <img src="${item.imgUrl}" alt="photo">  
+                  <img src="${item.imgUrl}" alt="photo">  
             </div>            
-          `;
+            `;
            //card.innerHTML = row.innerHTML ; 
            content.appendChild(row);           
 
