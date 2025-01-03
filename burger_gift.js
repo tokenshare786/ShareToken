@@ -30,17 +30,26 @@ async function loadburgerBoxPage(item) {
         // 填充表格內容（只處理一個紅包）
         //const row = document.createElement("div");
         //row.classList.add("progress"); 
+        const formattedTime = item.startTime.toLocaleString('zh-TW', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit',
+              hour12: false
+         });
         content.innerHTML = `
             <div>
                  <h2>${web3.utils.hexToAscii(item.desc)}</h2>
                      <p class="reward-item">${item.claimedAmt} / ${item.subAmt}</p>
                      <p class="reward-item">${item.eligiType} : ${item.claimCount} /  ${item.maxClaims}</p>
+                     <p class="reward-item">${formattedTime}</p>
             </div>
             <div class="image-container">
                <img src="${item.imgUrl}" alt="photo">  
             </div>            
           `;
-           content.appendChild(content);           
+           //content.appendChild(content);           
 
     } catch (err) {
         console.error("Error loading content:", err);
