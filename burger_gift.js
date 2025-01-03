@@ -39,7 +39,7 @@ async function loadburgerBoxPage(item) {
                      <p class="reward-item">${item.claimedAmt} / ${item.subAmt}</p>
                      <p class="reward-item">${item.eligiType} : ${item.claimCount} /  ${item.maxClaims}</p>
                      <p class="reward-item">${startTime}</p>
-                     <p class"notification a" onclisk="reset()">Back</p>
+                     <p class="notification a" onclisk="reset()">Back</p>
             </div>
             <div class="image-container">
                <img src="${item.imgUrl}" alt="photo">  
