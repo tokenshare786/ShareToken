@@ -29,9 +29,7 @@ async function loadburgerBoxPage(item) {
          content.innerHTML = ""
         // 填充表格內容（只處理一個紅包）
         //const row = document.createElement("div");
-        //row.classList.add("progress");  
-         
-    </div>
+        //row.classList.add("progress"); 
         content.innerHTML = `
             <div>
                  <h2>${web3.utils.hexToAscii(item.desc)}</h2>
