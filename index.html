@@ -921,7 +921,8 @@ try {
             filter: { referer: holderAddress }, // 过滤条件：指定 holder
             fromBlock: 0,                       // 起始区块（可调整）
             toBlock: "latest",                  // 结束区块
-        });      
+        });     
+        alert("fans:"+events.length);
         document.getElementById('fans_count').textContent = `${events.length} `;
     } catch (error) {
         console.error("查詢失败:", error);
