@@ -39,8 +39,7 @@ async function loadburgerBoxPage(item) {
             </div>
             <div class="image-container">
                <img src="${item.imgUrl}" alt="photo">  
-            </div>
-            </div>
+            </div>            
           `;
            content.appendChild(row);           
 
