@@ -31,10 +31,10 @@ async function loadburgerBoxPage(item) {
          //card_html.style.display= "invisible";           
          const row = document.createElement("div");
          row.id = "burgerbox";        
-         row.classList.add("progress");
+         //row.classList.add("progress");
          const startTime = new Date(Number(item.startTime) * 1000).toLocaleString();        
          row.innerHTML = `
-            <div>
+            <div class="new-container">
                  <h2>${web3.utils.hexToAscii(item.desc)}</h2>
                      <p class="reward-item">${startTime} & ${item.claimedAmt} / ${item.subAmt} 【${item.eligiType}】: ${item.claimCount} /  ${item.maxClaims}</p>
                      <span class="progress">
