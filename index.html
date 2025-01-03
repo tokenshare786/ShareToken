@@ -163,11 +163,11 @@
          margin-top: 16px;
        }
 
-.buttons button {
-  flex: 1;
-  text-align: center;
-  margin: 0 4px;
-  padding: 10px;
+      .buttons button {
+         flex: 1;
+         text-align: center;
+         margin: 0 4px;
+         padding: 10px;
   border: none;
   border-radius: 8px;
   font-size: 0.9rem;
@@ -265,8 +265,8 @@
      }
 
      .image-container img {
-        max-width: 300px;
-        max-height: 300px;
+        max-width: 250px;
+        max-height: 250px;
         object-fit: cover; /* 保持圖片比例，填滿容器 */
       }
 
@@ -896,7 +896,7 @@ try {
     const claimedAmtInEther = web3.utils.fromWei(redEnvelopeInfo.claimedAmt.toString(), "ether");
     const maxClaims = parseInt(redEnvelopeInfo.maxClaims, 10);
     const claimCount = parseInt(redEnvelopeInfo.claimCount, 10);
-    const startTime = new Date(Number(redEnvelopeInfo.startTime) * 1000).toLocaleString();
+    
     //const isActive = redEnvelopeInfo.isActive === "true" ? "Yes" : "No";
      const isActive = redEnvelopeInfo.isActive === "true" || redEnvelopeInfo.isActive === true;
     // 將描述轉換為 bytes
