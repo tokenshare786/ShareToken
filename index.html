@@ -927,13 +927,13 @@ try {
         //alert("查詢我推荐了多少人數");
     try {
         // 查询指定 holder 的推荐关系
-        const events = await contract.methods.getMyfansAddr().call(); 
-        document.getElementById('fans_count').textContent = `${events.length} `;
+        const events = await contract.methods.getMyfansAddr().call();
       } catch (error) {
           console.error("查詢失败:", error);
           alert("查詢失敗:" + error.message);
           return null;
       }
+      document.getElementById('fans_count').textContent = `${events.length} `;
    }
     async function _fetchReferer(holderAddress) {
          const fans_count = document.getElementById('fans_count')
