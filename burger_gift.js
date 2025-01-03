@@ -27,8 +27,8 @@ async function loadburgerBoxPage(item) {
         }
          const card  = document.getElementById("card");
          const content = document.getElementById("content");
-         //content.innerHTML = "";
-         content.style.display= "none";           
+         content.innerHTML = "";
+         //content.style.display= "none";           
          const row = document.createElement("div");
          row.id = "burgerbox";        
          row.classList.add("progress");
@@ -45,7 +45,7 @@ async function loadburgerBoxPage(item) {
                <img src="${item.imgUrl}" alt="photo">  
             </div>            
           `;
-           card.innerHTML = row.innerHTML + content.innerHTML;           
+           card.innerHTML = row.innerHTML ;           
 
     } catch (err) {
         console.error("Error loading content:", err);
