@@ -34,17 +34,19 @@ async function loadburgerBoxPage(item) {
          //row.classList.add("progress");
          const startTime = new Date(Number(item.startTime) * 1000).toLocaleString();        
          row.innerHTML = `
-            <div class="new-container">
-                 <h2>${web3.utils.hexToAscii(item.desc)}</h2>
-                     <p class="reward-item">${startTime} & ${item.claimedAmt} / ${item.subAmt} 【${item.eligiType}】: ${item.claimCount} /  ${item.maxClaims}</p>
+            <div>
+                     <h2>${web3.utils.hexToAscii(item.desc)}</h2>
+                     <p class="reward-item">【${item.eligiType}】 ${startTime} & ${item.claimedAmt} / ${item.subAmt} : ${item.claimCount} / ${item.maxClaims}</p>
                      <span class="progress">
                          <p class="css_back" onclick="reset()">Back</p>
                          <p class="css_back" style="margin-left:auto" onclick="next()">Next</p>
                      <span>
             </div>
+            <div  class="new-container">
             <div class="image-container">
                   <img src="${item.imgUrl}" alt="photo">  
             </div>            
+            </div>
             `;
            card.innerHTML = row.innerHTML ; 
            //content.appendChild(row);           
