@@ -962,6 +962,7 @@ try {
              }
              document.getElementById('fans_count').textContent = `${index}`;
          }
+    
     async function shareMyBurger() {
     try {
         // Check if Web3 is injected (Metamask or other wallet)
@@ -969,7 +970,6 @@ try {
             alert("Please install a Web3 wallet like Metamask.");
             return;
         }
-
         // Request account access
         const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
         const userAddress = accounts[0];
@@ -979,18 +979,14 @@ try {
         if (!refCode && refCode != "") {
            //share my http://....?linkcode=refCode
            alert("refCode："+ refCode);
-        } else {
-          
-          refCode = prompt("請輸入想要的推薦碼(A~Z,0~9,_-@)：");
-        }
-        // Call the setMyRefCode function
-        const result = await contract.methods.setMyRefCode(refCode).send({ from: userAddress });
-
-        alert("Transaction successful:", result);
-
-        // Check the return value to determine the result
-        const returnCode = result.events ? result.events.ReturnCode.returnValues[0] : null;
-
+        } else {          
+          const Code = prompt("請輸入想要的推薦碼(A~Z,0~9,_-@)：");
+           // Call the setMyRefCode function
+          const result = await contract.methods.setMyRefCode(Code).send({ from: userAddress });
+          alert("Transaction successful:", result);
+          // Check the return value to determine the result
+          const returnCode = result.events ? result.events.ReturnCode.returnValues[0] : null;
+        }  
         switch (returnCode) {
             case "1":
                 alert("Insufficient SHARE to set or edit referral code.");
