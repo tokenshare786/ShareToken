@@ -49,7 +49,7 @@ async function loadburgerBoxPage(item) {
             `;
            card.innerHTML = row.innerHTML ; 
            //content.appendChild(row);           
-
+           alert('reloaded！');
     } catch (err) {
         console.error("Error loading content:", err);
         alert("Failed to display Burgerbox." + err);            
