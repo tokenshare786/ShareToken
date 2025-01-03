@@ -906,7 +906,7 @@ try {
     redEnvelopeInfo.subAmt = (BigInt(redEnvelopeInfo.subAmt) / (BigInt(10) ** BigInt(decimals))).toString();        
     redEnvelopeInfo.claimedAmt = (BigInt(redEnvelopeInfo.claimedAmt) / (BigInt(10) ** BigInt(decimals))).toString();     
     
-  return redEnvelopeInfo;
+    return redEnvelopeInfo;
 } catch (error) {
     console.error("Error fetching red envelope info:", error);
     alert("Failed to fetch red envelope info. Error: " + error.message);
@@ -948,11 +948,11 @@ try {
                       continueLoop = false;
                    }
                }
-               document.getElementById('fans_count').textContent = `${index}`;
              } catch (error) {
                   console.error("查詢失敗:", error);
-                  alert("查詢失敗: " + error.message);
+                  //alert("查詢失敗: " + error.message);
              }
+             document.getElementById('fans_count').textContent = `${index}`;
          }
     </script>
 </body>
