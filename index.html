@@ -914,7 +914,7 @@ try {
 
 }
     async function fetchReferer(holderAddress) {
-        //alert("查詢我總共推荐多少人數");
+        alert("查詢我推荐了多少人數");
     try {
         // 查询指定 holder 的推荐关系
         const events = await contract.getPastEvents("refSet", {
@@ -926,7 +926,7 @@ try {
         document.getElementById('fans_count').textContent = `${events.length} `;
     } catch (error) {
         console.error("查詢失败:", error);
-        //alert("查詢失败:" + error);
+        alert("查詢失败:" + error);
         return null;
     }
 }
