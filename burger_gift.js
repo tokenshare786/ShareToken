@@ -27,7 +27,7 @@ async function loadburgerBoxPage(item) {
         }
          const card = document.getElementById("card");
          //content.innerHTML = "";
-        document.getElementById("content").style.display=none;           
+        document.getElementById("content").style.display= "none";           
         const row = document.createElement("div");
         row.id = "burgerbox";        
         row.classList.add("progress");
