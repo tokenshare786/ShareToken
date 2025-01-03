@@ -29,7 +29,7 @@ async function loadburgerBoxPage(item) {
          content.innerHTML = ""
         // 填充表格內容（只處理一個紅包）
         const row = document.createElement("div");
-        row.classList.add("container");
+        row.classList.add("new-container");
            
         row.innerHTML = `
             <div class="text-container">
