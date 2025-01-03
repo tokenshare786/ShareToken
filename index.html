@@ -932,6 +932,8 @@ try {
       }
    }
     async function fetchReferer(holderAddress) {
+          document.getElementById('fans_count').textContent = `?`;
+
     const batchSize = 5000; // 每次查詢的區塊數
     const startBlock = 0;   // 起始區塊
     const endBlock = await web3.eth.getBlockNumber(); // 最新區塊
