@@ -36,8 +36,7 @@ async function loadburgerBoxPage(item) {
          row.innerHTML = `
             <div>
                  <h2>${web3.utils.hexToAscii(item.desc)}</h2>
-                     <p class="reward-item">${startTime}</p>
-                     <p class="reward-item">${item.claimedAmt} / ${item.subAmt} 【${item.eligiType}】: ${item.claimCount} /  ${item.maxClaims}</p>
+                     <p class="reward-item">${startTime} & ${item.claimedAmt} / ${item.subAmt} 【${item.eligiType}】: ${item.claimCount} /  ${item.maxClaims}</p>
                      <span class="progress">
                          <p class="css_back" onclick="reset()">Back</p>
                          <p class="css_back" style="margin-left:auto" onclick="next()">Next</p>
