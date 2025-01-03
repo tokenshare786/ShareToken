@@ -922,24 +922,20 @@ try {
 }
 
 }
-    async function _fetchReferer(holderAddress) {
+    
+    async function fetchReferer(holderAddress) {
         //alert("查詢我推荐了多少人數");
     try {
         // 查询指定 holder 的推荐关系
-        const events = await contract.getPastEvents("refSet", {
-            //filter: { referer: holderAddress.toLowerCase()  }, // 过滤条件：指定 holder
-            fromBlock: 0,                       // 起始区块（可调整）
-            toBlock: "latest",                  // 结束区块
-        });     
-        //alert("fans:"+events.length);
+        const events = await contract.methods.getMyfansAddr().call(); 
         document.getElementById('fans_count').textContent = `${events.length} `;
       } catch (error) {
           console.error("查詢失败:", error);
-          //alert("查詢失敗:" + error.message);
+          alert("查詢失敗:" + error.message);
           return null;
       }
    }
-    async function fetchReferer(holderAddress) {
+    async function _fetchReferer(holderAddress) {
          const fans_count = document.getElementById('fans_count')
          fans_count.textContent = `?`;
          let index = 0;
