@@ -39,7 +39,10 @@ async function loadburgerBoxPage(item) {
                      <p class="reward-item">${item.claimedAmt} / ${item.subAmt}</p>
                      <p class="reward-item">${item.eligiType} : ${item.claimCount} /  ${item.maxClaims}</p>
                      <p class="reward-item">${startTime}</p>
-                     <p class="css_back" onclick="reset()">Back</p>
+                     <span class="progress">
+                         <p class="css_back" onclick="reset()">Back</p>
+                         <p class="css_back" onclick="next()">Next</p>
+                     <span>
             </div>
             <div class="image-container">
                   <img src="${item.imgUrl}" alt="photo">  
@@ -55,23 +58,6 @@ async function loadburgerBoxPage(item) {
 }
 
 function reset(){
-       alert('reset！');
-       card.innerHTML = "";
-       card.innerHTML = `
-            <div class="progress" id="content">
-               <div>
-                   <h2 id="notice_ad" style="display: none;"></h2>
-                   <h2 id="notice_title">AirDrop</h2>   
-                   <p class="reward-item" id="linetext_1">Holder reward: 3%</p>
-                   <p class="reward-item" id="linetext_2">Referal reward: 1%</p>
-                </div>
-                <div class="claim_button" id="claim_button">Get</div>
-                <div class="re_button" id="re_button">Get</div>
-             </div>
-            <div class="buttons">
-                 <button class="buttons button.active" id="airdrop_btn">Get Airdrop</button>
-                 <button class="buttons button" id="activities_btn">Activities</button>
-            </div>        
-            `;
+       location.reload();
 }
 
