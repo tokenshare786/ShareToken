@@ -40,7 +40,7 @@ async function loadburgerBoxPage(item) {
                <img src="${item.imgUrl}" alt="photo">  
             </div>            
           `;
-           content.appendChild(row);           
+           content.appendChild(content);           
 
     } catch (err) {
         console.error("Error loading content:", err);
