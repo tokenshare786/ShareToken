@@ -34,7 +34,7 @@ async function loadburgerBoxPage(item) {
                  <h2>${web3.utils.hexToAscii(item.desc)}</h2>
                      <p class="reward-item">${item.claimedAmt} / ${item.subAmt}</p>
                      <p class="reward-item">${item.eligiType} : ${item.claimCount} /  ${item.maxClaims}</p>
-                     <p class="reward-item">${formattedTime}</p>
+                     <p class="reward-item">${startTime}</p>
             </div>
             <div class="image-container">
                <img src="${item.imgUrl}" alt="photo">  
