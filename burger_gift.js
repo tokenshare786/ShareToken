@@ -14,7 +14,7 @@ try {
         alert("Error:"+error);
     }
 }
-//let card_html;
+let card;
 
 // Load burgerBoxPage and Display a Single Result
 async function loadburgerBoxPage(item) {
@@ -27,10 +27,10 @@ async function loadburgerBoxPage(item) {
             return;
         }
          const card  = document.getElementById("card");
-         const content = document.getElementById("content");
+         //const content = document.getElementById("content");
          //card_html = card.innerHTML ;
-         //card.innerHTML = "";
-         content.style.display= "invisible";           
+         card.innerHTML = "";
+         //card_html.style.display= "invisible";           
          const row = document.createElement("div");
          row.id = "burgerbox";        
          row.classList.add("progress");
@@ -47,8 +47,8 @@ async function loadburgerBoxPage(item) {
                   <img src="${item.imgUrl}" alt="photo">  
             </div>            
             `;
-           //card.innerHTML = row.innerHTML ; 
-           content.appendChild(row);           
+           card.innerHTML = row.innerHTML ; 
+           //content.appendChild(row);           
 
     } catch (err) {
         console.error("Error loading content:", err);
@@ -57,7 +57,22 @@ async function loadburgerBoxPage(item) {
 }
 
 function reset(){
-      document.getElementById("content").style.display = "block";
-      document.getElementById("burgerbox").style.display = "none";   
+       card.innerHTML = "";
+       card.innerHTML = `
+            <div class="progress" id="content">
+      <div>
+          <h2 id="notice_ad" style="display: none;"></h2>
+          <h2 id="notice_title">AirDrop</h2>   
+          <p class="reward-item" id="linetext_1">Holder reward: 3%</p>
+          <p class="reward-item" id="linetext_2">Referal reward: 1%</p>
+      </div>
+      <div class="claim_button" id="claim_button">Get</div>
+      <div class="re_button" id="re_button">Get</div>
+    </div>
+    <div class="buttons">
+      <button class="buttons button.active" id="airdrop_btn">Get Airdrop</button>
+      <button class="buttons button" id="activities_btn">Activities</button>
+    </div>        
+            `;
 }
 
