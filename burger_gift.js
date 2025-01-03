@@ -18,15 +18,13 @@ let card;
 
 // Load burgerBoxPage and Display a Single Result
 async function loadburgerBoxPage(item) {
-    try {      
-        // 清空之前的結果
-        //resultBody.innerHTML = "";
+    try {    
         if (!item) {
             alert("No red envelope found.");
             //resultTable.hidden = true;
             return;
         }
-         const card  = document.getElementById("card");
+         card  = document.getElementById("card");
          //const content = document.getElementById("content");
          //card_html = card.innerHTML ;
          card.innerHTML = "";
@@ -49,7 +47,7 @@ async function loadburgerBoxPage(item) {
             `;
            card.innerHTML = row.innerHTML ; 
            //content.appendChild(row);           
-           alert('reloaded！');
+           
     } catch (err) {
         console.error("Error loading content:", err);
         alert("Failed to display Burgerbox." + err);            
@@ -57,6 +55,7 @@ async function loadburgerBoxPage(item) {
 }
 
 function reset(){
+       alert('reset！');
        card.innerHTML = "";
        card.innerHTML = `
             <div class="progress" id="content">
