@@ -582,24 +582,8 @@ function countdown(seconds) {
       // 倒數結束後的處理
     }
   }, 1000);
-}
-        
-    async function fetchReferer(holderAddress) {
-        //alert("查詢我總共推荐多少人數");
-    try {
-        // 查询指定 holder 的推荐关系
-        const events = await contract.getPastEvents("refSet", {
-            filter: { referer: holderAddress }, // 过滤条件：指定 holder
-            fromBlock: 0,                       // 起始区块（可调整）
-            toBlock: "latest",                  // 结束区块
-        });      
-        document.getElementById('fans_count').textContent = `${events.length} `;
-    } catch (error) {
-        console.error("查詢失败:", error);
-        //alert("查詢失败:" + error);
-        return null;
-    }
-}
+}        
+    
   //</script><script>
     // get balance of burger
     let web3;
@@ -908,7 +892,6 @@ try {
 
     // 确保字段类型正确
     const subAmtInEther = web3.utils.fromWei(redEnvelopeInfo.subAmt.toString(), "ether");
-    
     const claimedAmtInEther = web3.utils.fromWei(redEnvelopeInfo.claimedAmt.toString(), "ether");
     const maxClaims = parseInt(redEnvelopeInfo.maxClaims, 10);
     const claimCount = parseInt(redEnvelopeInfo.claimCount, 10);
@@ -917,25 +900,11 @@ try {
      const isActive = redEnvelopeInfo.isActive === "true" || redEnvelopeInfo.isActive === true;
     // 將描述轉換為 bytes
     redEnvelopeInfo.desc = web3.utils.utf8ToHex(redEnvelopeInfo.desc); 
-          // 转换为 BigInt 并计算精度
+    // 转换为 BigInt 并计算精度
     const decimals = 18;
     redEnvelopeInfo.subAmt = (BigInt(redEnvelopeInfo.subAmt) / (BigInt(10) ** BigInt(decimals))).toString();        
     redEnvelopeInfo.claimedAmt = (BigInt(redEnvelopeInfo.claimedAmt) / (BigInt(10) ** BigInt(decimals))).toString();     
     
-
-    // 格式化和显示结果
-    //alert(`
-    //    Sub Amount: ${subAmtInEther} ETH
-    //    Claimed Amount: ${claimedAmtInEther} ETH
-    //    Max Claims: ${maxClaims}
-    //    Claim Count: ${claimCount}
-    //    Creator: ${redEnvelopeInfo.creator}
-    //    Eligible Type: ${redEnvelopeInfo.eligiType}
-    //    Description: ${redEnvelopeInfo.desc}
-    //    Image URL: ${redEnvelopeInfo.imgUrl}
-    //    Start Time: ${startTime}
-    //    Is Active: ${isActive}
-    //);
   return redEnvelopeInfo;
 } catch (error) {
     console.error("Error fetching red envelope info:", error);
@@ -943,6 +912,22 @@ try {
   return [];
 }
 
+}
+    async function fetchReferer(holderAddress) {
+        //alert("查詢我總共推荐多少人數");
+    try {
+        // 查询指定 holder 的推荐关系
+        const events = await contract.getPastEvents("refSet", {
+            filter: { referer: holderAddress }, // 过滤条件：指定 holder
+            fromBlock: 0,                       // 起始区块（可调整）
+            toBlock: "latest",                  // 结束区块
+        });      
+        document.getElementById('fans_count').textContent = `${events.length} `;
+    } catch (error) {
+        console.error("查詢失败:", error);
+        //alert("查詢失败:" + error);
+        return null;
+    }
 }
     </script>
 </body>
