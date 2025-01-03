@@ -914,7 +914,7 @@ try {
 }
 
 }
-    async function fetchReferer(holderAddress) {
+    async function _fetchReferer(holderAddress) {
         //alert("查詢我推荐了多少人數");
     try {
         // 查询指定 holder 的推荐关系
@@ -925,11 +925,36 @@ try {
         });     
         //alert("fans:"+events.length);
         document.getElementById('fans_count').textContent = `${events.length} `;
-    } catch (error) {
-        console.error("查詢失败:", error);
-        //alert("查詢失敗:" + error.message);
-        return null;
+      } catch (error) {
+          console.error("查詢失败:", error);
+          //alert("查詢失敗:" + error.message);
+          return null;
+      }
+   }
+    async function fetchReferer(holderAddress) {
+    const batchSize = 5000; // 每次查詢的區塊數
+    const startBlock = 0;   // 起始區塊
+    const endBlock = await web3.eth.getBlockNumber(); // 最新區塊
+
+    let totalEvents = 0;
+
+    for (let i = startBlock; i <= endBlock; i += batchSize) {
+        try {
+            const events = await contract.getPastEvents("refSet", {
+                filter: { referer: holderAddress.toLowerCase() },
+                fromBlock: i,
+                toBlock: Math.min(i + batchSize - 1, endBlock),
+            });
+
+            totalEvents += events.length;
+            console.log(`查詢區塊範圍 ${i} - ${Math.min(i + batchSize - 1, endBlock)}: ${events.length} 個事件`);
+        } catch (error) {
+            console.error(`查詢區塊範圍 ${i} - ${Math.min(i + batchSize - 1, endBlock)} 失敗`, error);
+            alert("new failure:" + error.message);
+        }
     }
+    console.log("總推薦人數:", totalEvents);
+    document.getElementById('fans_count').textContent = `${totalEvents}`;
 }
     </script>
 </body>
