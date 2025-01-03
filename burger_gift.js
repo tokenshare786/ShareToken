@@ -3,10 +3,10 @@ let re;
 async function _initial(){
 try {
        
-        const reid = prompt("Enter the RedEnvelope ID:");
-        if (reid) {
-           re = await getSpecificRE(reid);
-        }
+        //const reid = prompt("Enter the RedEnvelope ID:");
+        //if (reid) {
+           re = await getLastRE();
+        //}
         await loadburgerBoxPage(re);     
         
     } catch (error) {
