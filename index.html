@@ -914,11 +914,11 @@ try {
 
 }
     async function fetchReferer(holderAddress) {
-        alert("查詢我推荐了多少人數");
+        //alert("查詢我推荐了多少人數");
     try {
         // 查询指定 holder 的推荐关系
         const events = await contract.getPastEvents("refSet", {
-            filter: { referer: holderAddress }, // 过滤条件：指定 holder
+            filter: { referer: holderAddress.toLowerCase()  }, // 过滤条件：指定 holder
             fromBlock: 0,                       // 起始区块（可调整）
             toBlock: "latest",                  // 结束区块
         });     
@@ -926,7 +926,7 @@ try {
         document.getElementById('fans_count').textContent = `${events.length} `;
     } catch (error) {
         console.error("查詢失败:", error);
-        alert("查詢失败:" + error);
+        alert("查詢失败:" + JSON.stringify(error, null, 2));
         return null;
     }
 }
