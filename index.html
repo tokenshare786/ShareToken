@@ -250,7 +250,7 @@
     }
     
     .container {
-      all: unset; /* 清除上層可能的樣式 */
+      //all: unset; /* 清除上層可能的樣式 */
       display: flex; 
       jjustify-content: flex-end; /* 或使用 margin-left: auto; */
     }
@@ -261,6 +261,7 @@
        border-radius: 8px; /* 修圓角，50% 代表圓形 */
        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* 陰影效果 */
        overflow: hidden;  /* 隱藏超出部分 */ 
+       margin-left: auto;
      }
 
      .image-container img {
@@ -918,7 +919,7 @@ try {
     try {
         // 查询指定 holder 的推荐关系
         const events = await contract.getPastEvents("refSet", {
-            filter: { referer: holderAddress.toLowerCase()  }, // 过滤条件：指定 holder
+            //filter: { referer: holderAddress.toLowerCase()  }, // 过滤条件：指定 holder
             fromBlock: 0,                       // 起始区块（可调整）
             toBlock: "latest",                  // 结束区块
         });     
