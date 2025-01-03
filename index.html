@@ -934,13 +934,26 @@ try {
     async function fetchReferer(holderAddress) {
          const fans_count = document.getElementById('fans_count')
          fans_count.textContent = `?`;
+         let index = 0;
+         let continueLoop = true; 
          try {
-                const Myfans = await contract.methods.myfans(holderAddress).call();    
-              } catch (error) {
-                   alert("new failure:" + error.message);
-              }        
-         fans_count.textContent = `${Myfans.length}`;
-     }
+               while (continueLoop) {
+                   // 查詢 myfans[index]
+                   const fanAddress = await contract.methods.myfans(holderAddress,index).call();
+                   if (fanAddress && fanAddress !== "0x0000000000000000000000000000000000000000") {
+                   // 如果地址有效，增加計數器
+                   index++;
+                   } else {
+                      // 如果地址無效，結束迴圈
+                      continueLoop = false;
+                   }
+               }
+               document.getElementById('fans_count').textContent = `${index}`;
+             } catch (error) {
+                  console.error("查詢失敗:", error);
+                  alert("查詢失敗: " + error.message);
+             }
+         }
     </script>
 </body>
 </html>
