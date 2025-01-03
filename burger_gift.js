@@ -15,6 +15,7 @@ try {
     }
 }
 let card_html;
+
 // Load burgerBoxPage and Display a Single Result
 async function loadburgerBoxPage(item) {
     try {      
@@ -27,9 +28,9 @@ async function loadburgerBoxPage(item) {
         }
          const card  = document.getElementById("card");
          const content = document.getElementById("content");
-         card_html = card.innerHTML ;
-         card.innerHTML = "";
-         //content.style.display= "none";           
+         //card_html = card.innerHTML ;
+         //card.innerHTML = "";
+         content.style.display= "none";           
          const row = document.createElement("div");
          row.id = "burgerbox";        
          row.classList.add("progress");
@@ -40,13 +41,14 @@ async function loadburgerBoxPage(item) {
                      <p class="reward-item">${item.claimedAmt} / ${item.subAmt}</p>
                      <p class="reward-item">${item.eligiType} : ${item.claimCount} /  ${item.maxClaims}</p>
                      <p class="reward-item">${startTime}</p>
-                     <p class="notification a" onclick="reset()">Back</p>
+                     <p class="back" onclick="reset()">Back</p>
             </div>
             <div class="image-container">
                <img src="${item.imgUrl}" alt="photo">  
             </div>            
           `;
-           card.innerHTML = row.innerHTML ;           
+           //card.innerHTML = row.innerHTML ; 
+           content.appendChild(row);           
 
     } catch (err) {
         console.error("Error loading content:", err);
@@ -55,6 +57,7 @@ async function loadburgerBoxPage(item) {
 }
 
 function reset(){
-      card.innerHTML = card_htmlcar;      
+      document.getElementById("content").style.display = "block";
+      document.getElementById("burgerbox").style.display = "none";   
 }
 
