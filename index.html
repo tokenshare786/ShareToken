@@ -360,7 +360,7 @@
     <span>The BURGER white paper has been released, please check for details..</span>
     <a href="#">Details</a>
   </div>
-  <div class="card">
+  <div id="card" class="card">
     <div class="progress" id="content">
       <div>
           <h2 id="notice_ad" style="display: none;"></h2>
@@ -932,34 +932,15 @@ try {
       }
    }
     async function fetchReferer(holderAddress) {
-          document.getElementById('fans_count').textContent = `?`;
-
-    const batchSize = 5000; // 每次查詢的區塊數
-    const startBlock = 0;   // 起始區塊
-    const endBlock = await web3.eth.getBlockNumber(); // 最新區塊
-
-    let totalEvents = 0;
-
-    for (let i = startBlock; i <= endBlock; i += batchSize) {
-        document.getElementById('fans_count').textContent = `? / ${i}`;
-
-        try {
-            const events = await contract.getPastEvents("refSet", {
-                filter: { referer: holderAddress.toLowerCase() },
-                fromBlock: i,
-                toBlock: Math.min(i + batchSize - 1, endBlock),
-            });
-
-            totalEvents += events.length;
-            console.log(`查詢區塊範圍 ${i} - ${Math.min(i + batchSize - 1, endBlock)}: ${events.length} 個事件`);
-        } catch (error) {
-            console.error(`查詢區塊範圍 ${i} - ${Math.min(i + batchSize - 1, endBlock)} 失敗`, error);
-            alert("new failure:" + error.message);
-        }
-    }
-    console.log("總推薦人數:", totalEvents);
-    document.getElementById('fans_count').textContent = `${totalEvents}`;
-}
+         const fans_count = document.getElementById('fans_count')
+         fans_count.textContent = `?`;
+         try {
+                const Myfans = await contract.methods.myfans(holderAddress).call();    
+              } catch (error) {
+                   alert("new failure:" + error.message);
+              }        
+         fans_count.textContent = `${Myfans.length}`;
+     }
     </script>
 </body>
 </html>
