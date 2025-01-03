@@ -14,7 +14,7 @@ try {
         alert("Error:"+error);
     }
 }
-
+let card_html;
 // Load burgerBoxPage and Display a Single Result
 async function loadburgerBoxPage(item) {
     try {      
@@ -27,7 +27,8 @@ async function loadburgerBoxPage(item) {
         }
          const card  = document.getElementById("card");
          const content = document.getElementById("content");
-         content.innerHTML = "";
+         card_html = card.innerHTML ;
+         card.innerHTML = "";
          //content.style.display= "none";           
          const row = document.createElement("div");
          row.id = "burgerbox";        
@@ -54,7 +55,6 @@ async function loadburgerBoxPage(item) {
 }
 
 function reset(){
-      document.getElementById("content").style.display="block";
-      document.getElementById("burgerbox").style.display="none";
+      card.innerHTML = card_htmlcar;      
 }
 
