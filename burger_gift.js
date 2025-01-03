@@ -26,8 +26,8 @@ async function loadburgerBoxPage(item) {
             return;
         }
          const content = document.getElementById("content");
-         content.innerHTML = ""
-        const startTime = new Date(Number(redEnvelopeInfo.startTime) * 1000).toLocaleString();
+         content.innerHTML = "";
+        const startTime = new Date(Number(item.startTime) * 1000).toLocaleString();
         
         content.innerHTML = `
             <div>
