@@ -6,8 +6,8 @@ let re_id;
 let burger_count;
 
 async function initial(){
-        const logic_contract = await getLogicContract();
-        alert("something..." + logic_contract);
+        //const logic_contract = await getLogicContract();
+        //alert("something..." + logic_contract);
 try {       
         //const reid = prompt("Enter the RedEnvelope ID:");
         burger_count = await getreID();
