@@ -46,8 +46,8 @@ async function loadburgerBoxPage(item) {
                      <h2>${web3.utils.hexToAscii(item.desc)}</h2>
                      <p class="reward-item">【${item.eligiType}】 ${startTime} & ${item.claimedAmt} / ${item.subAmt} : ${item.claimCount} / ${item.maxClaims}</p>
                      <span class="progress">
-                         <p class="css_back" onclick="_backto()">Back</p>
-                         <p class="css_back" style="margin-left:auto" onclick="_nextto()">Next</p>
+                         <p class="css_back" onclick="_back()">Back</p>
+                         <p class="css_back" style="margin-left:auto" onclick="_next()">Next</p>
                      <span>
             </div>
             <div  class="new-container">
@@ -70,22 +70,42 @@ function claim_re(){
     claimRE(re_id);
 }
 
-function _nextto(){
-        if(re_id < burger_count){
-              re_id ++ ;
-              re = await getSpecificRE(re_id);     
-              await loadburgerBoxPage(re);    
-        }else{
-              alert("後面沒有漢堡盒了！");
-        }        
-}
+async function _next() {
+    try {
+        if (re_id < burger_count) {
+            re_id++; // 增加 re_id
+            const re = await getSpecificRE(re_id); // 獲取下一個漢堡盒的數據
 
-function _backto(){
-        if(re_id > 1){
-              re_id --;
-              re = await getSpecificRE(re_id);     
-              await loadburgerBoxPage(re);    
-        }else{
-              alert("前面沒有漢堡盒了！");
-        }        
+            if (re) {
+                await loadburgerBoxPage(re); // 加載頁面
+            } else {
+                alert("未找到對應的漢堡盒數據！");
+                re_id--; // 如果數據不存在，還原 re_id
+            }
+        } else {
+            alert("後面沒有漢堡盒了！"); // 提示訊息
+        }
+    } catch (error) {
+        console.error("切換漢
+
+
+async function _back() {
+    try {
+        if (re_id > 1) {
+            re_id--; // 減少 re_id
+            const re = await getSpecificRE(re_id); // 獲取指定漢堡盒的數據
+
+            if (re) {
+                await loadburgerBoxPage(re); // 加載頁面
+            } else {
+                alert("未找到對應的漢堡盒數據！");
+                re_id++; // 如果數據不存在，還原 re_id
+            }
+        } else {
+            alert("前面沒有漢堡盒了！"); // 提示
+        }
+    } catch (error) {
+        console.error("切換漢堡盒時出現錯誤：", error);
+        alert("發生錯誤，請稍後再試！");
+    }
 }
