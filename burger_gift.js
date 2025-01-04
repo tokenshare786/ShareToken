@@ -1,14 +1,13 @@
 _initial();  
 let re;
+let re_id;
+
 async function _initial(){
-try {
-       
+try {       
         //const reid = prompt("Enter the RedEnvelope ID:");
-        //if (reid) {
-           re = await getLastRE();
-        //}
-        await loadburgerBoxPage(re);     
-        
+        re_id = await getreID();
+        re = await getSpecificRE();     
+        await loadburgerBoxPage(re);  
     } catch (error) {
         console.error("Error:", error);
         alert("Error:"+error);
@@ -43,9 +42,9 @@ async function loadburgerBoxPage(item) {
                      <span>
             </div>
             <div  class="new-container">
-            <div class="image-container">
+               <div class="image-container" onclick="claim_re()";>
                   <img src="${item.imgUrl}" alt="photo">  
-            </div>            
+               </div>            
             </div>
             `;
            card.innerHTML = row.innerHTML ; 
@@ -55,6 +54,9 @@ async function loadburgerBoxPage(item) {
         console.error("Error loading content:", err);
         alert("Failed to display Burgerbox." + err);            
     }
+}
+function claim_re(){       
+    claimRE(re_id);
 }
 
 function reset(){
