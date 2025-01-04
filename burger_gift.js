@@ -56,7 +56,7 @@ async function loadburgerBoxPage(item) {
     }
 }
 function claim_re(){   
-    alert("Claiming RE.." + re_id);
+    //alert("Claiming RE.." + re_id);
     claimRE(re_id);
 }
 
