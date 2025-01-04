@@ -86,8 +86,10 @@ async function _next() {
             alert("後面沒有漢堡盒了！"); // 提示訊息
         }
     } catch (error) {
-        console.error("切換漢
-
+        console.error("切換漢堡盒時出現錯誤：", error);
+        alert("發生錯誤，請稍後再試！");
+    }
+}
 
 async function _back() {
     try {
