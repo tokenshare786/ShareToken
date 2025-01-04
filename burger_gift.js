@@ -41,8 +41,8 @@ async function loadburgerBoxPage(item) {
                          <p class="css_back" style="margin-left:auto" onclick="next()">Next</p>
                      <span>
             </div>
-            <div  class="new-container" onclick="claim_re()">
-               <div class="image-container">
+            <div  class="new-container">
+               <div class="image-container" onclick="claim_re()">
                   <img src="${item.imgUrl}" alt="photo">  
                </div>            
             </div>
@@ -56,7 +56,7 @@ async function loadburgerBoxPage(item) {
     }
 }
 function claim_re(){   
-    alert("Claiming RE.." + reid);
+    alert("Claiming RE.." + re_id);
     claimRE(re_id);
 }
 
