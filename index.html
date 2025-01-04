@@ -1009,23 +1009,7 @@ try {
         console.error("Error setting referral code:", error);
         //alert("Failed to set referral code: " + error.message);
     }
-}
-    const { ethers } = require("ethers");
-
-// 智能合約地址和 ABI（替換成您的合約地址和 ABI）
-const contractAddress = "YOUR_CONTRACT_ADDRESS";
-const abi = [
-    {
-        "inputs": [
-            { "internalType": "string", "name": "linkcode", "type": "string" },
-            { "internalType": "uint256", "name": "id", "type": "uint256" }
-        ],
-        "name": "claimRE",
-        "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    }
-];
+}    
 
 async function claimRE(id) {
   // 取得 linkcode 參數    
@@ -1042,7 +1026,6 @@ async function claimRE(id) {
     }
    alert("執行完成:" + receipt);
 }
-
 
     </script>
 </body>
