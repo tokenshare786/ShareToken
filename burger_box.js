@@ -1,4 +1,4 @@
-alert("Haha");
+alert("no Haha");
 initial();  
 
 let re;
@@ -6,7 +6,7 @@ let re_id;
 let burger_count;
 
 async function initial(){
-        alert("something...");
+        //alert("something...");
 try {       
         //const reid = prompt("Enter the RedEnvelope ID:");
         burger_count = await getreID();
@@ -46,8 +46,8 @@ async function loadburgerBoxPage(item) {
                      <h2>${web3.utils.hexToAscii(item.desc)}</h2>
                      <p class="reward-item">【${item.eligiType}】 ${startTime} & ${item.claimedAmt} / ${item.subAmt} : ${item.claimCount} / ${item.maxClaims}</p>
                      <span class="progress">
-                         <p class="css_back" onclick="_back()">Back</p>
-                         <p class="css_back" style="margin-left:auto" onclick="_next()">Next</p>
+                         <p class="css_back" onclick="_backto()">Back</p>
+                         <p class="css_back" style="margin-left:auto" onclick="_nextto()">Next</p>
                      <span>
             </div>
             <div  class="new-container">
@@ -70,3 +70,22 @@ function claim_re(){
     claimRE(re_id);
 }
 
+function _nextto(){
+        if(re_id < burger_count){
+              re_id ++ ;
+              re = await getSpecificRE(re_id);     
+              await loadburgerBoxPage(re);    
+        }else{
+              alert("後面沒有漢堡盒了！");
+        }        
+}
+
+function _backto(){
+        if(re_id > 1){
+              re_id --;
+              re = await getSpecificRE(re_id);     
+              await loadburgerBoxPage(re);    
+        }else{
+              alert("前面沒有漢堡盒了！");
+        }        
+}
