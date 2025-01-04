@@ -1,9 +1,13 @@
-alert("Hi..What's up");
-_initial();  
+
+initial();  
 
 let re;
 let re_id;
 let burger_count;
+
+function initial(){
+        alert("Hi..What's up");
+}
 
 async function _initial(){
         alert("something...");
@@ -19,6 +23,7 @@ try {
         alert("Error:"+error);
     }
 }
+
 let card;
 
 // Load burgerBoxPage and Display a Single Result
@@ -67,7 +72,7 @@ function claim_re(){
 }
 
 function back(){
-        if(re_id>1){
+        if(re_id > 1){
               re_id --;
               re = await getSpecificRE(re_id);     
               await loadburgerBoxPage(re);    
