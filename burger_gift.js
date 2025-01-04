@@ -42,7 +42,7 @@ async function loadburgerBoxPage(item) {
                      <span>
             </div>
             <div  class="new-container">
-               <div class="image-container" onclick="claim_re()";>
+               <div class="image-container" onclick="claim_re()">
                   <img src="${item.imgUrl}" alt="photo">  
                </div>            
             </div>
