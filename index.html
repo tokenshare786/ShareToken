@@ -892,13 +892,14 @@ async function setRedEnvelope(holder) {
         return [];
     }
 }
-    // 獲取特定 holder 的紅包資訊
+// 獲取特定 holder 的紅包資訊
 
 async function getreID(){
   const reid = await contract.methods.reID().call();
+  alert("reID:" + reid);
   return reid;
 }    
-async function getLastRE(reid) {    
+async function getSpecificRE(reid) {    
     const reidBigInt = BigInt(reid);
 try {
     // 调用合约函数
