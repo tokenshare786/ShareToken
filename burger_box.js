@@ -5,15 +5,13 @@ let re;
 let re_id;
 let burger_count;
 
-function initial(){
-        alert("Hi..What's good");
-}
-
-async function _initial(){
+async function initial(){
         alert("something...");
 try {       
         //const reid = prompt("Enter the RedEnvelope ID:");
         burger_count = await getreID();
+        alert("burger_count:"+burger_count);
+        //
         re_id = burger_count;
         alert("re_id:"+_re_id);
         re = await getSpecificRE(burger_count);     
