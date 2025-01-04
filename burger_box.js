@@ -13,7 +13,7 @@ try {
         alert("burger_count:"+burger_count);
         //
         re_id = burger_count;
-        alert("re_id:"+_re_id);
+        alert("re_id:"+ re_id);
         re = await getSpecificRE(burger_count);     
         //await loadburgerBoxPage(re);  
     } catch (error) {
