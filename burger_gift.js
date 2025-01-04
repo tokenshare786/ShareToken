@@ -1,9 +1,11 @@
 _initial();  
+
 let re;
 let re_id;
 let burger_count;
 
 async function _initial(){
+        alert("something...");
 try {       
         //const reid = prompt("Enter the RedEnvelope ID:");
         burger_count = await getreID();
