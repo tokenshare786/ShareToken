@@ -48,8 +48,8 @@ async function loadburgerBoxPage(item) {
                      <h2>${web3.utils.hexToAscii(item.desc)}</h2>
                      <p class="reward-item">【${item.eligiType}】 ${startTime} & ${item.claimedAmt} / ${item.subAmt} : ${item.claimCount} / ${item.maxClaims}</p>
                      <span class="progress">
-                         <p class="css_back" onclick="back()">Back</p>
-                         <p class="css_back" style="margin-left:auto" onclick="next()">Next</p>
+                         <p class="css_back" onclick="_back()">Back</p>
+                         <p class="css_back" style="margin-left:auto" onclick="_next()">Next</p>
                      <span>
             </div>
             <div  class="new-container">
@@ -71,7 +71,7 @@ function claim_re(){
     claimRE(re_id);
 }
 
-function back(){
+function _back(){
         if(re_id > 1){
               re_id --;
               re = await getSpecificRE(re_id);     
@@ -81,7 +81,7 @@ function back(){
         }        
 }
 
-function next(){
+function _next(){
         if(re_id < burger_count){
               re_id ++ ;
               re = await getSpecificRE(re_id);     
