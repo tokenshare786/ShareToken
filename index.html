@@ -1030,6 +1030,10 @@ async function claimRE(id) {
     }
    alert("執行完成:" + receipt);
 }
+  async function getLogicContract(){
+    const implAddress = await contract.methods.implementation().call();
+    alert("Current logic contract address: ", implAddress);
+  }
 
     </script>
 </body>
