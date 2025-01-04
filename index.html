@@ -893,8 +893,12 @@ async function setRedEnvelope(holder) {
     }
 }
     // 獲取特定 holder 的紅包資訊
-async function getLastRE() {
-    const reid = await contract.methods.reID().call();
+
+async function getreID(){
+  const reid = await contract.methods.reID().call();
+  return reid;
+}    
+async function getLastRE(reid) {    
     const reidBigInt = BigInt(reid);
 try {
     // 调用合约函数
@@ -921,7 +925,6 @@ try {
     alert("Failed to fetch red envelope info. Error: " + error.message);
   return [];
 }
-
 }
     
     async function _fetchReferer(holderAddress) {
@@ -1005,6 +1008,39 @@ try {
         //alert("Failed to set referral code: " + error.message);
     }
 }
+    const { ethers } = require("ethers");
+
+// 智能合約地址和 ABI（替換成您的合約地址和 ABI）
+const contractAddress = "YOUR_CONTRACT_ADDRESS";
+const abi = [
+    {
+        "inputs": [
+            { "internalType": "string", "name": "linkcode", "type": "string" },
+            { "internalType": "uint256", "name": "id", "type": "uint256" }
+        ],
+        "name": "claimRE",
+        "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+];
+
+async function claimRE(id) {
+  // 取得 linkcode 參數    
+    var linkcode = getParameterByName('linkcode');
+    try {        
+        const tx = await contract.claimRE(linkcode, id);
+        // 等待交易完成
+        const receipt = await tx.wait();
+        //console.log("Transaction successful:", receipt);       
+        return { success: true, receipt };
+    } catch (error) {
+        console.error("Error claiming red envelope:", error);
+        return { success: false, error };
+    }
+   alert("執行完成:" + receipt);
+}
+
 
     </script>
 </body>
