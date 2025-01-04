@@ -1,12 +1,12 @@
 alert("Haha");
 initial();  
 
-//let re;
-//let re_id;
-//let burger_count;
+let re;
+let re_id;
+let burger_count;
 
 function initial(){
-        alert("Hi..What's up");
+        alert("Hi..What's good");
 }
 
 async function _initial(){
