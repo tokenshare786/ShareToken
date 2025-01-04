@@ -77,7 +77,7 @@ function next(){
               re = await getSpecificRE(re_id);     
               await loadburgerBoxPage(re);    
         }else{
-              alert("前面沒有漢堡盒了！");
+              alert("後面沒有漢堡盒了！");
         }        
 }
 
