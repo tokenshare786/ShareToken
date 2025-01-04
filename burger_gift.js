@@ -6,7 +6,7 @@ async function _initial(){
 try {       
         //const reid = prompt("Enter the RedEnvelope ID:");
         re_id = await getreID();
-        re = await getSpecificRE();     
+        re = await getSpecificRE(re_id);     
         await loadburgerBoxPage(re);  
     } catch (error) {
         console.error("Error:", error);
