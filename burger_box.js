@@ -64,27 +64,9 @@ async function loadburgerBoxPage(item) {
         alert("Failed to display Burgerbox." + err);            
     }
 }
+
 function claim_re(){   
     alert("正要領取漢堡盒：" + re_id);
     claimRE(re_id);
 }
 
-function _back(){
-        if(re_id > 1){
-              re_id --;
-              re = await getSpecificRE(re_id);     
-              await loadburgerBoxPage(re);    
-        }else{
-              alert("前面沒有漢堡盒了！");
-        }        
-}
-
-function _next(){
-        if(re_id < burger_count){
-              re_id ++ ;
-              re = await getSpecificRE(re_id);     
-              await loadburgerBoxPage(re);    
-        }else{
-              alert("後面沒有漢堡盒了！");
-        }        
-}
