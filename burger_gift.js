@@ -55,7 +55,8 @@ async function loadburgerBoxPage(item) {
         alert("Failed to display Burgerbox." + err);            
     }
 }
-function claim_re(){       
+function claim_re(){   
+    alert("Claiming RE.." + reid);
     claimRE(re_id);
 }
 
