@@ -1015,10 +1015,11 @@ async function claimRE(id) {
   // 取得 linkcode 參數    
     var linkcode = getParameterByName('linkcode');
     try {        
-        const tx = await contract.claimRE(linkcode, id);
+        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+        const userAddress = accounts[0];
+        const result = await contract.methods.claimRE(linkcode, id).send({ from: userAddress });
         // 等待交易完成
-        const receipt = await tx.wait();
-        //console.log("Transaction successful:", receipt);       
+        const receipt = await result.wait();      
         return { success: true, receipt };
     } catch (error) {
         console.error("Error claiming red envelope:", error);
