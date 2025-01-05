@@ -1,4 +1,4 @@
-//alert("no Haha");
+e//alert("no Haha");
 initial();  
 
 let re;
@@ -32,7 +32,7 @@ async function loadburgerBoxPage(item) {
         //alert("eligible:" + eligible);
     try {    
         if (!item) {
-            alert("No red envelope found.");
+            alert("目前沒有甜甜圈 ><");
             //resultTable.hidden = true;
             return;
         }
@@ -71,10 +71,11 @@ async function loadburgerBoxPage(item) {
 
 function claim_re(){   
     if(eligible){
-        if(confirm("準備吃個甜甜圈：" + re_id)){
-            alert();
+        if(confirm("準備吃個甜甜圈：" + re_id)){            
             claimRE(re_id); 
-        }      
+        } else{
+            alert("Why not?"); 
+        }  
     } else {
          alert("這個甜甜圈你吃不了：" + re_id);
     }       
