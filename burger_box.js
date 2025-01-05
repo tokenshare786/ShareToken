@@ -1,4 +1,4 @@
-e//alert("no Haha");
+//alert("no Haha");
 initial();  
 
 let re;
