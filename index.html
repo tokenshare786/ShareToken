@@ -864,7 +864,7 @@ async function setRedEnvelope(holder) {
         //alert("userAddress:"+userAddress);
         const reidBigInt = BigInt(reid);  
         const re = await contract.methods.getSpecificRE(reidBigInt).call();
-        //
+        //    
         if ( re.creator.toLowerCase() == userAddress) {
             alert("自己發的就別領了吧？");
             return false;
@@ -873,7 +873,8 @@ async function setRedEnvelope(holder) {
         const holders = await contract.methods.holders(userAddress).call();
         const referrer = holders.referrer.toLowerCase();
         //alert("referrer:"+referrer);
-        const linkcodeOwner = await contract.methods.refCodeOwners(linkcode).toLowerCase();
+        const linkcodeOwner = await contract.methods.refCodeOwners(linkcode).call().toLowerCase();
+        //const linkcodeOwner = _linkcodeOwner.toLowerCase();
         if (           
             (re.eligiType == 0 &&
                 (referrer == re.creator ||
