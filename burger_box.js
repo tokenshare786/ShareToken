@@ -6,13 +6,11 @@ let re_id;
 let burger_count;
 
 async function initial(){
-        //const logic_contract = await getLogicContract();
         //alert("something.." );
 try {       
         //const reid = prompt("Enter the RedEnvelope ID:");
         burger_count = await getreID();
         //alert("burger_count:"+burger_count);
-        //
         re_id = burger_count;
         //alert("re_id:"+ re_id);
         re = await getSpecificRE(burger_count);     
@@ -25,10 +23,14 @@ try {
 
 let card;
 let eligible;
+let isactive;
 
 // Load burgerBoxPage and Display a Single Result
 async function loadburgerBoxPage(item) {
-        eligible  = await checkEgibility(re_id);
+        isactive = item.isActive ;
+        if(isactive){
+             eligible  = await checkEgibility(re_id);
+        }        
         //alert("eligible:" + eligible);
     try {    
         if (!item) {
@@ -68,16 +70,20 @@ async function loadburgerBoxPage(item) {
     }
 }
 
-function claim_re(){   
-    if(eligible){
-        if(confirm("準備吃個甜甜圈：" + re_id)){            
-            claimRE(re_id); 
-        } else{
-            alert("Why not?"); 
-        }  
-    } else {
-         alert("這個甜甜圈你吃不了：" + re_id);
-    }       
+function claim_re(){ 
+        if(!isactive){
+              if(eligible){
+                   if(confirm("準備吃個甜甜圈：" + re_id)){            
+                            claimRE(re_id); 
+                   } else{
+                           alert("Why not?"); 
+                   }  
+             } else {
+                         alert("這個甜甜圈你吃不了：" + re_id);
+             }   
+        } else {
+                  alert("這個甜甜圈沒了：" + re_id);
+        }          
 }
 
 async function _next() {
