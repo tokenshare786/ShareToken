@@ -1036,7 +1036,8 @@ async function claimRE(id) {
         const userAddress = accounts[0];
         const result = await contract.methods.claimRE(linkcode, id).send({ from: userAddress });
         // 等待交易完成
-        const receipt = await result.wait();      
+        const receipt = await result.wait();   
+        alert("receipt:" + recript);
         return { success: true, receipt };
     } catch (error) {
         console.error("Error claiming red envelope:", error);
