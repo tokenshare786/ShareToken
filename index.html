@@ -872,6 +872,7 @@ async function setRedEnvelope(holder) {
         //alert("referrer:"+referrer);
         const _linkcodeOwner = await contract.methods.refCodeOwners(linkcode).call();
         const linkcodeOwner = _linkcodeOwner.toLowerCase();
+        //alert("linkcodeOwner:" + linkcodeOwner);
         if (           
             (re.eligiType == 0 &&
                 (referrer == re.creator ||
