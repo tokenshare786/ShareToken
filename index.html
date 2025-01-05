@@ -935,8 +935,8 @@ try {
 }
     
     async function fetchReCount(holderAddress) {
-        //alert("查詢我送過幾個甜甜圈？");
-    const re_count = document.getElementById('re_count')
+        alert("送過幾個甜甜圈？"+holderAddress);
+        const re_count = document.getElementById('re_count')
          re_count.textContent = `?`;
          let index = 0;
          let continueLoop = true; 
@@ -956,7 +956,7 @@ try {
                   console.error("查詢失敗:", error);
                   alert("送過甜甜圈嗎？" + error.message);
              }
-             document.getElementById('re_count').textContent = `${index}`;
+             re_count.textContent = `${index}`;
    }
     async function fetchReferer(holderAddress) {
          const fans_count = document.getElementById('fans_count')
