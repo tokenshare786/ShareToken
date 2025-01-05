@@ -803,14 +803,13 @@ function countdown(seconds) {
 // 呼叫智能合約函式
 async function setRedEnvelope(holder) {
     alert("要發漢堡嗎？請依序填入..");
-
     try {
         // 获取用户输入
         const { totalShare, countRE, eligiType, desc, url } = await promptRedEnvelope();
 
         // 验证用户输入
         if (isNaN(totalShare) || isNaN(countRE) || isNaN(eligiType)) {
-            alert("Invalid input. Please enter valid numbers.");
+            //alert("Invalid input. Please enter valid numbers.");
             return;
         }
 
