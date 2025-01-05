@@ -853,25 +853,23 @@ async function setRedEnvelope(holder) {
   async function checkEgibility(reid) {
     let eligible;
     const linkcode = await getParameterByName('linkcode');
-    alert("linkcode:"+linkcode);
+    //alert("linkcode:"+linkcode);
     try {
         // Request account access
         const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
         const userAddress = accounts[0].toLowerCase();
-        alert("userAddress:"+userAddress);
+        //alert("userAddress:"+userAddress);
         const reidBigInt = BigInt(reid);  
         const re = await contract.methods.getSpecificRE(reidBigInt).call();
-        // Convert the string 'linkcode' to the appropriate format (if necessary)
-        //const linkcodeHex = web3.utils.asciiToHex(linkcode);
         //
         if ( re.creator.toLowerCase() == userAddress) {
             alert("自己發的就別領了吧？");
             return false;
         }
-        alert("re.creator / userAddress:\n" + re.creator +"\n / \n"+userAddress);
+        //alert("re.creator / userAddress:\n" + re.creator +"\n / \n"+userAddress);
         const holders = await contract.methods.holders(userAddress).call();
         const referrer = holders.referrer.toLowerCase();
-        alert("referrer:"+referrer);
+        //alert("referrer:"+referrer);
         const linkcodeOwner = await contract.methods.refCodeOwners(linkcode).toLowerCase();
         if (           
             (re.eligiType == 0 &&
