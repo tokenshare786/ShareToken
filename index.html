@@ -849,51 +849,21 @@ async function setRedEnvelope(holder) {
         console.error("Error initiating Red Envelope Event:", error);
         alert("Failed to share BURGER: " + error.message);
     }
-}
-   
+}   
 
-  async function getAvailableRE(linkcode) {
+  async function checkEgibility(checkEligible,reid) {
+    let eligible;
     try {
-        
+        const reidBigInt = BigInt(reid);  
+        const redEnvelopeInfo = await contract.methods.getSpecificRE(reidBigInt).call();
         // Convert the string 'linkcode' to the appropriate format (if necessary)
         const linkcodeHex = web3.utils.asciiToHex(linkcode);
-
-        // Call the contract's getAvailableRE function
-        const availableRE = await contract.methods
-            .getAvailableRE(linkcodeHex)
-            .call();
-
-        // Process and display the results
-        if (availableRE.length === 0) {
-            console.log("No available red envelopes.");
-            alert("No available red envelopes for the provided link code.");
-            return [];
-        }
-
-        // Map the results for better readability
-        const formattedRE = availableRE.map((re, index) => ({
-            id: index,
-            subAmt: re.subAmt,          // Total share of the red envelope
-            claimedAmt: re.claimedAmt,  // Amount already claimed
-            maxClaims: re.maxClaims,    // Maximum claims allowed
-            claimCount: re.claimCount,  // Current claim count
-            creator: re.creator,        // Creator of the red envelope
-            eligiType: re.eligiType,    // Eligibility type
-            desc: web3.utils.hexToAscii(re.desc), // Description
-            imgUrl: web3.utils.hexToAscii(re.imgUrl), // Image URL
-            startTime: re.startTime,    // Start time (timestamp)
-            isActive: re.isActive,      // Whether the red envelope is active
-        }));
-
-        console.log("Available Red Envelopes:", formattedRE);
-        alert(`Found ${formattedRE.length} available red envelopes.`);
-        return formattedRE;
-
+        eligible = await contract.methods.checkEligible(linkcodeHex , reidBigInt); 
     } catch (error) {
         console.error("Error fetching available red envelopes:", error);
-        alert("Error:"+error);
-        return [];
+        alert("Error:"+error);        
     }
+    return eligible;
 }
 
 </script><script>  
@@ -1043,12 +1013,8 @@ async function claimRE(id) {
         return { success: false, error };
     }
    alert("執行完成:" + receipt);
-}
-  async function getLogicContract(){
-    const implAddress = await contract.methods.implementation().call();
-    alert("Current logic contract address: ", implAddress);
-  }
-
+}  
+  
     </script>
 </body>
 </html>
