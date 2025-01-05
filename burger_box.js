@@ -1,4 +1,4 @@
-alert("no Hahaha");
+//alert("no Hahaha");
 initial();  
 
 let re;
@@ -7,7 +7,7 @@ let burger_count;
 
 async function initial(){
         //const logic_contract = await getLogicContract();
-        alert("something..." );
+        //alert("something.." );
 try {       
         //const reid = prompt("Enter the RedEnvelope ID:");
         burger_count = await getreID();
@@ -29,11 +29,10 @@ let eligible;
 // Load burgerBoxPage and Display a Single Result
 async function loadburgerBoxPage(item) {
         eligible  = await checkEgibility(re_id);
-        alert("eligible:" + eligible);
+        //alert("eligible:" + eligible);
     try {    
         if (!item) {
             alert("目前沒有甜甜圈 ><");
-            //resultTable.hidden = true;
             return;
         }
          card  = document.getElementById("card");
