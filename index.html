@@ -944,7 +944,7 @@ try {
                while (continueLoop) {
                    // 查詢 myfans[index]
                    const reid = await contract.methods.myRE(holderAddress,index).call();
-                   if (reid && bytes(reid).length >0 ) {
+                   if (reid && reid.length > 0) {
                    // 如果reID有效，增加計數器
                    index++;
                    } else {
