@@ -27,6 +27,8 @@ let card;
 
 // Load burgerBoxPage and Display a Single Result
 async function loadburgerBoxPage(item) {
+        const eligible  = await checkEgibility(re_id);
+        alert("eligible:" + eligible);
     try {    
         if (!item) {
             alert("No red envelope found.");
