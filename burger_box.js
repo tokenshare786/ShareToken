@@ -71,8 +71,10 @@ async function loadburgerBoxPage(item) {
 
 function claim_re(){   
     if(eligible){
-         alert("正要領取漢堡盒：" + re_id);
-         claimRE(re_id);   
+        if(confirm("準備吃個甜甜圈：" + re_id)){
+            alert();
+            claimRE(re_id); 
+        }      
     } else {
          alert("這個甜甜圈你吃不了：" + re_id);
     }       
