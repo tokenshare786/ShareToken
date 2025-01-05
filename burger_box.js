@@ -29,7 +29,7 @@ let eligible;
 // Load burgerBoxPage and Display a Single Result
 async function loadburgerBoxPage(item) {
         eligible  = await checkEgibility(re_id);
-        //alert("eligible:" + eligible);
+        alert("eligible:" + eligible);
     try {    
         if (!item) {
             alert("目前沒有甜甜圈 ><");
