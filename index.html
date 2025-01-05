@@ -936,7 +936,7 @@ try {
     
     async function fetchReCount(holderAddress) {
         alert("送過幾個甜甜圈？"+holderAddress);
-        const re_count = document.getElementById('re_count')
+        //const re_count = document.getElementById('re_count')
          re_count.textContent = `?`;
          let index = 0;
          let continueLoop = true; 
@@ -944,7 +944,7 @@ try {
                while (continueLoop) {
                    // 查詢 myfans[index]
                    const reid = await contract.methods.myRE(holderAddress,index).call();
-                   if (reid && reid.length > 0) {
+                   if (reid) {
                    // 如果reID有效，增加計數器
                    index++;
                    } else {
@@ -954,7 +954,7 @@ try {
                }
              } catch (error) {
                   console.error("查詢失敗:", error);
-                  alert("送過甜甜圈嗎？" + error.message);
+                  //alert("送過甜甜圈嗎？" + error.message);
              }
              re_count.textContent = `${index}`;
    }
