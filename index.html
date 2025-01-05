@@ -849,21 +849,46 @@ async function setRedEnvelope(holder) {
         alert("Failed to share BURGER: " + error.message);
     }
 }   
-
+</script><script>  
   async function checkEgibility(reid) {
     let eligible;
     const linkcode = await getParameterByName('linkcode');
     try {
+        // Request account access
+        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+        const userAddress = accounts[0];
         const reidBigInt = BigInt(reid);  
-        const redEnvelopeInfo = await contract.methods.getSpecificRE(reidBigInt).call();
+        const re = await contract.methods.getSpecificRE(reidBigInt).call();
         // Convert the string 'linkcode' to the appropriate format (if necessary)
-        const linkcodeHex = web3.utils.asciiToHex(linkcode);
-        eligible = await contract.methods.checkEligible(linkcodeHex , reidBigInt); 
+        //const linkcodeHex = web3.utils.asciiToHex(linkcode);
+        const holders = await contract.methods.holders(userAddress).call();
+        const referrer = holders.referrer;
+        const linkcodeOwner = await contract.methods.refCodeOwners(linkcode);
+        if ( re.creator == userAddress) {
+            alert("自己發的就別領了吧？");
+            return false;
+        }
+        if (           
+            (re.eligiType == 0 &&
+                (referrer == re.creator ||
+                    (referrer == address(0) &&
+                        (linkcodelength == 0 ||
+                            linkcodeOwner == re.creator)))) ||
+            
+            (re.eligiType == 1 &&
+                (referrer == address(0) &&
+                    (bytes(linkcode).length == 0 ||
+                        linkcodeOwner == re.creator))) ||
+            // Any subscriber could claim the redenvelope
+            re.eligiType == 2
+        ) {
+            return true;
+        }        
     } catch (error) {
-        console.error("Error fetching available red envelopes:", error);
+        //console.error("Error fetching available red envelopes:", error);
         alert("Error:"+error);        
     }
-    return eligible;
+    return false; 
 }
 
 </script><script>  
