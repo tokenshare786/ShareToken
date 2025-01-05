@@ -71,7 +71,7 @@ async function loadburgerBoxPage(item) {
 }
 
 function claim_re(){ 
-        if(!isactive){
+        if(isactive){
               if(eligible){
                    if(confirm("準備吃個甜甜圈：" + re_id)){            
                             claimRE(re_id); 
@@ -95,15 +95,15 @@ async function _next() {
             if (re) {
                 await loadburgerBoxPage(re); // 加載頁面
             } else {
-                alert("未找到對應的漢堡盒數據！");
+                alert("未找到對應的甜甜圈！");
                 re_id--; // 如果數據不存在，還原 re_id
             }
         } else {
-            alert("後面沒有漢堡盒了！"); // 提示訊息
+            alert("後面沒有甜甜圈了！"); // 提示訊息
         }
     } catch (error) {
-        console.error("切換漢堡盒時出現錯誤：", error);
-        alert("發生錯誤，請稍後再試！");
+        //console.error("烘焙甜甜圈時出現錯誤：", error);
+        alert("烘焙甜甜圈時出現怪事，稍等！");
     }
 }
 
