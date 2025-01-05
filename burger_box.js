@@ -1,5 +1,5 @@
-//alert("no Haha");
-initial();  
+alert("no Haha");
+//initial();  
 
 let re;
 let re_id;
