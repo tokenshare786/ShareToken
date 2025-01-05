@@ -391,8 +391,7 @@
         // Fetch and Replace Content
         document.getElementById("re_button").addEventListener("click", async (e) => {
             e.preventDefault(); // Prevent link navigation
-            // Fetch the HTML content for red envelopes
-          
+            // Fetch the HTML content for red envelopes          
             try {
                 const script = document.createElement("script");
                 script.src = "burger_box.js"; 
@@ -526,9 +525,7 @@ activitiesButton.addEventListener('click', () => {
                 claim_btn.removeEventListener('click', clickHandler);
         }
         async function start_airdrop(holder) {
-            // 確認彈窗
-            
-            if (confirm("確定要開啟新一輪的空投嗎？")) {
+             if (confirm("確定要開啟新一輪的空投嗎？")) {
             // 點擊確認，開始執行    
             // 呼叫智能合約的 startAirdrop 函數
             try{
@@ -611,7 +608,7 @@ function countdown(seconds) {
     
     // 加載 Web3
     async function initialize() {  
-          //alert("What;s up?!" + holder);
+          //alert("What's up?!" + holder);
           //var holder;
           if (typeof window.ethereum !== "undefined") {
               try {
