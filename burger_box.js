@@ -24,11 +24,12 @@ try {
 }
 
 let card;
+let eligible;
 
 // Load burgerBoxPage and Display a Single Result
 async function loadburgerBoxPage(item) {
-        const eligible  = await checkEgibility(re_id);
-        alert("eligible:" + eligible);
+        eligible  = await checkEgibility(re_id);
+        //alert("eligible:" + eligible);
     try {    
         if (!item) {
             alert("No red envelope found.");
@@ -69,8 +70,12 @@ async function loadburgerBoxPage(item) {
 }
 
 function claim_re(){   
-    alert("正要領取漢堡盒：" + re_id);
-    claimRE(re_id);
+    if(eligible){
+         alert("正要領取漢堡盒：" + re_id);
+         claimRE(re_id);   
+    } else {
+         alert("這個甜甜圈你吃不了：" + re_id);
+    }       
 }
 
 async function _next() {
