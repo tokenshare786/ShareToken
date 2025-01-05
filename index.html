@@ -706,11 +706,11 @@ function countdown(seconds) {
                 }
                 //Query how many fans I have
                 fetchReferer(holder);
-                //
-                const myre = await contract.methods.getMyRE().call();
-                const myre_count = myre.length; 
-                document.getElementById('re_count').textContent = `${myre_count} `;
-
+                //Query how many REs I ever initiated
+                //const myre = await contract.methods.getMyRE().call();
+                //const myre_count = myre.length; 
+                //document.getElementById('re_count').textContent = `${myre_count} `;
+                fetchReCount(holder); 
                 //終於要愉快地領空投了嗎？
                 const adEnabled = await contract.methods.adEnabled().call();                 
                 const lastClaimTime = holderInfo.lastClaimedAD;
@@ -934,17 +934,29 @@ try {
 }
 }
     
-    async function _fetchReferer(holderAddress) {
-        //alert("查詢我推荐了多少人數");
-    try {
-        // 查询指定 holder 的推荐关系
-        const events = await contract.methods.getMyfansAddr().call();
-      } catch (error) {
-          console.error("查詢失败:", error);
-          alert("查詢失敗:" + error.message);
-          //return null;
-      }
-      document.getElementById('fans_count').textContent = `${events.length} `;
+    async function fetchReCount(holderAddress) {
+        alert("查詢我送過幾個甜甜圈？");
+    const re_count = document.getElementById('re_count')
+         re_count.textContent = `?`;
+         let index = 0;
+         let continueLoop = true; 
+         try {
+               while (continueLoop) {
+                   // 查詢 myfans[index]
+                   const reid = await contract.methods.myRE(holderAddress,index).call();
+                   if (reid && bytes(reid).length >0 ) {
+                   // 如果reID有效，增加計數器
+                   index++;
+                   } else {
+                      // 如果地址無效，結束迴圈
+                      continueLoop = false;
+                   }
+               }
+             } catch (error) {
+                  console.error("查詢失敗:", error);
+                  //alert("查詢失敗: " + error.message);
+             }
+             document.getElementById('re_count').textContent = `${index}`;
    }
     async function fetchReferer(holderAddress) {
          const fans_count = document.getElementById('fans_count')
