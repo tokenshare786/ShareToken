@@ -1186,6 +1186,8 @@ async function claimRE(id) {
     //    event.preventDefault(); // Prevent form from refreshing the page
     
     async function setDona(){
+        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+        const userAddress = accounts[0];
         // Get form data
         const totalShare = document.getElementById("totalShare").value;
         const countRE = document.getElementById("countRE").value;
@@ -1207,7 +1209,7 @@ async function claimRE(id) {
                 desc,                   // 描述
                 url                     // 图片 URL
             )
-            .send({ from: holder });
+            .send({ from: userAddress });
 
         // 获取交易哈希
         //const transactionHash = receipt.transactionHash;
