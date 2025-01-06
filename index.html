@@ -1172,6 +1172,7 @@ async function claimRE(id) {
 </div>
   <script>
     // Open modal 發甜甜圈的彈跳視窗
+    closeModal();
     let userAddress;
     function openModal(_userAddress) {
         //alert("Oh YA!");
@@ -1216,7 +1217,7 @@ async function claimRE(id) {
                 url                     // 图片 URL
             )
             .send({ from: userAddress });
-
+        alert("receipt："+ receipt);
         // 获取交易哈希
         //const transactionHash = receipt.transactionHash;
 
