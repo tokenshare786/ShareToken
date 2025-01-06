@@ -1236,12 +1236,16 @@ async function claimRE(id) {
             //"\nRed Envelope Created Successfully!"
             //+ "\nTXHash: " + transactionHash
         //);
-        //closeModal();
+        // 清空表單欄位
+        document.getElementById("set-re-form").reset();
+
+        // 關閉彈跳視窗
+        closeModal();
         } catch (error) {
             console.error("Error:", error);
             //alert("Error："+ error);        
         }     
-        closeModal();
+        //closeModal();
     }    
 </script>
 </body>
