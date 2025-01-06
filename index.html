@@ -1165,7 +1165,7 @@ async function claimRE(id) {
             </div>
             <div class="_buttons">
                 <button type="button" class="cancel" onclick="closeModal()">取消</button>
-                <button type="submit" class="confirm" onclick="setDona()">送出</button>
+                <button type="submit" class="confirm">送出</button>
             </div>
         </form>
     </div>
@@ -1173,6 +1173,10 @@ async function claimRE(id) {
   <script>
     // Open modal 發甜甜圈的彈跳視窗
     closeModal();
+    document.getElementById("set-re-form").addEventListener("submit", async (event) => {
+    event.preventDefault(); // 防止表單默認提交行為
+    await setDona(); // 確保執行智能合約的邏輯
+});
     let userAddress;
     function openModal(_userAddress) {
         //alert("Oh YA!");
