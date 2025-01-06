@@ -1172,8 +1172,10 @@ async function claimRE(id) {
 </div>
   <script>
     // Open modal 發甜甜圈的彈跳視窗
-    function openModal() {
-        alert("OH YA!");
+    let userAddress;
+    function openModal(_userAddress) {
+        //alert("Oh YA!");
+        userAddress = _userAddress ;
         document.getElementById("modal-overlay").style.display = "block";
     }
 
@@ -1186,7 +1188,7 @@ async function claimRE(id) {
     //document.getElementById("set-re-form").addEventListener("submit", function(event) {
     //    event.preventDefault(); // Prevent form from refreshing the page
     
-    async function setDona(userAddress){
+    async function setDona(){
         //const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
         //const userAddress = accounts[0];
         // Get form data
@@ -1200,7 +1202,10 @@ async function claimRE(id) {
         const decimals = 18;
         const totalShareWithDecimals = (BigInt(totalShare) * (BigInt(10) ** BigInt(decimals))).toString();
         const countREBigInt = countRE.toString();
-        alert("userAddress："+userAddress);
+        if(!contract){
+            alert("userAddress："+ userAddress);
+            return;
+        }        
         // 呼叫智能合约的 setRE 函式
         const receipt = await contract.methods
             .setRE(
@@ -1223,7 +1228,7 @@ async function claimRE(id) {
         );
         } catch (error) {
             console.error("Error:", error);
-            alert("Error："+error);
+            alert("Error："+ error);
         }
       closeModal();
     }    
