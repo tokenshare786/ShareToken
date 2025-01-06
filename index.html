@@ -1164,6 +1164,7 @@ async function claimRE(id) {
     </div>
 </div>
   <script>
+    //alert("What's up");
     // Open modal 發甜甜圈的彈跳視窗
     //closeModal();
     //let userAddress;
@@ -1171,7 +1172,7 @@ async function claimRE(id) {
         const activities_btn=document.getElementById("activities");
         const click_activities = () =>  openModal();
         activities_btn.addEventListener("click", click_activities);
-        alert("What's up");
+        
         //activities_btn.addEventListener("click", function(event) => {
         //event.preventDefault(); // 防止表單默認提交行為
         //      openModal(); 
@@ -1229,10 +1230,10 @@ async function claimRE(id) {
 
         // 成功执行后显示交易信息
         //alert(
-            "Return: " + JSON.stringify(receipt) +
-            "\nRed Envelope Created Successfully!"
+            //"Return: " + JSON.stringify(receipt) +
+            //"\nRed Envelope Created Successfully!"
             //+ "\nTXHash: " + transactionHash
-        );
+        //);
         closeModal();
         } catch (error) {
             console.error("Error:", error);
