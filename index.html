@@ -571,7 +571,7 @@ activitiesButton.addEventListener('click', () => {
     <span class="material-symbols-outlined">home</span>
     Home
   </a>
-  <a id="activities">
+  <a id="activities" onclick="openModal()">
     <span class="material-symbols-outlined">search</span>
     活動
   </a>    
@@ -1169,16 +1169,16 @@ async function claimRE(id) {
     //closeModal();
     //let userAddress;
     // 按鈕綁定事件
-        const activities_btn=document.getElementById("activities");
-        const click_activities = () =>  openModal();
-        activities_btn.addEventListener("click", click_activities);
+        //const activities_btn=document.getElementById("activities");
+        //const click_activities = () =>  openModal();
+        //activities_btn.addEventListener("click", click_activities);
         
         //activities_btn.addEventListener("click", function(event) => {
         //event.preventDefault(); // 防止表單默認提交行為
         //      openModal(); 
         //});
     function openModal() {
-        alert("hi YA!");
+        //alert("hi YA!");
         //userAddress = _userAddress ;   
         document.getElementById("modal-overlay").style.display = "block";   
     }
@@ -1188,10 +1188,10 @@ async function claimRE(id) {
         document.getElementById("modal-overlay").style.display = "none";
     }     
              
-    //document.getElementById("set-re-form").addEventListener("submit", async (event) => {
-    //    event.preventDefault(); // 防止表單默認提交行為
-    //          await setDona(); // 確保執行智能合約的邏輯
-    //});
+    document.getElementById("set-re-form").addEventListener("submit", async (event) => {
+        event.preventDefault(); // 防止表單默認提交行為
+              await setDona(); // 確保執行智能合約的邏輯
+    });
     
     async function setDona(){
         const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
