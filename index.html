@@ -702,11 +702,8 @@ function countdown(seconds) {
           //var holder;
           if (typeof window.ethereum !== "undefined") {
               try {
-                    // 請求錢包授權
-                    //await window.ethereum.request({ method: "eth_requestAccounts" });
-                    //const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' }); 
-                    const holder = await connectWallet();
-                    //updateAccountUI(holder);
+                    // 請求錢包授權              
+                    const holder = await connectWallet();                   
                     // 使用 MetaMask 提供的 provider 初始化 Web3
                     web3 = new Web3(window.ethereum);
                     // 初始化智能合約
@@ -727,10 +724,10 @@ function countdown(seconds) {
         //const activities_btn=document.getElementById("activities");
         //const click_activities = () =>  openModal();
         //activities_btn.addEventListener("click", click_activities);
-        activities_btn.addEventListener("click", function(event) => {
-        event.preventDefault(); // 防止表單默認提交行為
-              openModal(); 
-        });
+        //activities_btn.addEventListener("click", function(event) => {
+        //event.preventDefault(); // 防止表單默認提交行為
+        //      openModal(); 
+        //});
         //
         getlinkcode();
         getBalance(holder);
