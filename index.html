@@ -1192,25 +1192,32 @@ async function claimRE(id) {
         const eligiType = document.getElementById("eligiType").value;
         const desc = document.getElementById("_desc").value;
         const url = document.getElementById("_url").value;
+        try{
+        // 转换为 BigInt 并计算精度
+        const decimals = 18;
+        const totalShareWithDecimals = (BigInt(totalShare) * (BigInt(10) ** BigInt(decimals))).toString();
+        const countREBigInt = countRE.toString();
 
-        // Log values to console
-        //console.log({ totalShare, countRE, eligiType, desc, url });
+        // 呼叫智能合约的 setRE 函式
+        const receipt = await contract.methods
+            .setRE(
+                totalShareWithDecimals, // 转换后的代币数量
+                countREBigInt,          // 红包数量
+                parseInt(eligiType),    // 转换为整数类型
+                desc,                   // 描述
+                url                     // 图片 URL
+            )
+            .send({ from: holder });
 
-        // Call the smart contract function (example using ethers.js)
-        try {
-            const result = await contract.methods.setRE(
-                totalShare,
-                countRE,
-                eligiType,
-                desc,
-                url
-            ).then(() => {
-                alert("Transaction successful!");
-                closeModal();
-            }).catch((error) => {
-                console.error("Transaction failed:", error);
-                alert("Transaction failed. Check details.");
-            });
+        // 获取交易哈希
+        //const transactionHash = receipt.transactionHash;
+
+        // 成功执行后显示交易信息
+        alert(
+            "Return: " + JSON.stringify(receipt) +
+            "\nRed Envelope Created Successfully!"
+            //+ "\nTXHash: " + transactionHash
+        );
         } catch (error) {
             console.error("Error:", error);
             alert("Error："+error);
