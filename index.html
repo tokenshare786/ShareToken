@@ -1004,7 +1004,7 @@ try {
     //const isActive = redEnvelopeInfo.isActive === "true" ? "Yes" : "No";
      const isActive = redEnvelopeInfo.isActive === "true" || redEnvelopeInfo.isActive === true;
     // 將描述轉換為 bytes
-    redEnvelopeInfo.desc = web3.utils.utf8ToHex(redEnvelopeInfo.desc); 
+    redEnvelopeInfo.desc = web3.utils.hexToUtf8(redEnvelopeInfo.desc); 
     // 转换为 BigInt 并计算精度
     const decimals = 18;
     redEnvelopeInfo.subAmt = (BigInt(redEnvelopeInfo.subAmt) / (BigInt(10) ** BigInt(decimals))).toString();        
