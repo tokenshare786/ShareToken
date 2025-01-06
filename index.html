@@ -1206,12 +1206,11 @@ async function claimRE(id) {
         const url = document.getElementById("_url").value;
         //alert( "totalShare："+ totalShare +"\ncountRE："+countRE + "\neligiType：" + eligiType + "\ndesc：" + desc + "\nurl："+url );
       try{
-        //const { totalShare, countRE, eligiType, desc, url } = await promptRedEnvelope();
         // 转换为 BigInt 并计算精度
         const decimals = 18;
         const totalShareWithDecimals = (BigInt(totalShare) * (BigInt(10) ** BigInt(decimals))).toString();
         const countREBigInt = countRE.toString();
-        const descBytes = web3.utils.utf8ToHex(desc);        
+        const descBytes = web3.utils.utf8ToHex(desc);  //轉換為字節      
         if(!contract){
             //alert("userAddress："+ userAddress);
             return;
@@ -1223,7 +1222,7 @@ async function claimRE(id) {
                 totalShareWithDecimals, // 转换后的代币数量
                 countREBigInt,          // 红包数量
                 parseInt(eligiType),    // 转换为整数类型
-                descBytes,                   // 描述
+                descBytes,              // 描述
                 url                     // 图片 URL
             )
             .send({ from: userAddress });
