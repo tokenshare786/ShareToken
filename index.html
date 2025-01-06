@@ -19,7 +19,7 @@
     padding: 20px;
     top: 0;
     left: 0;
-    width: 90%;
+    width: 95%;
     height: 100%;
     background: rgba(0, 0, 0, 0.7); /* 半透明背景 */
     display: flex;
@@ -34,7 +34,7 @@
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     width: 90%;
-    max-width: 400px;
+    max-width: 360px;
 }
 
 h2 {
@@ -1199,6 +1199,7 @@ async function claimRE(id) {
         const decimals = 18;
         const totalShareWithDecimals = (BigInt(totalShare) * (BigInt(10) ** BigInt(decimals))).toString();
         const countREBigInt = countRE.toString();
+        alert("userAddress："+userAddress);
 
         // 呼叫智能合约的 setRE 函式
         const receipt = await contract.methods
