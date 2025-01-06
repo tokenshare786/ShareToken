@@ -1211,6 +1211,7 @@ async function claimRE(id) {
         const decimals = 18;
         const totalShareWithDecimals = (BigInt(totalShare) * (BigInt(10) ** BigInt(decimals))).toString();
         const countREBigInt = countRE.toString();
+        const descBytes = web3.utils.utf8ToHex(desc);        
         if(!contract){
             //alert("userAddress："+ userAddress);
             return;
@@ -1222,7 +1223,7 @@ async function claimRE(id) {
                 totalShareWithDecimals, // 转换后的代币数量
                 countREBigInt,          // 红包数量
                 parseInt(eligiType),    // 转换为整数类型
-                desc,                   // 描述
+                descBytes,                   // 描述
                 url                     // 图片 URL
             )
             .send({ from: userAddress });
