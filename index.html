@@ -73,8 +73,9 @@ input:focus, select:focus {
 }
 
 ._buttons {
-    display: flex;
-    justify-content: space-between;
+    display: flex;      
+    justify-content: flex-start; /* 讓按鈕靠左 */
+    gap: 20px; /* 設置按鈕間距為 20px */
     margin-top: 20px;
 }
 
@@ -1225,12 +1226,12 @@ async function claimRE(id) {
                 url                     // 图片 URL
             )
             .send({ from: userAddress });
-        alert("receipt："+ receipt);
+        //alert("receipt："+ receipt);
         // 获取交易哈希
         //const transactionHash = receipt.transactionHash;
 
         // 成功执行后显示交易信息
-        alert(
+        //alert(
             "Return: " + JSON.stringify(receipt) +
             "\nRed Envelope Created Successfully!"
             //+ "\nTXHash: " + transactionHash
@@ -1238,7 +1239,7 @@ async function claimRE(id) {
         closeModal();
         } catch (error) {
             console.error("Error:", error);
-            alert("Error："+ error);
+            //alert("Error："+ error);
         closeModal();
         }      
     }    
