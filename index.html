@@ -1186,10 +1186,10 @@ async function claimRE(id) {
         document.getElementById("modal-overlay").style.display = "none";
     }     
              
-    document.getElementById("set-re-form").addEventListener("submit", async (event) => {
-        event.preventDefault(); // 防止表單默認提交行為
-              await setDona(); // 確保執行智能合約的邏輯
-    });
+    //document.getElementById("set-re-form").addEventListener("submit", async (event) => {
+    //    event.preventDefault(); // 防止表單默認提交行為
+    //          await setDona(); // 確保執行智能合約的邏輯
+    //});
     
     async function setDona(){
         const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
