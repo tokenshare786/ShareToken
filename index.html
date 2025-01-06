@@ -571,7 +571,7 @@ activitiesButton.addEventListener('click', () => {
     <span class="material-symbols-outlined">home</span>
     Home
   </a>
-  <a onclick="openModal()" >
+  <a id="activities">
     <span class="material-symbols-outlined">search</span>
     活動
   </a>    
@@ -723,9 +723,9 @@ function countdown(seconds) {
     }
     function ready_togo(holder){
       // 按鈕綁定事件
-        //const activities_btn=document.getElementById("activities");
-        //const click_activities = () => setRedEnvelope(holder);
-        //activities_btn.addEventListener("click", click_activities);
+        const activities_btn=document.getElementById("activities");
+        const click_activities = () =>  openModal(holder);
+        activities_btn.addEventListener("click", click_activities);
       //
         getlinkcode();
         getBalance(holder);
@@ -1186,9 +1186,9 @@ async function claimRE(id) {
     //document.getElementById("set-re-form").addEventListener("submit", function(event) {
     //    event.preventDefault(); // Prevent form from refreshing the page
     
-    async function setDona(){
-        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-        const userAddress = accounts[0];
+    async function setDona(userAddress){
+        //const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+        //const userAddress = accounts[0];
         // Get form data
         const totalShare = document.getElementById("totalShare").value;
         const countRE = document.getElementById("countRE").value;
@@ -1201,7 +1201,6 @@ async function claimRE(id) {
         const totalShareWithDecimals = (BigInt(totalShare) * (BigInt(10) ** BigInt(decimals))).toString();
         const countREBigInt = countRE.toString();
         alert("userAddress："+userAddress);
-
         // 呼叫智能合约的 setRE 函式
         const receipt = await contract.methods
             .setRE(
