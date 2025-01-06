@@ -78,33 +78,31 @@ input:focus, select:focus {
 }
 
 _button {
-    padding: 10px 20px;
-    font-size: 14px;
-    border-radius: 5px;
-    border: none;
+    padding: 6px 12px; /* 調整為您提供的樣式 */
+    font-size: 0.8em;  /* 字體大小 */
+    border-radius: 6px;
+    border: 2px solid #00d9ff; /* 錢包按鈕的邊框顏色 */
+    color: #00d9ff; /* 文字顏色 */
+    background: transparent; /* 背景透明 */
     cursor: pointer;
+    transition: all 0.3s ease-in-out; /* 添加平滑過渡效果 */
 }
 
 _button.cancel {
-      padding: 6px 12px;
-      border-radius: 6px;
-      border: 2px solid #00d9ff;
-    background: #FFFFFF; /* 白色背景 */
-    color: #00d9ff;
+    color: #FF6F61; /* 可以為取消按鈕設置不同的顏色（如紅色） */
+    border-color: #FF6F61; /* 與文字顏色保持一致 */
 }
 
 _button.confirm {
-      padding: 6px 12px;
-      border-radius: 6px;
-      border: 2px solid #FFFFFF;
-    background: #00d9ff; /* 藍色背景 */
-    color: #FFFFFF;
+    color: #00d9ff; /* 藍色字體 */
+    border-color: #00d9ff; /* 藍色邊框 */
 }
 
 _button:hover {
-    opacity: 0.9;
+    background: #00d9ff; /* 添加藍色背景以突出效果 */
+    color: #121212; /* 深色字體，確保在藍色背景上可見 */
 }
-    
+
     header {
       display: flex;
       justify-content: space-between;
