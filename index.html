@@ -1210,7 +1210,7 @@ async function claimRE(id) {
             //alert("userAddress："+ userAddress);
             return;
         }     
-        closeModal();
+        //closeModal();
         // 呼叫智能合约的 setRE 函式
         const receipt = await contract.methods
             .setRE(
@@ -1231,9 +1231,11 @@ async function claimRE(id) {
             "\nRed Envelope Created Successfully!"
             //+ "\nTXHash: " + transactionHash
         );
+        closeModal();
         } catch (error) {
             console.error("Error:", error);
             alert("Error："+ error);
+        closeModal();
         }      
     }    
 </script>
