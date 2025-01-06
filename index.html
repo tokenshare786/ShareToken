@@ -1193,14 +1193,14 @@ async function claimRE(id) {
         //const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
         //const userAddress = accounts[0];
         // Get form data
-        const totalShare = document.getElementById("totalShare").value;
-        const countRE = document.getElementById("countRE").value;
-        const eligiType = document.getElementById("eligiType").value;
-        const desc = document.getElementById("_desc").value;
-        const url = document.getElementById("_url").value;
-      alert( "totalShare："+ totalShare +"\ncountRE："+countRE + "\neligiType：" + eligiType + "desc：" + desc + "\nurl："+url );
+        //const totalShare = document.getElementById("totalShare").value;
+        //const countRE = document.getElementById("countRE").value;
+        //const eligiType = document.getElementById("eligiType").value;
+        //const desc = document.getElementById("_desc").value;
+        //const url = document.getElementById("_url").value;
+      //alert( "totalShare："+ totalShare +"\ncountRE："+countRE + "\neligiType：" + eligiType + "\ndesc：" + desc + "\nurl："+url );
         try{
-          //const { totalShare, countRE, eligiType, desc, url } = await promptRedEnvelope();
+        /const { totalShare, countRE, eligiType, desc, url } = await promptRedEnvelope();
         // 转换为 BigInt 并计算精度
         const decimals = 18;
         const totalShareWithDecimals = (BigInt(totalShare) * (BigInt(10) ** BigInt(decimals))).toString();
