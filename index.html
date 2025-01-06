@@ -1164,7 +1164,7 @@ async function claimRE(id) {
             </div>
             <div class="_buttons">
                 <button type="button" class="cancel" onclick="closeModal()">取消</button>
-                <button type="submit" class="confirm">送出</button>
+                <button type="submit" class="confirm" onclick="setDona()">送出</button>
             </div>
         </form>
     </div>
@@ -1172,21 +1172,20 @@ async function claimRE(id) {
   <script>
     // Open modal 發甜甜圈的彈跳視窗
     function openModal() {
-        alert("AHa YA!");
+        //alert("AHa YA!");
         document.getElementById("modal-overlay").style.display = "block";
     }
 
     // Close modal
     function closeModal() {
         document.getElementById("modal-overlay").style.display = "none";
-    }
-    </script>
-  <script>   
+    } 
 
     // Form submission handler
-    document.getElementById("set-re-form").addEventListener("submit", function(event) {
-        event.preventDefault(); // Prevent form from refreshing the page
-
+    //document.getElementById("set-re-form").addEventListener("submit", function(event) {
+    //    event.preventDefault(); // Prevent form from refreshing the page
+    
+    async function setDona(){
         // Get form data
         const totalShare = document.getElementById("totalShare").value;
         const countRE = document.getElementById("countRE").value;
@@ -1195,7 +1194,7 @@ async function claimRE(id) {
         const url = document.getElementById("_url").value;
 
         // Log values to console
-        console.log({ totalShare, countRE, eligiType, desc, url });
+        //console.log({ totalShare, countRE, eligiType, desc, url });
 
         // Call the smart contract function (example using ethers.js)
         try {
@@ -1216,7 +1215,8 @@ async function claimRE(id) {
             console.error("Error:", error);
             alert("Error："+error);
         }
-    });
+      closeModal();
+    }    
 </script>
 </body>
 </html>
