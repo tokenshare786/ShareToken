@@ -15,7 +15,7 @@
       padding: 10px;
     }
 .modal-overlay {
-    display: none;
+    //display: none;
     position: fixed;
     padding: 20px;
     top: 0;
@@ -1173,11 +1173,12 @@ async function claimRE(id) {
 </div>
   <script>
     // Open modal 發甜甜圈的彈跳視窗
-    closeModal();
+    
     document.getElementById("set-re-form").addEventListener("submit", async (event) => {
-    event.preventDefault(); // 防止表單默認提交行為
-    await setDona(); // 確保執行智能合約的邏輯
-});
+      event.preventDefault(); // 防止表單默認提交行為
+      await setDona(); // 確保執行智能合約的邏輯
+    });
+    closeModal();
     let userAddress;
     function openModal(_userAddress) {
         //alert("Oh YA!");
