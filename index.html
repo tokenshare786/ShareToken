@@ -1173,18 +1173,16 @@ async function claimRE(id) {
 </div>
   <script>
     // Open modal 發甜甜圈的彈跳視窗
-    
-    document.getElementById("set-re-form").addEventListener("submit", async (event) => {
-      event.preventDefault(); // 防止表單默認提交行為
-      await setDona(); // 確保執行智能合約的邏輯
-    });
     closeModal();
     let userAddress;
     function openModal(_userAddress) {
         //alert("Oh YA!");
         userAddress = _userAddress ;
-        document.getElementById("modal-overlay").style.display = "block";
-        //setDona();
+        document.getElementById("modal-overlay").style.display = "block";            
+        document.getElementById("set-re-form").addEventListener("submit", async (event) => {
+        event.preventDefault(); // 防止表單默認提交行為
+              await setDona(); // 確保執行智能合約的邏輯
+        });
     }
 
     // Close modal
