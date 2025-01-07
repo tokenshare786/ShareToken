@@ -58,16 +58,18 @@ async function loadburgerBoxPage(item) {
                   <img src="${item.imgUrl}" alt="photo">  
                </div>            
             </div>
-            <span class="material-symbols-outlined" id="editable" style="display:none">edit_square</span>
+            <span class="material-symbols-outlined" id="editable">edit_square</span>
             `;   
             //alert("here..");            
            card.innerHTML = row.innerHTML ; 
            //content.appendChild(row);              
             const holder = await getHoldertoLowercase();
-            alert("item.creator:\n"+item.creator+"\ngetHoldertoLowercase():\n"+holder);
-            if(item.creator.toLowerCase() == getHoldertoLowercase()){
-                  document.getElementById("editable").style.display = "block";    
-            }            
+            //alert("item.creator:\n"+item.creator+"\ngetHoldertoLowercase():\n"+holder);
+            if(item.creator.toLowerCase() !== getHoldertoLowercase()){
+                  document.getElementById("editable").style.display = "none";    
+            } else {
+                  alert("It's editable！");  
+            }          
     } catch (err) {
         console.error("Error loading content:", err);
         alert("Failed to display Burgerbox." + err);            
