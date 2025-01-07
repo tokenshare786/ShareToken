@@ -67,7 +67,7 @@ async function loadburgerBoxPage(item) {
             const re_creator = item.creator.toLowerCase() ;
             //alert("item.creator:\n"+item.creator+"\ngetHoldertoLowercase():\n"+holder);
             if( re_creator !== holder){
-                  alert("any problem?");  
+                  //alert("any problem?");  
                   document.getElementById("editable").style.display = "none";
                   alert("you're not creator.");  
             } else {
