@@ -1,4 +1,4 @@
-alert("Updated!3");
+alert("Updated!4");
 
 initial();  
 
@@ -52,14 +52,16 @@ async function loadburgerBoxPage(item) {
                      <span class="progress">
                          <p class="css_back" onclick="_back()">Back</p>                         
                          <p class="css_back" style="margin-left:auto" onclick="_next()">Next</p>
-                     <span>
+                     </span>
             </div>
             <div  class="new-container">
                <div class="image-container" onclick="claim_re()">
                   <img src="${item.imgUrl}" alt="photo">  
                </div>            
             </div>
-            <div class="css_back" onclick="open_edit()" style="margin-bottom:10px" id="editable">Edit</div>
+            <span class="progress">
+                         <p class="css_back" onclick="open_edit()" id="editable">Edit</p>
+            </span>
             `;   
             //alert("here..");            
            card.innerHTML = row.innerHTML ; 
