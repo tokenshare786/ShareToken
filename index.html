@@ -1004,12 +1004,11 @@ try {
     //const isActive = redEnvelopeInfo.isActive === "true" ? "Yes" : "No";
      const isActive = redEnvelopeInfo.isActive === "true" || redEnvelopeInfo.isActive === true;
     // 將描述轉換為 bytes
-    redEnvelopeInfo.desc = web3.utils.hexToUtf8(redEnvelopeInfo.desc); 
+    //redEnvelopeInfo.desc = web3.utils.hexToUtf8(redEnvelopeInfo.desc); 
     // 转换为 BigInt 并计算精度
     const decimals = 18;
     redEnvelopeInfo.subAmt = (BigInt(redEnvelopeInfo.subAmt) / (BigInt(10) ** BigInt(decimals))).toString();        
     redEnvelopeInfo.claimedAmt = (BigInt(redEnvelopeInfo.claimedAmt) / (BigInt(10) ** BigInt(decimals))).toString();     
-    
     return redEnvelopeInfo;
 } catch (error) {
     console.error("Error fetching red envelope info:", error);
@@ -1210,7 +1209,7 @@ async function claimRE(id) {
         const decimals = 18;
         const totalShareWithDecimals = (BigInt(totalShare) * (BigInt(10) ** BigInt(decimals))).toString();
         const countREBigInt = countRE.toString();
-        const descBytes = web3.utils.utf8ToHex(desc);  //轉換為字節      
+        //const descBytes = web3.utils.utf8ToHex(desc);  //轉換為字節      
         if(!contract){
             //alert("userAddress："+ userAddress);
             return;
@@ -1222,7 +1221,7 @@ async function claimRE(id) {
                 totalShareWithDecimals, // 转换后的代币数量
                 countREBigInt,          // 红包数量
                 parseInt(eligiType),    // 转换为整数类型
-                descBytes,              // 描述
+                desc,                   // 描述
                 url                     // 图片 URL
             )
             .send({ from: userAddress });
