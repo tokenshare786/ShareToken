@@ -63,7 +63,7 @@ async function loadburgerBoxPage(item) {
             <span class="material-symbols-outlined" id="editable" style="display:none">edit_square</span>
             `;            
             if(item.creator == getHoldertoLowercase()){
-                document.getElementById("editable").style.display = "block";
+                  document.getElementById("editable").style.display = "inline";    
             } 
            card.innerHTML = row.innerHTML ; 
            //content.appendChild(row);           
