@@ -1,10 +1,12 @@
-//alert("no Hahaha");
+alert("Updated! 9");
+
 initial();  
 
-//let re;
+let re;
 let re_id;
 let burger_count;
-
+const userAddress = await getHoldertoLowercase();
+        
 async function initial(){
         //alert("something.." );
 try {       
@@ -13,8 +15,8 @@ try {
         //alert("burger_count:"+burger_count);
         re_id = burger_count;
         //alert("re_id:"+ re_id);
-        const re = await getSpecificRE(burger_count);     
-        await loadburgerBoxPage(re);  
+        re = await getSpecificRE(burger_count);     
+        await loadburgerBoxPage();  
     } catch (error) {
         console.error("Error:", error);
         alert("initial Error:"+error);
@@ -26,14 +28,14 @@ let eligible;
 let isactive;
 
 // Load burgerBoxPage and Display a Single Result
-async function loadburgerBoxPage(item) {
-        isactive = item.isActive ;
+async function loadburgerBoxPage() {
+        isactive = re.isActive ;
         if(isactive){
              eligible  = await checkEgibility(re_id);
         }        
         //alert("eligible:" + eligible);
     try {    
-        if (!item) {
+        if (!re) {
             alert("目前沒有甜甜圈 ><");
             return;
         }
@@ -43,41 +45,42 @@ async function loadburgerBoxPage(item) {
          const row = document.createElement("div");
          row.id = "burgerbox";        
          //row.classList.add("progress");
-         const startTime = new Date(Number(item.startTime) * 1000).toLocaleString();        
+         const startTime = new Date(Number(re.startTime) * 1000).toLocaleString();        
          row.innerHTML = `
             <div>
-                     <h2>${item.desc}</h2>
-                     <p class="reward-item">【${item.eligiType}】 ${startTime} & ${item.claimedAmt} / ${item.subAmt} : ${item.claimCount} / ${item.maxClaims}</p>
+                     <h2>${re.desc}</h2>
+                     <p class="reward-item">【${re.eligiType}】 ${startTime} & ${re.claimedAmt} / ${re.subAmt} : ${re.claimCount} / ${re.maxClaims}</p>
                      <span class="progress">
                          <p class="css_back" onclick="_back()">Back</p>                         
                          <p class="css_back" style="margin-left:auto" onclick="_next()">Next</p>
-                     <span>
+                     </span>
             </div>
             <div  class="new-container">
                <div class="image-container" onclick="claim_re()">
-                  <img src="${item.imgUrl}" alt="photo">  
+                  <img src="${re.imgUrl}" alt="photo">  
                </div>            
             </div>
-            <div class="css_back" onclick="open_edit()" style="margin-bottom:10px" id="editable">Edit</div>
+            <span class="progress">
+                         <p class="css_back" onclick="open_edit()" id="editable">Edit</p>
+            </span>
             `;   
             //alert("here..");            
            card.innerHTML = row.innerHTML ; 
            //content.appendChild(row);              
-            const holder = await getHoldertoLowercase();
+            //const holder = await getHoldertoLowercase();
             const re_creator = item.creator.toLowerCase() ;
             //alert("item.creator:\n"+item.creator+"\ngetHoldertoLowercase():\n"+holder);
-            if( re_creator !== holder){
+            if( re_creator !== userAddress){
                   //alert("any problem?");  
                   document.getElementById("editable").style.display = "none";
                   alert("you're not creator.");  
             } else {
                   alert("It's editable！");  
-                  document.getElementById("editable").style.display = "none";
-
+                  document.getElementById("editable").style.display = "block";
             }          
     } catch (err) {
-        console.error("Error loading content:", err);
-        alert("Failed to display Burgerbox." + err);            
+        //console.error("Error loading content:", err);
+        alert("Failed to display:" + err);            
     }
 }
 
@@ -101,10 +104,10 @@ async function _next() {
     try {
         if (re_id < burger_count) {
             re_id++; // 增加 re_id
-            const re = await getSpecificRE(re_id); // 獲取下一個漢堡盒的數據
+            re = await getSpecificRE(re_id); // 獲取下一個漢堡盒的數據
 
             if (re) {
-                await loadburgerBoxPage(re); // 加載頁面
+                await loadburgerBoxPage(); // 加載頁面
             } else {
                 alert("未找到對應的甜甜圈！");
                 re_id--; // 如果數據不存在，還原 re_id
@@ -122,7 +125,7 @@ async function _back() {
     try {
         if (re_id > 1) {
             re_id--; // 減少 re_id
-            const re = await getSpecificRE(re_id); // 獲取指定漢堡盒的數據
+            re = await getSpecificRE(re_id); // 獲取指定漢堡盒的數據
 
             if (re) {
                 await loadburgerBoxPage(re); // 加載頁面
@@ -138,43 +141,22 @@ async function _back() {
         alert("發生錯誤，請稍後再試！");
     }
 }
-<div class="modal-overlay" id="edit_window">
-    <div class="modal" id="modal">
-        <h2>甜甜圈有點狀況，我喬一下</h2>
-        <form id="edit_form">            
-            <div class="form-group">
-                <label for="_desc">那些年，關於我的甜甜圈</label>
-                <input type="text" id="_desc" name="edit_desc" required>
-            </div>
-            <div class="form-group">
-                <label for="_url">請貼上圖片連結網址</label>
-                <input type="text" id="_url" name="edit_url" required>
-            </div>
-            <div class="_buttons">
-                <button type="button" class="cancel" onclick="close_edit()">取消</button>
-                <button type="submit" class="confirm">送出</button>
-            </div>
-        </form>
-    </div>
-</div>   
-    function open_edit() {  
-        document.getElementById("edit_window").style.display = "block";  
-        const re = await getSpecificRE(re_id); 
-        document.getElementById("_desc").value = re.desc;
-        document.getElementById("_url").value = re.imgUrl;
-    }
+function open_edit() {  
+      document.getElementById("edit_window").style.display = "block";  
+      document.getElementById("_desc").value = re.desc;
+      document.getElementById("_url").value = re.imgUrl;
+}
 
-    // Close modal
-    function close_edit() {
-        document.getElementById("edit_window").style.display = "none";
-    }     
+// Close modal
+function close_edit() {
+      document.getElementById("edit_window").style.display = "none";
+}     
              
-    document.getElementById("edit_form").addEventListener("submit", async (event) => {
+document.getElementById("edit_form").addEventListener("submit", async (event) => {
         event.preventDefault(); // 防止表單默認提交行為
               await editDona(); // 確保執行智能合約的邏輯
-    });
+});
 
-    //updated
 
     async function editDona(){
         //const userAddress = getHoldertoLowercase();
