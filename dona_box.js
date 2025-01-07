@@ -1,4 +1,4 @@
-alert("Updated! 30");
+alert("Updated! 31");
 let burger_count;
 let re_id;
 let re;
@@ -161,7 +161,7 @@ async function editDona(){
         // Get form data
         const edit_desc = document.getElementById("edit_desc").value;
         const edit_url = document.getElementById("edit_url").value;
-        alert("editDona:"+ _desc + "/" +  re.desc);
+        alert("editDona:"+ edit_desc  + "/" +  re.desc);
       try{
         // 呼叫智能合约的 setRE 函式
         if( edit_desc != re.desc){                
@@ -169,7 +169,7 @@ async function editDona(){
             .setRE(
                 re_id,                   
                 true,
-                _desc
+                edit_desc
             )
             .send({ from: userAddress });
         }
@@ -180,7 +180,7 @@ async function editDona(){
             .setRE(
                 re_id,                   
                 false,
-                _url
+                edit_url
             )
             .send({ from: userAddress });
         }
