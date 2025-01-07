@@ -1,4 +1,4 @@
-alert("Updated!4");
+alert("Updated! 5");
 
 initial();  
 
@@ -140,5 +140,58 @@ async function _back() {
         alert("發生錯誤，請稍後再試！");
     }
 }
+function open_edit() {  
+        document.getElementById("edit_window").style.display = "block";  
+        const re = await getSpecificRE(re_id); 
+        document.getElementById("_desc").value = re.desc;
+        document.getElementById("_url").value = re.imgUrl;
+    }
 
+    // Close modal
+    function close_edit() {
+        document.getElementById("edit_window").style.display = "none";
+    }     
+             
+    document.getElementById("edit_form").addEventListener("submit", async (event) => {
+        event.preventDefault(); // 防止表單默認提交行為
+              await editDona(); // 確保執行智能合約的邏輯
+    });
+
+    async function editDona(){
+        const userAddress = getHoldertoLowercase();
+        // Get form data
+        const desc = document.getElementById("edit_desc").value;
+        const url = document.getElementById("edit_url").value;
+        const isdesc = true;
+      try{
+        // 呼叫智能合约的 setRE 函式
+        if(desc){                
+        const receipt = await contract.methods
+            .setRE(
+                re_id,                   
+                isdesc,
+                desc
+            )
+            .send({ from: userAddress });
+        if(url){  
+        isdesc= false;
+        const receipt = await contract.methods
+            .setRE(
+                re_id,                   
+                isdesc,
+                url
+            )
+            .send({ from: userAddress });
+        //
+        document.getElementById("edit_form").reset();
+
+        // 關閉彈跳視窗
+        close_edit();
+        const item = await getSpecificRE(re_id);
+        loadburgerBoxPage(item);
+        } catch (error) {
+            console.error("Error:", error);
+            alert("edit Error:" + error);        
+        }     
+    }
 
