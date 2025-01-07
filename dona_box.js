@@ -1,5 +1,5 @@
 alert("Updated! 13");
-let re_id = 0;
+let re_id;
 let re;
 let card;
 let eligible;
