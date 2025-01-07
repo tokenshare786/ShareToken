@@ -1,4 +1,4 @@
-alert("Updated! 29");
+alert("Updated! 30");
 let burger_count;
 let re_id;
 let re;
@@ -137,13 +137,13 @@ async function _back() {
 function open_edit() {  
       document.getElementById("edit_window").style.display = "block";  
       //alert("re:"+ re.desc + "/" +  re.imgUrl);
-      const get_desc = document.getElementById("_desc");
+      const get_desc = document.getElementById("edit_desc");
         if(get_desc){
                 get_desc.value = re.desc;
         } else {
               alert("get_desc:null");  
         }              
-       document.getElementById("_url").value = re.imgUrl;
+       document.getElementById("edit_url").value = re.imgUrl;
 }
 
 // Close modal
@@ -159,12 +159,12 @@ document.getElementById("edit_form").addEventListener("submit", async (event) =>
 async function editDona(){
         //const userAddress = getHoldertoLowercase();
         // Get form data
-        const _desc = document.getElementById("_desc").value;
-        const _url = document.getElementById("_url").value;
+        const edit_desc = document.getElementById("edit_desc").value;
+        const edit_url = document.getElementById("edit_url").value;
         alert("editDona:"+ _desc + "/" +  re.desc);
       try{
         // 呼叫智能合约的 setRE 函式
-        if( _desc != re.desc){                
+        if( edit_desc != re.desc){                
         await contract.methods
             .setRE(
                 re_id,                   
@@ -174,7 +174,7 @@ async function editDona(){
             .send({ from: userAddress });
         }
         //
-        if( _url != re.imgUrl){  
+        if( edit_url != re.imgUrl){  
         //isdesc= false;
         await contract.methods
             .setRE(
