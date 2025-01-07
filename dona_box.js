@@ -1,4 +1,4 @@
-alert("Updated! 31");
+alert("Updated! 32");
 let burger_count;
 let re_id;
 let re;
@@ -166,7 +166,7 @@ async function editDona(){
         // 呼叫智能合约的 setRE 函式
         if( edit_desc != re.desc){                
         await contract.methods
-            .setRE(
+            .updateMyRE(
                 re_id,                   
                 true,
                 edit_desc
@@ -177,7 +177,7 @@ async function editDona(){
         if( edit_url != re.imgUrl){  
         //isdesc= false;
         await contract.methods
-            .setRE(
+            .updateMyRE(
                 re_id,                   
                 false,
                 edit_url
