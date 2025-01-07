@@ -58,7 +58,7 @@ async function loadburgerBoxPage(item) {
                   <img src="${item.imgUrl}" alt="photo">  
                </div>            
             </div>
-            <span class="material-symbols-outlined" id="editable">edit_square</span>
+            <div class="material-symbols-outlined" id="editable">edit_square</div>
             `;   
             //alert("here..");            
            card.innerHTML = row.innerHTML ; 
