@@ -64,9 +64,12 @@ async function loadburgerBoxPage(item) {
            card.innerHTML = row.innerHTML ; 
            //content.appendChild(row);              
             const holder = await getHoldertoLowercase();
+            const re_creator = item.creator.toLowerCase() ;
             //alert("item.creator:\n"+item.creator+"\ngetHoldertoLowercase():\n"+holder);
-            if(item.creator.toLowerCase() !== holder){
-                  document.getElementById("editable2").style.display = "none";    
+            if( re_creator !== holder){
+                  alert("any problem?");  
+                  document.getElementById("editable2").style.display = "none";
+                  alert("you're not creator");  
             } else {
                   alert("It's editable！");  
             }          
