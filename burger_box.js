@@ -62,9 +62,8 @@ async function loadburgerBoxPage(item) {
             </div>
             <span class="material-symbols-outlined" id="editable" style="display:none">edit_square</span>
             `;   
-            
-            alert("item.creator:\n"+item.creator+"\ngetHoldertoLowercase():\n"+getHoldertoLowercase());
-
+            const holder = await getHoldertoLowercase();
+            alert("item.creator:\n"+item.creator+"\ngetHoldertoLowercase():\n"+holder);
             if(item.creator.toLowerCase() == getHoldertoLowercase()){
                   document.getElementById("editable").style.display = "inline";    
             } 
