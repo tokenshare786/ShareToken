@@ -153,9 +153,9 @@ document.getElementById("edit_form").addEventListener("submit", async (event) =>
     async function editDona(){
         //const userAddress = getHoldertoLowercase();
         // Get form data
-        const _desc = document.getElementById("edit_desc").value;
-        const _url = document.getElementById("edit_url").value;
-        //const isdesc = true;
+        const _desc = document.getElementById("_desc").value;
+        const _url = document.getElementById("_url").value;
+        //alert("editDona:"+ _desc + "/" +  _url);
       try{
         // 呼叫智能合约的 setRE 函式
         if( _desc != re.desc){                
@@ -187,4 +187,4 @@ document.getElementById("edit_form").addEventListener("submit", async (event) =>
             console.error("Error:", error);
             alert("edit Error:" + error);        
         }     
-    }   
+    }
