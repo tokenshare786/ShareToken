@@ -1,4 +1,4 @@
-alert("Updated! 19");
+alert("Updated! 20");
 
 let re_id;
 let re;
@@ -135,6 +135,7 @@ async function _back() {
 
 function open_edit() {  
       document.getElementById("edit_window").style.display = "block";  
+      alert("re:"+ re.desc + "/" +  re.imgUrl);
       document.getElementById("_desc").value = re.desc;
       document.getElementById("_url").value = re.imgUrl;
 }
