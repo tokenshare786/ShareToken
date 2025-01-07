@@ -171,11 +171,10 @@ async function _back() {
              
     document.getElementById("edit_form").addEventListener("submit", async (event) => {
         event.preventDefault(); // 防止表單默認提交行為
-              await editDona(re_id); // 確保執行智能合約的邏輯
+              await editDona(); // 確保執行智能合約的邏輯
     });
 
-</script><script>    
-    async function editDona(id){
+    async function editDona(){
         const userAddress = getHoldertoLowercase();
         // Get form data
         const desc = document.getElementById("edit_desc").value;
@@ -186,7 +185,7 @@ async function _back() {
         if(desc){                
         const receipt = await contract.methods
             .setRE(
-                id,                   
+                re_id,                   
                 isdesc,
                 desc
             )
@@ -195,7 +194,7 @@ async function _back() {
         isdesc= false;
         const receipt = await contract.methods
             .setRE(
-                id,                   
+                re_id,                   
                 isdesc,
                 url
             )
@@ -205,11 +204,11 @@ async function _back() {
 
         // 關閉彈跳視窗
         close_edit();
-        const item = await getSpecificRE(id);
+        const item = await getSpecificRE(re_id);
         loadburgerBoxPage(item);
         } catch (error) {
             console.error("Error:", error);
-            alert("edit Error："+ error);        
+            alert("edit Error:" + error);        
         }     
     }    
-</script>
+
