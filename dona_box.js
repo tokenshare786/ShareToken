@@ -1,4 +1,4 @@
-alert("Wa ha!");
+alert("Updated!");
 
 initial();  
 
