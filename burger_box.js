@@ -46,7 +46,7 @@ async function loadburgerBoxPage(item) {
          const startTime = new Date(Number(item.startTime) * 1000).toLocaleString();        
          row.innerHTML = `
             <div>
-                     <h2>${item.desc}</h2>
+                     <h2>${item.desc}</h2><span class="material-symbols-outlined" id="editable2">edit_square</span>
                      <p class="reward-item">【${item.eligiType}】 ${startTime} & ${item.claimedAmt} / ${item.subAmt} : ${item.claimCount} / ${item.maxClaims}</p>
                      <span class="progress">
                          <p class="css_back" onclick="_back()">Back</p>                         
@@ -65,8 +65,8 @@ async function loadburgerBoxPage(item) {
            //content.appendChild(row);              
             const holder = await getHoldertoLowercase();
             //alert("item.creator:\n"+item.creator+"\ngetHoldertoLowercase():\n"+holder);
-            if(item.creator.toLowerCase() !== getHoldertoLowercase()){
-                  document.getElementById("editable").style.display = "none";    
+            if(item.creator.toLowerCase() !== holder){
+                  document.getElementById("editable2").style.display = "none";    
             } else {
                   alert("It's editable！");  
             }          
