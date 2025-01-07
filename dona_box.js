@@ -1,11 +1,12 @@
-alert("Updated! 8");
+alert("Updated! 9");
 
 initial();  
 
 let re;
 let re_id;
 let burger_count;
-
+const userAddress = await getHoldertoLowercase();
+        
 async function initial(){
         //alert("something.." );
 try {       
@@ -66,10 +67,10 @@ async function loadburgerBoxPage() {
             //alert("here..");            
            card.innerHTML = row.innerHTML ; 
            //content.appendChild(row);              
-            const holder = await getHoldertoLowercase();
+            //const holder = await getHoldertoLowercase();
             const re_creator = item.creator.toLowerCase() ;
             //alert("item.creator:\n"+item.creator+"\ngetHoldertoLowercase():\n"+holder);
-            if( re_creator !== holder){
+            if( re_creator !== userAddress){
                   //alert("any problem?");  
                   document.getElementById("editable").style.display = "none";
                   alert("you're not creator.");  
@@ -78,7 +79,7 @@ async function loadburgerBoxPage() {
                   document.getElementById("editable").style.display = "block";
             }          
     } catch (err) {
-        console.error("Error loading content:", err);
+        //console.error("Error loading content:", err);
         alert("Failed to display:" + err);            
     }
 }
@@ -157,14 +158,14 @@ document.getElementById("edit_form").addEventListener("submit", async (event) =>
 });
 
 async function editDona(){
-        const userAddress = getHoldertoLowercase();
+        //const userAddress = getHoldertoLowercase();
         // Get form data
         const _desc = document.getElementById("edit_desc").value;
         const _url = document.getElementById("edit_url").value;
         const isdesc = true;
       try{
         // 呼叫智能合约的 setRE 函式
-        if(_desc != re.desc){                
+        if( _desc != re.desc){                
         const receipt = await contract.methods
             .setRE(
                 re_id,                   
@@ -173,7 +174,7 @@ async function editDona(){
             )
             .send({ from: userAddress });
         //
-        if(_url != re.imgUrl){  
+        if( _url != re.imgUrl){  
         isdesc= false;
         const receipt = await contract.methods
             .setRE(
