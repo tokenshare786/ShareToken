@@ -157,43 +157,6 @@ document.getElementById("edit_form").addEventListener("submit", async (event) =>
               await editDona(); // 確保執行智能合約的邏輯
 });
 
-async function editDona(){
-        //const userAddress = getHoldertoLowercase();
-        // Get form data
-        const _desc = document.getElementById("edit_desc").value;
-        const _url = document.getElementById("edit_url").value;
-        //const isdesc = true;
-      try{
-        // 呼叫智能合约的 setRE 函式
-        if( _desc != re.desc){                
-        await contract.methods
-            .setRE(
-                re_id,                   
-                true,
-                _desc
-            )
-            .send({ from: userAddress });
-        //
-        if( _url != re.imgUrl){  
-        //isdesc= false;
-        await contract.methods
-            .setRE(
-                re_id,                   
-                false,
-                _url
-            )
-            .send({ from: userAddress });
-        //
-        document.getElementById("edit_form").reset();
 
-        // 關閉彈跳視窗
-        close_edit();
-        re = await getSpecificRE(re_id);
-        loadburgerBoxPage();
-        } catch (error) {
-            console.error("Error:", error);
-            alert("edit Error:" + error);        
-        }     
-    }   
 
     
