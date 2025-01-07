@@ -1,27 +1,17 @@
-alert("Updated! 9");
-
-initial();  
-
-let re;
-let re_id;
-let burger_count;
+alert("Updated! 10");
+var re_id = await getreID();
+var re = await getSpecificRE(re_id);
 const userAddress = await getHoldertoLowercase();
-        
-async function initial(){
-        //alert("something.." );
-try {       
-        //const reid = prompt("Enter the RedEnvelope ID:");
-        burger_count = await getreID();
-        //alert("burger_count:"+burger_count);
-        re_id = burger_count;
-        //alert("re_id:"+ re_id);
-        re = await getSpecificRE(burger_count);     
+return;
+try {   
+        if (!re) {
+            alert("目前沒有甜甜圈 ><");
+            return;
+        }
         await loadburgerBoxPage();  
     } catch (error) {
-        console.error("Error:", error);
         alert("initial Error:"+error);
     }
-}
 
 let card;
 let eligible;
@@ -34,11 +24,7 @@ async function loadburgerBoxPage() {
              eligible  = await checkEgibility(re_id);
         }        
         //alert("eligible:" + eligible);
-    try {    
-        if (!re) {
-            alert("目前沒有甜甜圈 ><");
-            return;
-        }
+    try {  
          card  = document.getElementById("card");
          //const content = document.getElementById("content");
          card.innerHTML = "";
@@ -68,7 +54,7 @@ async function loadburgerBoxPage() {
            card.innerHTML = row.innerHTML ; 
            //content.appendChild(row);              
             //const holder = await getHoldertoLowercase();
-            const re_creator = item.creator.toLowerCase() ;
+            const re_creator = re.creator.toLowerCase() ;
             //alert("item.creator:\n"+item.creator+"\ngetHoldertoLowercase():\n"+holder);
             if( re_creator !== userAddress){
                   //alert("any problem?");  
@@ -126,7 +112,6 @@ async function _back() {
         if (re_id > 1) {
             re_id--; // 減少 re_id
             re = await getSpecificRE(re_id); // 獲取指定漢堡盒的數據
-
             if (re) {
                 await loadburgerBoxPage(re); // 加載頁面
             } else {
@@ -152,11 +137,11 @@ function close_edit() {
       document.getElementById("edit_window").style.display = "none";
 }     
              
+             
 document.getElementById("edit_form").addEventListener("submit", async (event) => {
         event.preventDefault(); // 防止表單默認提交行為
               await editDona(); // 確保執行智能合約的邏輯
 });
-
 
     async function editDona(){
         //const userAddress = getHoldertoLowercase();
