@@ -1,7 +1,7 @@
 //alert("no Hahaha");
 initial();  
 
-let re;
+//let re;
 let re_id;
 let burger_count;
 
@@ -13,11 +13,11 @@ try {
         //alert("burger_count:"+burger_count);
         re_id = burger_count;
         //alert("re_id:"+ re_id);
-        re = await getSpecificRE(burger_count);     
+        const re = await getSpecificRE(burger_count);     
         await loadburgerBoxPage(re);  
     } catch (error) {
         console.error("Error:", error);
-        alert("Error:"+error);
+        alert("initial Error:"+error);
     }
 }
 
@@ -62,10 +62,9 @@ async function loadburgerBoxPage(item) {
             </div>
             <span class="material-symbols-outlined" id="editable" style="display:none">edit_square</span>
             `;            
-            if(re.creator == getHoldertoLowercase()){
-                document.getElementById("card").style.display = "block";
-            }           
-            
+            if(item.creator == getHoldertoLowercase()){
+                document.getElementById("editable").style.display = "block";
+            } 
            card.innerHTML = row.innerHTML ; 
            //content.appendChild(row);           
            
