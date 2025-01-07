@@ -48,7 +48,7 @@ async function loadburgerBoxPage(item) {
          const startTime = new Date(Number(item.startTime) * 1000).toLocaleString();        
          row.innerHTML = `
             <div>
-                     <h2>${web3.utils.hexToAscii(item.desc)}</h2>
+                     <h2>${item.desc}</h2>
                      <p class="reward-item">【${item.eligiType}】 ${startTime} & ${item.claimedAmt} / ${item.subAmt} : ${item.claimCount} / ${item.maxClaims}</p>
                      <span class="progress">
                          <p class="css_back" onclick="_back()">Back</p>
