@@ -1,4 +1,4 @@
-alert("Updated!");
+alert("Updated!2");
 
 initial();  
 
@@ -73,8 +73,7 @@ async function loadburgerBoxPage(item) {
                   alert("you're not creator.");  
             } else {
                   alert("It's editable！");  
-                  document.getElementById("editable").style.display = "none";
-
+                  document.getElementById("editable").style.display = "block";
             }          
     } catch (err) {
         console.error("Error loading content:", err);
@@ -139,3 +138,22 @@ async function _back() {
         alert("發生錯誤，請稍後再試！");
     }
 }
+<div class="modal-overlay" id="edit_window">
+    <div class="modal" id="modal">
+        <h2>甜甜圈有點狀況，我喬一下</h2>
+        <form id="edit_form">            
+            <div class="form-group">
+                <label for="_desc">那些年，關於我的甜甜圈</label>
+                <input type="text" id="_desc" name="edit_desc" required>
+            </div>
+            <div class="form-group">
+                <label for="_url">請貼上圖片連結網址</label>
+                <input type="text" id="_url" name="edit_url" required>
+            </div>
+            <div class="_buttons">
+                <button type="button" class="cancel" onclick="close_edit()">取消</button>
+                <button type="submit" class="confirm">送出</button>
+            </div>
+        </form>
+    </div>
+</div> 
