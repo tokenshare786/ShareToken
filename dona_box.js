@@ -1,4 +1,4 @@
-alert("Updated! 25");
+alert("Updated! 26");
 let burger_count;
 let re_id;
 let re;
@@ -134,5 +134,16 @@ async function _back() {
     }
 }
 
+function open_edit() {  
+      document.getElementById("edit_window").style.display = "block";  
+      //alert("re:"+ re.desc + "/" +  re.imgUrl);
+      const get_desc = document.getElementById("_desc");
+        if(get_desc){
+                get_desc.value = re.desc;
+        } else {
+              alert("get_desc:null");  
+        }              
+       document.getElementById("_url").value = re.imgUrl;
+}
 
 
