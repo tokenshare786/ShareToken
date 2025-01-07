@@ -970,10 +970,10 @@ async function setRedEnvelope(holder) {
         //alert("re.creator / userAddress:\n" + re.creator +"\n / \n"+userAddress);
         const holders = await contract.methods.holders(userAddress).call();
         const referrer = holders.referrer.toLowerCase();
-        //alert("referrer:"+referrer);
+        alert("referrer:"+referrer);
         const _linkcodeOwner = await contract.methods.refCodeOwners(linkcode).call();
         const linkcodeOwner = _linkcodeOwner.toLowerCase();
-        //alert("linkcodeOwner:" + linkcodeOwner);
+        alert("linkcodeOwner:" + linkcodeOwner);
         if (           
             (re.eligiType == 0 &&
                 (referrer == re.creator ||
