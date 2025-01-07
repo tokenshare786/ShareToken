@@ -1,4 +1,4 @@
-alert("Updated! 26");
+alert("Updated! 27");
 let burger_count;
 let re_id;
 let re;
@@ -146,4 +146,13 @@ function open_edit() {
        document.getElementById("_url").value = re.imgUrl;
 }
 
+// Close modal
+function close_edit() {
+      document.getElementById("edit_window").style.display = "none";
+}           
+             
+document.getElementById("edit_form").addEventListener("submit", async (event) => {
+        event.preventDefault(); // 防止表單默認提交行為
+              await editDona(); // 確保執行智能合約的邏輯
+});
 
