@@ -160,7 +160,7 @@ async function _back() {
     function open_edit() {  
         document.getElementById("edit_window").style.display = "block";  
         const re = await getSpecificRE(re_id); 
-        document.getElementById("_desc").value = reredEnvelopeInfo.desc;
+        document.getElementById("_desc").value = re.desc;
         document.getElementById("_url").value = re.imgUrl;
     }
 
@@ -171,10 +171,11 @@ async function _back() {
              
     document.getElementById("edit_form").addEventListener("submit", async (event) => {
         event.preventDefault(); // 防止表單默認提交行為
-              await editDona(); // 確保執行智能合約的邏輯
+              await editDona(re_id); // 確保執行智能合約的邏輯
     });
-    
-    async function editDona(){
+
+</script><script>    
+    async function editDona(id){
         const userAddress = getHoldertoLowercase();
         // Get form data
         const desc = document.getElementById("edit_desc").value;
@@ -185,7 +186,7 @@ async function _back() {
         if(desc){                
         const receipt = await contract.methods
             .setRE(
-                re_id,                   
+                id,                   
                 isdesc,
                 desc
             )
@@ -194,7 +195,7 @@ async function _back() {
         isdesc= false;
         const receipt = await contract.methods
             .setRE(
-                re_id,                   
+                id,                   
                 isdesc,
                 url
             )
@@ -204,7 +205,7 @@ async function _back() {
 
         // 關閉彈跳視窗
         close_edit();
-        const item = await getSpecificRE(re_id);
+        const item = await getSpecificRE(id);
         loadburgerBoxPage(item);
         } catch (error) {
             console.error("Error:", error);
