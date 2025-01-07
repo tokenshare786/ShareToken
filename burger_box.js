@@ -39,9 +39,7 @@ async function loadburgerBoxPage(item) {
         }
          card  = document.getElementById("card");
          //const content = document.getElementById("content");
-         //card_html = card.innerHTML ;
          card.innerHTML = "";
-         //card_html.style.display= "invisible";           
          const row = document.createElement("div");
          row.id = "burgerbox";        
          //row.classList.add("progress");
