@@ -1,6 +1,6 @@
 alert("Updated! 10");
-var re_id = = await getreID();
-var re =  = await getSpecificRE(burger_count);
+var re_id = await getreID();
+var re = await getSpecificRE(burger_count);
 const userAddress = await getHoldertoLowercase();
         
 try {   
