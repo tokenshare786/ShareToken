@@ -12,15 +12,14 @@ try {
         re_id = await getreID();
         if(re_id > 0){
              re = await getSpecificRE(re_id);
+             await loadburgerBoxPage();
         } else {
                 alert("目前沒有甜甜圈 ><");
                 return;
-        }  
-        await loadburgerBoxPage();  
+        }            
     } catch (error) {
         alert("initial Error:" + error);
-    }
-  
+    }  
 }
 alert("here..");
 initializePage();
