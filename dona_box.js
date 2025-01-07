@@ -1,27 +1,17 @@
-alert("Updated! 9");
-
-initial();  
-
-let re;
-let re_id;
-let burger_count;
+alert("Updated! 10");
+var re_id = = await getreID();
+var re =  = await getSpecificRE(burger_count);
 const userAddress = await getHoldertoLowercase();
         
-async function initial(){
-        //alert("something.." );
-try {       
-        //const reid = prompt("Enter the RedEnvelope ID:");
-        burger_count = await getreID();
-        //alert("burger_count:"+burger_count);
-        re_id = burger_count;
-        //alert("re_id:"+ re_id);
-        re = await getSpecificRE(burger_count);     
+try {   
+        if (!re) {
+            alert("目前沒有甜甜圈 ><");
+            return;
+        }
         await loadburgerBoxPage();  
     } catch (error) {
-        console.error("Error:", error);
         alert("initial Error:"+error);
     }
-}
 
 let card;
 let eligible;
@@ -34,11 +24,7 @@ async function loadburgerBoxPage() {
              eligible  = await checkEgibility(re_id);
         }        
         //alert("eligible:" + eligible);
-    try {    
-        if (!re) {
-            alert("目前沒有甜甜圈 ><");
-            return;
-        }
+    try {  
          card  = document.getElementById("card");
          //const content = document.getElementById("content");
          card.innerHTML = "";
