@@ -174,29 +174,32 @@ async function _back() {
               await editDona(); // 確保執行智能合約的邏輯
     });
 
+    //updated
+
     async function editDona(){
-        const userAddress = getHoldertoLowercase();
+        //const userAddress = getHoldertoLowercase();
         // Get form data
-        const desc = document.getElementById("edit_desc").value;
-        const url = document.getElementById("edit_url").value;
-        const isdesc = true;
+        const _desc = document.getElementById("edit_desc").value;
+        const _url = document.getElementById("edit_url").value;
+        //const isdesc = true;
       try{
         // 呼叫智能合约的 setRE 函式
-        if(desc){                
-        const receipt = await contract.methods
+        if( _desc != re.desc){                
+        await contract.methods
             .setRE(
                 re_id,                   
-                isdesc,
-                desc
+                true,
+                _desc
             )
             .send({ from: userAddress });
-        if(url){  
-        isdesc= false;
-        const receipt = await contract.methods
+        //
+        if( _url != re.imgUrl){  
+        //isdesc= false;
+        await contract.methods
             .setRE(
                 re_id,                   
-                isdesc,
-                url
+                false,
+                _url
             )
             .send({ from: userAddress });
         //
@@ -204,11 +207,10 @@ async function _back() {
 
         // 關閉彈跳視窗
         close_edit();
-        const item = await getSpecificRE(re_id);
-        loadburgerBoxPage(item);
+        re = await getSpecificRE(re_id);
+        loadburgerBoxPage();
         } catch (error) {
             console.error("Error:", error);
             alert("edit Error:" + error);        
         }     
-    }    
-
+    }   
