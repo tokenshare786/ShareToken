@@ -122,14 +122,14 @@ async function _back() {
             if (re) {
                 await loadburgerBoxPage(re); // 加載頁面
             } else {
-                alert("未找到對應的漢堡盒數據！");
+                alert("未找到對應的甜甜圈數據！");
                 re_id++; // 如果數據不存在，還原 re_id
             }
         } else {
-            alert("前面沒有漢堡盒了！"); // 提示
+            alert("前面沒有甜甜圈了！"); // 提示
         }
     } catch (error) {
-        console.error("切換漢堡盒時出現錯誤：", error);
+        console.error("切換甜甜圈時出現錯誤：", error);
         alert("發生錯誤，請稍後再試！");
     }
 }
