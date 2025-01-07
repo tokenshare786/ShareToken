@@ -51,8 +51,7 @@ async function loadburgerBoxPage(item) {
                      <h2>${item.desc}</h2>
                      <p class="reward-item">【${item.eligiType}】 ${startTime} & ${item.claimedAmt} / ${item.subAmt} : ${item.claimCount} / ${item.maxClaims}</p>
                      <span class="progress">
-                         <p class="css_back" onclick="_back()">Back</p>
-                         <span class="material-symbols-outlined" id="editable">edit_square</span>
+                         <p class="css_back" onclick="_back()">Back</p>                         
                          <p class="css_back" style="margin-left:auto" onclick="_next()">Next</p>
                      <span>
             </div>
@@ -61,7 +60,12 @@ async function loadburgerBoxPage(item) {
                   <img src="${item.imgUrl}" alt="photo">  
                </div>            
             </div>
-            `;
+            <span class="material-symbols-outlined" id="editable" style="display:none">edit_square</span>
+            `;            
+            if(re.creator == getHoldertoLowercase()){
+                document.getElementById("card").style.display = "block";
+            }           
+            
            card.innerHTML = row.innerHTML ; 
            //content.appendChild(row);           
            
