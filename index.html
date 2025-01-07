@@ -423,15 +423,14 @@ button:hover {
                if (!results) return null;
                if (!results[2]) return '';
                return decodeURIComponent(results[2].replace(/\+/g, ' '));
-           }          
-           async function connectWallet() {
+           }  
+           async function getHoldertoLowercase() {
                var holder;
                if (typeof window.ethereum !== 'undefined') {  
                    try {
                         // Connect Wallet
                         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' }); 
-                        holder = accounts[0].toLowerCase();
-                        updateAccountUI(holder);       
+                        holder = accounts[0].toLowerCase();                             
                     } catch (error) {
                         console.log('No accounts available');
                     }
@@ -439,6 +438,24 @@ button:hover {
                       // 如果瀏覽器中未檢測到電子錢包
                       alert('Login failed！Please try again via MetaMask.');
                 }
+                return holder;
+          }
+           async function connectWallet() {
+               //var holder;
+               //if (typeof window.ethereum !== 'undefined') {  
+                   //try {
+                        // Connect Wallet
+                        //const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' }); 
+                        //holder = accounts[0].toLowerCase();
+                        const holder = getHoldertoLowercase();
+                        if(holder){updateAccountUI(holder);}     
+                    //} catch (error) {
+                        //console.log('No accounts available');
+                    //}
+                //} else {
+                      // 如果瀏覽器中未檢測到電子錢包
+                      //alert('Login failed！Please try again via MetaMask.');
+                //}
                 return holder;
           }   
     // 監聽帳號變化
