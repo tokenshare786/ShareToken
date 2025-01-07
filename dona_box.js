@@ -1,8 +1,8 @@
-alert("Updated! 6");
+alert("Updated! 8");
 
 initial();  
 
-//let re;
+let re;
 let re_id;
 let burger_count;
 
@@ -14,8 +14,8 @@ try {
         //alert("burger_count:"+burger_count);
         re_id = burger_count;
         //alert("re_id:"+ re_id);
-        const re = await getSpecificRE(burger_count);     
-        await loadburgerBoxPage(re);  
+        re = await getSpecificRE(burger_count);     
+        await loadburgerBoxPage();  
     } catch (error) {
         console.error("Error:", error);
         alert("initial Error:"+error);
@@ -27,14 +27,14 @@ let eligible;
 let isactive;
 
 // Load burgerBoxPage and Display a Single Result
-async function loadburgerBoxPage(item) {
-        isactive = item.isActive ;
+async function loadburgerBoxPage() {
+        isactive = re.isActive ;
         if(isactive){
              eligible  = await checkEgibility(re_id);
         }        
         //alert("eligible:" + eligible);
     try {    
-        if (!item) {
+        if (!re) {
             alert("目前沒有甜甜圈 ><");
             return;
         }
@@ -44,11 +44,11 @@ async function loadburgerBoxPage(item) {
          const row = document.createElement("div");
          row.id = "burgerbox";        
          //row.classList.add("progress");
-         const startTime = new Date(Number(item.startTime) * 1000).toLocaleString();        
+         const startTime = new Date(Number(re.startTime) * 1000).toLocaleString();        
          row.innerHTML = `
             <div>
-                     <h2>${item.desc}</h2>
-                     <p class="reward-item">【${item.eligiType}】 ${startTime} & ${item.claimedAmt} / ${item.subAmt} : ${item.claimCount} / ${item.maxClaims}</p>
+                     <h2>${re.desc}</h2>
+                     <p class="reward-item">【${re.eligiType}】 ${startTime} & ${re.claimedAmt} / ${re.subAmt} : ${re.claimCount} / ${re.maxClaims}</p>
                      <span class="progress">
                          <p class="css_back" onclick="_back()">Back</p>                         
                          <p class="css_back" style="margin-left:auto" onclick="_next()">Next</p>
@@ -56,7 +56,7 @@ async function loadburgerBoxPage(item) {
             </div>
             <div  class="new-container">
                <div class="image-container" onclick="claim_re()">
-                  <img src="${item.imgUrl}" alt="photo">  
+                  <img src="${re.imgUrl}" alt="photo">  
                </div>            
             </div>
             <span class="progress">
@@ -79,7 +79,7 @@ async function loadburgerBoxPage(item) {
             }          
     } catch (err) {
         console.error("Error loading content:", err);
-        alert("Failed to display Burgerbox." + err);            
+        alert("Failed to display:" + err);            
     }
 }
 
@@ -103,10 +103,10 @@ async function _next() {
     try {
         if (re_id < burger_count) {
             re_id++; // 增加 re_id
-            const re = await getSpecificRE(re_id); // 獲取下一個漢堡盒的數據
+            re = await getSpecificRE(re_id); // 獲取下一個漢堡盒的數據
 
             if (re) {
-                await loadburgerBoxPage(re); // 加載頁面
+                await loadburgerBoxPage(); // 加載頁面
             } else {
                 alert("未找到對應的甜甜圈！");
                 re_id--; // 如果數據不存在，還原 re_id
@@ -124,7 +124,7 @@ async function _back() {
     try {
         if (re_id > 1) {
             re_id--; // 減少 re_id
-            const re = await getSpecificRE(re_id); // 獲取指定漢堡盒的數據
+            re = await getSpecificRE(re_id); // 獲取指定漢堡盒的數據
 
             if (re) {
                 await loadburgerBoxPage(re); // 加載頁面
@@ -141,7 +141,7 @@ async function _back() {
     }
 }
 function open_edit() {  
-      document.getElementById("edit_window").style.display = "block"; 
+      document.getElementById("edit_window").style.display = "block";  
       document.getElementById("_desc").value = re.desc;
       document.getElementById("_url").value = re.imgUrl;
 }
@@ -155,5 +155,44 @@ document.getElementById("edit_form").addEventListener("submit", async (event) =>
         event.preventDefault(); // 防止表單默認提交行為
               await editDona(); // 確保執行智能合約的邏輯
 });
+
+async function editDona(){
+        const userAddress = getHoldertoLowercase();
+        // Get form data
+        const _desc = document.getElementById("edit_desc").value;
+        const _url = document.getElementById("edit_url").value;
+        const isdesc = true;
+      try{
+        // 呼叫智能合约的 setRE 函式
+        if(_desc != re.desc){                
+        const receipt = await contract.methods
+            .setRE(
+                re_id,                   
+                isdesc,
+                _desc
+            )
+            .send({ from: userAddress });
+        //
+        if(_url != re.imgUrl){  
+        isdesc= false;
+        const receipt = await contract.methods
+            .setRE(
+                re_id,                   
+                isdesc,
+                _url
+            )
+            .send({ from: userAddress });
+        //
+        document.getElementById("edit_form").reset();
+
+        // 關閉彈跳視窗
+        close_edit();
+        re = await getSpecificRE(re_id);
+        loadburgerBoxPage();
+        } catch (error) {
+            console.error("Error:", error);
+            alert("edit Error:" + error);        
+        }     
+    }   
 
     
