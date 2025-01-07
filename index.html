@@ -953,8 +953,7 @@ async function setRedEnvelope(holder) {
 </script><script>  
   async function checkEgibility(reid) {
     let eligible;
-    const linkcode = await getParameterByName('linkcode');
-    //alert("linkcode:"+linkcode);
+    let _linkcodeOwner;
     try {
         // Request account access
         const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
@@ -971,7 +970,13 @@ async function setRedEnvelope(holder) {
         const holders = await contract.methods.holders(userAddress).call();
         const referrer = holders.referrer.toLowerCase();
         alert("referrer:"+referrer);
-        const _linkcodeOwner = await contract.methods.refCodeOwners(linkcode).call();
+        const linkcode = await getParameterByName('linkcode');
+        //alert("linkcode:"+linkcode);
+        if(linkcode.length > 0){
+          _linkcodeOwner = await contract.methods.refCodeOwners(linkcode).call();          
+        } else {
+          _linkcodeOwner = "0x0000000000000000000000000000000000000000";
+        }      
         const linkcodeOwner = _linkcodeOwner.toLowerCase();
         alert("linkcodeOwner:" + linkcodeOwner);
         if (           
@@ -983,7 +988,7 @@ async function setRedEnvelope(holder) {
             
             (re.eligiType == 1 &&
                 (referrer == address(0) &&
-                    (bytes(linkcode).length == 0 ||
+                    ( linkcode.length == 0 ||
                         linkcodeOwner == re.creator))) ||
             // Any subscriber could claim the redenvelope
             re.eligiType == 2
