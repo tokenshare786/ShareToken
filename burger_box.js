@@ -72,6 +72,8 @@ async function loadburgerBoxPage(item) {
                   alert("you're not creator.");  
             } else {
                   alert("It's editable！");  
+                  document.getElementById("editable").style.display = "none";
+
             }          
     } catch (err) {
         console.error("Error loading content:", err);
