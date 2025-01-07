@@ -1,5 +1,5 @@
-alert("Updated! 20");
-
+alert("Updated! 21");
+let burger_count;
 let re_id;
 let re;
 let card;
@@ -9,7 +9,8 @@ let userAddress;
 
 async function initializePage() {
 try {   
-        re_id = await getreID();
+        burger_count = await getreID();
+        re_id = burger_count;
         if(re_id > 0){
              re = await getSpecificRE(re_id);
              userAddress = await getHoldertoLowercase();
@@ -135,9 +136,14 @@ async function _back() {
 
 function open_edit() {  
       document.getElementById("edit_window").style.display = "block";  
-      alert("re:"+ re.desc + "/" +  re.imgUrl);
-      document.getElementById("_desc").value = re.desc;
-      document.getElementById("_url").value = re.imgUrl;
+      //alert("re:"+ re.desc + "/" +  re.imgUrl);
+      const get_desc = document.getElementById("_desc");
+        if(get_desc){
+                get_desc.value = re.desc;
+        } else {
+              alert("get_desc:null");  
+        }              
+       document.getElementById("_url").value = re.imgUrl;
 }
 
 // Close modal
@@ -149,4 +155,43 @@ document.getElementById("edit_form").addEventListener("submit", async (event) =>
         event.preventDefault(); // 防止表單默認提交行為
               await editDona(); // 確保執行智能合約的邏輯
 });
+
+async function editDona(){
+        //const userAddress = getHoldertoLowercase();
+        // Get form data
+        const _desc = document.getElementById("_desc").value;
+        const _url = document.getElementById("_url").value;
+        //const isdesc = true;
+      try{
+        // 呼叫智能合约的 setRE 函式
+        if( _desc != re.desc){                
+        await contract.methods
+            .setRE(
+                re_id,                   
+                true,
+                _desc
+            )
+            .send({ from: userAddress });
+        //
+        if( _url != re.imgUrl){  
+        //isdesc= false;
+        await contract.methods
+            .setRE(
+                re_id,                   
+                false,
+                _url
+            )
+            .send({ from: userAddress });
+        //
+        document.getElementById("edit_form").reset();
+
+        // 關閉彈跳視窗
+        close_edit();
+        re = await getSpecificRE(re_id);
+        loadburgerBoxPage();
+        } catch (error) {
+            console.error("Error:", error);
+            alert("edit Error:" + error);        
+        }     
+    }
 
