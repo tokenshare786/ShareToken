@@ -81,3 +81,61 @@ async function loadburgerBoxPage(item) {
         alert("Failed to display Burgerbox." + err);            
     }
 }
+
+function claim_re(){ 
+        if(isactive){
+              if(eligible){
+                   if(confirm("準備吃個甜甜圈：" + re_id)){            
+                            claimRE(re_id); 
+                   } else{
+                           alert("Why not?"); 
+                   }  
+             } else {
+                         alert("這個甜甜圈你吃不了：" + re_id);
+             }   
+        } else {
+                  alert("這個甜甜圈沒了：" + re_id);
+        }          
+}
+
+async function _next() {
+    try {
+        if (re_id < burger_count) {
+            re_id++; // 增加 re_id
+            const re = await getSpecificRE(re_id); // 獲取下一個漢堡盒的數據
+
+            if (re) {
+                await loadburgerBoxPage(re); // 加載頁面
+            } else {
+                alert("未找到對應的甜甜圈！");
+                re_id--; // 如果數據不存在，還原 re_id
+            }
+        } else {
+            alert("後面沒有甜甜圈了！"); // 提示訊息
+        }
+    } catch (error) {
+        //console.error("烘焙甜甜圈時出現錯誤：", error);
+        alert("烘焙甜甜圈時出現怪事，稍等！");
+    }
+}
+
+async function _back() {
+    try {
+        if (re_id > 1) {
+            re_id--; // 減少 re_id
+            const re = await getSpecificRE(re_id); // 獲取指定漢堡盒的數據
+
+            if (re) {
+                await loadburgerBoxPage(re); // 加載頁面
+            } else {
+                alert("未找到對應的甜甜圈數據！");
+                re_id++; // 如果數據不存在，還原 re_id
+            }
+        } else {
+            alert("前面沒有甜甜圈了！"); // 提示
+        }
+    } catch (error) {
+        console.error("切換甜甜圈時出現錯誤：", error);
+        alert("發生錯誤，請稍後再試！");
+    }
+}
