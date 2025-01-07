@@ -133,17 +133,23 @@ async function _back() {
         alert("發生錯誤，請稍後再試！");
     }
 }
+
 function open_edit() {  
       document.getElementById("edit_window").style.display = "block";  
-      document.getElementById("_desc").value = re.desc;
-      document.getElementById("_url").value = re.imgUrl;
+      //alert("re:"+ re.desc + "/" +  re.imgUrl);
+      const get_desc = document.getElementById("_desc");
+        if(get_desc){
+                get_desc.value = re.desc;
+        } else {
+              alert("get_desc:null");  
+        }              
+       document.getElementById("_url").value = re.imgUrl;
 }
 
 // Close modal
 function close_edit() {
       document.getElementById("edit_window").style.display = "none";
-}     
-             
+}           
              
 document.getElementById("edit_form").addEventListener("submit", async (event) => {
         event.preventDefault(); // 防止表單默認提交行為
