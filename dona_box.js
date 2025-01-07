@@ -4,6 +4,7 @@ var re_id = await getreID();
 var re = await getSpecificRE(re_id);
 const userAddress = await getHoldertoLowercase();
 
+async function initializePage() {
 try {   
         if (!re) {
             alert("目前沒有甜甜圈 ><");
@@ -13,7 +14,7 @@ try {
     } catch (error) {
         alert("initial Error:"+error);
     }
-
+}
 let card;
 let eligible;
 let isactive;
@@ -127,4 +128,6 @@ async function _back() {
         alert("發生錯誤，請稍後再試！");
     }
 }
+
+initializePage();
 
