@@ -1,4 +1,4 @@
-alert("Updated! 21");
+alert("Updated! 22");
 let burger_count;
 let re_id;
 let re;
@@ -161,7 +161,7 @@ async function editDona(){
         // Get form data
         const _desc = document.getElementById("_desc").value;
         const _url = document.getElementById("_url").value;
-        //const isdesc = true;
+        alert("editDona:"+ _desc + "/" +  _url);
       try{
         // 呼叫智能合约的 setRE 函式
         if( _desc != re.desc){                
