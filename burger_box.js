@@ -52,6 +52,7 @@ async function loadburgerBoxPage(item) {
                      <p class="reward-item">【${item.eligiType}】 ${startTime} & ${item.claimedAmt} / ${item.subAmt} : ${item.claimCount} / ${item.maxClaims}</p>
                      <span class="progress">
                          <p class="css_back" onclick="_back()">Back</p>
+                         <span class="material-symbols-outlined" id="editable">edit_square</span>
                          <p class="css_back" style="margin-left:auto" onclick="_next()">Next</p>
                      <span>
             </div>
