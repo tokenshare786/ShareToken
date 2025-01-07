@@ -162,24 +162,24 @@ async function editDona(){
         // Get form data
         const _desc = document.getElementById("edit_desc").value;
         const _url = document.getElementById("edit_url").value;
-        const isdesc = true;
+        //const isdesc = true;
       try{
         // 呼叫智能合约的 setRE 函式
         if( _desc != re.desc){                
-        const receipt = await contract.methods
+        await contract.methods
             .setRE(
                 re_id,                   
-                isdesc,
+                true,
                 _desc
             )
             .send({ from: userAddress });
         //
         if( _url != re.imgUrl){  
-        isdesc= false;
-        const receipt = await contract.methods
+        //isdesc= false;
+        await contract.methods
             .setRE(
                 re_id,                   
-                isdesc,
+                false,
                 _url
             )
             .send({ from: userAddress });
