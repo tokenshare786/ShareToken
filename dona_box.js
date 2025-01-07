@@ -18,7 +18,7 @@ try {
 let card;
 let eligible;
 let isactive;
-
+alert("here..");
 // Load burgerBoxPage and Display a Single Result
 async function loadburgerBoxPage() {
         isactive = re.isActive ;
