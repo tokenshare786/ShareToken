@@ -54,7 +54,7 @@ async function loadburgerBoxPage() {
            card.innerHTML = row.innerHTML ; 
            //content.appendChild(row);              
             //const holder = await getHoldertoLowercase();
-            const re_creator = item.creator.toLowerCase() ;
+            const re_creator = re.creator.toLowerCase() ;
             //alert("item.creator:\n"+item.creator+"\ngetHoldertoLowercase():\n"+holder);
             if( re_creator !== userAddress){
                   //alert("any problem?");  
@@ -112,7 +112,6 @@ async function _back() {
         if (re_id > 1) {
             re_id--; // 減少 re_id
             re = await getSpecificRE(re_id); // 獲取指定漢堡盒的數據
-
             if (re) {
                 await loadburgerBoxPage(re); // 加載頁面
             } else {
