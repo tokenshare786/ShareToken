@@ -958,7 +958,7 @@ async function setRedEnvelope(holder) {
     try {
         // Request account access
         //const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-        const userAddress = getHoldertoLowercase();
+        const userAddress = await getHoldertoLowercase();
         //alert("userAddress:"+userAddress);
         const reidBigInt = BigInt(reid);  
         const re = await contract.methods.blkDona(reidBigInt).call();
