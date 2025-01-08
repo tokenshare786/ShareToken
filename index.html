@@ -1089,15 +1089,9 @@ try {
          }
     
     async function shareMyDona() {
-    try {
-        // Check if Web3 is injected (Metamask or other wallet)
-        if (typeof window.ethereum === "undefined") {
-            alert("Please install a Web3 wallet like Metamask.");
-            return;
-        }
-        // Request account access
-        //const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+    try {       
         const userAddress = await getHoldertoLowercase();
+        alert("1:" + userAddress);
         const holderInfo = await contract.methods.holders(userAddress).call();
         //Get my refCode
         const refCode = holderInfo.refCode;
