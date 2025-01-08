@@ -461,7 +461,7 @@ button:hover {
       walletButton.textContent = `${account.substring(0, 2)}...${account.slice(-4)}`;
     }    
   </script>  
-  <div class="notification">
+  <div class="notification" id="notice">
     <span class="material-symbols-outlined">brand_awareness</span>
     <span>The BURGER white paper has been released, please check for details..</span>
     <a href="#">Details</a>
@@ -486,6 +486,7 @@ button:hover {
         // Fetch and Replace Content
         document.getElementById("re_button").addEventListener("click", async (e) => {
             e.preventDefault(); // Prevent link navigation
+            document.getElementById("notice").style.display = "none";
             // Fetch the HTML content for red envelopes          
             try {
                 const script = document.createElement("script");
