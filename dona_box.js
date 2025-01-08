@@ -93,10 +93,12 @@ const slider = document.getElementById("slider");
 
 slider.addEventListener("touchstart", (event) => {
     startX = event.touches[0].clientX; // 紀錄觸摸開始的 X 座標
+    alert("startX:"+startX);    
 });
 
 slider.addEventListener("touchmove", (event) => {
     endX = event.touches[0].clientX; // 更新滑動過程的 X 座標
+    alert("endX:"+endX); 
 });
 
 slider.addEventListener("touchend", () => {
