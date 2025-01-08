@@ -1,4 +1,4 @@
-alert("Updated! 37");
+alert("Updated! 38");
 let burger_count;
 let re_id;
 let re;
@@ -51,8 +51,8 @@ async function loadburgerBoxPage() {
                          <p class="css_back" style="margin-left:auto" onclick="_next()" id="click_next">Next</p>
                      </span>
             </div>
-            <div  class="new-container">
-               <div class="image-container" onclick="claim_re()" id="slider">
+            <div  class="new-container" id="slider">
+               <div class="image-container" onclick="claim_re()">
                   <img src="${re.imgUrl}" alt="photo">  
                </div>            
             </div>
@@ -63,7 +63,7 @@ async function loadburgerBoxPage() {
             `;   
             //alert("here..");            
             card.innerHTML = row.innerHTML ;   
-        if(re_id >1){
+        if(re_id > 1){
                 document.getElementById("click_back").style.display = "block";
         } else {
                 document.getElementById("click_back").style.display = "none";
@@ -79,10 +79,8 @@ async function loadburgerBoxPage() {
                 document.getElementById("take").style.display = "none";
         }
         const re_creator = re.creator.toLowerCase() ;
-        if( re_creator !== userAddress){
-                //alert("any problem?");  
+        if( re_creator !== userAddress){ 
                 document.getElementById("editable").style.display = "none";
-                //alert("you're not creator.");  
          } else {
                 //alert("It's editable！");  
                 document.getElementById("editable").style.display = "block";
