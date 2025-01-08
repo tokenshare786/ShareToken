@@ -422,7 +422,9 @@ button:hover {
                results = regex.exec(url);
                if (!results) return null;
                if (!results[2]) return '';
-               return decodeURIComponent(results[2].replace(/\+/g, ' '));
+               const result = decodeURIComponent(results[2].replace(/\+/g, ' '));
+               if(!result){result='';}
+               return result; 
            }  
            async function getHoldertoLowercase() {
                var holder;
