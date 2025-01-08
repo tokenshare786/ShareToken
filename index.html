@@ -1095,7 +1095,7 @@ try {
         const holderInfo = await contract.methods.holders(userAddress).call();
         //Get my refCode
         const refCode = holderInfo.refCode;
-        alert("4.refCode："+ refCode);
+        //alert("4.refCode："+ refCode);
         //      
         if ( refCode == "") {        
           const Code = prompt("請輸入想要的推薦碼(A~Z,0~9,_-@)：");
@@ -1269,7 +1269,7 @@ async function claimDona(id) {
         const userAddress = await getHoldertoLowercase();
         const holderInfo = await contract.methods.holders(userAddress).call();
         document.getElementById("refcode").textContent =  `${holderInfo.refCode}`; 
-        document.getElementById("share_link").textContent = "https://tokenshare786.github.io/ShareToken/?linkcode=${holderInfo.refCode}";
+        document.getElementById("share_link").textContent = `https://tokenshare786.github.io/ShareToken/?linkcode=${holderInfo.refCode}`;
     }
 
     // Close modal
