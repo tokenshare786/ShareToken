@@ -1,4 +1,4 @@
-alert("Updated! 38");
+alert("Updated! 39");
 let burger_count;
 let re_id;
 let re;
@@ -103,6 +103,7 @@ slider.addEventListener("touchstart", (event) => {
 });
 
 slider.addEventListener("touchmove", (event) => {
+    event.preventDefault(); // 防止默認滾動
     endX = event.touches[0].clientX; // 更新滑動過程的 X 座標
     alert("endX:"+endX); 
 });
