@@ -1,4 +1,4 @@
-//alert("Updated! 41");
+alert("Updated! 42");
 let burger_count;
 let re_id;
 let re;
@@ -12,7 +12,7 @@ try {
         burger_count = await getreID();
         re_id = burger_count;
         if(re_id > 0){
-             re = await getSpecificRE(re_id);
+             re = await getSpecificDN(re_id);
              userAddress = await getHoldertoLowercase();
              await loadburgerBoxPage();
         } else {
@@ -138,7 +138,7 @@ async function _next() {
     try {
         if (re_id < burger_count) {
             re_id++; // 增加 re_id
-            re = await getSpecificRE(re_id); // 獲取下一個漢堡盒的數據
+            re = await getSpecificDN(re_id); // 獲取下一個漢堡盒的數據
 
             if (re) {
                 await loadburgerBoxPage(); // 加載頁面
@@ -159,7 +159,7 @@ async function _back() {
     try {
         if (re_id > 1) {
             re_id--; // 減少 re_id
-            re = await getSpecificRE(re_id); // 獲取指定漢堡盒的數據
+            re = await getSpecificDN(re_id); // 獲取指定漢堡盒的數據
             if (re) {
                 await loadburgerBoxPage(re); // 加載頁面
             } else {
@@ -207,20 +207,9 @@ async function editDona(){
         // 呼叫智能合约的 setRE 函式
         if( edit_desc != re.desc){                
         await contract.methods
-            .updateMyRE(
+            .updateMyDona(
                 re_id,                   
-                true,
-                edit_desc
-            )
-            .send({ from: userAddress });
-        }
-        //
-        if( edit_url != re.imgUrl){  
-        //isdesc= false;
-        await contract.methods
-            .updateMyRE(
-                re_id,                   
-                false,
+                edit_desc,
                 edit_url
             )
             .send({ from: userAddress });
@@ -230,7 +219,7 @@ async function editDona(){
 
         // 關閉彈跳視窗
         close_edit();
-        re = await getSpecificRE(re_id);
+        re = await getSpecificDN(re_id);
         loadburgerBoxPage();
         } catch (error) {
             //console.error("Error:", error);
