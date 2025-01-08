@@ -749,17 +749,25 @@ function countdown(seconds) {
                 // 調用 balanceOf 函數
                 const balance = await contract.methods.balanceOf(holder).call();
                 // 假設代幣有 18 位小數
-                const decimals = 18n; // 使用 BigInt 表示 18
+                //const decimals = 18n; // 使用 BigInt 表示 18
                 // 將餘額轉換為人類可讀的格式
-                const readableBalance = balance / BigInt(10 ** Number(decimals));                
+                //const readableBalance = balance / BigInt(10 ** Number(decimals));                
                 // 格式化为本地格式
-                const formatted = readableBalance.toLocaleString(); 
-                document.getElementById('balance').textContent = `${formatted} `; 
+                //const formatted = readableBalance.toLocaleString(); 
+                document.getElementById('balance').textContent = `${format_amt(balance)} `; 
                 //return readableBalance;
             } catch (error){
                 console.error("查詢餘額發生錯誤:", error);
                 alert("getbalance error：" + error);
             }
+        }
+        function format_amt(amt){
+               const decimals = 18n; // 使用 BigInt 表示 18
+                // 將餘額轉換為人類可讀的格式
+                const readableBalance = amt / BigInt(10 ** Number(decimals));                
+                // 格式化为本地格式
+                const formatted = readableBalance.toLocaleString(); 
+                return formatted;
         }
         async function startup(holder){
              const burger_icon = document.getElementById('hamburger');
@@ -782,10 +790,10 @@ function countdown(seconds) {
                   const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
                   const refaddress = holderInfo.referrer ;
                   if(holderInfo.holderReward>0){
-                    document.getElementById('linetext_1').textContent = `HolderReward:${holderInfo.holderReward}`;
+                    document.getElementById('linetext_1').textContent = `HolderReward:${format_amt(holderInfo.holderReward)}`;
                   }
                   if(holderInfo.referReward>0){
-                    document.getElementById('linetext_2').textContent = `ReferalReward:${holderInfo.referReward}`;
+                    document.getElementById('linetext_2').textContent = `ReferalReward:${format_amt(holderInfo.referReward)}`;
                   }
                   
                   //alert("refAddress: " + refaddress );
