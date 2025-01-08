@@ -1,4 +1,4 @@
-alert("Updated! 32");
+alert("Updated! 33");
 let burger_count;
 let re_id;
 let re;
@@ -50,25 +50,32 @@ async function loadburgerBoxPage() {
                          <p class="css_back" style="margin-left:auto" onclick="_next()">Next</p>
                      </span>
             </div>
-            <div  class="new-container">
+            <div  class="new-container" id="slider">
                <div class="image-container" onclick="claim_re()">
                   <img src="${re.imgUrl}" alt="photo">  
                </div>            
             </div>
             <span class="progress">
                          <p class="css_back" onclick="open_edit()" id="editable">Edit</p>
+                         <p class="css_back" onclick="open_edit()" id="take">Take</p>
             </span>
             `;   
             //alert("here..");            
             card.innerHTML = row.innerHTML ;  
             const re_creator = re.creator.toLowerCase() ;
             //alert("item.creator:\n"+item.creator+"\ngetHoldertoLowercase():\n"+holder);
+            if(eligible){
+                    document.getElementById("take").style.display = "block";
+            } else {
+                    document.getElementById("take").style.display = "none";
+
+            }
             if( re_creator !== userAddress){
                   //alert("any problem?");  
                   document.getElementById("editable").style.display = "none";
-                  alert("you're not creator.");  
+                  //alert("you're not creator.");  
             } else {
-                  alert("It's editable！");  
+                  //alert("It's editable！");  
                   document.getElementById("editable").style.display = "block";
             }          
     } catch (err) {
@@ -76,6 +83,28 @@ async function loadburgerBoxPage() {
         alert("Failed to display:" + err);            
     }
 }
+
+//讓手指滑動成有有用的動作
+
+const slider = document.getElementById("slider");
+
+slider.addEventListener("touchstart", (event) => {
+    startX = event.touches[0].clientX; // 紀錄觸摸開始的 X 座標
+});
+
+slider.addEventListener("touchmove", (event) => {
+    endX = event.touches[0].clientX; // 更新滑動過程的 X 座標
+});
+
+slider.addEventListener("touchend", () => {
+    if (startX - endX > 50) {
+        // 往左滑
+        _next();
+    } else if (endX - startX > 50) {
+        // 往右滑
+        _back();
+    }
+});
 
 function claim_re(){ 
         if(isactive){
@@ -196,3 +225,22 @@ async function editDona(){
             alert("edit Error:" + error);        
         }     
     }
+<div class="modal-overlay" id="edit_window">
+    <div class="modal" id="modal">
+        <h2>甜甜圈有點狀況，我喬一下</h2>
+        <form id="edit_form">            
+            <div class="form-group">
+                <label for="edit_desc">那些年，關於我的甜甜圈</label>
+                <input type="text" id="edit_desc" name="edit_desc" required>
+            </div>
+            <div class="form-group">
+                <label for="edit_url">請貼上圖片連結網址</label>
+                <input type="text" id="edit_url" name="edit_url" required>
+            </div>
+            <div class="_buttons">
+                <button type="button" class="cancel" onclick="close_edit()">取消</button>
+                <button type="submit" class="confirm">送出</button>
+            </div>
+        </form>
+    </div>
+    </div> 
