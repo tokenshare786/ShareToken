@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BURGER</title>
+  <title>BLACKDONA</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap">
   <style> 
@@ -436,26 +436,13 @@ button:hover {
                     }
                 } else {
                       // 如果瀏覽器中未檢測到電子錢包
-                      alert('Login failed！Please try again via MetaMask.');
+                      alert('請使用MetaMask錢包附帶的瀏覽器登入！');
                 }
                 return holder;
           }
-           async function connectWallet() {
-               //var holder;
-               //if (typeof window.ethereum !== 'undefined') {  
-                   //try {
-                        // Connect Wallet
-                        //const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' }); 
-                        //holder = accounts[0].toLowerCase();
-                        const holder = await getHoldertoLowercase();
-                        if(holder){updateAccountUI(holder);}     
-                    //} catch (error) {
-                        //console.log('No accounts available');
-                    //}
-                //} else {
-                      // 如果瀏覽器中未檢測到電子錢包
-                      //alert('Login failed！Please try again via MetaMask.');
-                //}
+           async function connectWallet() {               
+                const holder = await getHoldertoLowercase();
+                if(holder){updateAccountUI(holder);}   
                 return holder;
           }   
     // 監聽帳號變化
