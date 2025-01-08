@@ -1094,13 +1094,13 @@ try {
         const holderInfo = await contract.methods.holders(userAddress).call();
         //Get my refCode
         const refCode = holderInfo.refCode;
-        alert("3.refCode："+ refCode);
+        alert("4.refCode："+ refCode);
         //      
         if ( refCode == "") {        
           const Code = prompt("請輸入想要的推薦碼(A~Z,0~9,_-@)：");
           await contract.methods.setMyRefCode(Code).send({ from: userAddress });      
         }  
-        openShare(holderInfo);
+        openShare();
     } catch (error) {
         console.error("Error setting referral code:", error);
         //alert("Failed to set referral code: " + error.message);
@@ -1256,18 +1256,19 @@ async function claimDona(id) {
             <form id="edit_form">
                 <div class="_buttons">
                     <button type="button" class="cancel" onclick="closeShare()">取消</button>
-                    <button type="submit" class="confirm" onclick="toShare()">分享</button>
+                    <button type="button" class="confirm" onclick="toShare(true)">複製推薦碼</button>
+                  <button type="button" class="confirm" onclick="toShare(false)">複製連結</button>
                 </div>
             </form>
         </div>
     </div>
   <script>
-    function openShare(holderInfo) {  
+    async function openShare() {  
         document.getElementById("share_window").style.display = "block";  
-        //const userAddress = await getHoldertoLowercase();
-        //const holderInfo = await contract.methods.holders(userAddress).call();
-        document.getElementById("refcode").textContent =  `${holderInfo.refCode} `; 
-        document.getElementById("refcode").textContent = "https://tokenshare786.github.io/ShareToken/?linkcode=${holderInfo.refCode}";
+        const userAddress = await getHoldertoLowercase();
+        const holderInfo = await contract.methods.holders(userAddress).call();
+        document.getElementById("refcode").textContent =  `${holderInfo.refCode}`; 
+        document.getElementById("share_link").textContent = "https://tokenshare786.github.io/ShareToken/?linkcode=${holderInfo.refCode}";
     }
 
     // Close modal
@@ -1275,7 +1276,14 @@ async function claimDona(id) {
         document.getElementById("share_window").style.display = "none";
     }     
 
-    function toShare(){
+    function toShare(isCode){
+      let contractAddress ;      
+      if(isCode){
+        contractAddress = document.getElementById("refcode").textContent;
+      } else {
+        contractAddress = document.getElementById("share_link").textContent;
+      }
+      navigator.clipboard.writeText(contractAddress)
       closeShare();
     }
   </script>
