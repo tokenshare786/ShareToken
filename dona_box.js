@@ -48,11 +48,11 @@ async function loadburgerBoxPage() {
                      <h2>${re.desc}</h2>
                      <p class="reward-item">【${re.eligiType}】 ${startTime} & ${re.claimedAmt} / ${re.subAmt} : ${re.claimCount} / ${re.maxClaims}</p>
                      <span class="progress">
-                         <p class="css_back" onclick="_back()">Back</p>                         
-                         <p class="css_back" style="margin-left:auto" onclick="_next()">Next</p>
+                         <p class="css_back" onclick="_back()" id="click_back">Back</p>                         
+                         <p class="css_back" style="margin-left:auto" onclick="_next()" id="click_next">Next</p>
                      </span>
             </div>
-            <div  class="new-container" id="slider">
+            <div  class="new-container">
                <div class="image-container" onclick="claim_re()">
                   <img src="${re.imgUrl}" alt="photo">  
                </div>            
@@ -64,21 +64,30 @@ async function loadburgerBoxPage() {
             `;   
             //alert("here..");            
             card.innerHTML = row.innerHTML ;   
-            //alert("item.creator:\n"+item.creator+"\ngetHoldertoLowercase():\n"+holder);
-            if(eligible){
-                    document.getElementById("take").style.display = "block";
-            } else {
-                    document.getElementById("take").style.display = "none";
-            }
-            const re_creator = re.creator.toLowerCase() ;
-            if( re_creator !== userAddress){
-                  //alert("any problem?");  
-                  document.getElementById("editable").style.display = "none";
-                  //alert("you're not creator.");  
-            } else {
-                  //alert("It's editable！");  
-                  document.getElementById("editable").style.display = "block";
-            }          
+        if(re_id >1){
+                document.getElementById("click_back").style.display = "block";
+        } else {
+                document.getElementById("click_back").style.display = "none";
+        }
+        if(re_id < burger_count ){
+                document.getElementById("click_back").style.display = "block";
+        } else {
+                document.getElementById("click_back").style.display = "none";
+        }
+        if(eligible){
+                document.getElementById("take").style.display = "block";
+        } else {
+                document.getElementById("take").style.display = "none";
+        }
+        const re_creator = re.creator.toLowerCase() ;
+        if( re_creator !== userAddress){
+                //alert("any problem?");  
+                document.getElementById("editable").style.display = "none";
+                //alert("you're not creator.");  
+         } else {
+                //alert("It's editable！");  
+                document.getElementById("editable").style.display = "block";
+         }          
     } catch (err) {
         //console.error("Error loading content:", err);
         alert("Failed to display:" + err);            
@@ -89,11 +98,17 @@ async function loadburgerBoxPage() {
 let startX = 0; // 起始觸點
 let endX = 0;   // 結束觸點
 
-const slider = document.getElementById("slider");
+const slider = document.getElementById("card");
 
 slider.addEventListener("touchstart", (event) => {
     startX = event.touches[0].clientX; // 紀錄觸摸開始的 X 座標
     alert("startX:"+startX);    
+});
+
+slider.addEventListener("touchmove", (event) => {
+    event.preventDefault(); // 防止默認滾動
+    endX = event.touches[0].clientX; // 更新結束觸點
+    alert("endX:"+endX); 
 });
 
 slider.addEventListener("touchmove", (event) => {
