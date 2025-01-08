@@ -950,7 +950,7 @@ async function setRedEnvelope(holder) {
         const re = await contract.methods.getSpecificRE(reidBigInt).call();
         //    
         if ( re.creator.toLowerCase() == userAddress) {
-            alert("自己發的就別領了吧？");
+            //alert("自己發的就別領了吧？");
             return false;
         }
         //alert("re.creator / userAddress:\n" + re.creator +"\n / \n"+userAddress);
