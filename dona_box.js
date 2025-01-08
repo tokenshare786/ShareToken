@@ -59,7 +59,7 @@ async function loadburgerBoxPage() {
             </div>
             <span class="progress">
                          <p class="css_back" onclick="open_edit()" id="editable">Edit</p>
-                         <p class="css_back" onclick="claim_re()" id="take">Take</p>
+                         <p class="css_back" style="margin-left:auto" onclick="claim_re()" id="take">Take</p>
             </span>
             `;   
             //alert("here..");            
@@ -69,7 +69,6 @@ async function loadburgerBoxPage() {
                     document.getElementById("take").style.display = "block";
             } else {
                     document.getElementById("take").style.display = "none";
-
             }
             const re_creator = re.creator.toLowerCase() ;
             if( re_creator !== userAddress){
