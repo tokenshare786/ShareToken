@@ -12,7 +12,7 @@ try {
         burger_count = await getreID();
         re_id = burger_count;
         if(re_id > 0){
-             re = await getSpecificRE(re_id);
+             re = await getSpecificDN(re_id);
              userAddress = await getHoldertoLowercase();
              await loadburgerBoxPage();
         } else {
