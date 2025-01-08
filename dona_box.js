@@ -1,4 +1,4 @@
-alert("Updated! 39");
+alert("Updated! 41");
 let burger_count;
 let re_id;
 let re;
@@ -62,12 +62,7 @@ async function loadburgerBoxPage() {
             </span>
             `;   
             //alert("here..");            
-            card.innerHTML = row.innerHTML ;   
-        if(re_id > 1){
-                document.getElementById("click_back").style.display = "block";
-        } else {
-                document.getElementById("click_back").style.display = "none";
-        }
+            card.innerHTML = row.innerHTML ; 
         if(re_id < burger_count ){
                 document.getElementById("click_next").style.display = "block";
         } else {
@@ -167,7 +162,7 @@ async function _back() {
                 re_id++; // 如果數據不存在，還原 re_id
             }
         } else {
-            alert("前面沒有甜甜圈了！"); // 提示
+            location.reload();
         }
     } catch (error) {
         console.error("切換甜甜圈時出現錯誤：", error);
