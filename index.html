@@ -38,7 +38,7 @@
     max-width: 360px;
 }
 
-h2 {
+h2 {    
     margin-bottom: 20px;
     font-size: 18px;
     font-weight: bold;
@@ -72,6 +72,9 @@ input:focus, select:focus {
     outline: none;
     border-color: #555555; /* 聚焦時的邊框顏色 */
 }
+._text{
+    width: calc(100% - 20px);
+}    
 
 ._buttons {
     display: flex;      
@@ -1252,8 +1255,10 @@ async function claimDona(id) {
    <div class="modal-overlay" id="share_window">
         <div class="modal" id="modal">
             <h2>分享我的黑色甜甜圈</h2>
-            <p>我的推薦碼：</p><p id="refcode"></p>
-            <p>推薦連結網址：</p><p id="share_link"></p>
+            <p style="color:#bbbbbb">我的推薦碼：</p>
+            <p id="refcode"></p>
+            <p style="color:#bbbbbb">推薦連結網址：</p>
+            <p id="share_link" class="_text"></p>          
             <form>
                 <div class="_buttons">
                     <button type="button" class="cancel" onclick="closeShare()">取消</button>
