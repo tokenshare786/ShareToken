@@ -1,4 +1,4 @@
-alert("Updated! 45");
+alert("Updated! 46");
 let burger_count;
 let re_id;
 let re;
@@ -189,6 +189,7 @@ function close_edit() {
              
 document.getElementById("edit_form").addEventListener("submit", async (event) => {
         event.preventDefault(); // 防止表單默認提交行為
+              alert("What's up?");
               await editDona(); // 確保執行智能合約的邏輯
 });
 
