@@ -62,7 +62,12 @@ async function loadburgerBoxPage() {
             </span>
             `;   
             //alert("here..");            
-            card.innerHTML = row.innerHTML ; 
+         card.innerHTML = row.innerHTML ; 
+         if( re_id > 1){
+                document.getElementById('click_back').textContent = `Back`;         
+         } else {
+                document.getElementById('click_back').textContent = `Home`; 
+         }                             
         if(re_id < burger_count ){
                 document.getElementById("click_next").style.display = "block";
         } else {
@@ -160,10 +165,8 @@ async function _back() {
             } else {
                 alert("未找到對應的甜甜圈數據！");
                 re_id++; // 如果數據不存在，還原 re_id
-            }
-            document.getElementById('click_next').textContent = `Back`; 
+            }           
         } else {
-            document.getElementById('click_next').textContent = `Home`; 
             location.reload();
         }
     } catch (error) {
