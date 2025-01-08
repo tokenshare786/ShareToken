@@ -608,7 +608,7 @@ activitiesButton.addEventListener('click', () => {
       }        
     }
   </script>
-  <script>
+  <script>        
         let clickHandler;
         let clickHandler_hb;
         //
@@ -781,6 +781,13 @@ function countdown(seconds) {
                   // call getSpecificHolder() 函數 
                   const holderInfo = await contract.methods.getSpecificHolder(holder).call()  ;
                   const refaddress = holderInfo.referrer ;
+                  if(holderInfo.holderReward>0){
+                    document.getElementById('linetext_1').textContent = `HolderReward:${holderInfo.holderReward}`;
+                  }
+                  if(holderInfo.referReward>0){
+                    document.getElementById('linetext_2').textContent = `ReferalReward:${holderInfo.referReward}`;
+                  }
+                  
                   //alert("refAddress: " + refaddress );
                   // 是該出現推薦人還是推薦碼
                 if( web3.utils.isAddress(refaddress) && refaddress !=="0x0000000000000000000000000000000000000000"){
