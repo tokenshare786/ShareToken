@@ -178,13 +178,8 @@ async function _back() {
 function open_edit() {  
       document.getElementById("edit_window").style.display = "block";  
       //alert("re:"+ re.desc + "/" +  re.imgUrl);
-      const get_desc = document.getElementById("edit_desc");
-        if(get_desc){
-                get_desc.value = re.desc;
-        } else {
-              alert("get_desc:null");  
-        }              
-       document.getElementById("edit_url").value = re.imgUrl;
+      document.getElementById("edit_desc").value = re.desc;             
+      document.getElementById("edit_url").value = re.imgUrl;
 }
 
 // Close modal
@@ -205,7 +200,7 @@ async function editDona(){
         alert("editDona:"+ edit_desc  + "/" +  re.desc);
       try{
         // 呼叫智能合约的 setRE 函式
-        if( edit_desc != re.desc){                
+        if( edit_desc != re.desc || edit_url != re.imgUrl){                
         await contract.methods
             .updateMyDona(
                 re_id,                   
