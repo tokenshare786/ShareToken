@@ -1091,23 +1091,19 @@ try {
     async function shareMyDona() {
     try {       
         const userAddress = await getHoldertoLowercase();
-        alert("1:" + userAddress);
         const holderInfo = await contract.methods.holders(userAddress).call();
         //Get my refCode
         const refCode = holderInfo.refCode;
+        alert("2.refCode："+ refCode);
         //      
-        if ( refCode != "") {
-           //share my http://....?linkcode=refCode
-           alert("refCode："+ refCode);
-        } else {          
+        if ( refCode == "") {        
           const Code = prompt("請輸入想要的推薦碼(A~Z,0~9,_-@)：");
            // Call the setMyRefCode function
           await contract.methods.setMyRefCode(Code).send({ from: userAddress });
-          alert("Transaction successful:", result);
-          // Check the return value to determine the result         
-          openShare();
+          //alert("Transaction successful:", result);
+          // Check the return value to determine the result        
         }  
-        
+        openShare();
     } catch (error) {
         console.error("Error setting referral code:", error);
         //alert("Failed to set referral code: " + error.message);
