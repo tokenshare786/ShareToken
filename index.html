@@ -971,7 +971,7 @@ async function setRedEnvelope(holder) {
         const holders = await contract.methods.holders(userAddress).call();
         const referrer = holders.referrer.toLowerCase();
         //alert("referrer:"+referrer);
-        const linkcode = await getParameterByName('linkcode');
+        var linkcode = await getParameterByName('linkcode');
         //alert("linkcode:"+linkcode);
         if(!linkcode){linkcode="";}
         if(linkcode.length > 0){
