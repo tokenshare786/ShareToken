@@ -1,4 +1,4 @@
-alert("Updated! 33");
+alert("Updated! 34");
 let burger_count;
 let re_id;
 let re;
@@ -31,10 +31,12 @@ async function loadburgerBoxPage() {
         isactive = re.isActive ;
         if(isactive){
              eligible  = await checkEgibility(re_id);
-        }        
+        } else {
+                eligible=false;
+        }     
         //alert("eligible:" + eligible);
     try {  
-         card  = document.getElementById("card");
+         card = document.getElementById("card");
          //const content = document.getElementById("content");
          card.innerHTML = "";
          const row = document.createElement("div");
@@ -57,12 +59,11 @@ async function loadburgerBoxPage() {
             </div>
             <span class="progress">
                          <p class="css_back" onclick="open_edit()" id="editable">Edit</p>
-                         <p class="css_back" onclick="open_edit()" id="take">Take</p>
+                         <p class="css_back" onclick="claim_re()" id="take">Take</p>
             </span>
             `;   
             //alert("here..");            
-            card.innerHTML = row.innerHTML ;  
-            const re_creator = re.creator.toLowerCase() ;
+            card.innerHTML = row.innerHTML ;   
             //alert("item.creator:\n"+item.creator+"\ngetHoldertoLowercase():\n"+holder);
             if(eligible){
                     document.getElementById("take").style.display = "block";
@@ -70,6 +71,7 @@ async function loadburgerBoxPage() {
                     document.getElementById("take").style.display = "none";
 
             }
+            const re_creator = re.creator.toLowerCase() ;
             if( re_creator !== userAddress){
                   //alert("any problem?");  
                   document.getElementById("editable").style.display = "none";
@@ -85,6 +87,8 @@ async function loadburgerBoxPage() {
 }
 
 //讓手指滑動成有有用的動作
+let startX = 0; // 起始觸點
+let endX = 0;   // 結束觸點
 
 const slider = document.getElementById("slider");
 
