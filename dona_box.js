@@ -1,4 +1,4 @@
-alert("Updated! 35");
+alert("Updated! 36");
 let burger_count;
 let re_id;
 let re;
@@ -54,7 +54,7 @@ async function loadburgerBoxPage() {
             </div>
             <div  class="new-container">
                <div class="image-container" onclick="claim_re()">
-                  <img src="${re.imgUrl}" alt="photo">  
+                  <img src="${re.imgUrl}" alt="photo" id="slider">  
                </div>            
             </div>
             <span class="progress">
@@ -70,9 +70,9 @@ async function loadburgerBoxPage() {
                 document.getElementById("click_back").style.display = "none";
         }
         if(re_id < burger_count ){
-                document.getElementById("click_back").style.display = "block";
+                document.getElementById("click_next").style.display = "block";
         } else {
-                document.getElementById("click_back").style.display = "none";
+                document.getElementById("click_next").style.display = "none";
         }
         if(eligible){
                 document.getElementById("take").style.display = "block";
@@ -117,10 +117,10 @@ slider.addEventListener("touchmove", (event) => {
 });
 
 slider.addEventListener("touchend", () => {
-    if (startX - endX > 50) {
+    if (startX - endX > 20) {
         // 往左滑
         _next();
-    } else if (endX - startX > 50) {
+    } else if (endX - startX > 20) {
         // 往右滑
         _back();
     }
