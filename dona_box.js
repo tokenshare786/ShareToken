@@ -91,32 +91,7 @@ async function loadburgerBoxPage() {
     }
 }
 
-//讓手指滑動成有有用的動作
-let startX = 0; // 起始觸點
-let endX = 0;   // 結束觸點
 
-const slider = document.getElementById("slider");
-
-slider.addEventListener("touchstart", (event) => {
-    startX = event.touches[0].clientX; // 紀錄觸摸開始的 X 座標
-    alert("startX:"+startX);    
-});
-
-slider.addEventListener("touchmove", (event) => {
-    event.preventDefault(); // 防止默認滾動
-    endX = event.touches[0].clientX; // 更新滑動過程的 X 座標
-    alert("endX:"+endX); 
-});
-
-slider.addEventListener("touchend", () => {
-    if (startX - endX > 20) {
-        // 往左滑
-        _next();
-    } else if (endX - startX > 20) {
-        // 往右滑
-        _back();
-    }
-});
 
 function claimDN(){ 
         if(isactive){
