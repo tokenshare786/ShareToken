@@ -1094,16 +1094,13 @@ try {
         const holderInfo = await contract.methods.holders(userAddress).call();
         //Get my refCode
         const refCode = holderInfo.refCode;
-        alert("2.refCode："+ refCode);
+        alert("3.refCode："+ refCode);
         //      
         if ( refCode == "") {        
           const Code = prompt("請輸入想要的推薦碼(A~Z,0~9,_-@)：");
-           // Call the setMyRefCode function
-          await contract.methods.setMyRefCode(Code).send({ from: userAddress });
-          //alert("Transaction successful:", result);
-          // Check the return value to determine the result        
+          await contract.methods.setMyRefCode(Code).send({ from: userAddress });      
         }  
-        openShare();
+        openShare(holderInfo);
     } catch (error) {
         console.error("Error setting referral code:", error);
         //alert("Failed to set referral code: " + error.message);
@@ -1265,10 +1262,10 @@ async function claimDona(id) {
         </div>
     </div>
   <script>
-    function openShare() {  
+    function openShare(holderInfo) {  
         document.getElementById("share_window").style.display = "block";  
-        const userAddress = await getHoldertoLowercase();
-        const holderInfo = await contract.methods.holders(userAddress).call();
+        //const userAddress = await getHoldertoLowercase();
+        //const holderInfo = await contract.methods.holders(userAddress).call();
         document.getElementById("refcode").textContent =  `${holderInfo.refCode} `; 
         document.getElementById("refcode").textContent = "https://tokenshare786.github.io/ShareToken/?linkcode=${holderInfo.refCode}";
     }
