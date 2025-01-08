@@ -1,4 +1,4 @@
-alert("Updated! 44");
+alert("Updated! 45");
 let burger_count;
 let re_id;
 let re;
@@ -193,11 +193,13 @@ document.getElementById("edit_form").addEventListener("submit", async (event) =>
 });
 
 async function editDona(){
+        alert("editDona:"+ re.desc  + "/" +  re.imgUrl);
+
         //const userAddress = getHoldertoLowercase();
         // Get form data
         const edit_desc = document.getElementById("edit_desc").value;
         const edit_url = document.getElementById("edit_url").value;
-        alert("editDona:"+ edit_desc  + "/" +  re.desc);
+        alert("editDona:"+ edit_desc  + "/" +  edit_url);
       try{
         // 呼叫智能合约的 setRE 函式
         if( edit_desc != re.desc || edit_url != re.imgUrl){                
