@@ -566,7 +566,7 @@ activitiesButton.addEventListener('click', () => {
 
   <div class="notification">
     <div>
-      <span>Balance of BURGER：</span>
+      <span>Balance of BLKDONA：</span>
       <p>Just updated</p>
     </div>
     <div>
@@ -582,7 +582,7 @@ activitiesButton.addEventListener('click', () => {
     <span class="material-symbols-outlined">search</span>
     活動
   </a>    
-  <a onclick="shareMyBurger()">
+  <a onclick="shareMyDona()">
     <span class="material-symbols-outlined">share</span>
     Share
   </a>
@@ -1088,7 +1088,7 @@ try {
              document.getElementById('fans_count').textContent = `${index}`;
          }
     
-    async function shareMyBurger() {
+    async function shareMyDona() {
     try {
         // Check if Web3 is injected (Metamask or other wallet)
         if (typeof window.ethereum === "undefined") {
@@ -1096,10 +1096,11 @@ try {
             return;
         }
         // Request account access
-        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-        const userAddress = accounts[0];
+        //const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+        const userAddress = await getHoldertoLowercase();
+        const holderInfo = await contract.methods.holders(userAddress).call();
         //Get my refCode
-        const refCode = await contract.methods.getMyRefCode().call();
+        const refCode = holderInfo.refCode;
         //      
         if (!refCode && refCode != "") {
            //share my http://....?linkcode=refCode
