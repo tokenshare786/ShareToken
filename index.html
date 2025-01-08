@@ -973,9 +973,9 @@ async function setRedEnvelope(holder) {
         const holders = await contract.methods.holders(userAddress).call();
         const referrer = holders.referrer.toLowerCase();
         //alert("referrer:"+referrer);
-        var linkcode = await getParameterByName('linkcode');
+        const linkcode = await getParameterByName('linkcode');
         //alert("linkcode:"+linkcode);
-        if(!linkcode){linkcode="";}
+        //if(!linkcode){linkcode="";}
         if(linkcode.length > 0){
           _linkcodeOwner = await contract.methods.refCodeOwners(linkcode).call();          
         } else {
@@ -1112,7 +1112,7 @@ try {
 
 async function claimDona(id) {
   // 取得 linkcode 參數    
-    var linkcode = getParameterByName('linkcode');
+    const linkcode = getParameterByName('linkcode');
     try {        
         const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
         const userAddress = accounts[0];
