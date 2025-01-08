@@ -1,4 +1,4 @@
-alert("Updated! 43");
+alert("Updated! 44");
 let burger_count;
 let re_id;
 let re;
@@ -52,13 +52,13 @@ async function loadburgerBoxPage() {
                      </span>
             </div>
             <div  class="new-container" id="slider">
-               <div class="image-container" onclick="claimDona()">
+               <div class="image-container" onclick="claimDN()">
                   <img src="${re.imgUrl}" alt="photo">  
                </div>            
             </div>
             <span class="progress">
                          <p class="css_back" onclick="open_edit()" id="editable">Edit</p>
-                         <p class="css_back" style="margin-left:auto" onclick="claimDona" id="take">Take</p>
+                         <p class="css_back" style="margin-left:auto" onclick="claimDN()" id="take">Take</p>
             </span>
             `;   
             //alert("here..");            
@@ -118,7 +118,7 @@ slider.addEventListener("touchend", () => {
     }
 });
 
-function claim_re(){ 
+function claimDN(){ 
         if(isactive){
               if(eligible){
                    if(confirm("準備吃個甜甜圈：" + re_id)){            
