@@ -1102,33 +1102,18 @@ try {
         //Get my refCode
         const refCode = holderInfo.refCode;
         //      
-        if (!refCode && refCode != "") {
+        if ( refCode != "") {
            //share my http://....?linkcode=refCode
            alert("refCode："+ refCode);
         } else {          
           const Code = prompt("請輸入想要的推薦碼(A~Z,0~9,_-@)：");
            // Call the setMyRefCode function
-          const result = await contract.methods.setMyRefCode(Code).send({ from: userAddress });
+          await contract.methods.setMyRefCode(Code).send({ from: userAddress });
           alert("Transaction successful:", result);
-          // Check the return value to determine the result
-          const returnCode = result.events ? result.events.ReturnCode.returnValues[0] : null;
+          // Check the return value to determine the result         
+          openShare();
         }  
-        switch (returnCode) {
-            case "1":
-                alert("Insufficient SHARE to set or edit referral code.");
-                break;
-            case "2":
-                alert("Invalid referral code format.");
-                break;
-            case "3":
-                alert("Referral code already in use.");
-                break;
-            case "0":
-                alert("Referral code set successfully!");
-                break;
-            default:
-                alert("Unknown result. Please check your transaction.");
-        }
+        
     } catch (error) {
         console.error("Error setting referral code:", error);
         //alert("Failed to set referral code: " + error.message);
@@ -1188,23 +1173,8 @@ async function claimDona(id) {
         </form>
     </div>
 </div>
-  <script>
-    //alert("What's up");
-    // Open modal 發甜甜圈的彈跳視窗
-    //closeModal();
-    //let userAddress;
-    // 按鈕綁定事件
-        //const activities_btn=document.getElementById("activities");
-        //const click_activities = () =>  openModal();
-        //activities_btn.addEventListener("click", click_activities);
-        
-        //activities_btn.addEventListener("click", function(event) => {
-        //event.preventDefault(); // 防止表單默認提交行為
-        //      openModal(); 
-        //});
-    function openModal() {
-        //alert("hi YA!");
-        //userAddress = _userAddress ;   
+  <script>    
+    function openModal() {  
         document.getElementById("modal-overlay").style.display = "block";   
     }
 
@@ -1291,6 +1261,36 @@ async function claimDona(id) {
         </form>
     </div>
     </div> 
+   <div class="modal-overlay" id="share_window">
+        <div class="modal" id="modal">
+            <h2>分享我的黑色甜甜圈</h2>
+            <p>我的推薦碼：</p><p id="refcode"></p>
+            <p>推薦連結網址：</p><p id="share_link"></p>
+            <form id="edit_form">
+                <div class="_buttons">
+                    <button type="button" class="cancel" onclick="closeShare()">取消</button>
+                    <button type="submit" class="confirm" onclick="toShare()">分享</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  <script>
+    function openShare() {  
+        document.getElementById("share_window").style.display = "block";  
+        const userAddress = await getHoldertoLowercase();
+        const holderInfo = await contract.methods.holders(userAddress).call();
+        document.getElementById("refcode").textContent =  `${holderInfo.refCode} `; 
+        document.getElementById("refcode").textContent = "https://tokenshare786.github.io/ShareToken/?linkcode=${holderInfo.refCode}";
+    }
 
+    // Close modal
+    function closeShare() {
+        document.getElementById("share_window").style.display = "none";
+    }     
+
+    function toShare(){
+      closeShare();
+    }
+  </script>
 </body>
 </html>
