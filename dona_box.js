@@ -1,4 +1,4 @@
-alert("Updated! 41");
+//alert("Updated! 41");
 let burger_count;
 let re_id;
 let re;
@@ -161,7 +161,9 @@ async function _back() {
                 alert("未找到對應的甜甜圈數據！");
                 re_id++; // 如果數據不存在，還原 re_id
             }
+            document.getElementById('click_next').textContent = `Back`; 
         } else {
+            document.getElementById('click_next').textContent = `Home`; 
             location.reload();
         }
     } catch (error) {
