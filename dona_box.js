@@ -1,4 +1,4 @@
-alert("Updated! 36");
+alert("Updated! 37");
 let burger_count;
 let re_id;
 let re;
@@ -40,8 +40,7 @@ async function loadburgerBoxPage() {
          //const content = document.getElementById("content");
          card.innerHTML = "";
          const row = document.createElement("div");
-         row.id = "burgerbox";        
-         //row.classList.add("progress");
+         //row.id = "slider";        
          const startTime = new Date(Number(re.startTime) * 1000).toLocaleString();        
          row.innerHTML = `
             <div>
@@ -53,8 +52,8 @@ async function loadburgerBoxPage() {
                      </span>
             </div>
             <div  class="new-container">
-               <div class="image-container" onclick="claim_re()">
-                  <img src="${re.imgUrl}" alt="photo" id="slider">  
+               <div class="image-container" onclick="claim_re()" id="slider">
+                  <img src="${re.imgUrl}" alt="photo">  
                </div>            
             </div>
             <span class="progress">
@@ -98,17 +97,11 @@ async function loadburgerBoxPage() {
 let startX = 0; // 起始觸點
 let endX = 0;   // 結束觸點
 
-const slider = document.getElementById("card");
+const slider = document.getElementById("slider");
 
 slider.addEventListener("touchstart", (event) => {
     startX = event.touches[0].clientX; // 紀錄觸摸開始的 X 座標
     alert("startX:"+startX);    
-});
-
-slider.addEventListener("touchmove", (event) => {
-    event.preventDefault(); // 防止默認滾動
-    endX = event.touches[0].clientX; // 更新結束觸點
-    alert("endX:"+endX); 
 });
 
 slider.addEventListener("touchmove", (event) => {
