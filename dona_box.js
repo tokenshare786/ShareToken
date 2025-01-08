@@ -164,12 +164,12 @@ function close_edit() {
              
 document.getElementById("form_edit").addEventListener("submit", async (event) => {
         event.preventDefault(); // 防止表單默認提交行為
-              alert("What's up?");
+              //alert("What's up?");
               await editDona(); // 確保執行智能合約的邏輯
 });
 
 async function editDona(){
-        alert("editDona:"+ re.desc  + "/" +  re.imgUrl);
+        //alert("editDona:"+ re.desc  + "/" +  re.imgUrl);
 
         //const userAddress = getHoldertoLowercase();
         // Get form data
@@ -196,6 +196,6 @@ async function editDona(){
         loadburgerBoxPage();
         } catch (error) {
             //console.error("Error:", error);
-            alert("edit Error:" + error);        
+            //alert("edit Error:" + error);        
         }     
     }
