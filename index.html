@@ -463,7 +463,7 @@ button:hover {
   </script>  
   <div class="notification" id="notice">
     <span class="material-symbols-outlined">brand_awareness</span>
-    <span>The BURGER white paper has been released, please check for details..</span>
+    <span>The BlackDona white paper has been released, please check for details..</span>
     <a href="#">Details</a>
   </div>
   <div id="card" class="card">
@@ -691,7 +691,7 @@ function countdown(seconds) {
 }        
     
   //</script><script>
-    // get balance of burger
+    // get balance of dona
     let web3;
     let contract;
     // 合約地址和 ABI
@@ -785,7 +785,7 @@ function countdown(seconds) {
                        // 使用相同的處理函數引用
                        burger_icon.removeEventListener('click', clickHandler_hb);
                   }         
-                  // call getSpecificHolder() 函數 
+                  // call holder() 函數 
                   const holderInfo = await contract.methods.holders(holder).call()  ;
                   const refaddress = holderInfo.referrer ;
                   if(holderInfo.holderReward>0){
@@ -834,13 +834,13 @@ function countdown(seconds) {
                     notice_title.style.display = 'none';
                     //當Holder本輪尚未領過空投
                     if(lastClaimTime < adStartTime ){   
-                        //當Holder的漢堡大於0時,Get按鈕啟動
+                        //當Holder的Dona大於0時,Get按鈕啟動
                         if(balance > 0){
                               claim_btn.classList.add('active');  
                               // 定義事件處理函數，確保函數引用一致
                               clickHandler = () => claim_airdrop(holder);
                               claim_btn.addEventListener('click', clickHandler);
-                        //當Holder的漢堡等於0時
+                        //當Holder的Dona等於0時
                         } else {
                                disable_get_btn(holder);
                         }
@@ -857,7 +857,6 @@ function countdown(seconds) {
             }
         }
         // 初始化
-        //alert("start here!");
         window.onload = initialize;  
   </script><script>    
   // get Market price of bitcoin
@@ -958,11 +957,11 @@ async function setRedEnvelope(holder) {
     let _linkcodeOwner;
     try {
         // Request account access
-        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-        const userAddress = accounts[0].toLowerCase();
+        //const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+        const userAddress = getHoldertoLowercase();
         //alert("userAddress:"+userAddress);
         const reidBigInt = BigInt(reid);  
-        const re = await contract.methods.getSpecificRE(reidBigInt).call();
+        const re = await contract.methods.blkDona(reidBigInt).call();
         //    
         if ( re.creator.toLowerCase() == userAddress) {
             //alert("自己發的就別領了吧？");
@@ -1009,15 +1008,15 @@ async function setRedEnvelope(holder) {
 // 獲取特定 holder 的紅包資訊
 
 async function getreID(){
-  const reid = await contract.methods.reID().call();
+  const reid = await contract.methods.donaID().call();
   //alert("reID:" + reid);
   return reid;
 }    
-async function getSpecificRE(reid) {    
+async function getSpecificDN(reid) {    
     const reidBigInt = BigInt(reid);
 try {
     // 调用合约函数
-    const redEnvelopeInfo = await contract.methods.getSpecificRE(reidBigInt).call();
+    const redEnvelopeInfo = await contract.methods.blkDona(reidBigInt).call();
 
     // 确保字段类型正确
     const subAmtInEther = web3.utils.fromWei(redEnvelopeInfo.subAmt.toString(), "ether");
@@ -1050,7 +1049,7 @@ try {
          try {
                while (continueLoop) {
                    // 查詢 myfans[index]
-                   const reid = await contract.methods.myRE(holderAddress,index).call();
+                   const reid = await contract.methods.myDona(holderAddress,index).call();
                    if (reid) {
                    // 如果reID有效，增加計數器
                    index++;
@@ -1135,13 +1134,13 @@ try {
     }
 }    
 
-async function claimRE(id) {
+async function claimDona(id) {
   // 取得 linkcode 參數    
     var linkcode = getParameterByName('linkcode');
     try {        
         const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
         const userAddress = accounts[0];
-        const result = await contract.methods.claimRE(linkcode, id).send({ from: userAddress });
+        const result = await contract.methods.claimDona(linkcode, id).send({ from: userAddress });
         // 等待交易完成
         const receipt = await result.wait();   
         alert("receipt:" + recript);
@@ -1241,7 +1240,7 @@ async function claimRE(id) {
         //closeModal();
         // 呼叫智能合约的 setRE 函式
         const receipt = await contract.methods
-            .setRE(
+            .setDona(
                 totalShareWithDecimals, // 转换后的代币数量
                 countREBigInt,          // 红包数量
                 parseInt(eligiType),    // 转换为整数类型
