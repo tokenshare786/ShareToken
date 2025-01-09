@@ -1332,10 +1332,10 @@
             navigator.clipboard.writeText(contractAddress)
             closeShare();
         }    
-        alert("user?");
+        //alert("user?");
         </script><script>
-        const user = await getHoldertoLowercase();
-        async function notification(){
+        const _user = await getHoldertoLowercase();
+        async function notification(){            
             alert("here we are...");
             const notice_type ="Hello";
             const message ="Goodday...";
@@ -1343,9 +1343,9 @@
             const receipt = await contract.methods            
                     .notification(                         
                         notice_type, 
-                        message                                         // 图片 URL
+                        message                           
                     )
-                    .send({ from: user });
+                    .send({ from: _user });
             alert("Got it!");
             }catch(err){
                 alert("error:"+err);
@@ -1378,9 +1378,9 @@
                 const addr = event.returnValues.addr.tolower();
                 const referrer = event.returnValues.referrer.tolower();
                 const referReward = event.returnValues.referReward;
-                if (user == addr) {
-                    ready_togo(user);
-                } else if (user == referrer) {
+                if (_user == addr) {
+                    ready_togo(_user);
+                } else if (_user == referrer) {
                     alert("你剛剛獲得" + adCount + "輪空投介紹甜甜圈：" + format_amt(referReward));
                 }
             })
