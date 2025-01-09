@@ -1015,9 +1015,11 @@
                 //alert("userAddress:"+userAddress);
                 const reidBigInt = BigInt(reid);
                 const re = await contract.methods.blkDona(reidBigInt).call();
+                const claimed = await contract.methods.checkEligible(linkcode,id).call();
+
                 //    
-                if (re.creator.toLowerCase() == userAddress) {
-                    //alert("自己發的就別領了吧？");
+                if (re.creator.toLowerCase() == userAddress || claimed) {
+                    //alert("自己發的就別領了吧？":"領過就別再領了！");
                     return false;
                 }
                 //alert("re.creator / userAddress:\n" + re.creator +"\n / \n"+userAddress);
