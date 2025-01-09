@@ -1,4 +1,4 @@
-alert("Updated! 47");
+ //alert("Updated! 47");
 let burger_count;
 let re_id;
 let re;
