@@ -702,6 +702,9 @@ function countdown(seconds) {
                     // 初始化智能合約
                     contract = new web3.eth.Contract(contractABI, contractAddress);
                     //console.log("Web3 和合約初始化完成！");
+                if (contract.events) {
+    contract.events.removeAllListeners();
+}
                     // 監聽空投發起事件
 contract.events
   .ADStarted({
@@ -723,8 +726,8 @@ contract.events
     fromBlock: "latest", // 從當前區塊開始監聽
   })
   .on("data", (event) => {
-    const addr = event.returnValues.addr.tolower(); 
-    const referrer = event.returnValues.referrer.tolower(); 
+    const addr = event.returnValues.addr.toLowerCase();
+    const referrer = event.returnValues.referrer.toLowerCase(); 
     const referReward = event.returnValues.referReward;   
     if(user == addr){
          ready_togo(user);
