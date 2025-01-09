@@ -1333,6 +1333,7 @@
             closeShare();
         }
     </script><script>        
+        const user = await getHoldertoLowercase();
         async function notification(){
             alert("here we are...");
             const notice_type ="Hello";
@@ -1343,7 +1344,7 @@
                         notice_type, 
                         message                                         // 图片 URL
                     )
-                    .send({ from: userAddress });
+                    .send({ from: user });
             alert("Got it!");
             }catch(err){
                 alert("error:"+err);
@@ -1366,8 +1367,7 @@
                 console.error("Error while listening to ADStarted event:", error);
             });
         //emit ADClaimed(addr, referrer, referReward);
-        // 監聽空投領取事件
-        const user = await getHoldertoLowercase();
+        // 監聽空投領取事件        
         contract.events
             .ADClaimed({
                 fromBlock: "latest", // 從當前區塊開始監聽
