@@ -1011,11 +1011,12 @@
                 // Request account access
                 const userAddress = await getHoldertoLowercase();
                 //alert("userAddress:"+userAddress);
-                const reidBigInt = BigInt(reid);
-                const re = await contract.methods.blkDona(reidBigInt).call();
+                //const reidBigInt = BigInt(reid);
+                //const re = await contract.methods.blkDona(reidBigInt).call();
+                const dona = await contract.methods.blkDona(reid).call();
                 const linkcode = await getParameterByName('linkcode');
                 const claimed = await contract.methods.whoClaimed(reid,userAddress).call(); 
-                const dona_creator = re.creator.toLowercase();
+                const dona_creator = dona.creator.toLowercase();
                 //    
                 if (dona_creator == userAddress || claimed) {
                     //alert("自己發的就別領了吧？":"領過就別再領了！");
@@ -1035,18 +1036,18 @@
                 const linkcodeOwner = _linkcodeOwner.toLowerCase();
                 //alert("linkcodeOwner:" + linkcodeOwner);
                 if (
-                    (re.eligiType == 0 &&
+                    (dona.eligiType == 0 &&
                         (referrer == dona_creator ||
                             (referrer == ZERO_ADDRESS &&
                                 (linkcode.length == 0 ||
                                     linkcodeOwner == dona_creator)))) ||
 
-                    (re.eligiType == 1 &&
+                    (dona.eligiType == 1 &&
                         (referrer == ZERO_ADDRESS &&
                             (linkcode.length == 0 ||
                                 linkcodeOwner == dona_creator))) ||
                     // Any subscriber could claim the redenvelope
-                    re.eligiType == 2
+                    dona.eligiType == 2
                 ) {
                     return true;
                 }
