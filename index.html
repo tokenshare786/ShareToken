@@ -1332,8 +1332,9 @@
             navigator.clipboard.writeText(contractAddress)
             closeShare();
         }
-            
+    </script><script>
         const user = await getHoldertoLowercase();
+        alert("user:"+user);
         async function notification(){
             alert("here we are...");
             const notice_type ="Hello";
@@ -1350,7 +1351,7 @@
                 alert("error:"+err);
             }
         }
-    </script><script>
+    
         // 清理旧的事件监听器，防止重复注册
         if (contract.events) {
                 contract.events.removeAllListeners();
