@@ -994,10 +994,10 @@
         }   
     </script>
     <script>
-        async function checkEligible(id){
+        async function checkEligible(re_id){
             try{         
                 const linkcode = await getParameterByName('linkcode');
-                return await contract.methods.checkEligible(linkcode,id).call();                
+                return await contract.methods.checkEligible( linkcode , re_id ).call();                
             }catch(error){
                 alert("Error:" + error);
             }            
@@ -1015,7 +1015,7 @@
                 const reidBigInt = BigInt(reid);
                 const re = await contract.methods.blkDona(reidBigInt).call();
                 const linkcode = await getParameterByName('linkcode');
-                const claimed = await contract.methods.checkEligible(linkcode,id).call();
+                const claimed = await contract.methods.checkEligible(linkcode , reid).call();
                 //    
                 if (re.creator.toLowerCase() == userAddress || claimed) {
                     //alert("自己發的就別領了吧？":"領過就別再領了！");
