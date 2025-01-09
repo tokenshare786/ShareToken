@@ -30,7 +30,7 @@ initializePage();
 async function loadburgerBoxPage() {
         isactive = re.isActive ;
         if(isactive){
-             eligible  = await checkEgibility(re_id);
+             eligible  = await checkEligible(re_id);
         } else {
                 eligible=false;
         }     
