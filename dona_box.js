@@ -169,13 +169,10 @@ document.getElementById("form_edit").addEventListener("submit", async (event) =>
 });
 
 async function editDona(){
-        //alert("editDona:"+ re.desc  + "/" +  re.imgUrl);
-
-        //const userAddress = getHoldertoLowercase();
         // Get form data
         const edit_desc = document.getElementById("edit_desc").value;
-        const edit_url = document.getElementById("edit_url").value;
-        alert("editDona:"+ edit_desc  + "/" +  edit_url);
+        const edit_url = document.getElementById("edit_url").value;       
+        //alert("editDona:"+ edit_desc  + "/" +  edit_url);
       try{
         // 呼叫智能合约的 setRE 函式
         if( edit_desc != re.desc || edit_url != re.imgUrl){                
@@ -195,7 +192,6 @@ async function editDona(){
         re = await getSpecificDN(re_id);
         loadburgerBoxPage();
         } catch (error) {
-            //console.error("Error:", error);
-            //alert("edit Error:" + error);        
+            console.error("Error:", error);
         }     
     }
