@@ -645,6 +645,18 @@ activitiesButton.addEventListener('click', () => {
                   console.log("使用者取消啟動空投");
           }
     }
+    // 監聽空投發起事件
+contract.events
+  .ADStarted({
+    fromBlock: "latest", // 從當前區塊開始監聽
+  })
+  .on("data", (event) => {
+    const adCount = event.returnValues.adCount; // 提取事件的 adCount
+    alert("第" + adCount + "輪空投已經開始了！");
+  })
+  .on("error", (error) => {
+    console.error("Error while listening to ADStarted event:", error);
+  });
     
     async function claim_airdrop(holder) {      
         if ( confirm("請注意！領取空投必須付出Gas，您確定繼續？")) {      
@@ -652,13 +664,34 @@ activitiesButton.addEventListener('click', () => {
                 // 呼叫智能合約的 claimAirdrop 函數
                 await contract.methods.claimAirdrop().send({ from: holder });
                 disable_get_btn();              
-                getBalance(holder);                 
+                //getBalance(holder);                 
             } catch (error) {
                 console.error("Error claiming airdrop:", error);
                 alert("Claiming airdrop failure.Try again later." + error);
             }
            }
         } 
+//emit ADClaimed(addr, referrer, referReward);
+    // 監聽空投領取事件
+const user = await getHoldertoLowercase();
+contract.events
+  .ADClaimed({
+    fromBlock: "latest", // 從當前區塊開始監聽
+  })
+  .on("data", (event) => {
+    const addr = event.returnValues.addr; 
+    const referrer = event.returnValues.referrer; 
+    const referReward = event.returnValues.referReward;   
+    if(user == addr.tolower()){
+         ready_togo(user);
+    } else if(user == referrer.tolower()){
+         alert("你剛剛獲得" + adCount + "輪空投介紹甜甜圈：" + format_amt(referReward));
+    }
+  })
+  .on("error", (error) => {
+    console.error("Error while listening to ADStarted event:", error);
+  });
+
 let intervalId; 
 function countdown(seconds) {  
   // 清除之前的計時器
