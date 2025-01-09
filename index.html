@@ -997,7 +997,7 @@
         async function checkEligible(re_id){
             try{         
                 const linkcode = await getParameterByName('linkcode');
-                return await contract.methods.checkEligible( linkcode , re_id ).call();                
+                return !await contract.methods.checkEligible( linkcode , re_id ).call();                
             }catch(error){
                 alert("Error:" + error);
             }            
