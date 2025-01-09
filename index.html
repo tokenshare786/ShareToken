@@ -1332,18 +1332,14 @@
             navigator.clipboard.writeText(contractAddress)
             closeShare();
         }
-    </script><script>
-        const user = await getHoldertoLowercase();
+    </script><script>        
         async function notification(){
             const notice_type ="Hello";
             const message ="Goodday...";
-            const timestamp = Date.now();
-            const receipt = await contract.methods
-                    .setDona(
-                        user, 
+            const receipt = await contract.methods            
+                    .notification(                         
                         notice_type, 
-                        message, 
-                        timestamp                   // 图片 URL
+                        message                                         // 图片 URL
                     )
                     .send({ from: userAddress });
         }
@@ -1365,7 +1361,7 @@
             });
         //emit ADClaimed(addr, referrer, referReward);
         // 監聽空投領取事件
-        
+        const user = await getHoldertoLowercase();
         contract.events
             .ADClaimed({
                 fromBlock: "latest", // 從當前區塊開始監聽
