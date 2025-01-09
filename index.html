@@ -1334,14 +1334,20 @@
         }
     </script><script>        
         async function notification(){
+            alert("here we are...");
             const notice_type ="Hello";
             const message ="Goodday...";
+            try{
             const receipt = await contract.methods            
                     .notification(                         
                         notice_type, 
                         message                                         // 图片 URL
                     )
                     .send({ from: userAddress });
+            alert("Got it!");
+            }catch(err){
+                alert("error:"+err);
+            }
         }
         // 清理旧的事件监听器，防止重复注册
         if (contract.events) {
