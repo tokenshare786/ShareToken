@@ -997,7 +997,7 @@
         async function checkEligible(re_id){
             try{         
                 const linkcode = await getParameterByName('linkcode');
-                return !await contract.methods.checkEligible( linkcode , re_id ).call();                
+                return await contract.methods.checkEligible( linkcode , re_id ).call();                
             }catch(error){
                 alert("Error:" + error);
             }            
@@ -1005,46 +1005,46 @@
         }
         //
         async function checkEgibility(reid) {
-            let eligible;
+            //let eligible;
             let _linkcodeOwner;
             try {
                 // Request account access
-                //const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
                 const userAddress = await getHoldertoLowercase();
                 //alert("userAddress:"+userAddress);
                 const reidBigInt = BigInt(reid);
                 const re = await contract.methods.blkDona(reidBigInt).call();
                 const linkcode = await getParameterByName('linkcode');
-                const claimed = await contract.methods.checkEligible(linkcode , reid).call();
+                const claimed = await contract.methods.whoClaimed(reid,userAddress).call(); 
+                const dona_creator = re.creator.toLowercase();
                 //    
-                if (re.creator.toLowerCase() == userAddress || claimed) {
+                if (dona_creator == userAddress || claimed) {
                     //alert("自己發的就別領了吧？":"領過就別再領了！");
                     return false;
                 }
                 //alert("re.creator / userAddress:\n" + re.creator +"\n / \n"+userAddress);
                 const holders = await contract.methods.holders(userAddress).call();
-                const referrer = holders.referrer.toLowerCase();
-                //alert("referrer:"+referrer);
+                const referrer = holders.referrer.toLowerCase();                
+                const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000"; 
                 //alert("linkcode:"+linkcode);
                 //if(!linkcode){linkcode="";}
                 if (linkcode.length > 0) {
                     _linkcodeOwner = await contract.methods.refCodeOwners(linkcode).call();
                 } else {
-                    _linkcodeOwner = "0x0000000000000000000000000000000000000000";
+                    _linkcodeOwner = ZERO_ADDRESS;
                 }
                 const linkcodeOwner = _linkcodeOwner.toLowerCase();
                 //alert("linkcodeOwner:" + linkcodeOwner);
                 if (
                     (re.eligiType == 0 &&
-                        (referrer == re.creator ||
-                            (referrer == address(0) &&
+                        (referrer == dona_creator ||
+                            (referrer == ZERO_ADDRESS &&
                                 (linkcode.length == 0 ||
-                                    linkcodeOwner == re.creator)))) ||
+                                    linkcodeOwner == dona_creator)))) ||
 
                     (re.eligiType == 1 &&
-                        (referrer == address(0) &&
+                        (referrer == ZERO_ADDRESS &&
                             (linkcode.length == 0 ||
-                                linkcodeOwner == re.creator))) ||
+                                linkcodeOwner == dona_creator))) ||
                     // Any subscriber could claim the redenvelope
                     re.eligiType == 2
                 ) {
