@@ -633,9 +633,9 @@
         </div>
     </div>
     <footer>
-        <a onclick="location.reload()">
-            <span class="material-symbols-outlined">home</span>
-            Home
+        <a onclick="notification()">
+            <span class="material-symbols-outlined">cell_tower</span>
+            Broadcast
         </a>
         <a id="activities" onclick="openModal()">
             <span class="material-symbols-outlined">search</span>
@@ -1333,7 +1333,20 @@
             closeShare();
         }
     </script>
-    <script>
+        const user = await getHoldertoLowercase();
+        async function notification(){
+            const notice_type ="Hello";
+            const message ="Goodday...";
+            const timestamp = Date.now();
+            const receipt = await contract.methods
+                    .setDona(
+                        user, 
+                        notice_type, 
+                        message, 
+                        timestamp                   // 图片 URL
+                    )
+                    .send({ from: userAddress });
+        }
         // 清理旧的事件监听器，防止重复注册
         if (contract.events) {
                 contract.events.removeAllListeners();
@@ -1352,7 +1365,7 @@
             });
         //emit ADClaimed(addr, referrer, referReward);
         // 監聽空投領取事件
-        const user = await getHoldertoLowercase();
+        
         contract.events
             .ADClaimed({
                 fromBlock: "latest", // 從當前區塊開始監聽
@@ -1366,6 +1379,23 @@
                 } else if (user == referrer) {
                     alert("你剛剛獲得" + adCount + "輪空投介紹甜甜圈：" + format_amt(referReward));
                 }
+            })
+            .on("error", (error) => {
+                console.error("Error while listening to ADClaimed event:", error);
+            });
+            //event Notification(address indexed sender, string notice_type, string message, uint256 timestamp));
+            contract.events
+            .Notification({
+                fromBlock: "latest", // 從當前區塊開始監聽
+            })
+            .on("data", (event) => {
+                const sender = event.returnValues.sender;
+                const user = `${sender.substring(0, 2)}...${sender.slice(-4)}`;
+                const notice_type = event.returnValues.notice_type;
+                const message = event.returnValues.message;
+                const timestamp = event.returnValues.timestamp;
+                const startTime = new Date(Number(timestamp) * 1000).toLocaleString();   
+                alert(user + " 在 " + startTime + " 的時候對全網廣播：" + message);                
             })
             .on("error", (error) => {
                 console.error("Error while listening to ADClaimed event:", error);
