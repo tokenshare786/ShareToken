@@ -1016,20 +1016,15 @@
                 const dona = await contract.methods.blkDona(reidBigInt).call();
                 const creator = dona.creator.toLowerCase();
                 const claimed = await contract.methods.whoClaimed(reidBigInt , userAddress).call();
-                alert(`領過？` + claimed);
+                //alert(`領過？` + claimed);
                 if(claimed){
-                    alert(`領過了就別再領了吧？`);
+                    //alert(`領過了就別再領了吧？`);
                     return false;
                 } else if(creator == userAddress){
-                    alert("自己發的就別領了吧？");
+                    //alert("自己發的就別領了吧？");
                     return false;
                 }
-                //    
-                //if (creator == userAddress || claimed) {
-                    //alert("自己發的或是領過了就別再領了吧？");
-                //    return false;
-                //}
-                //alert("re.creator / userAddress:\n" + re.creator +"\n / \n"+userAddress);
+
                 const holders = await contract.methods.holders(userAddress).call();
                 const referrer = holders.referrer.toLowerCase();
                 //alert("referrer:"+referrer);
