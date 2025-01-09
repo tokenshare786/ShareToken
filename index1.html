@@ -1,3 +1,16 @@
+// 監聽空投發起事件
+contract.events
+  .ADStarted({
+    fromBlock: "latest", // 從當前區塊開始監聽
+  })
+  .on("data", (event) => {
+    const adCount = event.returnValues.adCount; // 提取事件的 adCount
+    alert("第" + adCount + "輪空投已經開始了！");
+  })
+  .on("error", (error) => {
+    console.error("Error while listening to ADStarted event:", error);
+  });
+// 監聽空投領取事件
 contract.events
   .ADClaimed({
     fromBlock: "latest", // 從當前區塊開始監聽
