@@ -73,9 +73,11 @@ input:focus, select:focus {
     border-color: #555555; /* 聚焦時的邊框顏色 */
 }
 ._text{
-    width: calc(100% - 20px);
-    padding: 10px;
-    box-sizing: border-box; 
+    word-wrap: break-word; /* 長單詞換行 */
+    word-break: break-all; /* 強制斷字換行（可選） */
+    overflow-wrap: break-word; /* 現代瀏覽器首選 */
+    white-space: normal; /* 允許正常換行 */
+    overflow: hidden; /* 防止超出容器時內容溢出 */
 }    
 
 ._buttons {
