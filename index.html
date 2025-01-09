@@ -644,19 +644,7 @@ activitiesButton.addEventListener('click', () => {
                   // 如果使用者點擊取消，則什麼都不做
                   console.log("使用者取消啟動空投");
           }
-    }
-    // 監聽空投發起事件
-contract.events
-  .ADStarted({
-    fromBlock: "latest", // 從當前區塊開始監聽
-  })
-  .on("data", (event) => {
-    const adCount = event.returnValues.adCount; // 提取事件的 adCount
-    alert("第" + adCount + "輪空投已經開始了！");
-  })
-  .on("error", (error) => {
-    console.error("Error while listening to ADStarted event:", error);
-  });
+    }    
     
     async function claim_airdrop(holder) {      
         if ( confirm("請注意！領取空投必須付出Gas，您確定繼續？")) {      
@@ -670,11 +658,7 @@ contract.events
                 alert("Claiming airdrop failure.Try again later." + error);
             }
            }
-        } 
-//emit ADClaimed(addr, referrer, referReward);
-// 監聽空投領取事件
-const user = await getHoldertoLowercase();
-    
+        }     
 let intervalId; 
 function countdown(seconds) {  
   // 清除之前的計時器
