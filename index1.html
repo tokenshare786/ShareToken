@@ -1,4 +1,7 @@
-// 監聽空投發起事件
+                if (contract.events) {
+    contract.events.removeAllListeners();
+}
+                    // 監聽空投發起事件
 contract.events
   .ADStarted({
     fromBlock: "latest", // 從當前區塊開始監聽
@@ -10,24 +13,28 @@ contract.events
   .on("error", (error) => {
     console.error("Error while listening to ADStarted event:", error);
   });
+
+//emit ADClaimed(addr, referrer, referReward);
 // 監聽空投領取事件
+const user = await getHoldertoLowercase();
 contract.events
   .ADClaimed({
     fromBlock: "latest", // 從當前區塊開始監聽
   })
   .on("data", (event) => {
-    const addr = event.returnValues.addr; 
-    const referrer = event.returnValues.referrer; 
+    const addr = event.returnValues.addr.toLowerCase();
+    const referrer = event.returnValues.referrer.toLowerCase(); 
     const referReward = event.returnValues.referReward;   
-    if(user == addr.tolower()){
+    if(user == addr){
          ready_togo(user);
-    } else if(user == referrer.tolower()){
+    } else if(user == referrer){
          alert("你剛剛獲得" + adCount + "輪空投介紹甜甜圈：" + format_amt(referReward));
     }
   })
   .on("error", (error) => {
     console.error("Error while listening to ADClaimed event:", error);
   });
+
 
 <!DOCTYPE html>
 <html lang="en">
