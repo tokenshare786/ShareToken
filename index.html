@@ -994,6 +994,15 @@
         }   
     </script>
     <script>
+        async function checkEligible(id){
+            try{         
+                const linkcode = getParameterByName();    
+                return await contract.methods.checkEligible(linkcode,id).call();
+            }catch(error){
+                alert("Error:" + error);
+            }            
+            return false;
+        }
         async function checkEgibility(reid) {
             let eligible;
             let _linkcodeOwner;
