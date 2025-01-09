@@ -649,33 +649,14 @@ activitiesButton.addEventListener('click', () => {
     async function claim_airdrop(holder) {      
         if ( confirm("請注意！領取空投必須付出Gas，您確定繼續？")) {      
         try {
-              // 呼叫智能合約的 claimAirdrop 函數
-              const result = await contract.methods.claimAirdrop().send({ from: holder });
-              disable_get_btn();
-              // 處理回傳值 (result)
-              switch (result) {
-                case 1:
-                     alert("Airdrop not enabled");
-                break;
-                case 2:
-                     alert("Airdrop expired");
-                break;
-                case 3:
-                     alert("You have already claimed this airdrop");
-                break;
-                case 4:
-                    alert("恭喜！成功領取空投！");
-                  // 更新 UI 顯示 (例如：更新餘額、顯示領取成功訊息)
-                 getBalance(holder); 
-                break;
-                default:
-                      alert("Unknown error occurred during claim."+ result);
-               break;
-               }
-              } catch (error) {
-                   console.error("Error claiming airdrop:", error);
-                   alert("Claiming airdrop failure.Try again later." + error);
-               }
+                // 呼叫智能合約的 claimAirdrop 函數
+                await contract.methods.claimAirdrop().send({ from: holder });
+                disable_get_btn();              
+                getBalance(holder);                 
+            } catch (error) {
+                console.error("Error claiming airdrop:", error);
+                alert("Claiming airdrop failure.Try again later." + error);
+            }
            }
         } 
 let intervalId; 
