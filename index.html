@@ -1333,5 +1333,43 @@
             closeShare();
         }
     </script>
+    <script>
+        // 清理旧的事件监听器，防止重复注册
+        if (contract.events) {
+                contract.events.removeAllListeners();
+        }
+        // 監聽空投發起事件
+        contract.events
+            .ADStarted({
+                fromBlock: "latest", // 從當前區塊開始監聽
+            })
+            .on("data", (event) => {
+                const adCount = event.returnValues.adCount; // 提取事件的 adCount
+                alert("第" + adCount + "輪空投已經開始了！");
+            })
+            .on("error", (error) => {
+                console.error("Error while listening to ADStarted event:", error);
+            });
+        //emit ADClaimed(addr, referrer, referReward);
+        // 監聽空投領取事件
+        const user = await getHoldertoLowercase();
+        contract.events
+            .ADClaimed({
+                fromBlock: "latest", // 從當前區塊開始監聽
+            })
+            .on("data", (event) => {
+                const addr = event.returnValues.addr.tolower();
+                const referrer = event.returnValues.referrer.tolower();
+                const referReward = event.returnValues.referReward;
+                if (user == addr) {
+                    ready_togo(user);
+                } else if (user == referrer) {
+                    alert("你剛剛獲得" + adCount + "輪空投介紹甜甜圈：" + format_amt(referReward));
+                }
+            })
+            .on("error", (error) => {
+                console.error("Error while listening to ADClaimed event:", error);
+            });
+    </script>
 </body>
 </html>
