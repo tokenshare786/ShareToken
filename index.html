@@ -1173,14 +1173,12 @@
                 const userAddress = accounts[0];
                 const result = await contract.methods.claimDona(linkcode, id).send({ from: userAddress });
                 // 等待交易完成
-                const receipt = await result.wait();
-                alert("receipt:" + recript);
-                return { success: true, receipt };
+                document.getElementById("take").style.display = "none";
             } catch (error) {
                 console.error("Error claiming red envelope:", error);
-                return { success: false, error };
+                //return { success: false, error };
             }
-            alert("執行完成:" + receipt);
+            //alert("執行完成:" + receipt);
         }    
     </script>
     <div class="modal-overlay" id="modal-overlay">
