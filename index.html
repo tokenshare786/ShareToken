@@ -1,410 +1,462 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BLKDONA</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap">
-  <style> 
-    
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #000;
-      color: #fff;
-      padding: 10px;
-    }
-.modal-overlay {
-    display: none;
-    position: fixed;
-    padding: 20px;
-    top: 0;
-    left: 0;
-    width: 95%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7); /* 半透明背景 */
-    justify-content: center;
-    align-items: center;
-    overflow-y: auto
-    z-index: 1000;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLKDONA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000;
+            color: #fff;
+            padding: 10px;
+        }
 
-.modal {
-    background: #1E1E1E; /* 深灰色背景 */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    width: 90%;
-    max-width: 360px;
-}
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            padding: 20px;
+            top: 0;
+            left: 0;
+            width: 95%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            /* 半透明背景 */
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto z-index: 1000;
+        }
 
-h2 {    
-    margin-bottom: 20px;
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-    color: #FFFFFF;
-}
+        .modal {
+            background: #1E1E1E;
+            /* 深灰色背景 */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 360px;
+        }
 
-.form-group {
-    margin-bottom: 15px;
-}
+        h2 {
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            color: #FFFFFF;
+        }
 
-label {
-    display: block;
-    font-size: 14px;
-    margin-bottom: 5px;
-    color: #BBBBBB; /* 次要文本顏色 */
-}
+        .form-group {
+            margin-bottom: 15px;
+        }
 
-input, select {
-    width: calc(100% - 20px); /* 控制寬度，防止過長 */
-    padding: 10px;
-    border: 1px solid #333333;
-    border-radius: 5px;
-    background: #292929; /* 深灰背景 */
-    color: #FFFFFF; /* 白色字體 */
-    font-size: 14px;
-    box-sizing: border-box; /* 包含內邊距和邊框 */
-}
+        label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #BBBBBB;
+            /* 次要文本顏色 */
+        }
 
-input:focus, select:focus {
-    outline: none;
-    border-color: #555555; /* 聚焦時的邊框顏色 */
-}
-._text{
-    word-wrap: break-word; /* 長單詞換行 */
-    word-break: break-all; /* 強制斷字換行（可選） */
-    overflow-wrap: break-word; /* 現代瀏覽器首選 */
-    white-space: normal; /* 允許正常換行 */
-    overflow: hidden; /* 防止超出容器時內容溢出 */
-}    
+        input,
+        select {
+            width: calc(100% - 20px);
+            /* 控制寬度，防止過長 */
+            padding: 10px;
+            border: 1px solid #333333;
+            border-radius: 5px;
+            background: #292929;
+            /* 深灰背景 */
+            color: #FFFFFF;
+            /* 白色字體 */
+            font-size: 14px;
+            box-sizing: border-box;
+            /* 包含內邊距和邊框 */
+        }
 
-._buttons {
-    display: flex;      
-    justify-content: flex-start; /* 讓按鈕靠左 */
-    gap: 12px; /* 設置按鈕間距為 20px */
-    margin-top: 20px;
-}
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #555555;
+            /* 聚焦時的邊框顏色 */
+        }
 
-button {
-    padding: 6px 12px; /* 調整為您提供的樣式 */
-    font-size: 0.8em;  /* 字體大小 */
-    border-radius: 6px;
-    border: 2px solid #00d9ff; /* 錢包按鈕的邊框顏色 */
-    color: #00d9ff; /* 文字顏色 */
-    background: transparent; /* 背景透明 */
-    cursor: pointer;
-    transition: all 0.3s ease-in-out; /* 添加平滑過渡效果 */
-}
+        ._text {
+            word-wrap: break-word;
+            /* 長單詞換行 */
+            word-break: break-all;
+            /* 強制斷字換行（可選） */
+            overflow-wrap: break-word;
+            /* 現代瀏覽器首選 */
+            white-space: normal;
+            /* 允許正常換行 */
+            overflow: hidden;
+            /* 防止超出容器時內容溢出 */
+        }
 
-button.cancel {
-    color: #FF6F61; /* 可以為取消按鈕設置不同的顏色（如紅色） */
-    border-color: #FF6F61; /* 與文字顏色保持一致 */
-}
+        ._buttons {
+            display: flex;
+            justify-content: flex-start;
+            /* 讓按鈕靠左 */
+            gap: 12px;
+            /* 設置按鈕間距為 20px */
+            margin-top: 20px;
+        }
 
-button.confirm {
-    color: #00d9ff; /* 藍色字體 */
-    border-color: #00d9ff; /* 藍色邊框 */
-}
+        button {
+            padding: 6px 12px;
+            /* 調整為您提供的樣式 */
+            font-size: 0.8em;
+            /* 字體大小 */
+            border-radius: 6px;
+            border: 2px solid #00d9ff;
+            /* 錢包按鈕的邊框顏色 */
+            color: #00d9ff;
+            /* 文字顏色 */
+            background: transparent;
+            /* 背景透明 */
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            /* 添加平滑過渡效果 */
+        }
 
-button:hover {
-    background: #00d9ff; /* 添加藍色背景以突出效果 */
-    color: #121212; /* 深色字體，確保在藍色背景上可見 */
-}
+        button.cancel {
+            color: #FF6F61;
+            /* 可以為取消按鈕設置不同的顏色（如紅色） */
+            border-color: #FF6F61;
+            /* 與文字顏色保持一致 */
+        }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 6px;
-    }
+        button.confirm {
+            color: #00d9ff;
+            /* 藍色字體 */
+            border-color: #00d9ff;
+            /* 藍色邊框 */
+        }
 
-    header h1 {
-      margin-left: 4px; /* 移除預設的 margin */
-      font-size: 1.5rem;
-      text-transform: capitalize;
-    }
-    header div {
-      margin-left: auto; /* 將按鈕推到右側 */
-    }
-    
-    .copy-icon {
-      display: inline-block; 
-      font-size: 95%; 
-      vertical-align: top; /* 垂直對齊到頂部 */
-      margin-bottom: 4px;
-      margin-left: 4px;
-    }
+        button:hover {
+            background: #00d9ff;
+            /* 添加藍色背景以突出效果 */
+            color: #121212;
+            /* 深色字體，確保在藍色背景上可見 */
+        }
 
-    .copy-message{      
-      font-weight: bold;
-      display: none;
-      font-size: 90%;
-      margin-bottom: 4px;
-      margin-left: 4px;
-    }
-    
-    .walletbutton {
-      margin-top: 2px;
-      padding: 6px 12px;
-      border-radius: 6px;
-      border: 2px solid #00d9ff;
-      color: #00d9ff;
-      background: transparent;
-      font-size: 0.8em;
-      cursor: pointer;
-      transition: all 0.3s ease-in-out;
-    }
-    .walletbutton:hover {
-      background: #00d9ff;
-      color: #000;
-    }
-    
-    .claim_button {
-        margin-top: 3px;              
-        width: 55px; 
-        height: 55px;
-        border-radius: 50%;
-        border: 2px solid #00d9ff;
-        color: #00d9ff;
-        background: transparent;
-        font-size: 0.9em;
-        cursor: pointer;
-        transition: all 0.3s ease-in-out;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        line-height: 50px; /* 與高度相同 */
-    }
-    .claim_button.active {
-      background: #00d9ff;
-      color: #000;
-    }
-    .re_button {
-        display: none;
-        margin-top: 3px;              
-        width: 55px; 
-        height: 55px;
-        border-radius: 50%;
-        border: 2px solid #ff4500;
-        color: #ff4500;
-        background: transparent;
-        font-size: 0.9em;
-        cursor: pointer;
-        transition: all 0.3s ease-in-out;
-        justify-content: center;
-        align-items: center;
-        line-height: 50px; /* 與高度相同 */
-    }
-    .re_button.active {
-      background: #ff4500;
-      color: #ff4500;
-    }
-    
-    .notification {
-      background-color: #1a1a1a;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      margin-bottom: 2px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .notification span {
-       margin-left: 2px;       
-    }
-    
-    .notification h2 {
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
 
-    .notification p {
-      margin: 0;
-      color: #aaaaaa;
-      font-size: 0.7rem;
-    }
-    
-    .notification a {
-      color: #1e90ff;
-      text-decoration: none;
-      font-weight: 600;
-    }
+        header h1 {
+            margin-left: 4px;
+            /* 移除預設的 margin */
+            font-size: 1.5rem;
+            text-transform: capitalize;
+        }
 
-    .css_back {
-      font-size: 0.8rem;
-      color: #1e90ff;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    
-    .card {
-      display: flex;
-      flex-direction: column;
-      background-color: #1a1a1a;
-      padding: 6px 12px;
-      border-radius: 8px;
-      margin-bottom: 5px;
-      }
+        header div {
+            margin-left: auto;
+            /* 將按鈕推到右側 */
+        }
 
-    .card h2 {
-       font-size: 1.25rem;
-       font-weight: 600;
-     }
+        .copy-icon {
+            display: inline-block;
+            font-size: 95%;
+            vertical-align: top;
+            /* 垂直對齊到頂部 */
+            margin-bottom: 4px;
+            margin-left: 4px;
+        }
 
-     .reward-item {
-       font-size: 0.8rem;
-       margin: 0;
-       color: #bbbbbb;
-       flex: 1;
-     }     
+        .copy-message {
+            font-weight: bold;
+            display: none;
+            font-size: 90%;
+            margin-bottom: 4px;
+            margin-left: 4px;
+        }
 
-      .buttons {
-         display: flex;
-         justify-content: space-between;
-         margin-top: 16px;
-       }
+        .walletbutton {
+            margin-top: 2px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 2px solid #00d9ff;
+            color: #00d9ff;
+            background: transparent;
+            font-size: 0.8em;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
 
-      .buttons button {
-         flex: 1;
-         text-align: center;
-         margin: 0 4px;
-         padding: 10px;
-         border: none;
-         border-radius: 8px;
-         font-size: 0.9rem;
-         line-height: 1.2;
-         cursor: pointer;
-         background-color: #4a4a4a;
-         color: #fff;
-         display: flex; /* 关键：将按钮设置为 flexbox 布局 */
-         align-items: center; /* 垂直居中 */
-         justify-content: center; /* 水平居中 */
-       }
+        .walletbutton:hover {
+            background: #00d9ff;
+            color: #000;
+        }
 
-.buttons button.active {
-  background-color: #fff;
-  color: #000;
-}
+        .claim_button {
+            margin-top: 3px;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            border: 2px solid #00d9ff;
+            color: #00d9ff;
+            background: transparent;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: 50px;
+            /* 與高度相同 */
+        }
 
-.progress-card {
-  background-color: #1a1a1a;
-  padding: 16px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-}
+        .claim_button.active {
+            background: #00d9ff;
+            color: #000;
+        }
 
-.progress-card p {
-  font-size: 0.9rem;
-  margin-bottom: 8px;
-}
-    
-.progress {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+        .re_button {
+            display: none;
+            margin-top: 3px;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            border: 2px solid #ff4500;
+            color: #ff4500;
+            background: transparent;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            justify-content: center;
+            align-items: center;
+            line-height: 50px;
+            /* 與高度相同 */
+        }
 
-.progress span{
-   font-size: 0.9rem;
-   margin-bottom: 8px;
-}
+        .re_button.active {
+            background: #ff4500;
+            color: #ff4500;
+        }
 
-.progress .steps {
-   display: flex;
-   gap: 8px;
-}
+        .notification {
+            background-color: #1a1a1a;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            margin-bottom: 2px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .steps span {
-      width: 16px;
-      height: 16px;
-      background-color: #ff4500;
-      border-radius: 50%;
-    }
-    footer {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px solid #333;
-    }
+        .notification span {
+            margin-left: 2px;
+        }
 
-    footer a {
-      color: #fff;
-      font-size: 0.9rem;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      text-align: center;
-      gap: 4px;
-    }
-    .material-symbols-outlined {
-      font-variation-settings:
-     'FILL' 0,
-     'wght' 400,
-     'GRAD' -25,
-     'opsz' 40
-    }
-    .symbol-match {
-      display: inline-block; 
-      vertical-align: middle; 
-      margin-bottom: 12px;
-    }
-    
-    .new-container {
-      //all: unset; /* 清除上層可能的樣式 */
-      display: flex; 
-      justify-content: center; /* 或使用 margin-left: auto; */
-    }
+        .notification h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
 
-    .image-container {
-       width: 300px;
-       height: 300px;
-       //border-radius: 8px; /* 修圓角，50% 代表圓形 */
-       //box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* 陰影效果 */
-       //overflow: hidden;  /* 隱藏超出部分 */ 
-       margin: 0 auto;
-     }
+        .notification p {
+            margin: 0;
+            color: #aaaaaa;
+            font-size: 0.7rem;
+        }
 
-     .image-container img {
-        max-width: 300px;
-        max-height: 300px;
-       border-radius: 8px; /* 修圓角，50% 代表圓形 */
-       box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* 陰影效果 */
-        object-fit: cover; /* 保持圖片比例，填滿容器 */
-      }
+        .notification a {
+            color: #1e90ff;
+            text-decoration: none;
+            font-weight: 600;
+        }
 
-      .text-container {
-       flex: 1; /* 讓文字部分佔用剩餘空間 */
-      }
+        .css_back {
+            font-size: 0.8rem;
+            color: #1e90ff;
+            text-decoration: none;
+            font-weight: 600;
+        }
 
-      .main-title {
-       font-size: 24px; /* 調整主標題字體大小 */
-       font-weight: bold;
-    }
-  
-  </style>
+        .card {
+            display: flex;
+            flex-direction: column;
+            background-color: #1a1a1a;
+            padding: 6px 12px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+        }
+
+        .card h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .reward-item {
+            font-size: 0.8rem;
+            margin: 0;
+            color: #bbbbbb;
+            flex: 1;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 16px;
+        }
+
+        .buttons button {
+            flex: 1;
+            text-align: center;
+            margin: 0 4px;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.2;
+            cursor: pointer;
+            background-color: #4a4a4a;
+            color: #fff;
+            display: flex;
+            /* 关键：将按钮设置为 flexbox 布局 */
+            align-items: center;
+            /* 垂直居中 */
+            justify-content: center;
+            /* 水平居中 */
+        }
+
+        .buttons button.active {
+            background-color: #fff;
+            color: #000;
+        }
+
+        .progress-card {
+            background-color: #1a1a1a;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .progress-card p {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .progress {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .progress span {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .progress .steps {
+            display: flex;
+            gap: 8px;
+        }
+
+        .steps span {
+            width: 16px;
+            height: 16px;
+            background-color: #ff4500;
+            border-radius: 50%;
+        }
+
+        footer {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #333;
+        }
+
+        footer a {
+            color: #fff;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            gap: 4px;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' -25,
+                'opsz' 40
+        }
+
+        .symbol-match {
+            display: inline-block;
+            vertical-align: middle;
+            margin-bottom: 12px;
+        }
+
+        .new-container {
+            //all: unset; /* 清除上層可能的樣式 */
+            display: flex;
+            justify-content: center;
+            /* 或使用 margin-left: auto; */
+        }
+
+        .image-container {
+            width: 300px;
+            height: 300px;
+            //border-radius: 8px; /* 修圓角，50% 代表圓形 */
+            //box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3); /* 陰影效果 */
+            //overflow: hidden;  /* 隱藏超出部分 */ 
+            margin: 0 auto;
+        }
+
+        .image-container img {
+            max-width: 300px;
+            max-height: 300px;
+            border-radius: 8px;
+            /* 修圓角，50% 代表圓形 */
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+            /* 陰影效果 */
+            object-fit: cover;
+            /* 保持圖片比例，填滿容器 */
+        }
+
+        .text-container {
+            flex: 1;
+            /* 讓文字部分佔用剩餘空間 */
+        }
+
+        .main-title {
+            font-size: 24px;
+            /* 調整主標題字體大小 */
+            font-weight: bold;
+        }
+    </style>
 </head>
+
 <body>
-  <header>
-    <span class="material-symbols-outlined" id="hamburger">lunch_dining</span>
-    <h1>BLKDONA</h1>
-    <span class="material-symbols-outlined copy-icon" onclick="copyAddress()">content_copy</span>
-    <span id="copyMessage" class="copy-message">copied</span>
-    <div>
-      <button class="walletbutton" id="walletButton" onclick="connectWallet()">Login</button>  
-    </div>
-  </header>  
-  <script>
+    <header>
+        <span class="material-symbols-outlined" id="hamburger">lunch_dining</span>
+        <h1>BLKDONA</h1>
+        <span class="material-symbols-outlined copy-icon" onclick="copyAddress()">content_copy</span>
+        <span id="copyMessage" class="copy-message">copied</span>
+        <div>
+            <button class="walletbutton" id="walletButton" onclick="connectWallet()">Login</button>
+        </div>
+    </header>
+    <script>
         function copyAddress() {
             // 获取合约地址文本
-            const contractAddress = "0xCdB05222c8a059a6c0e9202d62fDFb05D6B5D274";             
+            const contractAddress = "0xCdB05222c8a059a6c0e9202d62fDFb05D6B5D274";
             navigator.clipboard.writeText(contractAddress)
-                .then(() => {                   
+                .then(() => {
                     const message = document.getElementById("copyMessage");
                     message.style.display = "block";
                     setTimeout(() => {
@@ -415,81 +467,81 @@ button:hover {
                     console.error("copy failed:", err);
                 });
         }
-  </script>
-  
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>  
-  <!-- 引入 Web3.js -->
-  <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
-  <script>      
-           // 取得推薦碼    
-           function getParameterByName(name, url) {
-               if (!url) url = window.location.href;
-               name = name.replace(/[\[\]]/g, '\\$&');
-               var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-               results = regex.exec(url);
-               if (!results) return '';
-               if (!results[2]) return '';
-               return decodeURIComponent(results[2].replace(/\+/g, ' '));
-           }  
-           async function getHoldertoLowercase() {
-               var holder;
-               if (typeof window.ethereum !== 'undefined') {  
-                   try {
-                        // Connect Wallet
-                        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' }); 
-                        holder = accounts[0].toLowerCase();                             
-                    } catch (error) {
-                        console.log('No accounts available');
-                    }
-                } else {
-                      // 如果瀏覽器中未檢測到電子錢包
-                      alert('請使用MetaMask錢包附帶的瀏覽器登入！');
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- 引入 Web3.js -->
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+    <script>
+        // 取得推薦碼    
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return '';
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+        async function getHoldertoLowercase() {
+            var holder;
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    // Connect Wallet
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    holder = accounts[0].toLowerCase();
+                } catch (error) {
+                    console.log('No accounts available');
                 }
-                return holder;
-          }
-           async function connectWallet() {               
-                const holder = await getHoldertoLowercase();
-                if(holder){updateAccountUI(holder);}   
-                return holder;
-          }   
-    // 監聽帳號變化
-    ethereum.on('accountsChanged', (accounts) => {    
-      if (accounts.length > 0) {
-         location.reload();
-         //console.log('Account changed:', accounts[0]);
-         //ready_togo(accounts[0]);
-      } else {
-        console.log('No accounts available');
-      }
-    });
-    // 更新頁面上的帳號顯示
-    function updateAccountUI(account) {
-      const walletButton = document.getElementById('walletButton');
-      walletButton.textContent = `${account.substring(0, 2)}...${account.slice(-4)}`;
-    }    
-  </script>  
-  <div class="notification" id="notice">
-    <span class="material-symbols-outlined">brand_awareness</span>
-    <span>The BlackDona white paper has been released, please check for details..</span>
-    <a href="#">Details</a>
-  </div>
-  <div id="card" class="card">
-    <div class="progress" id="content">
-      <div>
-          <h2 id="notice_ad" style="display: none;"></h2>
-          <h2 id="notice_title">AirDrop</h2>   
-          <p class="reward-item" id="linetext_1">Holder reward: 3%</p>
-          <p class="reward-item" id="linetext_2">Referal reward: 1%</p>
-      </div>
-      <div class="claim_button" id="claim_button">Get</div>
-      <div class="re_button" id="re_button">Get</div>
+            } else {
+                // 如果瀏覽器中未檢測到電子錢包
+                alert('請使用MetaMask錢包附帶的瀏覽器登入！');
+            }
+            return holder;
+        }
+        async function connectWallet() {
+            const holder = await getHoldertoLowercase();
+            if (holder) { updateAccountUI(holder); }
+            return holder;
+        }
+        // 監聽帳號變化
+        ethereum.on('accountsChanged', (accounts) => {
+            if (accounts.length > 0) {
+                location.reload();
+                //console.log('Account changed:', accounts[0]);
+                //ready_togo(accounts[0]);
+            } else {
+                console.log('No accounts available');
+            }
+        });
+        // 更新頁面上的帳號顯示
+        function updateAccountUI(account) {
+            const walletButton = document.getElementById('walletButton');
+            walletButton.textContent = `${account.substring(0, 2)}...${account.slice(-4)}`;
+        }    
+    </script>
+    <div class="notification" id="notice">
+        <span class="material-symbols-outlined">brand_awareness</span>
+        <span>The BlackDona white paper has been released, please check for details..</span>
+        <a href="#">Details</a>
     </div>
-    <div class="buttons">
-      <button class="buttons button.active" id="airdrop_btn">Get Airdrop</button>
-      <button class="buttons button" id="activities_btn">Activities</button>
+    <div id="card" class="card">
+        <div class="progress" id="content">
+            <div>
+                <h2 id="notice_ad" style="display: none;"></h2>
+                <h2 id="notice_title">AirDrop</h2>
+                <p class="reward-item" id="linetext_1">Holder reward: 3%</p>
+                <p class="reward-item" id="linetext_2">Referal reward: 1%</p>
+            </div>
+            <div class="claim_button" id="claim_button">Get</div>
+            <div class="re_button" id="re_button">Get</div>
+        </div>
+        <div class="buttons">
+            <button class="buttons button.active" id="airdrop_btn">Get Airdrop</button>
+            <button class="buttons button" id="activities_btn">Activities</button>
+        </div>
     </div>
-  </div>
-  <script>
+    <script>
         // Fetch and Replace Content
         document.getElementById("re_button").addEventListener("click", async (e) => {
             e.preventDefault(); // Prevent link navigation
@@ -497,7 +549,7 @@ button:hover {
             // Fetch the HTML content for red envelopes          
             try {
                 const script = document.createElement("script");
-                script.src = "dona_box.js"; 
+                script.src = "dona_box.js";
                 // Your JavaScript logic for dynamic interaction
                 document.body.appendChild(script);
                 //alert("script:"+ script );
@@ -507,196 +559,197 @@ button:hover {
             }
         });
     </script>
-<script>
-  //隨著不同的Button 切換不同的信息
-  const claim_button = document.getElementById('claim_button');
-  const re_button = document.getElementById('re_button');
-  const getAirdropButton = document.getElementById('airdrop_btn');
-  const activitiesButton = document.getElementById('activities_btn');
-  const titleElement = document.getElementById('notice_title');
-  const holderRewardElement = document.getElementById('linetext_1');
-  const referalRewardElement = document.getElementById('linetext_2');
+    <script>
+        //隨著不同的Button 切換不同的信息
+        const claim_button = document.getElementById('claim_button');
+        const re_button = document.getElementById('re_button');
+        const getAirdropButton = document.getElementById('airdrop_btn');
+        const activitiesButton = document.getElementById('activities_btn');
+        const titleElement = document.getElementById('notice_title');
+        const holderRewardElement = document.getElementById('linetext_1');
+        const referalRewardElement = document.getElementById('linetext_2');
 
-  getAirdropButton.classList.add('active'); 
+        getAirdropButton.classList.add('active');
 
-  function swapButtonStyles() {
-    getAirdropButton.classList.toggle('active');
-    activitiesButton.classList.toggle('active');
-  }
+        function swapButtonStyles() {
+            getAirdropButton.classList.toggle('active');
+            activitiesButton.classList.toggle('active');
+        }
 
-  function updateContent(isAirdrop) {
-    titleElement.textContent = isAirdrop ? 'AirDrop' : 'Activities';
-    holderRewardElement.textContent = isAirdrop ? 'Holder reward: 3%' : 'My Activities:';
-    referalRewardElement.textContent = isAirdrop ? 'Referal reward: 1%' : 'Total Activities:';
-  }
+        function updateContent(isAirdrop) {
+            titleElement.textContent = isAirdrop ? 'AirDrop' : 'Activities';
+            holderRewardElement.textContent = isAirdrop ? 'Holder reward: 3%' : 'My Activities:';
+            referalRewardElement.textContent = isAirdrop ? 'Referal reward: 1%' : 'Total Activities:';
+        }
 
-getAirdropButton.addEventListener('click', () => {
-  swapButtonStyles();
-  updateContent(true);
-  claim_button.style.display = 'flex';  
-  re_button.style.display = 'none';
-});
+        getAirdropButton.addEventListener('click', () => {
+            swapButtonStyles();
+            updateContent(true);
+            claim_button.style.display = 'flex';
+            re_button.style.display = 'none';
+        });
 
-activitiesButton.addEventListener('click', () => {
-       swapButtonStyles();
-       updateContent(false);
-       claim_button.style.display = 'none';
-       re_button.style.display = 'flex';
-     });
-  </script>
+        activitiesButton.addEventListener('click', () => {
+            swapButtonStyles();
+            updateContent(false);
+            claim_button.style.display = 'none';
+            re_button.style.display = 'flex';
+        });
+    </script>
 
-  <div class="progress-card">  
-    <div class="progress">
-      <div>
-       <span id="link_icon" class="material-symbols-outlined">link</span>
-       <span class="symbol-match" id="linkcodeDisplay"></span>
-      </div>
-      <div>
-       <span class="material-symbols-outlined">heart_check</span>
-       <span class="symbol-match" id="fans_count"></span>
-      </div>
-      <div>
-       <span class="material-symbols-outlined">featured_seasonal_and_gifts</span>
-       <span class="symbol-match" id="re_count"></span>
-      </div>
+    <div class="progress-card">
+        <div class="progress">
+            <div>
+                <span id="link_icon" class="material-symbols-outlined">link</span>
+                <span class="symbol-match" id="linkcodeDisplay"></span>
+            </div>
+            <div>
+                <span class="material-symbols-outlined">heart_check</span>
+                <span class="symbol-match" id="fans_count"></span>
+            </div>
+            <div>
+                <span class="material-symbols-outlined">featured_seasonal_and_gifts</span>
+                <span class="symbol-match" id="re_count"></span>
+            </div>
+        </div>
+        <div class="progress">
+            <span> Bitcoin/USD：</span>
+            <span id="bitcoin-price"></span>
+            <div class="steps">
+                <span></span>
+                <span></span>
+                <span style="background-color: #4a4a4a;"></span>
+            </div>
+        </div>
     </div>
-    <div class="progress">
-      <span> Bitcoin/USD：</span>
-      <span id="bitcoin-price"></span>
-      <div class="steps">
-        <span></span>
-        <span></span>
-        <span style="background-color: #4a4a4a;"></span>
-      </div>
-    </div>
-  </div>
 
-  <div class="notification">
-    <div>
-      <span>Balance of BLKDONA：</span>
-      <p>Just updated</p>
+    <div class="notification">
+        <div>
+            <span>Balance of BLKDONA：</span>
+            <p>Just updated</p>
+        </div>
+        <div>
+            <h2 id="balance">waiting..</h2>
+        </div>
     </div>
-    <div>
-      <h2 id="balance" >waiting..</h2>
-    </div>
-  </div>  
-  <footer>
-  <a onclick="location.reload()">
-    <span class="material-symbols-outlined">home</span>
-    Home
-  </a>
-  <a id="activities" onclick="openModal()">
-    <span class="material-symbols-outlined">search</span>
-    活動
-  </a>    
-  <a onclick="shareMyDona()">
-    <span class="material-symbols-outlined">share</span>
-    Share
-  </a>
-  </footer>
-  <script>
-    // 取得 linkcode 參數    
-    var linkcode = getParameterByName('linkcode');
-    //alert("to get linkcode:" + linkcode);
-    function getlinkcode() {  
-      try{
-          if (linkcode != null){
-             // alert(`Welcome！`+ linkcode);
-             // 假設 linkcode 變數已經定義且包含要顯示的連結
-             const linkcodeDisplay = document.getElementById('linkcodeDisplay');
-             // 如果 linkcode 有值，則將其內容設置為顯示物件的內文
-             linkcodeDisplay.textContent = linkcode;
-         } else {
-              // 如果 linkcode 沒有值，則顯示空白
-             linkcodeDisplay.textContent = " ";
-         }
-      }catch(err){
-        alert("error:"+err);
-      }        
-    }
-  </script>
-  <script>        
+    <footer>
+        <a onclick="location.reload()">
+            <span class="material-symbols-outlined">home</span>
+            Home
+        </a>
+        <a id="activities" onclick="openModal()">
+            <span class="material-symbols-outlined">search</span>
+            活動
+        </a>
+        <a onclick="shareMyDona()">
+            <span class="material-symbols-outlined">share</span>
+            Share
+        </a>
+    </footer>
+    <script>
+        // 取得 linkcode 參數    
+        var linkcode = getParameterByName('linkcode');
+        //alert("to get linkcode:" + linkcode);
+        function getlinkcode() {
+            try {
+                if (linkcode != null) {
+                    // alert(`Welcome！`+ linkcode);
+                    // 假設 linkcode 變數已經定義且包含要顯示的連結
+                    const linkcodeDisplay = document.getElementById('linkcodeDisplay');
+                    // 如果 linkcode 有值，則將其內容設置為顯示物件的內文
+                    linkcodeDisplay.textContent = linkcode;
+                } else {
+                    // 如果 linkcode 沒有值，則顯示空白
+                    linkcodeDisplay.textContent = " ";
+                }
+            } catch (err) {
+                alert("error:" + err);
+            }
+        }
+    </script>
+    <script>
         let clickHandler;
         let clickHandler_hb;
         //
-        function disable_get_btn(holder){  
-                const claim_btn = document.getElementById('claim_button');
-                //alert("clickHandler：" + clickHandler);
-                //change color
-                claim_btn.classList.remove('active');   
-                // disable click
-                claim_btn.removeEventListener('click', clickHandler);
+        function disable_get_btn(holder) {
+            const claim_btn = document.getElementById('claim_button');
+            //alert("clickHandler：" + clickHandler);
+            //change color
+            claim_btn.classList.remove('active');
+            // disable click
+            claim_btn.removeEventListener('click', clickHandler);
         }
         async function start_airdrop(holder) {
-             if (confirm("確定要開啟新一輪的空投嗎？")) {
-            // 點擊確認，開始執行    
-            // 呼叫智能合約的 startAirdrop 函數
-            try{
-                 const tx = await contract.methods.startAirdrop().send({ from: holder });
-                 // 顯示交易結果
-                 console.log("Transaction hash:", tx.transactionHash);
-                 alert("Airdrop started successfully!");
-              } catch (error) {
-                   console.error("Error starting airdrop:", error);
-                   alert("Error starting airdrop. Please try again later.");
-              } 
-          } else {
-                  // 如果使用者點擊取消，則什麼都不做
-                  console.log("使用者取消啟動空投");
-          }
-    }    
-    
-    async function claim_airdrop(holder) {      
-        if ( confirm("請注意！領取空投必須付出Gas，您確定繼續？")) {      
-        try {
-                // 呼叫智能合約的 claimAirdrop 函數
-                await contract.methods.claimAirdrop().send({ from: holder });
-                disable_get_btn();              
-                //getBalance(holder);                 
-            } catch (error) {
-                console.error("Error claiming airdrop:", error);
-                alert("Claiming airdrop failure.Try again later." + error);
+            if (confirm("確定要開啟新一輪的空投嗎？")) {
+                // 點擊確認，開始執行    
+                // 呼叫智能合約的 startAirdrop 函數
+                try {
+                    const tx = await contract.methods.startAirdrop().send({ from: holder });
+                    // 顯示交易結果
+                    console.log("Transaction hash:", tx.transactionHash);
+                    alert("Airdrop started successfully!");
+                } catch (error) {
+                    console.error("Error starting airdrop:", error);
+                    alert("Error starting airdrop. Please try again later.");
+                }
+            } else {
+                // 如果使用者點擊取消，則什麼都不做
+                console.log("使用者取消啟動空投");
             }
-           }
-        }     
-let intervalId; 
-function countdown(seconds) {  
-  // 清除之前的計時器
-  clearInterval(intervalId);
-  const airdrop_btn = document.getElementById("airdrop_btn");
-  let count = seconds;
-  
-  intervalId = setInterval(() => {
-    airdrop_btn.textContent = count.toLocaleString()+" secs";
-    count--;
+        }
 
-    if (count < 0) {
-      clearInterval(intervalId);
-      airdrop_btn.textContent = "Get AirDrop";
-      // 倒數結束後的處理
-    }
-  }, 1000);
-}        
-    
-  //</script><script>
-    // get balance of dona
-    let web3;
-    let contract;
-    // 合約地址和 ABI
-    
-    const contractAddress = "0xCdB05222c8a059a6c0e9202d62fDFb05D6B5D274"; 
-    const contractABI =   [
-      {"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"holder","type":"address"},{"indexed":true,"internalType":"address","name":"receiver","type":"address"},{"indexed":false,"internalType":"uint256","name":"reward","type":"uint256"}],"name":"ADClaimed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"adCount","type":"uint256"}],"name":"ADStarted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"burner","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"Burn","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"donor","type":"address"},{"indexed":true,"internalType":"address","name":"recipient","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"Donation","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"minter","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"Mint","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"sender","type":"address"},{"indexed":false,"internalType":"string","name":"notice_type","type":"string"},{"indexed":false,"internalType":"string","name":"message","type":"string"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"Notification","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"},{"indexed":true,"internalType":"address","name":"claimer","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"},{"indexed":true,"internalType":"address","name":"creator","type":"address"}],"name":"donaClaimed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"},{"indexed":true,"internalType":"address","name":"creator","type":"address"},{"indexed":false,"internalType":"uint8","name":"eligiType","type":"uint8"},{"indexed":false,"internalType":"uint256","name":"subAmt","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"maxClaims","type":"uint256"}],"name":"donaCreated","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"holder","type":"address"},{"indexed":true,"internalType":"address","name":"referer","type":"address"}],"name":"refSet","type":"event"},{"inputs":[],"name":"_owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"activeDNs","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"adCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"adDuration","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"adEnabled","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"adStartTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"address","name":"","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"blkDona","outputs":[{"internalType":"uint256","name":"subAmt","type":"uint256"},{"internalType":"uint256","name":"claimedAmt","type":"uint256"},{"internalType":"uint256","name":"maxClaims","type":"uint256"},{"internalType":"uint256","name":"claimCount","type":"uint256"},{"internalType":"address","name":"creator","type":"address"},{"internalType":"uint8","name":"eligiType","type":"uint8"},{"internalType":"string","name":"desc","type":"string"},{"internalType":"string","name":"imgUrl","type":"string"},{"internalType":"uint256","name":"startTime","type":"uint256"},{"internalType":"bool","name":"isActive","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"linkcode","type":"string"},{"internalType":"uint256","name":"id","type":"uint256"}],"name":"checkEligible","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"claimAirdrop","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"linkcode","type":"string"},{"internalType":"uint256","name":"id","type":"uint256"}],"name":"claimDona","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"cost_Edit","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"donaID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"donateToBlackhole","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"donation","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"_nickname","type":"string"},{"internalType":"string","name":"_desc","type":"string"},{"internalType":"string","name":"_url","type":"string"}],"name":"editMyProfile","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"holderPercent","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"holders","outputs":[{"internalType":"address","name":"referrer","type":"address"},{"internalType":"uint256","name":"fans_count","type":"uint256"},{"internalType":"uint256","name":"holderReward","type":"uint256"},{"internalType":"uint256","name":"referReward","type":"uint256"},{"internalType":"string","name":"refCode","type":"string"},{"internalType":"string","name":"nickname","type":"string"},{"internalType":"string","name":"description","type":"string"},{"internalType":"string","name":"imgUrl","type":"string"},{"internalType":"uint256","name":"lastClaimedAD","type":"uint256"},{"internalType":"bool","name":"isDistoStartDA","type":"bool"},{"internalType":"bool","name":"isDistoRef","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"minRefAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"minShareBox","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"minShareTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"myDona","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"myDonaCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"myfans","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"notice_type","type":"string"},{"internalType":"string","name":"message","type":"string"}],"name":"notification","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"ownerPercent","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"","type":"string"}],"name":"refCodeOwners","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"refPercent","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"setAdDuration","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"setCost_Edit","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"bool","name":"_disabled","type":"bool"},{"internalType":"bool","name":"isRef","type":"bool"}],"name":"setDisabled","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"totalShare","type":"uint256"},{"internalType":"uint256","name":"countDN","type":"uint256"},{"internalType":"uint8","name":"eligiType","type":"uint8"},{"internalType":"string","name":"_desc","type":"string"},{"internalType":"string","name":"_url","type":"string"}],"name":"setDona","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_percentage","type":"uint256"}],"name":"setHolderReward","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"setMinRefAmount","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"setMinShareTime","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"refCode","type":"string"}],"name":"setMyRefCode","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_percentage","type":"uint256"}],"name":"setOwnerReward","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_percentage","type":"uint256"}],"name":"setReferalReward","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"refCode","type":"string"}],"name":"setReferrer","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"setminShareTime","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"startAirdrop","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"desc","type":"string"},{"internalType":"string","name":"url","type":"string"}],"name":"updateMyDona","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"address","name":"","type":"address"}],"name":"whoClaimed","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"}
-    ];        
-    
-    // 加載 Web3
-    async function initialize() {  
-          //alert("What's up?!" + holder);
-          //var holder;
-          if (typeof window.ethereum !== "undefined") {
-              try {
+        async function claim_airdrop(holder) {
+            if (confirm("請注意！領取空投必須付出Gas，您確定繼續？")) {
+                try {
+                    // 呼叫智能合約的 claimAirdrop 函數
+                    await contract.methods.claimAirdrop().send({ from: holder });
+                    disable_get_btn();
+                    //getBalance(holder);                 
+                } catch (error) {
+                    console.error("Error claiming airdrop:", error);
+                    alert("Claiming airdrop failure.Try again later." + error);
+                }
+            }
+        }
+        let intervalId;
+        function countdown(seconds) {
+            // 清除之前的計時器
+            clearInterval(intervalId);
+            const airdrop_btn = document.getElementById("airdrop_btn");
+            let count = seconds;
+
+            intervalId = setInterval(() => {
+                airdrop_btn.textContent = count.toLocaleString() + " secs";
+                count--;
+
+                if (count < 0) {
+                    clearInterval(intervalId);
+                    airdrop_btn.textContent = "Get AirDrop";
+                    // 倒數結束後的處理
+                }
+            }, 1000);
+        }
+
+        //</script>
+    <script>
+        // get balance of dona
+        let web3;
+        let contract;
+        // 合約地址和 ABI
+
+        const contractAddress = "0xCdB05222c8a059a6c0e9202d62fDFb05D6B5D274";
+        const contractABI = [
+            { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "holder", "type": "address" }, { "indexed": true, "internalType": "address", "name": "receiver", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "reward", "type": "uint256" }], "name": "ADClaimed", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "adCount", "type": "uint256" }], "name": "ADStarted", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "owner", "type": "address" }, { "indexed": true, "internalType": "address", "name": "spender", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" }], "name": "Approval", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "burner", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "Burn", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "donor", "type": "address" }, { "indexed": true, "internalType": "address", "name": "recipient", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "Donation", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "minter", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "Mint", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "sender", "type": "address" }, { "indexed": false, "internalType": "string", "name": "notice_type", "type": "string" }, { "indexed": false, "internalType": "string", "name": "message", "type": "string" }, { "indexed": false, "internalType": "uint256", "name": "timestamp", "type": "uint256" }], "name": "Notification", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "from", "type": "address" }, { "indexed": true, "internalType": "address", "name": "to", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" }], "name": "Transfer", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "id", "type": "uint256" }, { "indexed": true, "internalType": "address", "name": "claimer", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }, { "indexed": true, "internalType": "address", "name": "creator", "type": "address" }], "name": "donaClaimed", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "id", "type": "uint256" }, { "indexed": true, "internalType": "address", "name": "creator", "type": "address" }, { "indexed": false, "internalType": "uint8", "name": "eligiType", "type": "uint8" }, { "indexed": false, "internalType": "uint256", "name": "subAmt", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "maxClaims", "type": "uint256" }], "name": "donaCreated", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "holder", "type": "address" }, { "indexed": true, "internalType": "address", "name": "referer", "type": "address" }], "name": "refSet", "type": "event" }, { "inputs": [], "name": "_owner", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "name": "activeDNs", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "adCount", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "adDuration", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "adEnabled", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "adStartTime", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }, { "internalType": "address", "name": "", "type": "address" }], "name": "allowance", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "spender", "type": "address" }, { "internalType": "uint256", "name": "value", "type": "uint256" }], "name": "approve", "outputs": [{ "internalType": "bool", "name": "success", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }], "name": "balanceOf", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "name": "blkDona", "outputs": [{ "internalType": "uint256", "name": "subAmt", "type": "uint256" }, { "internalType": "uint256", "name": "claimedAmt", "type": "uint256" }, { "internalType": "uint256", "name": "maxClaims", "type": "uint256" }, { "internalType": "uint256", "name": "claimCount", "type": "uint256" }, { "internalType": "address", "name": "creator", "type": "address" }, { "internalType": "uint8", "name": "eligiType", "type": "uint8" }, { "internalType": "string", "name": "desc", "type": "string" }, { "internalType": "string", "name": "imgUrl", "type": "string" }, { "internalType": "uint256", "name": "startTime", "type": "uint256" }, { "internalType": "bool", "name": "isActive", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "linkcode", "type": "string" }, { "internalType": "uint256", "name": "id", "type": "uint256" }], "name": "checkEligible", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "claimAirdrop", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "linkcode", "type": "string" }, { "internalType": "uint256", "name": "id", "type": "uint256" }], "name": "claimDona", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "cost_Edit", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "decimals", "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "donaID", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "donateToBlackhole", "outputs": [{ "internalType": "bool", "name": "success", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "recipient", "type": "address" }, { "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "donation", "outputs": [{ "internalType": "bool", "name": "success", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "_nickname", "type": "string" }, { "internalType": "string", "name": "_desc", "type": "string" }, { "internalType": "string", "name": "_url", "type": "string" }], "name": "editMyProfile", "outputs": [{ "internalType": "bool", "name": "success", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "holderPercent", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }], "name": "holders", "outputs": [{ "internalType": "address", "name": "referrer", "type": "address" }, { "internalType": "uint256", "name": "fans_count", "type": "uint256" }, { "internalType": "uint256", "name": "holderReward", "type": "uint256" }, { "internalType": "uint256", "name": "referReward", "type": "uint256" }, { "internalType": "string", "name": "refCode", "type": "string" }, { "internalType": "string", "name": "nickname", "type": "string" }, { "internalType": "string", "name": "description", "type": "string" }, { "internalType": "string", "name": "imgUrl", "type": "string" }, { "internalType": "uint256", "name": "lastClaimedAD", "type": "uint256" }, { "internalType": "bool", "name": "isDistoStartDA", "type": "bool" }, { "internalType": "bool", "name": "isDistoRef", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "minRefAmount", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "minShareBox", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "minShareTime", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }, { "internalType": "uint256", "name": "", "type": "uint256" }], "name": "myDona", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }], "name": "myDonaCount", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }, { "internalType": "uint256", "name": "", "type": "uint256" }], "name": "myfans", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "name", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "notice_type", "type": "string" }, { "internalType": "string", "name": "message", "type": "string" }], "name": "notification", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "ownerPercent", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "", "type": "string" }], "name": "refCodeOwners", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "refPercent", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_amount", "type": "uint256" }], "name": "setAdDuration", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_amount", "type": "uint256" }], "name": "setCost_Edit", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "account", "type": "address" }, { "internalType": "bool", "name": "_disabled", "type": "bool" }, { "internalType": "bool", "name": "isRef", "type": "bool" }], "name": "setDisabled", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "totalShare", "type": "uint256" }, { "internalType": "uint256", "name": "countDN", "type": "uint256" }, { "internalType": "uint8", "name": "eligiType", "type": "uint8" }, { "internalType": "string", "name": "_desc", "type": "string" }, { "internalType": "string", "name": "_url", "type": "string" }], "name": "setDona", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_percentage", "type": "uint256" }], "name": "setHolderReward", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_amount", "type": "uint256" }], "name": "setMinRefAmount", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_amount", "type": "uint256" }], "name": "setMinShareTime", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "refCode", "type": "string" }], "name": "setMyRefCode", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_percentage", "type": "uint256" }], "name": "setOwnerReward", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_percentage", "type": "uint256" }], "name": "setReferalReward", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "refCode", "type": "string" }], "name": "setReferrer", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_amount", "type": "uint256" }], "name": "setminShareTime", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "startAirdrop", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "symbol", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "totalSupply", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "recipient", "type": "address" }, { "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "transfer", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "from", "type": "address" }, { "internalType": "address", "name": "to", "type": "address" }, { "internalType": "uint256", "name": "value", "type": "uint256" }], "name": "transferFrom", "outputs": [{ "internalType": "bool", "name": "success", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "id", "type": "uint256" }, { "internalType": "string", "name": "desc", "type": "string" }, { "internalType": "string", "name": "url", "type": "string" }], "name": "updateMyDona", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }, { "internalType": "address", "name": "", "type": "address" }], "name": "whoClaimed", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" }
+        ];
+
+        // 加載 Web3
+        async function initialize() {
+            //alert("What's up?!" + holder);
+            //var holder;
+            if (typeof window.ethereum !== "undefined") {
+                try {
                     // 請求錢包授權              
-                    const holder = await connectWallet();                   
+                    const holder = await connectWallet();
                     // 使用 MetaMask 提供的 provider 初始化 Web3
                     web3 = new Web3(window.ethereum);
                     // 初始化智能合約
@@ -707,23 +760,23 @@ function countdown(seconds) {
                     alert("initiate Web3 failed：" + error);
                     console.error("initiate Web3 failed", error);
                 }
-          } else {
-                    alert("請安裝MetaMask！");
-          }        
-    }
-    function ready_togo(holder){        
-        //
-        getlinkcode();
-        getBalance(holder);
-        startup(holder);   
-    }
+            } else {
+                alert("請安裝MetaMask！");
+            }
+        }
+        function ready_togo(holder) {
+            //
+            getlinkcode();
+            getBalance(holder);
+            startup(holder);
+        }
 
         // 查詢餘額
         async function getBalance(holder) {
             if (!web3) {
                 alert("Web3加載失敗，請重試！");
                 return;
-            }else if(!contract){
+            } else if (!contract) {
                 alert("合約未初始化，請重試！");
                 return;
             }
@@ -740,56 +793,56 @@ function countdown(seconds) {
                 //const readableBalance = balance / BigInt(10 ** Number(decimals));                
                 // 格式化为本地格式
                 //const formatted = readableBalance.toLocaleString(); 
-                document.getElementById('balance').textContent = `${format_amt(balance)} `; 
+                document.getElementById('balance').textContent = `${format_amt(balance)} `;
                 //return readableBalance;
-            } catch (error){
+            } catch (error) {
                 console.error("查詢餘額發生錯誤:", error);
                 alert("getbalance error：" + error);
             }
         }
-        function format_amt(amt){
-               const decimals = 18n; // 使用 BigInt 表示 18
-                // 將餘額轉換為人類可讀的格式
-                const readableBalance = amt / BigInt(10 ** Number(decimals));                
-                // 格式化为本地格式
-                const formatted = readableBalance.toLocaleString(); 
-                return formatted;
+        function format_amt(amt) {
+            const decimals = 18n; // 使用 BigInt 表示 18
+            // 將餘額轉換為人類可讀的格式
+            const readableBalance = amt / BigInt(10 ** Number(decimals));
+            // 格式化为本地格式
+            const formatted = readableBalance.toLocaleString();
+            return formatted;
         }
-        async function startup(holder){
-             const burger_icon = document.getElementById('hamburger');
-             try{
-                  // Identify   
-                  const _owner = await contract.methods._owner().call();
-                  const owner = _owner.toLowerCase()
-                  //Check If holder is Owner
-                  //alert("holder / owner :" + owner );
-                  // 定義事件處理函數，確保函數引用一致                  
-                  if (holder === owner) { 
-                       clickHandler_hb = () => start_airdrop(holder);
-                       // 使用事件處理函數
-                       burger_icon.addEventListener('click', clickHandler_hb);
-                  } else {           
-                       // 使用相同的處理函數引用
-                       burger_icon.removeEventListener('click', clickHandler_hb);
-                  }         
-                  // call holder() 函數 
-                  const holderInfo = await contract.methods.holders(holder).call()  ;
-                  const refaddress = holderInfo.referrer ;
-                  if(holderInfo.holderReward>0){
+        async function startup(holder) {
+            const burger_icon = document.getElementById('hamburger');
+            try {
+                // Identify   
+                const _owner = await contract.methods._owner().call();
+                const owner = _owner.toLowerCase()
+                //Check If holder is Owner
+                //alert("holder / owner :" + owner );
+                // 定義事件處理函數，確保函數引用一致                  
+                if (holder === owner) {
+                    clickHandler_hb = () => start_airdrop(holder);
+                    // 使用事件處理函數
+                    burger_icon.addEventListener('click', clickHandler_hb);
+                } else {
+                    // 使用相同的處理函數引用
+                    burger_icon.removeEventListener('click', clickHandler_hb);
+                }
+                // call holder() 函數 
+                const holderInfo = await contract.methods.holders(holder).call();
+                const refaddress = holderInfo.referrer;
+                if (holderInfo.holderReward > 0) {
                     document.getElementById('linetext_1').textContent = `HolderReward:${format_amt(holderInfo.holderReward)}`;
-                  }
-                  if(holderInfo.referReward>0){
+                }
+                if (holderInfo.referReward > 0) {
                     document.getElementById('linetext_2').textContent = `ReferalReward:${format_amt(holderInfo.referReward)}`;
-                  }
-                  
-                  //alert("refAddress: " + refaddress );
-                  // 是該出現推薦人還是推薦碼
-                if( web3.utils.isAddress(refaddress) && refaddress !=="0x0000000000000000000000000000000000000000"){
-                  document.getElementById('link_icon').textContent = `face`;                  
-                  document.getElementById('linkcodeDisplay').textContent = `${refaddress.substring(0, 2)}...${refaddress.slice(-4)}`;
-                }else{
-                  document.getElementById('link_icon').textContent = `link`;   
-                  getlinkcode();
+                }
+
+                //alert("refAddress: " + refaddress );
+                // 是該出現推薦人還是推薦碼
+                if (web3.utils.isAddress(refaddress) && refaddress !== "0x0000000000000000000000000000000000000000") {
+                    document.getElementById('link_icon').textContent = `face`;
+                    document.getElementById('linkcodeDisplay').textContent = `${refaddress.substring(0, 2)}...${refaddress.slice(-4)}`;
+                } else {
+                    document.getElementById('link_icon').textContent = `link`;
+                    getlinkcode();
                 }
                 //Query how many fans I have
                 fetchReferer(holder);
@@ -797,46 +850,46 @@ function countdown(seconds) {
                 //const myre = await contract.methods.getMyRE().call();
                 //const myre_count = myre.length; 
                 //document.getElementById('re_count').textContent = `${myre_count} `;
-                fetchReCount(holder); 
+                fetchReCount(holder);
                 //終於要愉快地領空投了嗎？
-                const adEnabled = await contract.methods.adEnabled().call();                 
+                const adEnabled = await contract.methods.adEnabled().call();
                 const lastClaimTime = holderInfo.lastClaimedAD;
                 //alert("現在能領空投嗎？"+ adEnabled.toString());
                 //當空投正在進行時
                 const claim_btn = document.getElementById('claim_button');
-                if(adEnabled){
-                    const adCount = await contract.methods.adCount().call();                    
+                if (adEnabled) {
+                    const adCount = await contract.methods.adCount().call();
                     const adStartTime = await contract.methods.adStartTime().call();
-                    const adDuration  = await contract.methods.adDuration().call();
-                    const nowtime = BigInt(Math.floor(Date.now() / 1000)); 
+                    const adDuration = await contract.methods.adDuration().call();
+                    const nowtime = BigInt(Math.floor(Date.now() / 1000));
                     const _countdown = adStartTime + adDuration - nowtime;
                     //倒數計時開始
-                    countdown(_countdown); 
-                    const balance = await contract.methods.balanceOf(holder).call(); 
+                    countdown(_countdown);
+                    const balance = await contract.methods.balanceOf(holder).call();
                     //告示牌主題變了
-                    const notice_ad = document.getElementById('notice_ad');              
+                    const notice_ad = document.getElementById('notice_ad');
                     const notice_title = document.getElementById('notice_title');
-                    notice_ad.textContent = "第"+adCount.toString()+"輪空投已經開始..."
+                    notice_ad.textContent = "第" + adCount.toString() + "輪空投已經開始..."
                     notice_ad.style.display = 'block';
                     notice_title.style.display = 'none';
                     //當Holder本輪尚未領過空投
-                    if(lastClaimTime < adStartTime ){   
+                    if (lastClaimTime < adStartTime) {
                         //當Holder的Dona大於0時,Get按鈕啟動
-                        if(balance > 0){
-                              claim_btn.classList.add('active');  
-                              // 定義事件處理函數，確保函數引用一致
-                              clickHandler = () => claim_airdrop(holder);
-                              claim_btn.addEventListener('click', clickHandler);
-                        //當Holder的Dona等於0時
+                        if (balance > 0) {
+                            claim_btn.classList.add('active');
+                            // 定義事件處理函數，確保函數引用一致
+                            clickHandler = () => claim_airdrop(holder);
+                            claim_btn.addEventListener('click', clickHandler);
+                            //當Holder的Dona等於0時
                         } else {
-                               disable_get_btn(holder);
-                        }
-                     } else {
-                           //本輪已經領過空投
                             disable_get_btn(holder);
-                     }
-                }else {
+                        }
+                    } else {
+                        //本輪已經領過空投
                         disable_get_btn(holder);
+                    }
+                } else {
+                    disable_get_btn(holder);
                 }
             } catch (error) {
                 console.error("查詢餘額發生錯誤:", error);
@@ -845,15 +898,16 @@ function countdown(seconds) {
         }
         // 初始化
         window.onload = initialize;  
-  </script><script>    
-  // get Market price of bitcoin
-  const apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd';
-  function fetchBitcoinPrice() {
+    </script>
+    <script>
+        // get Market price of bitcoin
+        const apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd';
+        function fetchBitcoinPrice() {
             axios.get(apiUrl)
                 .then(response => {
                     const bitcoinPrice = response.data.bitcoin.usd;
                     const formattedPrice = bitcoinPrice.toLocaleString(); // 格式化为本地格式
-                    document.getElementById('bitcoin-price').textContent = `${formattedPrice}`;                  
+                    document.getElementById('bitcoin-price').textContent = `${formattedPrice}`;
                 })
                 .catch(error => {
                     console.error('Error fetching:', error);
@@ -862,420 +916,422 @@ function countdown(seconds) {
 
         // 初次載入時即獲取價格，之後每 5 秒更新一次
         fetchBitcoinPrice();
-        setInterval(fetchBitcoinPrice, 5000); 
-        
-    // 創造活動事件，彈跳視窗表單來獲取使用者輸入
-    async function promptRedEnvelope() {
-       let totalShare, countRE, eligiType, desc, url;
-       while (true) {
-            totalShare = prompt("要發多少漢堡:");
-            if (totalShare === null) break; // 如果使用者按取消，則跳出迴圈
+        setInterval(fetchBitcoinPrice, 5000);
 
-            countRE = prompt("多少人可以領:");
-            if (countRE === null) break;
+        // 創造活動事件，彈跳視窗表單來獲取使用者輸入
+        async function promptRedEnvelope() {
+            let totalShare, countRE, eligiType, desc, url;
+            while (true) {
+                totalShare = prompt("要發多少漢堡:");
+                if (totalShare === null) break; // 如果使用者按取消，則跳出迴圈
 
-            eligiType = prompt("誰可以領(0粉加準粉, 1僅準粉, 2見者有份):");
-            if (eligiType === null) break;
+                countRE = prompt("多少人可以領:");
+                if (countRE === null) break;
 
-             desc = prompt("Description to share:");
-             url = prompt("Source URL:");
-            
-    // 所有提示都完成，跳出迴圈
-    break;
-  }
-  return { totalShare, countRE, eligiType, desc, url };
-}
+                eligiType = prompt("誰可以領(0粉加準粉, 1僅準粉, 2見者有份):");
+                if (eligiType === null) break;
 
-// 呼叫智能合約函式
-async function setRedEnvelope(holder) {
-    if(confirm("要發漢堡嗎？請依序填入..")){
-    try {
-        // 获取用户输入
-        const { totalShare, countRE, eligiType, desc, url } = await promptRedEnvelope();
+                desc = prompt("Description to share:");
+                url = prompt("Source URL:");
 
-        // 验证用户输入
-        if (isNaN(totalShare) || isNaN(countRE) || isNaN(eligiType)) {
-            //alert("Invalid input. Please enter valid numbers.");
-            return;
+                // 所有提示都完成，跳出迴圈
+                break;
+            }
+            return { totalShare, countRE, eligiType, desc, url };
         }
 
-        if (parseInt(eligiType) < 0 || parseInt(eligiType) > 2) {
-            alert("Eligibility type must be between 0 and 2.");
-            return;
-        }
+        // 呼叫智能合約函式
+        async function setRedEnvelope(holder) {
+            if (confirm("要發漢堡嗎？請依序填入..")) {
+                try {
+                    // 获取用户输入
+                    const { totalShare, countRE, eligiType, desc, url } = await promptRedEnvelope();
 
-        // 转换为 BigInt 并计算精度
-        const decimals = 18;
-        const totalShareWithDecimals = (BigInt(totalShare) * (BigInt(10) ** BigInt(decimals))).toString();
-        const countREBigInt = countRE.toString();
+                    // 验证用户输入
+                    if (isNaN(totalShare) || isNaN(countRE) || isNaN(eligiType)) {
+                        //alert("Invalid input. Please enter valid numbers.");
+                        return;
+                    }
 
-        // 呼叫智能合约的 setRE 函式
-        const receipt = await contract.methods
-            .setRE(
-                totalShareWithDecimals, // 转换后的代币数量
-                countREBigInt,          // 红包数量
-                parseInt(eligiType),    // 转换为整数类型
-                desc,                   // 描述
-                url                     // 图片 URL
-            )
-            .send({ from: holder });
+                    if (parseInt(eligiType) < 0 || parseInt(eligiType) > 2) {
+                        alert("Eligibility type must be between 0 and 2.");
+                        return;
+                    }
 
-        // 获取交易哈希
-        //const transactionHash = receipt.transactionHash;
+                    // 转换为 BigInt 并计算精度
+                    const decimals = 18;
+                    const totalShareWithDecimals = (BigInt(totalShare) * (BigInt(10) ** BigInt(decimals))).toString();
+                    const countREBigInt = countRE.toString();
 
-        // 成功执行后显示交易信息
-        alert(
-            "Return: " + JSON.stringify(receipt) +
-            "\nRed Envelope Created Successfully!"
-            //+ "\nTXHash: " + transactionHash
-        );
+                    // 呼叫智能合约的 setRE 函式
+                    const receipt = await contract.methods
+                        .setRE(
+                            totalShareWithDecimals, // 转换后的代币数量
+                            countREBigInt,          // 红包数量
+                            parseInt(eligiType),    // 转换为整数类型
+                            desc,                   // 描述
+                            url                     // 图片 URL
+                        )
+                        .send({ from: holder });
 
-    } catch (error) {
-        console.error("Error initiating Red Envelope Event:", error);
-        alert("Failed to share BURGER: " + error.message);
-    }
-    } else {
-        alert("其實，大家都挺喜歡甜甜圈的 ^^" );
-    }
-}   
-</script><script>  
-  async function checkEgibility(reid) {
-    let eligible;
-    let _linkcodeOwner;
-    try {
-        // Request account access
-        //const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-        const userAddress = await getHoldertoLowercase();
-        //alert("userAddress:"+userAddress);
-        const reidBigInt = BigInt(reid);  
-        const re = await contract.methods.blkDona(reidBigInt).call();
-        //    
-        if ( re.creator.toLowerCase() == userAddress) {
-            //alert("自己發的就別領了吧？");
+                    // 获取交易哈希
+                    //const transactionHash = receipt.transactionHash;
+
+                    // 成功执行后显示交易信息
+                    alert(
+                        "Return: " + JSON.stringify(receipt) +
+                        "\nRed Envelope Created Successfully!"
+                        //+ "\nTXHash: " + transactionHash
+                    );
+
+                } catch (error) {
+                    console.error("Error initiating Red Envelope Event:", error);
+                    alert("Failed to share BURGER: " + error.message);
+                }
+            } else {
+                alert("其實，大家都挺喜歡甜甜圈的 ^^");
+            }
+        }   
+    </script>
+    <script>
+        async function checkEgibility(reid) {
+            let eligible;
+            let _linkcodeOwner;
+            try {
+                // Request account access
+                //const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+                const userAddress = await getHoldertoLowercase();
+                //alert("userAddress:"+userAddress);
+                const reidBigInt = BigInt(reid);
+                const re = await contract.methods.blkDona(reidBigInt).call();
+                //    
+                if (re.creator.toLowerCase() == userAddress) {
+                    //alert("自己發的就別領了吧？");
+                    return false;
+                }
+                //alert("re.creator / userAddress:\n" + re.creator +"\n / \n"+userAddress);
+                const holders = await contract.methods.holders(userAddress).call();
+                const referrer = holders.referrer.toLowerCase();
+                //alert("referrer:"+referrer);
+                const linkcode = await getParameterByName('linkcode');
+                //alert("linkcode:"+linkcode);
+                //if(!linkcode){linkcode="";}
+                if (linkcode.length > 0) {
+                    _linkcodeOwner = await contract.methods.refCodeOwners(linkcode).call();
+                } else {
+                    _linkcodeOwner = "0x0000000000000000000000000000000000000000";
+                }
+                const linkcodeOwner = _linkcodeOwner.toLowerCase();
+                //alert("linkcodeOwner:" + linkcodeOwner);
+                if (
+                    (re.eligiType == 0 &&
+                        (referrer == re.creator ||
+                            (referrer == address(0) &&
+                                (linkcode.length == 0 ||
+                                    linkcodeOwner == re.creator)))) ||
+
+                    (re.eligiType == 1 &&
+                        (referrer == address(0) &&
+                            (linkcode.length == 0 ||
+                                linkcodeOwner == re.creator))) ||
+                    // Any subscriber could claim the redenvelope
+                    re.eligiType == 2
+                ) {
+                    return true;
+                }
+            } catch (error) {
+                //console.error("Error fetching available red envelopes:", error);
+                alert("Error:" + error);
+            }
             return false;
         }
-        //alert("re.creator / userAddress:\n" + re.creator +"\n / \n"+userAddress);
-        const holders = await contract.methods.holders(userAddress).call();
-        const referrer = holders.referrer.toLowerCase();
-        //alert("referrer:"+referrer);
-        const linkcode = await getParameterByName('linkcode');
-        //alert("linkcode:"+linkcode);
-        //if(!linkcode){linkcode="";}
-        if(linkcode.length > 0){
-          _linkcodeOwner = await contract.methods.refCodeOwners(linkcode).call();          
-        } else {
-          _linkcodeOwner = "0x0000000000000000000000000000000000000000";
-        }      
-        const linkcodeOwner = _linkcodeOwner.toLowerCase();
-        //alert("linkcodeOwner:" + linkcodeOwner);
-        if (           
-            (re.eligiType == 0 &&
-                (referrer == re.creator ||
-                    (referrer == address(0) &&
-                        (linkcode.length == 0 ||
-                            linkcodeOwner == re.creator)))) ||
-            
-            (re.eligiType == 1 &&
-                (referrer == address(0) &&
-                    ( linkcode.length == 0 ||
-                        linkcodeOwner == re.creator))) ||
-            // Any subscriber could claim the redenvelope
-            re.eligiType == 2
-        ) {
-            return true;
-        }        
-    } catch (error) {
-        //console.error("Error fetching available red envelopes:", error);
-        alert("Error:"+error);        
-    }
-    return false; 
-}
 
-</script><script>  
-  
-// 獲取特定 holder 的紅包資訊
+    </script>
+    <script>
 
-async function getreID(){
-  const reid = await contract.methods.donaID().call();
-  //alert("reID:" + reid);
-  return reid;
-}    
-async function getSpecificDN(reid) {    
-    const reidBigInt = BigInt(reid);
-try {
-    // 调用合约函数
-    const redEnvelopeInfo = await contract.methods.blkDona(reidBigInt).call();
+        // 獲取特定 holder 的紅包資訊
 
-    // 确保字段类型正确
-    const subAmtInEther = web3.utils.fromWei(redEnvelopeInfo.subAmt.toString(), "ether");
-    const claimedAmtInEther = web3.utils.fromWei(redEnvelopeInfo.claimedAmt.toString(), "ether");
-    const maxClaims = parseInt(redEnvelopeInfo.maxClaims, 10);
-    const claimCount = parseInt(redEnvelopeInfo.claimCount, 10);
-    
-    //const isActive = redEnvelopeInfo.isActive === "true" ? "Yes" : "No";
-     const isActive = redEnvelopeInfo.isActive === "true" || redEnvelopeInfo.isActive === true;
-    // 將描述轉換為 bytes
-    //redEnvelopeInfo.desc = web3.utils.hexToUtf8(redEnvelopeInfo.desc); 
-    // 转换为 BigInt 并计算精度
-    const decimals = 18;
-    redEnvelopeInfo.subAmt = (BigInt(redEnvelopeInfo.subAmt) / (BigInt(10) ** BigInt(decimals))).toString();        
-    redEnvelopeInfo.claimedAmt = (BigInt(redEnvelopeInfo.claimedAmt) / (BigInt(10) ** BigInt(decimals))).toString();     
-    return redEnvelopeInfo;
-} catch (error) {
-    console.error("Error fetching red envelope info:", error);
-    alert("Failed to fetch red envelope info. Error: " + error.message);
-  return [];
-}
-}
-    
-    async function fetchReCount(holderAddress) {
-        //alert("送過幾個甜甜圈？"+holderAddress);
-        //const re_count = document.getElementById('re_count')
-         re_count.textContent = `?`;
-         let index = 0;
-         let continueLoop = true; 
-         try {
-               while (continueLoop) {
-                   // 查詢 myfans[index]
-                   const reid = await contract.methods.myDona(holderAddress,index).call();
-                   if (reid) {
-                   // 如果reID有效，增加計數器
-                   index++;
-                   } else {
-                      // 如果地址無效，結束迴圈
-                      continueLoop = false;
-                   }
-               }
-             } catch (error) {
-                  console.error("查詢失敗:", error);
-                  //alert("送過甜甜圈嗎？" + error.message);
-             }
-             re_count.textContent = `${index}`;
-   }
-    async function fetchReferer(holderAddress) {
-         const fans_count = document.getElementById('fans_count')
-         fans_count.textContent = `?`;
-         let index = 0;
-         let continueLoop = true; 
-         try {
-               while (continueLoop) {
-                   // 查詢 myfans[index]
-                   const fanAddress = await contract.methods.myfans(holderAddress,index).call();
-                   if (fanAddress && fanAddress !== "0x0000000000000000000000000000000000000000") {
-                   // 如果地址有效，增加計數器
-                   index++;
-                   } else {
-                      // 如果地址無效，結束迴圈
-                      continueLoop = false;
-                   }
-               }
-             } catch (error) {
-                  console.error("查詢失敗:", error);
-                  //alert("查詢失敗: " + error.message);
-             }
-             document.getElementById('fans_count').textContent = `${index}`;
-         }
-    
-    async function shareMyDona() {
-    try {       
-        const userAddress = await getHoldertoLowercase();
-        const holderInfo = await contract.methods.holders(userAddress).call();
-        //Get my refCode
-        const refCode = holderInfo.refCode;
-        //alert("4.refCode："+ refCode);
-        //      
-        if ( refCode == "") {        
-          const Code = prompt("請輸入想要的推薦碼(A~Z,0~9,_-@)：");
-          await contract.methods.setMyRefCode(Code).send({ from: userAddress });      
-        }  
-        openShare();
-    } catch (error) {
-        console.error("Error setting referral code:", error);
-        //alert("Failed to set referral code: " + error.message);
-    }
-}    
+        async function getreID() {
+            const reid = await contract.methods.donaID().call();
+            //alert("reID:" + reid);
+            return reid;
+        }
+        async function getSpecificDN(reid) {
+            const reidBigInt = BigInt(reid);
+            try {
+                // 调用合约函数
+                const redEnvelopeInfo = await contract.methods.blkDona(reidBigInt).call();
 
-async function claimDona(id) {
-  // 取得 linkcode 參數    
-    const linkcode = getParameterByName('linkcode');
-    try {        
-        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-        const userAddress = accounts[0];
-        const result = await contract.methods.claimDona(linkcode, id).send({ from: userAddress });
-        // 等待交易完成
-        const receipt = await result.wait();   
-        alert("receipt:" + recript);
-        return { success: true, receipt };
-    } catch (error) {
-        console.error("Error claiming red envelope:", error);
-        return { success: false, error };
-    }
-   alert("執行完成:" + receipt);
-}    
-  </script>
-<div class="modal-overlay" id="modal-overlay">
-    <div class="modal" id="modal">
-        <h2>來發個甜甜圈，大家熟識一下</h2>
-        <form id="set-re-form">
-            <div class="form-group">
-                <label for="totalShare">總共幾個甜甜圈？(自然是愈多愈好)</label>
-                <input type="number" id="totalShare" name="totalShare" required>
-            </div>
-            <div class="form-group">
-                <label for="countRE">想發給幾個人能領到？(每個人平均要有50個)</label>
-                <input type="number" id="countRE" name="countRE" required>
-            </div>
-            <div class="form-group">
-                <label for="eligiType">Eligibility Type (uint8)</label>
-                <select id="eligiType" name="eligiType" required>
-                    <option value="0">我的粉絲和準粉(用我的連結碼進來的)</option>
-                    <option value="1">僅限準粉，專給那些用我連結碼進來的</option>
-                    <option value="2">天下為公，見者有分</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="_desc">那些年，關於我的甜甜圈</label>
-                <input type="text" id="_desc" name="_desc" required>
-            </div>
-            <div class="form-group">
-                <label for="_url">請貼上圖片連結網址</label>
-                <input type="text" id="_url" name="_url" required>
-            </div>
-            <div class="_buttons">
-                <button type="button" class="cancel" onclick="closeModal()">取消</button>
-                <button type="submit" class="confirm">送出</button>
-            </div>
-        </form>
+                // 确保字段类型正确
+                const subAmtInEther = web3.utils.fromWei(redEnvelopeInfo.subAmt.toString(), "ether");
+                const claimedAmtInEther = web3.utils.fromWei(redEnvelopeInfo.claimedAmt.toString(), "ether");
+                const maxClaims = parseInt(redEnvelopeInfo.maxClaims, 10);
+                const claimCount = parseInt(redEnvelopeInfo.claimCount, 10);
+
+                //const isActive = redEnvelopeInfo.isActive === "true" ? "Yes" : "No";
+                const isActive = redEnvelopeInfo.isActive === "true" || redEnvelopeInfo.isActive === true;
+                // 將描述轉換為 bytes
+                //redEnvelopeInfo.desc = web3.utils.hexToUtf8(redEnvelopeInfo.desc); 
+                // 转换为 BigInt 并计算精度
+                const decimals = 18;
+                redEnvelopeInfo.subAmt = (BigInt(redEnvelopeInfo.subAmt) / (BigInt(10) ** BigInt(decimals))).toString();
+                redEnvelopeInfo.claimedAmt = (BigInt(redEnvelopeInfo.claimedAmt) / (BigInt(10) ** BigInt(decimals))).toString();
+                return redEnvelopeInfo;
+            } catch (error) {
+                console.error("Error fetching red envelope info:", error);
+                alert("Failed to fetch red envelope info. Error: " + error.message);
+                return [];
+            }
+        }
+
+        async function fetchReCount(holderAddress) {
+            //alert("送過幾個甜甜圈？"+holderAddress);
+            //const re_count = document.getElementById('re_count')
+            re_count.textContent = `?`;
+            let index = 0;
+            let continueLoop = true;
+            try {
+                while (continueLoop) {
+                    // 查詢 myfans[index]
+                    const reid = await contract.methods.myDona(holderAddress, index).call();
+                    if (reid) {
+                        // 如果reID有效，增加計數器
+                        index++;
+                    } else {
+                        // 如果地址無效，結束迴圈
+                        continueLoop = false;
+                    }
+                }
+            } catch (error) {
+                console.error("查詢失敗:", error);
+                //alert("送過甜甜圈嗎？" + error.message);
+            }
+            re_count.textContent = `${index}`;
+        }
+        async function fetchReferer(holderAddress) {
+            const fans_count = document.getElementById('fans_count')
+            fans_count.textContent = `?`;
+            let index = 0;
+            let continueLoop = true;
+            try {
+                while (continueLoop) {
+                    // 查詢 myfans[index]
+                    const fanAddress = await contract.methods.myfans(holderAddress, index).call();
+                    if (fanAddress && fanAddress !== "0x0000000000000000000000000000000000000000") {
+                        // 如果地址有效，增加計數器
+                        index++;
+                    } else {
+                        // 如果地址無效，結束迴圈
+                        continueLoop = false;
+                    }
+                }
+            } catch (error) {
+                console.error("查詢失敗:", error);
+                //alert("查詢失敗: " + error.message);
+            }
+            document.getElementById('fans_count').textContent = `${index}`;
+        }
+
+        async function shareMyDona() {
+            try {
+                const userAddress = await getHoldertoLowercase();
+                const holderInfo = await contract.methods.holders(userAddress).call();
+                //Get my refCode
+                const refCode = holderInfo.refCode;
+                //alert("4.refCode："+ refCode);
+                //      
+                if (refCode == "") {
+                    const Code = prompt("請輸入想要的推薦碼(A~Z,0~9,_-@)：");
+                    await contract.methods.setMyRefCode(Code).send({ from: userAddress });
+                }
+                openShare();
+            } catch (error) {
+                console.error("Error setting referral code:", error);
+                //alert("Failed to set referral code: " + error.message);
+            }
+        }
+
+        async function claimDona(id) {
+            // 取得 linkcode 參數    
+            const linkcode = getParameterByName('linkcode');
+            try {
+                const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+                const userAddress = accounts[0];
+                const result = await contract.methods.claimDona(linkcode, id).send({ from: userAddress });
+                // 等待交易完成
+                const receipt = await result.wait();
+                alert("receipt:" + recript);
+                return { success: true, receipt };
+            } catch (error) {
+                console.error("Error claiming red envelope:", error);
+                return { success: false, error };
+            }
+            alert("執行完成:" + receipt);
+        }    
+    </script>
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal" id="modal">
+            <h2>來發個甜甜圈，大家熟識一下</h2>
+            <form id="set-re-form">
+                <div class="form-group">
+                    <label for="totalShare">總共幾個甜甜圈？(自然是愈多愈好)</label>
+                    <input type="number" id="totalShare" name="totalShare" required>
+                </div>
+                <div class="form-group">
+                    <label for="countRE">想發給幾個人能領到？(每個人平均要有50個)</label>
+                    <input type="number" id="countRE" name="countRE" required>
+                </div>
+                <div class="form-group">
+                    <label for="eligiType">Eligibility Type (uint8)</label>
+                    <select id="eligiType" name="eligiType" required>
+                        <option value="0">我的粉絲和準粉(用我的連結碼進來的)</option>
+                        <option value="1">僅限準粉，專給那些用我連結碼進來的</option>
+                        <option value="2">天下為公，見者有分</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="_desc">那些年，關於我的甜甜圈</label>
+                    <input type="text" id="_desc" name="_desc" required>
+                </div>
+                <div class="form-group">
+                    <label for="_url">請貼上圖片連結網址</label>
+                    <input type="text" id="_url" name="_url" required>
+                </div>
+                <div class="_buttons">
+                    <button type="button" class="cancel" onclick="closeModal()">取消</button>
+                    <button type="submit" class="confirm">送出</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-  <script>    
-    function openModal() {  
-        document.getElementById("modal-overlay").style.display = "block";   
-    }
+    <script>
+        function openModal() {
+            document.getElementById("modal-overlay").style.display = "block";
+        }
 
-    // Close modal
-    function closeModal() {
-        document.getElementById("modal-overlay").style.display = "none";
-    }     
-             
-    document.getElementById("set-re-form").addEventListener("submit", async (event) => {
-        event.preventDefault(); // 防止表單默認提交行為
-              await setDona(); // 確保執行智能合約的邏輯
-    });
-    
-    async function setDona(){
-        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-        const userAddress = accounts[0];
-        // Get form data
-        const totalShare = document.getElementById("totalShare").value;
-        const countRE = document.getElementById("countRE").value;
-        const eligiType = document.getElementById("eligiType").value;
-        const desc = document.getElementById("_desc").value;
-        const url = document.getElementById("_url").value;
-        //alert( "totalShare："+ totalShare +"\ncountRE："+countRE + "\neligiType：" + eligiType + "\ndesc：" + desc + "\nurl："+url );
-      try{
-        // 转换为 BigInt 并计算精度
-        const decimals = 18;
-        const totalShareWithDecimals = (BigInt(totalShare) * (BigInt(10) ** BigInt(decimals))).toString();
-        const countREBigInt = countRE.toString();
-        //const descBytes = web3.utils.utf8ToHex(desc);  //轉換為字節      
-        if(!contract){
-            //alert("userAddress："+ userAddress);
-            return;
-        }     
-        //closeModal();
-        // 呼叫智能合约的 setRE 函式
-        const receipt = await contract.methods
-            .setDona(
-                totalShareWithDecimals, // 转换后的代币数量
-                countREBigInt,          // 红包数量
-                parseInt(eligiType),    // 转换为整数类型
-                desc,                   // 描述
-                url                     // 图片 URL
-            )
-            .send({ from: userAddress });
-        //alert("receipt："+ receipt);
-        // 获取交易哈希
-        //const transactionHash = receipt.transactionHash;
+        // Close modal
+        function closeModal() {
+            document.getElementById("modal-overlay").style.display = "none";
+        }
 
-        // 成功执行后显示交易信息
-        //alert(
-            //"Return: " + JSON.stringify(receipt) +
-            //"\nRed Envelope Created Successfully!"
-            //+ "\nTXHash: " + transactionHash
-        //);
-        // 清空表單欄位
-        document.getElementById("set-re-form").reset();
+        document.getElementById("set-re-form").addEventListener("submit", async (event) => {
+            event.preventDefault(); // 防止表單默認提交行為
+            await setDona(); // 確保執行智能合約的邏輯
+        });
 
-        // 關閉彈跳視窗
-        closeModal();
-        } catch (error) {
-            console.error("Error:", error);
-            //alert("Error："+ error);        
-        }     
-        //closeModal();
-    }    
-</script>
-  
-  <div class="modal-overlay" id="edit_window">
-    <div class="modal" id="modal">
-        <h2>甜甜圈有點狀況，我喬一下</h2>
-        <form id="form_edit">            
-            <div class="form-group">
-                <label for="edit_desc">那些年，關於我的甜甜圈</label>
-                <input type="text" id="edit_desc" name="edit_desc" required>
-            </div>
-            <div class="form-group">
-                <label for="edit_url">請貼上圖片連結網址</label>
-                <input type="text" id="edit_url" name="edit_url" required>
-            </div>
-            <div class="_buttons">
-                <button type="button" class="cancel" onclick="close_edit()">取消</button>
-                <button type="submit" class="confirm">送出</button>
-            </div>
-        </form>
+        async function setDona() {
+            const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+            const userAddress = accounts[0];
+            // Get form data
+            const totalShare = document.getElementById("totalShare").value;
+            const countRE = document.getElementById("countRE").value;
+            const eligiType = document.getElementById("eligiType").value;
+            const desc = document.getElementById("_desc").value;
+            const url = document.getElementById("_url").value;
+            //alert( "totalShare："+ totalShare +"\ncountRE："+countRE + "\neligiType：" + eligiType + "\ndesc：" + desc + "\nurl："+url );
+            try {
+                // 转换为 BigInt 并计算精度
+                const decimals = 18;
+                const totalShareWithDecimals = (BigInt(totalShare) * (BigInt(10) ** BigInt(decimals))).toString();
+                const countREBigInt = countRE.toString();
+                //const descBytes = web3.utils.utf8ToHex(desc);  //轉換為字節      
+                if (!contract) {
+                    //alert("userAddress："+ userAddress);
+                    return;
+                }
+                //closeModal();
+                // 呼叫智能合约的 setRE 函式
+                const receipt = await contract.methods
+                    .setDona(
+                        totalShareWithDecimals, // 转换后的代币数量
+                        countREBigInt,          // 红包数量
+                        parseInt(eligiType),    // 转换为整数类型
+                        desc,                   // 描述
+                        url                     // 图片 URL
+                    )
+                    .send({ from: userAddress });
+                //alert("receipt："+ receipt);
+                // 获取交易哈希
+                //const transactionHash = receipt.transactionHash;
+
+                // 成功执行后显示交易信息
+                //alert(
+                //"Return: " + JSON.stringify(receipt) +
+                //"\nRed Envelope Created Successfully!"
+                //+ "\nTXHash: " + transactionHash
+                //);
+                // 清空表單欄位
+                document.getElementById("set-re-form").reset();
+
+                // 關閉彈跳視窗
+                closeModal();
+            } catch (error) {
+                console.error("Error:", error);
+                //alert("Error："+ error);        
+            }
+            //closeModal();
+        }    
+    </script>
+
+    <div class="modal-overlay" id="edit_window">
+        <div class="modal" id="modal">
+            <h2>甜甜圈有點狀況，我喬一下</h2>
+            <form id="form_edit">
+                <div class="form-group">
+                    <label for="edit_desc">那些年，關於我的甜甜圈</label>
+                    <input type="text" id="edit_desc" name="edit_desc" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit_url">請貼上圖片連結網址</label>
+                    <input type="text" id="edit_url" name="edit_url" required>
+                </div>
+                <div class="_buttons">
+                    <button type="button" class="cancel" onclick="close_edit()">取消</button>
+                    <button type="submit" class="confirm">送出</button>
+                </div>
+            </form>
+        </div>
     </div>
-    </div> 
-   <div class="modal-overlay" id="share_window">
+    <div class="modal-overlay" id="share_window">
         <div class="modal" id="modal">
             <h2>分享我的黑色甜甜圈</h2>
             <p style="color:#bbbbbb">我的推薦碼：</p>
             <p id="refcode"></p>
             <p style="color:#bbbbbb">推薦連結網址：</p>
-            <p id="share_link" class="_text"></p>          
+            <p id="share_link" class="_text"></p>
             <form>
                 <div class="_buttons">
                     <button type="button" class="cancel" onclick="closeShare()">取消</button>
                     <button type="button" class="confirm" onclick="toShare(true)">複製推薦碼</button>
-                  <button type="button" class="confirm" onclick="toShare(false)">複製連結</button>
+                    <button type="button" class="confirm" onclick="toShare(false)">複製連結</button>
                 </div>
             </form>
         </div>
     </div>
-  <script>
-    async function openShare() {  
-        document.getElementById("share_window").style.display = "block";  
-        const userAddress = await getHoldertoLowercase();
-        const holderInfo = await contract.methods.holders(userAddress).call();
-        document.getElementById("refcode").textContent =  `${holderInfo.refCode}`; 
-        document.getElementById("share_link").textContent = `https://tokenshare786.github.io/ShareToken/?linkcode=${holderInfo.refCode}`;
-    }
+    <script>
+        async function openShare() {
+            document.getElementById("share_window").style.display = "block";
+            const userAddress = await getHoldertoLowercase();
+            const holderInfo = await contract.methods.holders(userAddress).call();
+            document.getElementById("refcode").textContent = `${holderInfo.refCode}`;
+            document.getElementById("share_link").textContent = `https://tokenshare786.github.io/ShareToken/?linkcode=${holderInfo.refCode}`;
+        }
 
-    // Close modal
-    function closeShare() {
-        document.getElementById("share_window").style.display = "none";
-    }     
+        // Close modal
+        function closeShare() {
+            document.getElementById("share_window").style.display = "none";
+        }
 
-    function toShare(isCode){
-      let contractAddress ;      
-      if(isCode){
-        contractAddress = document.getElementById("refcode").textContent;
-      } else {
-        contractAddress = document.getElementById("share_link").textContent;
-      }
-      navigator.clipboard.writeText(contractAddress)
-      closeShare();
-    }
-  </script>
+        function toShare(isCode) {
+            let contractAddress;
+            if (isCode) {
+                contractAddress = document.getElementById("refcode").textContent;
+            } else {
+                contractAddress = document.getElementById("share_link").textContent;
+            }
+            navigator.clipboard.writeText(contractAddress)
+            closeShare();
+        }
+    </script>
 </body>
 </html>
