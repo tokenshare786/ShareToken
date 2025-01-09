@@ -918,80 +918,7 @@
         fetchBitcoinPrice();
         setInterval(fetchBitcoinPrice, 5000);
 
-        // 創造活動事件，彈跳視窗表單來獲取使用者輸入
-        async function promptRedEnvelope() {
-            let totalShare, countRE, eligiType, desc, url;
-            while (true) {
-                totalShare = prompt("要發多少漢堡:");
-                if (totalShare === null) break; // 如果使用者按取消，則跳出迴圈
-
-                countRE = prompt("多少人可以領:");
-                if (countRE === null) break;
-
-                eligiType = prompt("誰可以領(0粉加準粉, 1僅準粉, 2見者有份):");
-                if (eligiType === null) break;
-
-                desc = prompt("Description to share:");
-                url = prompt("Source URL:");
-
-                // 所有提示都完成，跳出迴圈
-                break;
-            }
-            return { totalShare, countRE, eligiType, desc, url };
-        }
-
-        // 呼叫智能合約函式
-        async function setRedEnvelope(holder) {
-            if (confirm("要發漢堡嗎？請依序填入..")) {
-                try {
-                    // 获取用户输入
-                    const { totalShare, countRE, eligiType, desc, url } = await promptRedEnvelope();
-
-                    // 验证用户输入
-                    if (isNaN(totalShare) || isNaN(countRE) || isNaN(eligiType)) {
-                        //alert("Invalid input. Please enter valid numbers.");
-                        return;
-                    }
-
-                    if (parseInt(eligiType) < 0 || parseInt(eligiType) > 2) {
-                        alert("Eligibility type must be between 0 and 2.");
-                        return;
-                    }
-
-                    // 转换为 BigInt 并计算精度
-                    const decimals = 18;
-                    const totalShareWithDecimals = (BigInt(totalShare) * (BigInt(10) ** BigInt(decimals))).toString();
-                    const countREBigInt = countRE.toString();
-
-                    // 呼叫智能合约的 setRE 函式
-                    const receipt = await contract.methods
-                        .setRE(
-                            totalShareWithDecimals, // 转换后的代币数量
-                            countREBigInt,          // 红包数量
-                            parseInt(eligiType),    // 转换为整数类型
-                            desc,                   // 描述
-                            url                     // 图片 URL
-                        )
-                        .send({ from: holder });
-
-                    // 获取交易哈希
-                    //const transactionHash = receipt.transactionHash;
-
-                    // 成功执行后显示交易信息
-                    alert(
-                        "Return: " + JSON.stringify(receipt) +
-                        "\nRed Envelope Created Successfully!"
-                        //+ "\nTXHash: " + transactionHash
-                    );
-
-                } catch (error) {
-                    console.error("Error initiating Red Envelope Event:", error);
-                    alert("Failed to share BURGER: " + error.message);
-                }
-            } else {
-                alert("其實，大家都挺喜歡甜甜圈的 ^^");
-            }
-        }   
+       
     </script>
     <script>
         async function getable(re_id){
@@ -1173,7 +1100,6 @@
                 const userAddress = accounts[0];
                 const result = await contract.methods.claimDona(linkcode, id).send({ from: userAddress });
                 // 等待交易完成
-                document.getElementById("take").style.display = "none";
             } catch (error) {
                 console.error("Error claiming red envelope:", error);
                 //return { success: false, error };
