@@ -98,8 +98,9 @@ function claimDN(){
               if(eligible){
                    if(confirm("準備吃個甜甜圈：" + re_id)){            
                             claimDona(re_id); 
+                            document.getElementById("take").style.display = "none";
                    } else{
-                           alert("Why not?"); 
+                           //alert("Why not?"); 
                    }  
              } else {
                          alert("這個甜甜圈你吃不了：" + re_id);
