@@ -1,1 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlackDona 智能合約</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            line-height: 1.6;
+        }
+        .container {
+            padding: 20px;
+        }
+        .section {
+            background-color: #111;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .section h2 {
+            margin-top: 0;
+            color: #6bc1ff;
+        }
+        .section p {
+            margin: 10px 0;
+        }
+        .section ul {
+            list-style: none;
+            padding: 0;
+        }
+        .section ul li {
+            margin: 5px 0;
+            padding: 10px;
+            background-color: #222;
+            border-radius: 5px;
+        }
+        .highlight {
+            color: #6bc1ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="section">
+            <h2>主要功能與數據結構</h2>
+            <h3>合約的基本屬性</h3>
+            <ul>
+                <li><span class="highlight">name:</span> 代幣名稱，設為 "BLKDONA"。</li>
+                <li><span class="highlight">symbol:</span> 代幣符號，設為 "BDN"。</li>
+                <li><span class="highlight">decimals:</span> 代幣的小數位數，設為 18。</li>
+                <li><span class="highlight">totalSupply:</span> 代幣的總供應量。</li>
+                <li><span class="highlight">INITIAL_SUPPLY:</span> 初始化供應量為 100,000 個代幣。</li>
+            </ul>
+            <h3>用戶的持有資料（Holder）</h3>
+            <p>每個用戶有以下屬性：</p>
+            <ul>
+                <li><span class="highlight">referrer:</span> 推薦人地址。</li>
+                <li><span class="highlight">fans_count:</span> 該用戶的粉絲數（即被推薦的人數）。</li>
+                <li><span class="highlight">holderReward:</span> 該用戶從空投活動中獲得的總獎勵。</li>
+                <li><span class="highlight">referReward:</span> 該用戶作為推薦人獲得的總獎勵。</li>
+                <li><span class="highlight">refCode:</span> 該用戶的推薦碼。</li>
+                <li><span class="highlight">nickname:</span> 用戶的暱稱。</li>
+                <li><span class="highlight">description:</span> 用戶的個人描述。</li>
+                <li><span class="highlight">imgUrl:</span> 用戶的個人圖片網址。</li>
+                <li><span class="highlight">lastClaimedAD:</span> 上一次領取空投的時間戳。</li>
+                <li><span class="highlight">isDistoStartDA:</span> 是否禁止該用戶發起空投活動。</li>
+                <li><span class="highlight">isDistoRef:</span> 是否禁止該用戶成為推薦人。</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>事件（Events）</h2>
+            <p>用於記錄系統中發生的各種操作，主要包括：</p>
+            <ul>
+                <li>轉帳事件（<span class="highlight">Transfer</span>）</li>
+                <li>授權事件（<span class="highlight">Approval</span>）</li>
+                <li>空投相關事件：空投啟動（<span class="highlight">ADStarted</span>）、領取空投（<span class="highlight">ADClaimed</span>）</li>
+                <li>紅包相關事件：紅包創建（<span class="highlight">donaCreated</span>）、紅包領取（<span class="highlight">donaClaimed</span>）</li>
+                <li>通知事件（<span class="highlight">Notification</span>）：用於廣播某些訊息。</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>推薦系統</h2>
+            <ul>
+                <li>用戶可以設定自己的推薦碼（<span class="highlight">setMyRefCode</span>）。</li>
+                <li>如果一個用戶的推薦碼被使用，他會自動成為另一個用戶的推薦人。</li>
+                <li>代幣轉移時會自動建立推薦關係。</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>空投系統</h2>
+            <ul>
+                <li>合約擁有者可以啟動空投（<span class="highlight">startAirdrop</span>），將一定比例的代幣作為獎勵分發給符合條件的用戶。</li>
+                <li>用戶可以通過 <span class="highlight">claimAirdrop</span> 領取空投。</li>
+                <li>空投的獎勵分為兩部分：持有者獎勵和推薦人獎勵。</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>紅包系統</h2>
+            <ul>
+                <li>紅包是一種特殊事件，用於隨機分配代幣。</li>
+                <li>發起人設置紅包總金額、最大分配次數等條件（<span class="highlight">setDona</span>）。</li>
+                <li>用戶可以通過紅包推薦碼領取紅包（<span class="highlight">claimDona</span>），同時建立推薦關係。</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>個人資料編輯</h2>
+            <p>用戶可以花費代幣來編輯自己的個人資料（暱稱、描述、圖片等）。</p>
+        </div>
+
+        <div class="section">
+            <h2>主要功能解釋</h2>
+            <h3>推薦系統邏輯</h3>
+            <p>當一個用戶轉帳給另一個用戶，若金額超過設定值且接收方尚未有推薦人，則自動將發送方設為推薦人。用戶也可以通過推薦碼手動指定推薦人。</p>
+            <h3>空投機制</h3>
+            <p>空投啟動後，系統會計算符合條件的用戶的持有獎勵（基於持有代幣數量的百分比）。推薦人也會獲得一定比例的推薦獎勵。空投有時間限制，過期後會自動停用。</p>
+            <h3>紅包機制</h3>
+            <p>紅包類似於多人隨機分配代幣的活動。發起人可以設置紅包的總額、分配次數、領取條件（例如推薦碼或粉絲關係）。紅包金額是隨機分配的，每次領取後更新紅包的剩餘金額與次數。</p>
+        </div>
+
+        <div class="section">
+            <h2>費用與配置</h2>
+            <p>設定推薦碼、編輯個人資料、或發起某些活動時，會需要燃燒一定數量的代幣作為費用。</p>
+        </div>
+
+        <div class="section">
+            <h2>安全機制</h2>
+            <ul>
+                <li>防止智能合約地址成為推薦人。</li>
+                <li>設定禁止參與空投或紅包活動的標誌。</li>
+                <li>代幣轉移與活動執行時都會進行必要的檢查（如餘額、格式、條件等）。</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
 
