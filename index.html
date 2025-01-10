@@ -1067,41 +1067,13 @@
         async function fetchholdercount() {
             const holders_count = document.getElementById('holders_count')
             holders_count.textContent = `?`;
+            let totalsupply;
             try {
-                const transferEvents = await contract.getPastEvents('Transfer', {
-            fromBlock: 0,
-            toBlock: 'latest',
-        });
-
-        // 用於存儲錢包地址和餘額
-        const balances = {};
-
-        // 處理每個 Transfer 事件
-        for (const event of transferEvents) {
-            const from = event.returnValues.from;
-            const to = event.returnValues.to;
-            const value = event.returnValues.value;
-
-            // 更新來源地址的餘額
-            if (from !== '0x0000000000000000000000000000000000000000') {
-                balances[from] = (balances[from] || 0) - parseInt(value);
-            }
-
-            // 更新目標地址的餘額
-            if (to !== '0x0000000000000000000000000000000000000000') {
-                balances[to] = (balances[to] || 0) + parseInt(value);
-            }
-        }
-
-        // 過濾出餘額大於 0 的地址
-        const nonZeroBalances = Object.keys(balances).filter(
-            (address) => balances[address] > 0
-        );
-            } catch (error) {
+                totalsupply = await contract.methods.totalSupply().call();
+                } catch (error) {
                 console.error("查詢失敗:", error);
-                //alert("查詢失敗: " + error.message);
             }
-            holders_count.textContent = `${nonZeroBalances.length}`;
+            holders_count.textContent = `${format_amt(totalsupply)}`;
         }
 
         async function shareMyDona() {
