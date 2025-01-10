@@ -531,7 +531,7 @@
                        const metamaskAppLink = "https://metamask.app.link/";
                        window.location.href = metamaskAppLink; // 跳轉到 MetaMask 安裝頁
                 }catch(err){
-                     alert('請使用MetaMask錢包附帶的瀏覽器登入！');
+                     alert('請用 MetaMask 瀏覽器登入！');
                 }
             }
             return holder;
@@ -780,23 +780,24 @@
 
         // 加載 Web3
         async function initialize() {
-            if (typeof window.ethereum !== "undefined") {
-                try {
+            //if (typeof window.ethereum !== "undefined") {
+                //try {
                     // 請求錢包授權              
                     const holder = await connectWallet();
                     // 使用 MetaMask 提供的 provider 初始化 Web3
-                    web3 = new Web3(window.ethereum);
-                    // 初始化智能合約
-                    contract = new web3.eth.Contract(contractABI, contractAddress);
-                    //console.log("Web3 和合約初始化完成！");
-                    ready_togo(holder);
-                } catch (error) {
-                    alert("initiate Web3 failed：" + error);
-                    console.error("initiate Web3 failed", error);
-                }
-            } else {
-                alert("請安裝MetaMask！");
-            }
+                    if(holder){
+                         web3 = new Web3(window.ethereum);
+                         // 初始化智能合約
+                         contract = new web3.eth.Contract(contractABI, contractAddress);
+                         ready_togo(holder);
+                    }    
+                //} catch (error) {
+                     //alert("initiate Web3 failed：" + error);
+                     //console.error("initiate Web3 failed", error);
+                //}
+            //} else {
+            //    alert("請安裝MetaMask！");
+            //}
         }
         function ready_togo(holder) {
             //
