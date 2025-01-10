@@ -151,8 +151,10 @@ async function _back() {
     }
 }
 
-function open_edit() {  
-      document.getElementById("edit_window").style.display = "block";  
+function open_edit() {   
+      //document.getElementById("edit_window").style.display = "block"; 
+      const overlay = document.getElementById('edit_window');
+      overlay.classList.add('show');
       //alert("re:"+ re.desc + "/" +  re.imgUrl);
       document.getElementById("edit_desc").value = re.desc;             
       document.getElementById("edit_url").value = re.imgUrl;
@@ -160,7 +162,9 @@ function open_edit() {
 
 // Close modal
 function close_edit() {
-      document.getElementById("edit_window").style.display = "none";
+      //document.getElementById("edit_window").style.display = "none";
+      const overlay = document.getElementById('edit_window');
+      overlay.classList.remove('show'); 
 }           
              
 document.getElementById("form_edit").addEventListener("submit", async (event) => {
