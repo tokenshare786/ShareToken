@@ -615,10 +615,9 @@
         <div class="progress">
             <span> Bitcoin/USD：</span>
             <span id="bitcoin-price"></span>
-            <div class="steps">
-                <span></span>
-                <span></span>
-                <span style="background-color: #4a4a4a;"></span>
+            <div>
+                <span class="material-symbols-outlined">face</span>
+                <span class="symbol-match" id="holders_count"></span>
             </div>
         </div>
     </div>
@@ -744,8 +743,6 @@
 
         // 加載 Web3
         async function initialize() {
-            //alert("What's up?!" + holder);
-            //var holder;
             if (typeof window.ethereum !== "undefined") {
                 try {
                     // 請求錢包授權              
@@ -787,14 +784,8 @@
             try {
                 // 調用 balanceOf 函數
                 const balance = await contract.methods.balanceOf(holder).call();
-                // 假設代幣有 18 位小數
-                //const decimals = 18n; // 使用 BigInt 表示 18
-                // 將餘額轉換為人類可讀的格式
-                //const readableBalance = balance / BigInt(10 ** Number(decimals));                
-                // 格式化为本地格式
-                //const formatted = readableBalance.toLocaleString(); 
                 document.getElementById('balance').textContent = `${format_amt(balance)} `;
-                //return readableBalance;
+
             } catch (error) {
                 console.error("查詢餘額發生錯誤:", error);
                 alert("getbalance error：" + error);
@@ -851,6 +842,7 @@
                 //const myre_count = myre.length; 
                 //document.getElementById('re_count').textContent = `${myre_count} `;
                 fetchReCount(holder);
+                fetchholdercount();
                 //終於要愉快地領空投了嗎？
                 const adEnabled = await contract.methods.adEnabled().call();
                 const lastClaimTime = holderInfo.lastClaimedAD;
@@ -1072,6 +1064,29 @@
             }
             document.getElementById('fans_count').textContent = `${index}`;
         }
+        async function fetchholdercount() {
+            const holders_count = document.getElementById('holders_count')
+            holders_count.textContent = `?`;
+            let index = 0;
+            let continueLoop = true;
+            try {
+                while (continueLoop) {
+                    // 查詢 myfans[index]
+                    const holdersAddress = await contract.methods.holders(index).call();
+                    if (holdersAddress && holdersAddress !== "0x0000000000000000000000000000000000000000") {
+                        // 如果地址有效，增加計數器
+                        index++;
+                    } else {
+                        // 如果地址無效，結束迴圈
+                        continueLoop = false;
+                    }
+                }
+            } catch (error) {
+                console.error("查詢失敗:", error);
+                //alert("查詢失敗: " + error.message);
+            }
+            holders_count.textContent = `${index}`;
+        }
 
         async function shareMyDona() {
             try {
@@ -1187,18 +1202,7 @@
                         desc,                   // 描述
                         url                     // 图片 URL
                     )
-                    .send({ from: userAddress });
-                //alert("receipt："+ receipt);
-                // 获取交易哈希
-                //const transactionHash = receipt.transactionHash;
-
-                // 成功执行后显示交易信息
-                //alert(
-                //"Return: " + JSON.stringify(receipt) +
-                //"\nRed Envelope Created Successfully!"
-                //+ "\nTXHash: " + transactionHash
-                //);
-                // 清空表單欄位
+                    .send({ from: userAddress });          
                 document.getElementById("set-re-form").reset();
 
                 // 關閉彈跳視窗
