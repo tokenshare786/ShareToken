@@ -1067,25 +1067,41 @@
         async function fetchholdercount() {
             const holders_count = document.getElementById('holders_count')
             holders_count.textContent = `?`;
-            let index = 0;
-            let continueLoop = true;
             try {
-                while (continueLoop) {
-                    // 查詢 myfans[index]
-                    const holdersAddress = await contract.methods.holders(index).call();
-                    if (holdersAddress && holdersAddress !== "0x0000000000000000000000000000000000000000") {
-                        // 如果地址有效，增加計數器
-                        index++;
-                    } else {
-                        // 如果地址無效，結束迴圈
-                        continueLoop = false;
-                    }
-                }
+                const transferEvents = await contract.getPastEvents('Transfer', {
+            fromBlock: 0,
+            toBlock: 'latest',
+        });
+
+        // 用於存儲錢包地址和餘額
+        const balances = {};
+
+        // 處理每個 Transfer 事件
+        for (const event of transferEvents) {
+            const from = event.returnValues.from;
+            const to = event.returnValues.to;
+            const value = event.returnValues.value;
+
+            // 更新來源地址的餘額
+            if (from !== '0x0000000000000000000000000000000000000000') {
+                balances[from] = (balances[from] || 0) - parseInt(value);
+            }
+
+            // 更新目標地址的餘額
+            if (to !== '0x0000000000000000000000000000000000000000') {
+                balances[to] = (balances[to] || 0) + parseInt(value);
+            }
+        }
+
+        // 過濾出餘額大於 0 的地址
+        const nonZeroBalances = Object.keys(balances).filter(
+            (address) => balances[address] > 0
+        );
             } catch (error) {
                 console.error("查詢失敗:", error);
                 //alert("查詢失敗: " + error.message);
             }
-            holders_count.textContent = `${index}`;
+            holders_count.textContent = `${nonZeroBalances.length}`;
         }
 
         async function shareMyDona() {
