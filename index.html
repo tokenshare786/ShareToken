@@ -527,7 +527,12 @@
                 }
             } else {
                 // 如果瀏覽器中未檢測到電子錢包
-                alert('請使用MetaMask錢包附帶的瀏覽器登入！');
+                try{
+                       const metamaskAppLink = "https://metamask.app.link/";
+                       window.location.href = metamaskAppLink; // 跳轉到 MetaMask 安裝頁
+                }catch(err){
+                     alert('請使用MetaMask錢包附帶的瀏覽器登入！');
+                }
             }
             return holder;
         }
