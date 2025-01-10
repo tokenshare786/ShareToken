@@ -26,7 +26,7 @@
             margin-top: 0;
             color:  #1e90ff;
         }
-        .section span {
+        .home {
             margin-left: auto;  
             color: #fff;
         }
@@ -52,7 +52,7 @@
     <div class="container">
         <div class="section">
             <h2>BLKDONA主要功能與結構</h2>
-            <span class="material-symbols-outlined" onclick="location.href='index.html'">home</span>
+            <span class="material-symbols-outlined home" onclick="location.href='index.html'">home</span>
             <h3>合約的基本屬性</h3>
             <ul>
                 <li><span class="highlight">name:</span> 代幣名稱，設為 "BLKDONA"。</li>
@@ -121,7 +121,6 @@
             <h2>個人資料編輯</h2>
             <p>用戶可以花費代幣來編輯自己的個人資料（暱稱、描述、圖片等）。</p>
         </div>
-
         <div class="section">
             <h2>主要功能解釋</h2>
             <h3>推薦系統邏輯</h3>
@@ -131,7 +130,6 @@
             <h3>紅包機制</h3>
             <p>紅包類似於多人隨機分配代幣的活動。發起人可以設置紅包的總額、分配次數、領取條件（例如推薦碼或粉絲關係）。紅包金額是隨機分配的，每次領取後更新紅包的剩餘金額與次數。</p>
         </div>
-
         <div class="section">
             <h2>費用與配置</h2>
             <p>設定推薦碼、編輯個人資料、或發起某些活動時，會需要燃燒一定數量的代幣作為費用。</p>
@@ -141,7 +139,7 @@
             <h2>安全機制</h2>
             <ul>
                 <li>防止智能合約地址成為推薦人。</li>
-                <li>設定禁止參與空投或發起甜甜圈活動的特定地址。</li>
+                <li>設定禁止參與空投或紅包活動的標誌。</li>
                 <li>代幣轉移與活動執行時都會進行必要的檢查（如餘額、格式、條件等）。</li>
             </ul>
         </div>
