@@ -1115,7 +1115,7 @@
                 const holderInfo = await contract.methods.holders(userAddress).call();
                 //Get my refCode
                 const refCode = holderInfo.refCode;
-                //alert("4.refCode："+ refCode);
+                alert("4.refCode："+ refCode);
                 //      
                 if (refCode == "") {
                     const Code = prompt("請輸入想要的推薦碼(A~Z,0~9,_-@)：");
@@ -1156,7 +1156,7 @@
                     <input type="number" id="countRE" name="countRE" required>
                 </div>
                 <div class="form-group">
-                    <label for="eligiType">Eligibility Type (uint8)</label>
+                    <label for="eligiType">誰能領這些甜甜圈？</label>                    
                     <select id="eligiType" name="eligiType" required>
                         <option value="0">我的粉絲和準粉(用我的連結碼進來的)</option>
                         <option value="1">僅限準粉，專給那些用我連結碼進來的</option>
@@ -1180,7 +1180,6 @@
     </div>
     <script>
         function openModal() {
-            //document.getElementById("modal-overlay").style.display = "block";
             const overlay = document.getElementById('modal-overlay');
             overlay.classList.add('show');
         }
@@ -1276,7 +1275,9 @@
     </div>
     <script>
         async function openShare() {
-            document.getElementById("share_window").style.display = "block";
+            //document.getElementById("share_window").style.display = "block";
+            const overlay = document.getElementById('share_window');
+            overlay.classList.add('show');
             const userAddress = await getHoldertoLowercase();
             const holderInfo = await contract.methods.holders(userAddress).call();
             document.getElementById("refcode").textContent = `${holderInfo.refCode}`;
@@ -1285,7 +1286,9 @@
 
         // Close modal
         function closeShare() {
-            document.getElementById("share_window").style.display = "none";
+            //document.getElementById("share_window").style.display = "none";
+            const overlay = document.getElementById('share_window');
+            overlay.classList.remove('show'); 
         }
 
         function toShare(isCode) {
