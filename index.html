@@ -775,12 +775,12 @@
         //        }
         //}  
         //event Notification(address indexed sender, string notice_type, string message, uint256 timestamp));
-            try{
-                contract.events
-              .Notification({
-                 fromBlock: "latest", // 從當前區塊開始監聽
-            })
-            .on("data", (event) => {
+            //try{
+            //    contract.events
+            //  .Notification({
+            //     fromBlock: "latest", // 從當前區塊開始監聽
+            //})
+            //.on("data", (event) => {
                 //const _sender = event.returnValues.sender;
                 //const _user = `${_sender.substring(0, 2)}..${_sender.slice(-4)}`;
                 //const _notice_type = event.returnValues.notice_type;
@@ -789,14 +789,13 @@
                 //const _startTime = new Date(Number(_timestamp) * 1000).toLocaleString();   
                 //alert(_user + " 在 " + _startTime + " 的時候對全網廣播：" + _message); 
                 //alert("_sender:"+_sender);
-            })
-            .on("error", (error) => {
+            //})
+            //.on("error", (error) => {
             //    console.error("Error while listening to ADClaimed event:", error);
-                alert("ListnerErr:"+error);
-            });
-            }catch(err){alert("err:"+err)}
-                        
-                ready_togo(holder);
+            //    alert("ListnerErr:"+error);
+            //});
+            //}catch(err){alert("err:"+err)}
+                 ready_togo(holder);
             } else {
                 alert("請安裝MetaMask！");
             }
