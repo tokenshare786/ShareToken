@@ -1328,13 +1328,26 @@
         </div>
     </div>
     <script>
-        let dnid;
-        function whichAvailable(holder){
-            alert("get One!");
+        let dnid;        
+        async function whichAvailable(holder){
+            //alert("get One!");
             let loops=true;
             let index = 0 ;
+            let _get = false;
             dnid = 0;
-            
+            try{
+            while(loops){
+                dnid = await contract.methods.activeDNs().call(index);
+                _get = await getable(dnid);
+                if(!dnid || _get){                        
+                      loops = false;
+                }    
+                index++;                                                 
+            }       
+        }catch(err){
+             alert("ErrAvailable:"+err); 
+        }
+        if(dnid>0){open_DN()};
         }
         async function open_DN(){
             const dona = await getSpecificDN(dnid);
