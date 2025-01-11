@@ -1308,6 +1308,25 @@
             closeShare();
         }    
         </script>
+    <div class="modal-overlay" id="DN_window">
+        <div class="modal" id="modal">            
+            <div>
+                <h2  id="dn_desc"></h2>
+                <p class="reward-item" id="dn_info"></p>
+                <span class="progress">
+                    <p class="css_back" onclick="dn_back()" id="click_back">Back</p>
+                    <p class="css_back" style="margin-left:auto" onclick="dn_next()" id="click_next">Next</p>
+                </span>
+            </div>
+            <div class="image-container">
+                <img src="" alt="" id="dn_img">
+            </div>
+            <div class="_buttons">
+                <button type="button" class="cancel" onclick="closeShare()">取消</button>
+                <button type="button" class="confirm" id="dn_claim">領取</button>
+            </div>
+        </div>
+    </div>
     <script>
         let dnid;
         function whichAvailable(holder){
