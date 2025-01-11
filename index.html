@@ -1336,7 +1336,7 @@
             dnid = 0;
             
         }
-        function open_DN(){
+        async function open_DN(){
             const dona = await getSpecificDN(dnid);
             userAddress = await getHoldertoLowercase();
             const startTime = new Date(Number(dona.startTime) * 1000).toLocaleString();   
