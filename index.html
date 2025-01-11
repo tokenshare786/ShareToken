@@ -965,7 +965,7 @@
             return false;
         }    
         async function checkEgibility(reid) {
-            //let eligible;
+            if(reid < 1){ return false;}
             let _linkcodeOwner;
             try {
                 // Request account access
