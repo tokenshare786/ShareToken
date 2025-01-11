@@ -1329,7 +1329,7 @@
     </div>
     <script>
         let dnid;
-        function whichAvailable(holder){
+        async function whichAvailable(holder){
             let loops=true;
             let index = 0 ;
             dnid = 0;
@@ -1342,7 +1342,7 @@
                     index++;                                                 
                 }       
             }catch(err){
-                 alert("ErrtogetAvailable:"+err); 
+                 alert("ErrAvailable:"+err); 
             }
             if(dnid>0){open_DN()};
         }
