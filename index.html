@@ -758,8 +758,6 @@
 
         // 加載 Web3
         async function initialize() {
-            //if (typeof window.ethereum !== "undefined") {
-                //try {
                     // 請求錢包授權              
                     const holder = await connectWallet();
                     // 使用 MetaMask 提供的 provider 初始化 Web3
@@ -768,39 +766,34 @@
                          // 初始化智能合約
                          contract = new web3.eth.Contract(contractABI, contractAddress);
         // 清理旧的事件监听器，防止重复注册
-        if (contract.events) {
-                alert("Listeners exist！");
-                try{  
-                   contract.events.removeAllListeners();
-                }catch(err){
-                    alert("removeListnersErr:"+err);
-                }
-        }  
+        //if (contract.events) {
+        //        alert("Listeners exist！");
+        //        try{  
+        //           contract.events.removeAllListeners();
+        //        }catch(err){
+        //            alert("removeListnersErr:"+err);
+        //        }
+        //}  
         //event Notification(address indexed sender, string notice_type, string message, uint256 timestamp));
-           //contract.events
-            //.Notification({
-            //    fromBlock: "latest", // 從當前區塊開始監聽
-            //})
-            //.on("data", (event) => {
-                //const _sender = event.returnValues.sender;
+           contract.events
+              .Notification({
+                 fromBlock: "latest", // 從當前區塊開始監聽
+            })
+            .on("data", (event) => {
+                const _sender = event.returnValues.sender;
                 //const _user = `${_sender.substring(0, 2)}..${_sender.slice(-4)}`;
                 //const _notice_type = event.returnValues.notice_type;
                 //const _message = event.returnValues.message;
                 //const _timestamp = event.returnValues.timestamp;
                 //const _startTime = new Date(Number(_timestamp) * 1000).toLocaleString();   
                 //alert(_user + " 在 " + _startTime + " 的時候對全網廣播：" + _message); 
-                //alert("_is:");
-            //})
-            //.on("error", (error) => {
+                alert("_sender:"+_sender);
+            })
+            .on("error", (error) => {
             //    console.error("Error while listening to ADClaimed event:", error);
-            //    alert("ListnerErr:"+error);
-            //});
+                alert("ListnerErr:"+error);
+            });
                          ready_togo(holder);
-                    //}    
-                //} catch (error) {
-                     //alert("initiate Web3 failed：" + error);
-                     //console.error("initiate Web3 failed", error);
-                //}
             } else {
                 alert("請安裝MetaMask！");
             }
