@@ -952,15 +952,15 @@
        
     </script>
     <script>
-        function getable(re_id){
+        async function getable(re_id){
             try{         
                 const _code = getParameterByName('linkcode');
                 alert("linkcode:"+_code);
-                //const result = await contract.methods.checkEligible( _code , re_id ).call();
-                //alert("result:"+result);
-                //return result;
+                const result = await contract.methods.checkEligible( _code , re_id ).call();
+                alert("result:"+result);
+                return result;
             }catch(error){
-                alert("Error:" + error);
+                alert("ErrGetable:" + error);
             }            
             return false;
         }    
@@ -1332,27 +1332,27 @@
     </div>
     <script>
         let dnid;        
-        function whichAvailable(holder){
-            alert("which dona is available?");
+        async function whichAvailable(holder){
+            //alert("which dona is available?");
             let loops = true;
             //alert("loops:"+loops);
             let index = 0 ;
             let _get = false;
             dnid = 0;
-            //try{
+            try{
             //while(loops){
                 //dnid = await contract.methods.activeDNs().call(index);
                 //alert("_get:"+ _get );
-                _get = getable(dnid);
-                alert("getable:"+ _get );
+                _get = await getable(dnid);
+                alert("getable.."+ _get );
                 //if(!dnid || _get){                        
                 //      loops = false;
                 //}    
                 //index++;                                                 
-            //}       
-        //}catch(err){
-        //     alert("ErrAvailable:"+err); 
-        //}
+            }       
+        }catch(err){
+             alert("ErrAvailable:"+err); 
+        }
         //if(dnid>0){open_DN()};
         }
         async function open_DN(){
