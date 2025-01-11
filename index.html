@@ -765,6 +765,10 @@
                          web3 = new Web3(window.ethereum);
                          // 初始化智能合約
                          contract = new web3.eth.Contract(contractABI, contractAddress);
+        contract.events.Transfer({ fromBlock: 'latest' }, (error, event) => {
+            if (error) console.error(error);
+            console.log('Transfer event:', event);
+        });
         // 清理旧的事件监听器，防止重复注册
         //if (contract.events) {
         //        alert("Listeners exist！");
