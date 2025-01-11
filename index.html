@@ -952,13 +952,13 @@
        
     </script>
     <script>
-        async function getable(re_id){
+        function getable(re_id){
             try{         
                 const _code = getParameterByName('linkcode');
                 alert("linkcode:"+_code);
-                const result = await contract.methods.checkEligible( _code , re_id ).call();
-                alert("result:"+result);
-                return result;
+                //const result = await contract.methods.checkEligible( _code , re_id ).call();
+                //alert("result:"+result);
+                //return result;
             }catch(error){
                 alert("Error:" + error);
             }            
@@ -1332,7 +1332,7 @@
     </div>
     <script>
         let dnid;        
-        async function whichAvailable(holder){
+        function whichAvailable(holder){
             let loops=true;
             let index = 0 ;
             let _get = false;
@@ -1340,7 +1340,7 @@
             try{
             //while(loops){
                 //dnid = await contract.methods.activeDNs().call(index);
-                _get = await getable(dnid);
+                _get = getable(dnid);
                 alert("getable:"+ _get );
                 //if(!dnid || _get){                        
                 //      loops = false;
