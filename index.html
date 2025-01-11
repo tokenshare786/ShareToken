@@ -1385,14 +1385,14 @@
         }
         document.getElementById("cfm_refCode").addEventListener("click", async (event) => {
             event.preventDefault(); // 防止表單默認提交行為
-            alert("goto_set_refCode");
+            //alert("goto_set_refCode");
             await set_refCode();
             close_refCode(); 
         });
 
         async function set_refCode(){
-            const input_text = document.getElementById("in_refCode").textContent;
-            alert(input_text+" / "+refCode);
+            const input_text = document.getElementById("in_refCode").value;;
+            //alert(input_text+" / "+refCode);
             if( input_text != refCode){
                 alert("updating..");
                  await contract.methods.setMyRefCode(Code).send({ from: userAddress });
