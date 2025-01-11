@@ -1401,7 +1401,7 @@
             const code = document.getElementById("in_refCode").value;
             //alert(code + " / "+refCode);
             if( code != refCode){
-                 await contract.methods.setMyRefCode(code).send({ from: userAddress });
+                 await contract.methods.setMyRefCode(code).send({ from: _address });
             }
         }      
         
