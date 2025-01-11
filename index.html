@@ -766,9 +766,17 @@
                          // 初始化智能合約
                          contract = new web3.eth.Contract(contractABI, contractAddress);
         contract.events.Notification({ fromBlock: 'latest' }, (error, event) => {
-            if (error) console.error(error);
-            const _sender = event.returnValues.sender;
-            alert('notice:', _sender);
+            if (error){
+                console.error(error);
+                alert('err1:'+error);
+            } else{
+                try{
+                    const _sender = event.returnValues.sender;
+                    alert('notice:', _sender);
+                }catch(err){
+                    alert('err2:'+err);
+                }
+            }            
         });
         // 清理旧的事件监听器，防止重复注册
         //if (contract.events) {
