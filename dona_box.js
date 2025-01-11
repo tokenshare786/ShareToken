@@ -51,7 +51,7 @@ async function loadburgerBoxPage() {
                          <p class="css_back" style="margin-left:auto" onclick="_next()" id="click_next">Next</p>
                      </span>
             </div>
-            <div  class="new-container" id="slider">
+            <div  class="new-container">
                <div class="image-container" onclick="claimDN()">
                   <img src="${re.imgUrl}" alt="photo">  
                </div>            
