@@ -48,30 +48,7 @@
     opacity: 1; /* 淡入效果 */
 }
 
-        .modal-overlay1 {
-            display: none;
-            position: fixed;
-            padding: 20px;
-            top: 0;
-            left: 0;
-            width: 95%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            /* 半透明背景 */
-            justify-content: center;
-            align-items: center;
-            overflow-y: auto z-index: 1000;
-        }
 
-        .modal1 {
-            background: #1E1E1E;
-            /* 深灰色背景 */
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            width: 90%;
-            max-width: 360px;
-        }
 
         h2 {
             margin-bottom: 20px;
@@ -1358,12 +1335,12 @@
         async function open_DN(){
             const overlay = document.getElementById('dn_window');
             overlay.classList.add('show');
-            //const dona = await getSpecificDN(dnid);            
-            //const startTime = new Date(Number(dona.startTime) * 1000).toLocaleString();   
-            //const dn_info = "【"+ dona.eligiType +"】 "+ startTime +" & " + dona.claimedAmt + " / " + dona.subAmt + " : " + dona.claimCount+" / " + dona.maxClaims ;
-            //document.getElementById("dn_img").src = dona.imgUrl;
-            //document.getElementById("dn_desc").textContent = dn_desc;
-            //document.getElementById("dn_info").textContent = dn_info;
+            const dona = await getSpecificDN(dnid);            
+            const startTime = new Date(Number(dona.startTime) * 1000).toLocaleString();   
+            const dn_info = "【"+ dona.eligiType +"】 "+ startTime +" & " + dona.claimedAmt + " / " + dona.subAmt + " : " + dona.claimCount+" / " + dona.maxClaims ;
+            document.getElementById("dn_img").src = dona.imgUrl;
+            document.getElementById("dn_desc").textContent = dn_desc;
+            document.getElementById("dn_info").textContent = dn_info;
         }
         
         document.getElementById("dn_claim").addEventListener("click", async (event) => {
