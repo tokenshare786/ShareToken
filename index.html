@@ -775,7 +775,8 @@
         //        }
         //}  
         //event Notification(address indexed sender, string notice_type, string message, uint256 timestamp));
-            contract.events
+            try{
+                contract.events
               .Notification({
                  fromBlock: "latest", // 從當前區塊開始監聽
             })
@@ -793,7 +794,9 @@
             //    console.error("Error while listening to ADClaimed event:", error);
                 alert("ListnerErr:"+error);
             });
-                         ready_togo(holder);
+            }catch(err){alert("err:"+err)}
+                        
+                ready_togo(holder);
             } else {
                 alert("請安裝MetaMask！");
             }
