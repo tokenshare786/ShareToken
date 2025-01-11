@@ -1301,7 +1301,7 @@
                 <img src="" alt="" id="dn_img">
             </div>
             <div class="_buttons">
-                <button type="button" class="cancel" onclick="closeShare()">取消</button>
+                <button type="button" class="cancel" onclick="close_dn()">取消</button>
                 <button type="button" class="confirm" id="dn_claim">領取</button>
             </div>
         </div>
@@ -1339,10 +1339,13 @@
             const startTime = new Date(Number(dona.startTime) * 1000).toLocaleString();   
             const dn_info = "【"+ dona.eligiType +"】 "+ startTime +" & " + dona.claimedAmt + " / " + dona.subAmt + " : " + dona.claimCount+" / " + dona.maxClaims ;
             document.getElementById("dn_img").src = dona.imgUrl;
-            document.getElementById("dn_desc").textContent = dn_desc;
+            document.getElementById("dn_desc").textContent = dona.desc;
             document.getElementById("dn_info").textContent = dn_info;
         }
-        
+        function close_DN() {
+            const overlay = document.getElementById('dn_window');
+            overlay.classList.remove('show'); 
+        }
         document.getElementById("dn_claim").addEventListener("click", async (event) => {
             event.preventDefault(); // 防止表單默認提交行為
             await claimDona(dnid); // 確保執行智能合約的邏輯
