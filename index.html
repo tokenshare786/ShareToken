@@ -1150,7 +1150,7 @@
         }    
     </script>
     <div class="modal-overlay" id="modal-overlay">
-        <div class="modal" id="modal">
+        <div class="modal">
             <h2>來發個甜甜圈，大家熟識一下</h2>
             <form id="set-re-form">
                 <div class="form-group">
@@ -1245,7 +1245,7 @@
     </script>
 
     <div class="modal-overlay" id="edit_window">
-        <div class="modal" id="modal">
+        <div class="modal">
             <h2>甜甜圈有點狀況，我喬一下</h2>
             <form id="form_edit">
                 <div class="form-group">
@@ -1264,7 +1264,7 @@
         </div>
     </div>
     <div class="modal-overlay" id="share_window">
-        <div class="modal" id="modal">
+        <div class="modal">
             <h2>分享我的黑色甜甜圈</h2>
             <p style="color:#bbbbbb">我的推薦碼：</p>
             <p id="refcode"></p>
@@ -1334,18 +1334,7 @@
             let loops=true;
             let index = 0 ;
             dnid = 0;
-            try{
-                while(loops){
-                    dnid = await contract.methods.activeDNs().call(index);
-                    if(!dnid || getable(dnid)){                        
-                          loops = false;
-                    }    
-                    index++;                                                 
-                }       
-            }catch(err){
-                 alert("ErrAvailable:"+err); 
-            }
-            if(dnid>0){open_DN()};
+            
         }
         function open_DN(){
             const dona = await getSpecificDN(dnid);
