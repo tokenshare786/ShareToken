@@ -768,13 +768,13 @@
         contract.events.Notification({ fromBlock: 'latest' }, (error, event) => {
             if (error){
                 console.error(error);
-                alert('err1:'+error);
+                alert('err1:' + error);
             } else{
                 try{
                     const _sender = event.returnValues.sender;
-                    alert('notice:', _sender);
+                    alert('notice:' + _sender);
                 }catch(err){
-                    alert('err2:'+err);
+                    alert('err2:' + err);
                 }
             }            
         });
