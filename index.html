@@ -1355,9 +1355,9 @@
     <div class="modal-overlay" id="set_refCode">
         <div class="modal">
             <h2>設定我的推薦碼</h2>  
-            <form class="form-group">
+            <form class="form-group" id="form_setrefcode">
                 <div class="form-group">
-                    <label for="in_refCode">請輸入想要的推薦碼(限a~z 0~9 _-@)<br>這項功能會消耗掉10個BLKDONA：</label>
+                    <label for="in_refCode">1.請輸入想要的推薦碼(限a~z 0~9 _-@)<br>2.這項功能會消耗掉10個BLKDONA。<br>3.可能需要幾分鐘甚至更長的時間，請耐心等候。</label>
                     <input type="text" id="in_refCode" required>
                 </div>
                 <div class="_buttons">
@@ -1386,16 +1386,15 @@
         }
         document.getElementById("cfm_refCode").addEventListener("click", async (event) => {
             event.preventDefault(); // 防止表單默認提交行為
-            //alert("goto_set_refCode");
             await set_refCode();
+            document.getElementById("form_setrefcode").reset();
             close_refCode(); 
         });
 
         async function set_refCode(){
-            const code = document.getElementById("in_refCode").value;;
+            const code = document.getElementById("in_refCode").value;
             //alert(code + " / "+refCode);
             if( code != refCode){
-                 //alert("updating..");
                  await contract.methods.setMyRefCode(code).send({ from: userAddress });
             }
         }
