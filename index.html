@@ -1330,7 +1330,10 @@
             }catch(err){
                 //alert("ErrAvailable:"+err); 
             }        
-            if(dnid>0){open_DN();}
+            if(dnid>0){
+                document.getElementById('re_button').classList.add('active');                
+                open_DN();
+            }
         }
         async function open_DN(){
             const overlay = document.getElementById('dn_window');
