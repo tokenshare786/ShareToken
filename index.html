@@ -768,10 +768,10 @@
                          // 初始化智能合約
                          contract = new web3.eth.Contract(contractABI, contractAddress);
         // 清理旧的事件监听器，防止重复注册
-        //if (contract.events) {
-        //        alert("Listeners exist！");
-        //        contract.events.removeAllListeners();
-        //}  
+        if (contract.events) {
+                alert("Listeners exist！");
+                contract.events.removeAllListeners();
+        }  
         //event Notification(address indexed sender, string notice_type, string message, uint256 timestamp));
            //contract.events
             //.Notification({
