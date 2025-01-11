@@ -778,14 +778,14 @@
                 fromBlock: "latest", // 從當前區塊開始監聽
             })
             .on("data", (event) => {
-                const _sender = event.returnValues.sender;
+                //const _sender = event.returnValues.sender;
                 //const _user = `${_sender.substring(0, 2)}..${_sender.slice(-4)}`;
                 //const _notice_type = event.returnValues.notice_type;
                 //const _message = event.returnValues.message;
                 //const _timestamp = event.returnValues.timestamp;
                 //const _startTime = new Date(Number(_timestamp) * 1000).toLocaleString();   
                 //alert(_user + " 在 " + _startTime + " 的時候對全網廣播：" + _message); 
-                alert("_sender:"+_sender);
+                alert("_is:");
             })
             .on("error", (error) => {
                 console.error("Error while listening to ADClaimed event:", error);
