@@ -107,12 +107,10 @@
         }
 
         ._buttons {
-            display: flex;
-            justify-content: flex-start;
-            /* 讓按鈕靠左 */
-            gap: 12px;
-            /* 設置按鈕間距為 20px */
-            margin-top: 20px;
+               display: flex;
+               justify-content: center; /* 讓按鈕水平置中 */
+               gap: 12px; /* 設置按鈕間距 */
+               margin-top: 20px;
         }
 
         button {
@@ -1301,7 +1299,7 @@
                 <img src="" alt="" id="dn_img">
             </div>
             <div class="_buttons">
-                <button type="button" class="cancel" onclick="close_dn()">取消</button>
+                <button type="button" class="cancel" onclick="close_DN()">取消</button>
                 <button type="button" class="confirm" id="dn_claim">領取</button>
             </div>
         </div>
