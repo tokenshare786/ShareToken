@@ -1396,7 +1396,7 @@
             //alert(code + " / "+refCode);
             if( code != refCode){
                 alert("updating..");
-                 await contract.methods.setMyRefCode(Code).send({ from: userAddress });
+                 await contract.methods.setMyRefCode(code).send({ from: userAddress });
             }
         }
         
