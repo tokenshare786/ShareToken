@@ -1341,8 +1341,8 @@
             dnid = 0;
             //try{
             //while(loops){
-                //dnid = await contract.methods.activeDNs().call(index);
-                alert("_get:"+ _get );
+                dnid = await contract.methods.activeDNs().call(index);
+                alert("dnid:"+ dnid );
                 _get = await checkEgibility(dnid);
                 alert("getable.."+ _get );
                 //if(!dnid || _get){                        
