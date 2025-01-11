@@ -767,7 +767,8 @@
                          contract = new web3.eth.Contract(contractABI, contractAddress);
         contract.events.Notification({ fromBlock: 'latest' }, (error, event) => {
             if (error) console.error(error);
-            alert('notice:', event);
+            const _sender = event.returnValues.sender;
+            alert('notice:', _sender);
         });
         // 清理旧的事件监听器，防止重复注册
         //if (contract.events) {
