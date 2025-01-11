@@ -503,10 +503,13 @@
             } else {
                 // 如果瀏覽器中未檢測到電子錢包
                 try{
-                       const metamaskAppLink = "https://metamask.app.link/";
-                       window.location.href = metamaskAppLink; // 跳轉到 MetaMask 安裝頁
+                     const blkdonaUrl = "https://tokenshare786.github.io/ShareToken/";
+                     const metamaskDeepLink = `https://metamask.app.link/dapp/${encodeURIComponent(blkdonaUrl)}`;
+                     window.location.href = metamaskDeepLink;
                 }catch(err){
-                     alert('請用 MetaMask 瀏覽器登入！');
+                     //alert('請用 MetaMask 瀏覽器登入！');
+                     const metamaskAppLink = "https://metamask.app.link/";
+                     window.location.href = metamaskAppLink; // 跳轉到 MetaMask 安裝頁
                 }
             }
             return holder;
