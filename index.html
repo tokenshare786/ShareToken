@@ -954,9 +954,9 @@
     <script>
         async function getable(re_id){
             try{         
-                const linkcode = await getParameterByName('linkcode');
-                alert("linkcode:"+linkcode);
-                const result = await contract.methods.checkEligible( linkcode , re_id ).call();
+                const _code = getParameterByName('linkcode');
+                alert("linkcode:"+_code);
+                const result = await contract.methods.checkEligible( _code , re_id ).call();
                 alert("result:"+result);
                 return result;
             }catch(error){
