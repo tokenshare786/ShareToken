@@ -1359,6 +1359,7 @@
         }
         async function open_DN(){
             const dona = await getSpecificDN(dnid);
+            alert("open_DN");
             userAddress = await getHoldertoLowercase();
             const startTime = new Date(Number(dona.startTime) * 1000).toLocaleString();   
             const desc_info = "【"+dona.eligiType+"】 "+ startTime +" & " + dona.claimedAmt+" / " + dona.subAmt +" : "+ dona.claimCount+" / " + dona.maxClaims ;
