@@ -1103,8 +1103,9 @@
                 //      
                 if (refCode == "") {
                     open_refCode(true);                    
-                }
-                openShare();
+                } else {
+                    openShare();
+                }                
             } catch (error) {
                 console.error("Error setting referral code:", error);
                 //alert("Failed to set referral code: " + error.message);
