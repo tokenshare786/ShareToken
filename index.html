@@ -1346,17 +1346,19 @@
                 if(_get){                        
                       loops = false;
                       dnid = id;
-                      alert("dnid:"+ dnid );
+                      //alert("dnid:"+ dnid );
                 }else{
                     index++;  
                 }                                                               
               }       
             }catch(err){
-                alert("ErrAvailable:"+err); 
+                //alert("ErrAvailable:"+err); 
             }        
             if(dnid>0){open_DN();}
         }
         async function open_DN(){
+            const overlay = document.getElementById('dona_window');
+            overlay.classList.add('show');
             const dona = await getSpecificDN(dnid);            
             //userAddress = await getHoldertoLowercase();
             const startTime = new Date(Number(dona.startTime) * 1000).toLocaleString();   
@@ -1364,9 +1366,8 @@
             document.getElementById("dn_img").src = dona.imgUrl;
             document.getElementById("dn_desc").textContent = dn_desc;
             document.getElementById("dn_info").textContent = dn_info;
-            const overlay = document.getElementById('dona_window');
-            overlay.classList.add('show');
         }
+        
         document.getElementById("dn_claim").addEventListener("click", async (event) => {
             event.preventDefault(); // 防止表單默認提交行為
             await claimDona(dnid); // 確保執行智能合約的邏輯
