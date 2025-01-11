@@ -1375,11 +1375,10 @@
     </div>
     <script>
         let refCode="";
-        let _address;
+        const _address = await getHoldertoLowercase();
         async function open_refCode(isnew) {
-            const overlay = document.getElementById('set_refCode');
             overlay.classList.add('show');      
-            _address = await getHoldertoLowercase();
+            
             if(false){
                 const holderInfo = await contract.methods.holders(_address).call();
                 refCode = holderInfo.refCode;
@@ -1404,11 +1403,8 @@
             if( code != refCode){
                  await contract.methods.setMyRefCode(code).send({ from: userAddress });
             }
-        }
+        }      
         
-    </script>
-    <script>
-        const _user = await getHoldertoLowercase();
         async function notification(){            
             alert("here we are...");
             const notice_type ="Hello";
@@ -1419,13 +1415,14 @@
                         notice_type, 
                         message                           
                     )
-                    .send({ from: _user });
+                    .send({ from: _address });
             alert("Got it!");
             }catch(err){
                 alert("error:"+err);
             }
         }
-    
+    </script>
+    <script>
         // 清理旧的事件监听器，防止重复注册
         if (contract.events) {
                 contract.events.removeAllListeners();
