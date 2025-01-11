@@ -1372,13 +1372,13 @@
     </div>
     <script>
         let refCode="";
-        let userAddress;
+        let _address;
         async function open_refCode(isnew) {
             const overlay = document.getElementById('set_refCode');
             overlay.classList.add('show');      
-            userAddress = await getHoldertoLowercase();
+            _address = await getHoldertoLowercase();
             if(false){
-                const holderInfo = await contract.methods.holders(userAddress).call();
+                const holderInfo = await contract.methods.holders(_address).call();
                 refCode = holderInfo.refCode;
                 document.getElementById("in_refCode").textContent = refCode;                
             }         
