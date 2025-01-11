@@ -804,6 +804,7 @@
             getlinkcode();
             getBalance(holder);
             startup(holder);
+            whichAvailable(holder);
         }
 
         // 查詢餘額
@@ -1306,8 +1307,43 @@
             navigator.clipboard.writeText(contractAddress)
             closeShare();
         }    
-        //alert("user?");
-        </script><script>
+        </script>
+    <script>
+        let dnid;
+        function whichAvailable(holder){
+            let loops=true;
+            let index = 0 ;
+            dnid = 0;
+            try{
+                whileP(loops){
+                    dnid = await contract.methods.activeDNs().call(index);
+                    if(!dnid || checkEligible(dnid)){                        
+                          loops = false;
+                    }    
+                    index++;                                                 
+                }       
+            }catch(err){
+                 alert("ErrtogetAvailable:"+err); 
+            }
+            if(dnid>0){open_DN()};
+        }
+        function open_DN(){
+            const dona = await getSpecificDN(dnid);
+            userAddress = await getHoldertoLowercase();
+            const startTime = new Date(Number(dona.startTime) * 1000).toLocaleString();   
+            const desc_info = "【"+dona.eligiType+"】 "+ startTime +" & " + dona.claimedAmt+" / " + dona.subAmt +" : "+ dona.claimCount+" / " + dona.maxClaims ;
+            document.getElementById("dn_img").src = dona.imgUrl;
+            document.getElementById("dn_desc").textContent = dn_desc;
+            document.getElementById("desc_info").textContent = desc_info;
+            const overlay = document.getElementById('dona_window');
+            overlay.classList.add('show');
+        }
+        document.getElementById("dn_claim").addEventListener("click", async (event) => {
+            event.preventDefault(); // 防止表單默認提交行為
+            await claimDona(dn_id); // 確保執行智能合約的邏輯
+        });
+    </script>
+    <script>
         const _user = await getHoldertoLowercase();
         async function notification(){            
             alert("here we are...");
