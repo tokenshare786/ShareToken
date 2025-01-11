@@ -1342,19 +1342,20 @@
         try{
             while(loops){
                 const id = await contract.methods.activeDNs(index).call();
-                //alert("dnid:"+ dnid );
                 _get = await checkEgibility(id);
                 //alert("getable.."+ _get );
-                if(!id || _get){                        
+                if(_get){                        
                       loops = false;
                       dnid = id;
-                }    
-                index++;                                                 
+                      alert("dnid:"+ dnid );
+                }else{
+                    index++;  
+                }                                                               
               }       
             }catch(err){
                 alert("ErrAvailable:"+err); 
             }        
-        if(dnid>0){open_DN();}
+            if(dnid>0){open_DN();}
         }
         async function open_DN(){
             const dona = await getSpecificDN(dnid);
