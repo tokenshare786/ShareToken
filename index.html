@@ -1407,7 +1407,7 @@
         }      
     
         async function notification(){            
-            alert("here we are...");
+            //alert("here we are...");
             if( _address == null){
                 _address = await getHoldertoLowercase();
             }
@@ -1420,17 +1420,35 @@
                         message                           
                     )
                     .send({ from: _address });
-            alert("Got it!");
+                //alert("Got it!");
             }catch(err){
-                alert("error:"+err);
+                //alert("error:"+err);
             }
         }
-    </script>
-    <script>
+
         // 清理旧的事件监听器，防止重复注册
         if (contract.events) {
                 contract.events.removeAllListeners();
-        }
+        }  
+        //event Notification(address indexed sender, string notice_type, string message, uint256 timestamp));
+           contract.events
+            .Notification({
+                fromBlock: "latest", // 從當前區塊開始監聽
+            })
+            .on("data", (event) => {
+                const sender = event.returnValues.sender;
+                const user = `${sender.substring(0, 2)}..${sender.slice(-4)}`;
+                const notice_type = event.returnValues.notice_type;
+                const message = event.returnValues.message;
+                const timestamp = event.returnValues.timestamp;
+                const startTime = new Date(Number(timestamp) * 1000).toLocaleString();   
+                alert(user + " 在 " + startTime + " 的時候對全網廣播：" + message);                
+            })
+            .on("error", (error) => {
+                console.error("Error while listening to ADClaimed event:", error);
+            });
+    </script>
+    <script>
         // 監聽空投發起事件
         contract.events
             .ADStarted({
@@ -1462,23 +1480,7 @@
             .on("error", (error) => {
                 console.error("Error while listening to ADClaimed event:", error);
             });
-            //event Notification(address indexed sender, string notice_type, string message, uint256 timestamp));
-            contract.events
-            .Notification({
-                fromBlock: "latest", // 從當前區塊開始監聽
-            })
-            .on("data", (event) => {
-                const sender = event.returnValues.sender;
-                const user = `${sender.substring(0, 2)}...${sender.slice(-4)}`;
-                const notice_type = event.returnValues.notice_type;
-                const message = event.returnValues.message;
-                const timestamp = event.returnValues.timestamp;
-                const startTime = new Date(Number(timestamp) * 1000).toLocaleString();   
-                alert(user + " 在 " + startTime + " 的時候對全網廣播：" + message);                
-            })
-            .on("error", (error) => {
-                console.error("Error while listening to ADClaimed event:", error);
-            });
+            
     </script>
 </body>
 </html>
