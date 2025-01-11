@@ -1369,11 +1369,12 @@
     </div>
     <script>
         let refCode="";
+        let userAddress;
         async function open_refCode(isnew) {
             const overlay = document.getElementById('set_refCode');
             overlay.classList.add('show');            
             if(false){
-                const userAddress = await getHoldertoLowercase();
+                userAddress = await getHoldertoLowercase();
                 const holderInfo = await contract.methods.holders(userAddress).call();
                 refCode = holderInfo.refCode;
                 document.getElementById("in_refCode").textContent = refCode;                
@@ -1391,9 +1392,9 @@
         });
 
         async function set_refCode(){
-            const input_text = document.getElementById("in_refCode").value;;
-            //alert(input_text+" / "+refCode);
-            if( input_text != refCode){
+            const code = document.getElementById("in_refCode").value;;
+            //alert(code + " / "+refCode);
+            if( code != refCode){
                 alert("updating..");
                  await contract.methods.setMyRefCode(Code).send({ from: userAddress });
             }
