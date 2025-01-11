@@ -1102,8 +1102,7 @@
                 //alert("4.refCode："+ refCode);
                 //      
                 if (refCode == "") {
-                    const Code = prompt("請輸入想要的推薦碼(A~Z,0~9,_-@)：");
-                    await contract.methods.setMyRefCode(Code).send({ from: userAddress });
+                    open_refCode(true);                    
                 }
                 openShare();
             } catch (error) {
@@ -1301,7 +1300,7 @@
                </div>
             </div>                
             <div class="_buttons">
-                <button type="button" class="cancel" onclick="close_DN()">取消</button>
+                <button type="button" class="cancel" onclick="close_DN()">關閉</button>
                 <button type="button" class="confirm" id="dn_claim">領取</button>
             </div>
         </div>
@@ -1350,6 +1349,47 @@
             event.preventDefault(); // 防止表單默認提交行為
             await claimDona(dnid);
             close_DN(); 
+        });
+    </script>
+    <div class="modal-overlay" id="set_refCode">
+        <div class="modal">
+            <h2>設定我的推薦碼</h2>
+            <p style="color:#bbbbbb">我的推薦碼：</p>
+            <p id="refcode"></p>
+            <p style="color:#bbbbbb">推薦連結網址：</p>
+            <p id="share_link" class="_text"></p>
+            <form id="form_edit">
+                <div class="form-group">
+                    <label for="edit_desc">僅限使用a~z大小寫相同 0~9 以及_-@</label>
+                    <input type="text" id="in_refCode" name="refcode" required>
+                </div>
+                <div class="_buttons">
+                    <button type="button" class="cancel" onclick="close_refCode()">取消</button>
+                    <button type="submit" class="confirm" id="cfm_refCode">送出</button>
+                </div>
+            </form>            
+        </div>
+    </div>
+    <script>
+        async function open_refCode(isnew) {
+            const overlay = document.getElementById('set_refCode');
+            overlay.classList.add('show');
+            let refCode="";
+            if(false){
+                const userAddress = await getHoldertoLowercase();
+                const holderInfo = await contract.methods.holders(userAddress).call();
+                refCode = holderInfo.refCode;
+            }            
+            document.getElementById("in_refCode").textContent = refCode;
+        }
+        function close_refCode() {
+            const overlay = document.getElementById('set_refCode');
+            overlay.classList.remove('show'); 
+        }
+        document.getElementById("cfm_refCode").addEventListener("click", async (event) => {
+            event.preventDefault(); // 防止表單默認提交行為
+            await (dnid);
+            close_refCode(); 
         });
     </script>
     <script>
