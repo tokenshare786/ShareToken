@@ -1378,7 +1378,8 @@
                 const holderInfo = await contract.methods.holders(userAddress).call();
                 refCode = holderInfo.refCode;
                 document.getElementById("in_refCode").textContent = refCode;                
-            }            
+            }         
+            document.getElementById("in_refCode").focus();
         }
         function close_refCode() {
             const overlay = document.getElementById('set_refCode');
