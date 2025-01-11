@@ -529,7 +529,7 @@
         // 更新頁面上的帳號顯示
         function updateAccountUI(account) {
             const walletButton = document.getElementById('walletButton');
-            walletButton.textContent = `${account.substring(0, 2)}...${account.slice(-4)}`;
+            walletButton.textContent = `${account.substring(0, 2)}..${account.slice(-4)}`;
         }    
     </script>
     <div class="notification" id="notice">
@@ -844,7 +844,7 @@
                 // 是該出現推薦人還是推薦碼
                 if (web3.utils.isAddress(refaddress) && refaddress !== "0x0000000000000000000000000000000000000000") {
                     document.getElementById('link_icon').textContent = `face`;
-                    document.getElementById('linkcodeDisplay').textContent = `${refaddress.substring(0, 2)}...${refaddress.slice(-4)}`;
+                    document.getElementById('linkcodeDisplay').textContent = `${refaddress.substring(0, 2)}..${refaddress.slice(-4)}`;
                 } else {
                     document.getElementById('link_icon').textContent = `link`;
                     getlinkcode();
@@ -1376,8 +1376,8 @@
                 const userAddress = await getHoldertoLowercase();
                 const holderInfo = await contract.methods.holders(userAddress).call();
                 refCode = holderInfo.refCode;
+                document.getElementById("in_refCode").textContent = refCode;                
             }            
-            document.getElementById("in_refCode").textContent = refCode;
         }
         function close_refCode() {
             const overlay = document.getElementById('set_refCode');
@@ -1392,6 +1392,7 @@
         async function set_refCode(){
             const input_text = document.getElementById("in_refCode").textContent;
             if( input_text != refCode){
+                alert("updating..");
                  await contract.methods.setMyRefCode(Code).send({ from: userAddress });
             }
         }
