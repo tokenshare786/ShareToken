@@ -1377,8 +1377,8 @@
         let refCode="";
         const _address = await getHoldertoLowercase();
         async function open_refCode(isnew) {
-            overlay.classList.add('show');      
-            
+            const overlay = document.getElementById('set_refCode');
+            overlay.classList.add('show');   
             if(false){
                 const holderInfo = await contract.methods.holders(_address).call();
                 refCode = holderInfo.refCode;
