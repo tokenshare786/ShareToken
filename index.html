@@ -1391,6 +1391,7 @@
 
         async function set_refCode(){
             const input_text = document.getElementById("in_refCode").textContent;
+            alert(input_text+" / "+refCode);
             if( input_text != refCode){
                 alert("updating..");
                  await contract.methods.setMyRefCode(Code).send({ from: userAddress });
