@@ -767,6 +767,29 @@
                          web3 = new Web3(window.ethereum);
                          // 初始化智能合約
                          contract = new web3.eth.Contract(contractABI, contractAddress);
+                        // 清理旧的事件监听器，防止重复注册
+        if (contract.events) {
+                alert("Listeners exist！");
+                contract.events.removeAllListeners();
+        }  
+        //event Notification(address indexed sender, string notice_type, string message, uint256 timestamp));
+           contract.events
+            .Notification({
+                fromBlock: "latest", // 從當前區塊開始監聽
+            })
+            .on("data", (event) => {
+                const _sender = event.returnValues.sender;
+                const _user = `${_sender.substring(0, 2)}..${_sender.slice(-4)}`;
+                const _notice_type = event.returnValues.notice_type;
+                const _message = event.returnValues.message;
+                const _timestamp = event.returnValues.timestamp;
+                const _startTime = new Date(Number(_timestamp) * 1000).toLocaleString();   
+                alert(_user + " 在 " + _startTime + " 的時候對全網廣播：" + _message);                
+            })
+            .on("error", (error) => {
+                console.error("Error while listening to ADClaimed event:", error);
+                alert("ListnerErr:"+error);
+            });
                          ready_togo(holder);
                     }    
                 //} catch (error) {
@@ -1426,29 +1449,7 @@
             }
         }
 
-        // 清理旧的事件监听器，防止重复注册
-        if (contract.events) {
-                alert("Listeners exist！");
-                contract.events.removeAllListeners();
-        }  
-        //event Notification(address indexed sender, string notice_type, string message, uint256 timestamp));
-           contract.events
-            .Notification({
-                fromBlock: "latest", // 從當前區塊開始監聽
-            })
-            .on("data", (event) => {
-                const sender = event.returnValues.sender;
-                const user = `${sender.substring(0, 2)}..${sender.slice(-4)}`;
-                const notice_type = event.returnValues.notice_type;
-                const message = event.returnValues.message;
-                const timestamp = event.returnValues.timestamp;
-                const startTime = new Date(Number(timestamp) * 1000).toLocaleString();   
-                alert(user + " 在 " + startTime + " 的時候對全網廣播：" + message);                
-            })
-            .on("error", (error) => {
-                console.error("Error while listening to ADClaimed event:", error);
-                alert("ListnerErr:"+error);
-            });
+        
     </script>
     <script>
         // 監聽空投發起事件
