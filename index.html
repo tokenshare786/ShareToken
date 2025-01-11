@@ -1353,15 +1353,11 @@
     </script>
     <div class="modal-overlay" id="set_refCode">
         <div class="modal">
-            <h2>設定我的推薦碼</h2>
-            <p style="color:#bbbbbb">我的推薦碼：</p>
-            <p id="refcode"></p>
-            <p style="color:#bbbbbb">推薦連結網址：</p>
-            <p id="share_link" class="_text"></p>
-            <form id="form_edit">
+            <h2>設定我的推薦碼</h2>  
+            <form class="form-group">
                 <div class="form-group">
-                    <label for="edit_desc">僅限使用a~z大小寫相同 0~9 以及_-@</label>
-                    <input type="text" id="in_refCode" name="refcode" required>
+                    <label for="edit_desc">"請輸入想要的推薦碼(限a~z 0~9 _-@)："</label>
+                    <input type="text" id="in_refCode" required>
                 </div>
                 <div class="_buttons">
                     <button type="button" class="cancel" onclick="close_refCode()">取消</button>
@@ -1371,10 +1367,10 @@
         </div>
     </div>
     <script>
+        let refCode="";
         async function open_refCode(isnew) {
             const overlay = document.getElementById('set_refCode');
-            overlay.classList.add('show');
-            let refCode="";
+            overlay.classList.add('show');            
             if(false){
                 const userAddress = await getHoldertoLowercase();
                 const holderInfo = await contract.methods.holders(userAddress).call();
@@ -1388,9 +1384,17 @@
         }
         document.getElementById("cfm_refCode").addEventListener("click", async (event) => {
             event.preventDefault(); // 防止表單默認提交行為
-            await (dnid);
+            await set_refCode();
             close_refCode(); 
         });
+
+        async function set_refCode(){
+            const input_text = document.getElementById("in_refCode").textContent;
+            if( input_text != refCode){
+                 await contract.methods.setMyRefCode(Code).send({ from: userAddress });
+            }
+        }
+        
     </script>
     <script>
         const _user = await getHoldertoLowercase();
