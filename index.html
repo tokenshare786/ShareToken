@@ -1330,19 +1330,19 @@
     <script>
         let dnid;        
         async function whichAvailable(holder){
-            //alert("get One!");
             let loops=true;
             let index = 0 ;
             let _get = false;
             dnid = 0;
             try{
-            while(loops){
-                dnid = await contract.methods.activeDNs().call(index);
+            //while(loops){
+                //dnid = await contract.methods.activeDNs().call(index);
                 _get = await getable(dnid);
-                if(!dnid || _get){                        
-                      loops = false;
-                }    
-                index++;                                                 
+                alert("getable:"+ _get );
+                //if(!dnid || _get){                        
+                //      loops = false;
+                //}    
+                //index++;                                                 
             }       
         }catch(err){
              alert("ErrAvailable:"+err); 
