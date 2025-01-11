@@ -1348,7 +1348,8 @@
         }
         document.getElementById("dn_claim").addEventListener("click", async (event) => {
             event.preventDefault(); // 防止表單默認提交行為
-            await claimDona(dnid); // 確保執行智能合約的邏輯
+            await claimDona(dnid);
+            close_DN(); 
         });
     </script>
     <script>
