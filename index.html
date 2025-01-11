@@ -1334,9 +1334,9 @@
             let index = 0 ;
             dnid = 0;
             try{
-                whileP(loops){
+                while(loops){
                     dnid = await contract.methods.activeDNs().call(index);
-                    if(!dnid || checkEligible(dnid)){                        
+                    if(!dnid || getable(dnid)){                        
                           loops = false;
                     }    
                     index++;                                                 
