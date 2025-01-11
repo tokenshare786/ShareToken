@@ -1311,7 +1311,7 @@
             closeShare();
         }    
         </script>
-    <div class="modal-overlay" id="DN_window">
+    <div class="modal-overlay" id="dn_window">
         <div class="modal">            
             <div>
                 <h2  id="dn_desc"></h2>
@@ -1343,7 +1343,6 @@
             while(loops){
                 const id = await contract.methods.activeDNs(index).call();
                 _get = await checkEgibility(id);
-                //alert("getable.."+ _get );
                 if(_get){                        
                       loops = false;
                       dnid = id;
@@ -1358,14 +1357,13 @@
             if(dnid>0){open_DN();}
         }
         async function open_DN(){
-            const dona = await getSpecificDN(dnid);
-            alert("open_DN");
-            userAddress = await getHoldertoLowercase();
+            const dona = await getSpecificDN(dnid);            
+            //userAddress = await getHoldertoLowercase();
             const startTime = new Date(Number(dona.startTime) * 1000).toLocaleString();   
-            const desc_info = "【"+dona.eligiType+"】 "+ startTime +" & " + dona.claimedAmt+" / " + dona.subAmt +" : "+ dona.claimCount+" / " + dona.maxClaims ;
+            const dn_info = "【"+ dona.eligiType +"】 "+ startTime +" & " + dona.claimedAmt + " / " + dona.subAmt + " : " + dona.claimCount+" / " + dona.maxClaims ;
             document.getElementById("dn_img").src = dona.imgUrl;
             document.getElementById("dn_desc").textContent = dn_desc;
-            document.getElementById("desc_info").textContent = desc_info;
+            document.getElementById("dn_info").textContent = dn_info;
             const overlay = document.getElementById('dona_window');
             overlay.classList.add('show');
         }
