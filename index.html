@@ -1331,7 +1331,7 @@
         </div>
     </div>
     <script>
-        let dnid;        
+    let dnid;        
     async function whichAvailable(holder){
             //alert("which dona is available?");
             let loops = true;
@@ -1341,7 +1341,7 @@
             dnid = 0;
             try{
             //while(loops){
-                dnid = await contract.methods.activeDNs().call(index);
+                dnid = await contract.methods.activeDNs(index).call();
                 alert("dnid:"+ dnid );
                 _get = await checkEgibility(dnid);
                 alert("getable.."+ _get );
