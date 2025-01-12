@@ -769,22 +769,37 @@
                          // 初始化智能合約                         
                          contract = new web3.eth.Contract(contractABI, contractAddress);
      //
-     contract.events.Notification({ fromBlock: 'latest' }, (error, event) => {
-            const _message = event.returnValues.message;
-            alert('message:' + _message);
+     contract.events.Notification({ fromBlock: 'latest' }, (error, event) => {            
             if (error){
                 console.error(error);    
-                alert('err1:' + error);
+                //alert('err1:' + error);
             } else{
                 console.log(event);
                 try{
-                    const _notice = event.returnValues.notice_type;
-                    alert('notice:' + _notice);
+                    const _message = event.returnValues.message;            
+                    const _noticetype = event.returnValues.notice_type;
+                    alert(_noticetype + ' : ' + _message);
                 }catch(err){
-                    alert('err2:' + err);
+                    //alert('err2:' + err);
                 }
             }      
     });
+    //event donaClaimed(uint256 indexed id, address indexed claimer, uint256 amount, address indexed creator);     
+    contract.events.donaClaimed({ fromBlock: 'latest' }, (error, event) => {            
+            if (error){
+                console.error(error);    
+                //alert('err1:' + error);
+            } else{
+                console.log(event);
+                try{
+                    const _amount = event.returnValues.amount;            
+                    alert('有人剛剛領了甜甜圈，獲得:' + _amount +'個BDN');
+                }catch(err){
+                    //alert('err2:' + err);
+                }
+            }      
+    });
+    /////                    
                  ready_togo(holder);
             } else {
                 alert("請安裝MetaMask！");
