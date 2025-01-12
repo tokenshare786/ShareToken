@@ -768,55 +768,21 @@
                          web3 = new Web3(window.ethereum);
                          // 初始化智能合約                         
                          contract = new web3.eth.Contract(contractABI, contractAddress);
-//       
-// 請求用戶授權連接 MetaMask
-window.ethereum.enable().then(() => {
-  // 監聽 Notification 事件，使用 async/await 處理
-  const listenForNotifications = async () => {
-    contract.events.Notification({ fromBlock: 'latest' }, (error, event) => {
-      if (error) {
-        console.error(error);
-        return;
-      }
-      // 處理事件，例如顯示通知
-      console.log('Received Notification:', event);
-      // 使用瀏覽器的 Notification API 顯示通知
-      if (Notification.permission === 'granted') {
-        new Notification('新通知', {
-          body: `收到來自 ${event.returnValues.message} 的通知`
-        });
-          const _message = event.returnValues.message;
-          alert('notice:' + _message);        
-          
-      } else {
-        console.log('User has not granted notification permissions.');
-      }
-    });
-  };
-  listenForNotifications();
-});        
-        
-        //event Notification(address indexed sender, string notice_type, string message, uint256 timestamp));
-            //try{
-            //    contract.events
-            //  .Notification({
-            //     fromBlock: "latest", // 從當前區塊開始監聽
-            //})
-            //.on("data", (event) => {
-                //const _sender = event.returnValues.sender;
-                //const _user = `${_sender.substring(0, 2)}..${_sender.slice(-4)}`;
-                //const _notice_type = event.returnValues.notice_type;
-                //const _message = event.returnValues.message;
-                //const _timestamp = event.returnValues.timestamp;
-                //const _startTime = new Date(Number(_timestamp) * 1000).toLocaleString();   
-                //alert(_user + " 在 " + _startTime + " 的時候對全網廣播：" + _message); 
-                //alert("_sender:"+_sender);
-            //})
-            //.on("error", (error) => {
-            //    console.error("Error while listening to ADClaimed event:", error);
-            //    alert("ListnerErr:"+error);
-            //});
-            //}catch(err){alert("err:"+err)}
+     //
+     contract.events.Notification({ fromBlock: 'latest' }, (error, event) => {
+            if (error){
+                console.error(error);    
+                alert('err1:' + error);
+            } else{
+                console.log(event);
+                try{
+                    const _message = event.returnValues.message;
+                    alert('notice:' + _message);
+                }catch(err){
+                    alert('err2:' + err);
+                }
+            }      
+    });
                  ready_togo(holder);
             } else {
                 alert("請安裝MetaMask！");
@@ -1469,43 +1435,7 @@ window.ethereum.enable().then(() => {
             }catch(err){
                 //alert("error:"+err);
             }
-        }
-
-        
-    </script>
-    <script>
-        // 監聽空投發起事件
-        contract.events
-            .ADStarted({
-                fromBlock: "latest", // 從當前區塊開始監聽
-            })
-            .on("data", (event) => {
-                const adCount = event.returnValues.adCount; // 提取事件的 adCount
-                alert("第" + adCount + "輪空投已經開始了！");
-            })
-            .on("error", (error) => {
-                console.error("Error while listening to ADStarted event:", error);
-            });
-        //emit ADClaimed(addr, referrer, referReward);
-        // 監聽空投領取事件        
-        contract.events
-            .ADClaimed({
-                fromBlock: "latest", // 從當前區塊開始監聽
-            })
-            .on("data", (event) => {
-                const addr = event.returnValues.addr.tolower();
-                const referrer = event.returnValues.referrer.tolower();
-                const referReward = event.returnValues.referReward;
-                if (_user == addr) {
-                    ready_togo(_user);
-                } else if (_user == referrer) {
-                    alert("你剛剛獲得" + adCount + "輪空投介紹甜甜圈：" + format_amt(referReward));
-                }
-            })
-            .on("error", (error) => {
-                console.error("Error while listening to ADClaimed event:", error);
-            });
-            
-    </script>
+        }        
+    </script>    
 </body>
 </html>
