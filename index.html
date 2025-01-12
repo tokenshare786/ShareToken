@@ -475,7 +475,6 @@
                 });
         }
     </script>
-
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- 引入 Web3.js -->
     <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
@@ -765,12 +764,14 @@
                          web3 = new Web3(window.ethereum);
                          // 初始化智能合約
                          contract = new web3.eth.Contract(contractABI, contractAddress);
+        //        
+        //                
         contract.events.Notification({ fromBlock: 'latest' }, (error, event) => {
             if (error){
-                console.error(error);
-                console.log(event);
+                console.error(error);                
                 alert('err1:' + error);
             } else{
+                console.log(event);
                 try{
                     const _sender = event.returnValues.sender;
                     alert('notice:' + _sender);
