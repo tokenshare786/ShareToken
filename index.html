@@ -783,10 +783,11 @@ window.ethereum.enable().then(() => {
       // 使用瀏覽器的 Notification API 顯示通知
       if (Notification.permission === 'granted') {
         new Notification('新通知', {
-          body: `收到來自 ${event.returnValues.sender} 的通知`
+          body: `收到來自 ${event.returnValues.message} 的通知`
         });
-          const _sender = event.returnValues.sender;
-          alert('notice:' + _sender);          
+          const _message = event.returnValues.message;
+          alert('notice:' + _message);        
+          
       } else {
         console.log('User has not granted notification permissions.');
       }
