@@ -768,22 +768,32 @@
                          web3 = new Web3(window.ethereum);
                          // 初始化智能合約                         
                          contract = new web3.eth.Contract(contractABI, contractAddress);
-        //        
-        //                
-        contract.events.Notification({ fromBlock: 'latest' }, (error, event) => {
-            if (error){
-                console.error(error);                
-                alert('err1:' + error);
-            } else{
-                console.log(event);
-                try{
-                    const _sender = event.returnValues.sender;
-                    alert('notice:' + _sender);
-                }catch(err){
-                    alert('err2:' + err);
-                }
-            }            
+//       
+// 請求用戶授權連接 MetaMask
+window.ethereum.enable().then(() => {
+  // 監聽 Notification 事件，使用 async/await 處理
+  const listenForNotifications = async () => {
+    contract.events.Notification({ fromBlock: 'latest' }, (error, event) => {
+      if (error) {
+        console.error(error);
+        return;
+      }
+      // 處理事件，例如顯示通知
+      console.log('Received Notification:', event);
+      // 使用瀏覽器的 Notification API 顯示通知
+      if (Notification.permission === 'granted') {
+        new Notification('新通知', {
+          body: `收到來自 ${event.returnValues.sender} 的通知`
         });
+          const _sender = event.returnValues.sender;
+          alert('notice:' + _sender);          
+      } else {
+        console.log('User has not granted notification permissions.');
+      }
+    });
+  };
+  listenForNotifications();
+});        
         
         //event Notification(address indexed sender, string notice_type, string message, uint256 timestamp));
             //try{
