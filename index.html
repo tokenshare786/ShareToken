@@ -15,6 +15,31 @@
             padding: 10px;
         }
 
+#toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.toast {
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
         .modal-overlay {
     position: fixed;
     top: 0;
@@ -1402,6 +1427,9 @@
             </form>            
         </div>
     </div>
+    // div for showtoast
+    <div id="toast-container"></div>
+
     <script>
         let refCode="";
         let _address;
@@ -1448,11 +1476,33 @@
                         message                           
                     )
                     .send({ from: _address });
-                //alert("Got it!");
+                   showToast("交易成功！請等候..", "success");
             }catch(err){
                 //alert("error:"+err);
             }
-        }        
+        }   
+        
+function showToast(message, type = "info") {
+    const container = document.getElementById("toast-container");
+    const toast = document.createElement("div");
+    toast.className = `toast ${type}`;
+    toast.innerText = message;
+
+    container.appendChild(toast);
+
+    // 顯示動畫
+    setTimeout(() => toast.classList.add("show"), 10);
+
+    // 自動消失
+    setTimeout(() => {
+        toast.classList.remove("show");
+        setTimeout(() => toast.remove(), 300); // 等動畫完成後移除
+    }, 3000);
+}
+
+// 示例調用
+//showToast("交易成功！", "success");
+//showToast("發生錯誤！", "error");
     </script>    
 </body>
 </html>
