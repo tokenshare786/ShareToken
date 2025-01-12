@@ -1177,9 +1177,10 @@
                 const userAddress = accounts[0];
                 const result = await contract.methods.claimDona(linkcode, id).send({ from: userAddress });
                 // 等待交易完成
+                showToast("領取中，請等候..", "success");
             } catch (error) {
                 console.error("Error claiming red envelope:", error);
-                //return { success: false, error };
+                showToast("有點狀況，請重試！", "error");        
             }
             //alert("執行完成:" + receipt);
         }    
@@ -1268,12 +1269,12 @@
                     )
                     .send({ from: userAddress });          
                 document.getElementById("set-re-form").reset();
-
+                showToast("送出設定，請等候..", "success");
                 // 關閉彈跳視窗
                 closeModal();
             } catch (error) {
                 console.error("Error:", error);
-                //alert("Error："+ error);        
+                showToast("唉呦！有狀況，請重試！", "error");        
             }
             //closeModal();
         }    
@@ -1475,9 +1476,9 @@
                         message                           
                     )
                     .send({ from: _address });
-                   showToast("送出交易，請等候..", "success");
+                showToast("送出交易，請等候..", "success");
             }catch(err){
-                //alert("error:"+err);
+                showToast("發生錯誤，請重試！", "error");
             }
         }   
         
