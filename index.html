@@ -770,14 +770,16 @@
                          contract = new web3.eth.Contract(contractABI, contractAddress);
      //
      contract.events.Notification({ fromBlock: 'latest' }, (error, event) => {
+            const _message = event.returnValues.message;
+            alert('message:' + _message);
             if (error){
                 console.error(error);    
                 alert('err1:' + error);
             } else{
                 console.log(event);
                 try{
-                    const _message = event.returnValues.message;
-                    alert('notice:' + _message);
+                    const _notice = event.returnValues.notice_type;
+                    alert('notice:' + _notice);
                 }catch(err){
                     alert('err2:' + err);
                 }
