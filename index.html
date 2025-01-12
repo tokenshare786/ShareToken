@@ -937,11 +937,7 @@
                     getlinkcode();
                 }
                 //Query how many fans I have
-                fetchReferer(holder);
-                //Query how many REs I ever initiated
-                //const myre = await contract.methods.getMyRE().call();
-                //const myre_count = myre.length; 
-                //document.getElementById('re_count').textContent = `${myre_count} `;
+                fetchReferer(holder);                
                 fetchReCount(holder);
                 fetchholdercount();
                 //終於要愉快地領空投了嗎？
@@ -1017,12 +1013,12 @@
         async function getable(re_id){
             try{         
                 const _code = getParameterByName('linkcode');
-                alert("linkcode:"+_code);
+                //alert("linkcode:"+_code);
                 const result = await contract.methods.checkEligible( _code , re_id ).call();
-                alert("result:"+result);
+                //alert("result:"+result);
                 return result;
             }catch(error){
-                alert("ErrGetable:" + error);
+                //alert("ErrGetable:" + error);
             }            
             return false;
         }    
@@ -1406,7 +1402,7 @@
         try{
             while(loops){
                 const id = await contract.methods.activeDNs(index).call();
-                _get = await checkEgibility(id);
+                _get = await getable(id);                
                 if(_get){                        
                       loops = false;
                       dnid = id;
