@@ -17,7 +17,7 @@
 
 #toast-container {
     position: fixed;
-    top: 20px;
+    top: 10px;
     left: 50%; /* 移到水平中心 */
     transform: translateX(-50%); /* 偏移到正中心 */    
     z-index: 1000;
@@ -44,7 +44,17 @@
     opacity: 1;
     transform: translateY(0);
 }
-
+.toast::before {
+    content: '';
+    position: absolute;
+    top: -10px; /* 突出角的位置 */
+    left: 20px; /* 根據需要調整突出角的水平位置 */
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent; /* 左邊的透明三角形 */
+    border-right: 10px solid transparent; /* 右邊的透明三角形 */
+    border-bottom: 10px solid white; /* 白色的突出角，與邊框顏色一致 */
+}
 
         .modal-overlay {
     position: fixed;
