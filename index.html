@@ -768,6 +768,7 @@
         contract.events.Notification({ fromBlock: 'latest' }, (error, event) => {
             if (error){
                 console.error(error);
+                console.log(event);
                 alert('err1:' + error);
             } else{
                 try{
@@ -778,15 +779,7 @@
                 }
             }            
         });
-        // 清理旧的事件监听器，防止重复注册
-        //if (contract.events) {
-        //        alert("Listeners exist！");
-        //        try{  
-        //           contract.events.removeAllListeners();
-        //        }catch(err){
-        //            alert("removeListnersErr:"+err);
-        //        }
-        //}  
+        
         //event Notification(address indexed sender, string notice_type, string message, uint256 timestamp));
             //try{
             //    contract.events
