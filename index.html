@@ -18,16 +18,17 @@
 #toast-container {
     position: fixed;
     top: 20px;
-    right: 20px;
+    left: 50%; /* 移到水平中心 */
+    transform: translateX(-50%); /* 偏移到正中心 */    
     z-index: 1000;
 }
 
 .toast {
     margin-bottom: 10px;
     padding: 10px 20px;
-    background-color: #333;
+    background-color: #111;
     color: white;
-    border-radius: 5px;
+    border-radius: 7px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     opacity: 0;
     transform: translateY(-10px);
@@ -1497,7 +1498,7 @@ function showToast(message, type = "info") {
     setTimeout(() => {
         toast.classList.remove("show");
         setTimeout(() => toast.remove(), 300); // 等動畫完成後移除
-    }, 3000);
+    }, 5000);
 }
 
 // 示例調用
