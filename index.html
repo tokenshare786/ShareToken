@@ -44,16 +44,30 @@
     opacity: 1;
     transform: translateY(0);
 }
+        
 .toast::before {
     content: '';
     position: absolute;
-    top: -10px; /* 突出角的位置 */
-    left: 20px; /* 根據需要調整突出角的水平位置 */
+    top: -12px; /* 微調突出角的位置 */
+    left: 20px; /* 調整突出角的水平位置 */
     width: 0;
     height: 0;
-    border-left: 10px solid transparent; /* 左邊的透明三角形 */
-    border-right: 10px solid transparent; /* 右邊的透明三角形 */
-    border-bottom: 10px solid white; /* 白色的突出角，與邊框顏色一致 */
+    border-left: 12px solid transparent; /* 左側透明邊 */
+    border-right: 12px solid transparent; /* 右側透明邊 */
+    border-bottom: 12px solid white; /* 白色邊框，與框的顏色一致 */
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2); /* 為三角形添加陰影，增強融合效果 */
+}
+
+.toast::after {
+    content: '';
+    position: absolute;
+    top: -10px; /* 與三角形的底部對齊 */
+    left: 22px; /* 將內部三角稍微縮小 */
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent; /* 內側透明邊 */
+    border-right: 10px solid transparent; /* 內側透明邊 */
+    border-bottom: 10px solid #333; /* 與背景色一致，製造白框內嵌效果 */
 }
 
         .modal-overlay {
