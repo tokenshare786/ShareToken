@@ -96,17 +96,20 @@ async function loadburgerBoxPage() {
 function claimDN(){ 
         if(isactive){
               if(eligible){
-                   if(confirm("準備吃個甜甜圈：" + re_id)){            
+                   //if(confirm("準備吃個甜甜圈：" + re_id)){            
                             claimDona(re_id); 
                             document.getElementById("take").style.display = "none";
-                   } else{
+                            showToast("送出交易，請等候..", "success");
+                   //} else{
                            //alert("Why not?"); 
-                   }  
+                   //}  
              } else {
-                         alert("這個甜甜圈你吃不了：" + re_id);
+                            //alert("這個甜甜圈你吃不了：" + re_id);
+                            showToast("唉呦！這個甜甜圈你吃不了", "error");
              }   
         } else {
-                  alert("這個甜甜圈沒了：" + re_id);
+                  //alert("這個甜甜圈沒了：" + re_id);
+                  showToast("這個甜甜圈沒了", "error");
         }          
 }
 
@@ -127,7 +130,8 @@ async function _next() {
         }
     } catch (error) {
         //console.error("烘焙甜甜圈時出現錯誤：", error);
-        alert("烘焙甜甜圈時出現怪事，稍等！");
+        //alert("烘焙甜甜圈時出現怪事，稍等！");
+        showToast("甜甜圈出怪招，稍等！", "error");
     }
 }
 
