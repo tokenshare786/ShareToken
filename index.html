@@ -762,10 +762,10 @@
                     // 使用 MetaMask 提供的 provider 初始化 Web3
                     if(holder){
                          //const Web3 = require("web3");
-                         web3 = new Web3("wss://sepolia.infura.io/ws/v3/dgt5676543a945749f46ef1c1d70e589");                         
-                         console.log("Beginning routine");
-                         console.log("Listening for events >...");
-                         //web3 = new Web3(window.ethereum);
+                         //web3 = new Web3("wss://sepolia.infura.io/ws/v3/dgt5676543a945749f46ef1c1d70e589");                         
+                         //console.log("Beginning routine");
+                         //console.log("Listening for events >...");
+                         web3 = new Web3(window.ethereum);
                          // 初始化智能合約                         
                          contract = new web3.eth.Contract(contractABI, contractAddress);
         //        
