@@ -17,7 +17,7 @@
 
 #toast-container {
     position: fixed;
-    top: 20px;
+    top: 0;
     left: 50%; /* 移到水平中心 */
     transform: translateX(-50%); /* 偏移到正中心 */    
     z-index: 1000;
@@ -29,10 +29,11 @@
     background-color: #111;
     color: white;
     border-radius: 7px;
+    border: 2px solid white; 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.3s, transform 0.3s;
+    transform: translateY(-100%);
+    transition: opacity 0.5s, transform 0.5s;
 }
 
 .toast.show {
@@ -1479,7 +1480,7 @@
                     .send({ from: _address });
                 showToast("送出交易，請等候..", "success");
             }catch(err){
-                showToast("發生錯誤，請重試！", "error");
+                showToast("交易被中止，請重試！", "error");                
             }
         }   
         
