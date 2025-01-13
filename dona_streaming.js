@@ -102,19 +102,19 @@ function createDonaBox(re, re_id) {
        ellipsis.style.display = "none";
        toggleLink.style.display = "none";
     }
-    
-    //if(re.isActive && await checkEgibility( re_id )) {
-    //            document.getElementById("take").style.display = "block";
-    //    } else {
-    //            document.getElementById("take").style.display = "invisible";
-    //    }
-    //    const re_creator = re.creator.toLowerCase() ;
-    //    if( re_creator !== userAddress){ 
-    //            document.getElementById("editable").style.display = "invisible";
-    //     } else {
-                //alert("It's editable！");  
-    //            document.getElementById("editable").style.display = "block";
-    //    }     
+    const takeElement = card.querySelector('#take');
+    if(re.isActive && await checkEgibility( re_id )) {
+              takeElement.style.display = "block";
+    } else {
+              takeElement.style.display = "invisible";
+    }
+    const re_creator = re.creator.toLowerCase() ;
+    const editElement = card.querySelector('#editable');
+    if( re_creator !== userAddress){ 
+              editElement.style.display = "invisible";
+    } else {
+              editElement.style.display = "block";
+    }     
 }
 
 // 点击领取甜甜圈
