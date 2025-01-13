@@ -568,7 +568,7 @@
                      const metamaskDeepLink = `https://metamask.app.link/dapp/${blkdonaUrl}`;
                      window.location.href = metamaskDeepLink;
                 }catch(err){
-                     showToast('請用 MetaMask 瀏覽器登入！','error');
+                     //showToast('請用 MetaMask 瀏覽器登入！','error');
                      const metamaskAppLink = "https://metamask.app.link/";
                      window.location.href = metamaskAppLink; // 跳轉到 MetaMask 安裝頁
                 }
@@ -866,7 +866,7 @@
             } else {
                 //deeplink();
                 //alert("請安裝MetaMask！");
-                showToast("請使用 MetaMask 瀏覽器！","error");
+                //showToast("請使用 MetaMask 瀏覽器！","error");
             }
         }
         function ready_togo(holder) {
