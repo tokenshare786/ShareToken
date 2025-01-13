@@ -53,9 +53,14 @@ function createDonaBox(re, re_id) {
     card.className = 'dona-box'; // 添加样式类
 
     const startTime = new Date(Number(re.startTime) * 1000).toLocaleString();
-    const shortDesc = re.desc.slice(0, 13);
-    const remainingDesc = re.desc.slice(13);
-
+    const desc = re.desc; // 假設這是描述文本
+    const maxLength = 13; // 最大顯示字數
+    let toolong = false;
+    if (desc.length > maxLength) {
+             toolong = true;
+    } 
+    const shortDesc = desc.slice(0, maxLength);
+    const remainingDesc = desc.slice(maxLength);
     card.innerHTML = `
         <div>
             <div id="desc-container">
@@ -80,16 +85,24 @@ function createDonaBox(re, re_id) {
     `;
     container.appendChild(card);
     // 显示完整描述逻辑
-    const toggleLink = card.querySelector('#toggle-link');
-    const remainingDescElement = card.querySelector('#remaining-desc');
-    const ellipsis = card.querySelector('#ellipsis');
-
-    toggleLink.addEventListener('click', () => {
-        remainingDescElement.style.display = 'inline';
-        ellipsis.style.display = 'none';
-        toggleLink.style.display = 'none';
+       // 初始化縮略文本
+    document.getElementById("short-desc").textContent = shortDesc;  
+    const remainingDescElement = document.getElementById("remaining-desc");
+    const ellipsis = document.getElementById("ellipsis");
+    const toggleLink = document.getElementById("toggle-link");
+    if(toolong){
+        remainingDescElement.textContent = remainingDesc;       
+    } else {
+       remainingDescElement.style.display = "none";
+       ellipsis.style.display = "none";
+       toggleLink.style.display = "none";
+    }
+    toggleLink.addEventListener("click", function () {
+         remainingDescElement.style.display = "inline";
+         ellipsis.style.display = "none";
+         toggleLink.style.display = "none"; // 隱藏 "詳看全文"
     });
-    
+    //
     if(eligible){
                 document.getElementById("take").style.display = "block";
         } else {
