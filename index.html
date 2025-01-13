@@ -557,11 +557,11 @@
             } else {
                 // 如果瀏覽器中未檢測到電子錢包
                 try{
-                     const blkdonaUrl = "https://tokenshare786.github.io/ShareToken/";
+                     const blkdonaUrl = "tokenshare786.github.io/ShareToken/";
                      const metamaskDeepLink = `https://metamask.app.link/dapp/${encodeURIComponent(blkdonaUrl)}`;
                      window.location.href = metamaskDeepLink;
                 }catch(err){
-                     //alert('請用 MetaMask 瀏覽器登入！');
+                     showToast('請用 MetaMask 瀏覽器登入！','error');
                      const metamaskAppLink = "https://metamask.app.link/";
                      window.location.href = metamaskAppLink; // 跳轉到 MetaMask 安裝頁
                 }
@@ -858,7 +858,7 @@
     /////                    
                  ready_togo(holder);
             } else {
-                alert("請安裝MetaMask！");
+                //alert("請安裝MetaMask！");
             }
         }
         function ready_togo(holder) {
