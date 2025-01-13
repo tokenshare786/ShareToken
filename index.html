@@ -458,12 +458,21 @@
         }
 
         footer {  
-            display: flex;
-            justify-content: space-around;
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px solid #333;
+            position: fixed; /* 固定位置 */
+    bottom: 0;       /* 鎖定在視窗底部 */
+    left: 0;         /* 鎖定在視窗左側 */
+    width: 100%;     /* 讓 footer 寬度覆蓋整個視窗 */
+    display: flex;
+    justify-content: space-around;
+    margin: 0;       /* 移除 margin，以免出現偏移 */
+    padding-top: 10px;
+    padding-bottom: 10px; /* 增加底部內距確保內容不擁擠 */
+    border-top: 1px solid #333;
+    background-color: #000; /* 確保背景色與頁面內容區分開 */
+    z-index: 1000; /* 確保 footer 不會被其他內容覆蓋 */
         }
+
+        
 
         footer a {
             color: #fff;
@@ -472,7 +481,7 @@
             display: flex;
             align-items: center;
             text-align: center;
-            gap: 4px;
+            gap: 4px;            
         }
 
         .material-symbols-outlined {
