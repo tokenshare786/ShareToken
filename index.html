@@ -703,7 +703,7 @@
         // Fetch and Replace Content
         document.getElementById("re_button").addEventListener("click", async (e) => {
             e.preventDefault(); // Prevent link navigation
-            document.getElementById("notice").style.display = "none";
+            //document.getElementById("notice").style.display = "none";
             // Fetch the HTML content for red envelopes          
             try {
                 const script = document.createElement("script");
@@ -713,7 +713,7 @@
                 //alert("script:"+ script );
             } catch (err) {
                 console.error("Error loading content:", err);
-                alert("Failed to load the red envelope page.");
+                //alert("Failed to load the dona page.");
             }
         });
     </script>
