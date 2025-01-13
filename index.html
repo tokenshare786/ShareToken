@@ -849,16 +849,7 @@
                          // 初始化智能合約                         
                          contract = new web3.eth.Contract(contractABI, contractAddress);
                         // another web3_listener
-                        const WebSocket = require('ws');
-                        const ws = new WebSocket('wss://bsc-ws-node.nariox.org/');
-ws.on('open', () => {
-    console.log('WebSocket connection opened.');
-    ws.close();
-});
-
-ws.on('error', (err) => {
-    console.error('WebSocket error:', err);
-});
+                        
                          const web3_listener = new Web3(
                                 //new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/")
                                  new Web3.providers.WebsocketProvider("wss://bsc-ws-node.nariox.org:443")
