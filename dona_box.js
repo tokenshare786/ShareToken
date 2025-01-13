@@ -57,7 +57,7 @@ async function loadburgerBoxPage() {
                      <div id="desc-container">
                          <span id="short-desc"></span>
                          <span id="ellipsis">..</span>
-                         <span id="toggle-link" class="css_back" style="position:relative; top: -10px" onclick="display_remain()">全文</span>   
+                         <span id="toggle-link" class="css_back" style="position:relative; top: -10px">全文</span>   
                     </div>   
                      <p id="remaining-desc"></p>
                      <p class="reward-item">【${re.eligiType}】 ${startTime} & ${re.claimedAmt} / ${re.subAmt} : ${re.claimCount} / ${re.maxClaims}</p>
@@ -90,11 +90,11 @@ async function loadburgerBoxPage() {
        ellipsis.style.display = "none";
        toggleLink.style.display = "none";
     }
-     function display_remain(){
+    toggleLink.addEventListener("click", function () {
          remainingDescElement.style.display = "inline";
          ellipsis.style.display = "none";
          toggleLink.style.display = "none"; // 隱藏 "詳看全文"
-     }
+    });
          //
          if( re_id > 1){
                 document.getElementById('click_back').textContent = `Back`;         
