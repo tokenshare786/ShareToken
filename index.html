@@ -576,8 +576,11 @@
         
         async function connectWallet() {
             const holder = await getHoldertoLowercase();
-            if (holder) { updateAccountUI(holder); }
-            return holder;
+            if (holder) { 
+                updateAccountUI(holder); 
+            }else{
+                deeplink();
+            }        
         }
         // 監聽帳號變化
         ethereum.on('accountsChanged', (accounts) => {
