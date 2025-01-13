@@ -52,22 +52,32 @@ function createDonaBox(re) {
     const shortDesc = re.desc.slice(0, 13);
     const remainingDesc = re.desc.slice(13);
 
-    card.innerHTML = `
-        <div class="dona-content">
-            <div id="desc-container">
-                <span id="short-desc">${shortDesc}</span>
-                <span id="ellipsis">&nbsp..</span>
-                <span id="toggle-link" class="css_back">全文</span>
-                <p id="remaining-desc" style="display: none;">${remainingDesc}</p>
-            </div>
-            <p class="reward-item">${startTime} - ${re.claimedAmt}/${re.subAmt}</p>
-            <div class="new-container">
-                <div class="image-container" onclick="claimDN(${re.re_id})">
-                    <img src="${re.imgUrl}" alt="photo">
-                </div>
-            </div>
-        </div>
-    `;
+card.innerHTML = `
+    <div>
+        <div id="desc-container">
+            <span id="short-desc"></span>
+            <span id="ellipsis">&nbsp..</span>
+            <span id="toggle-link" class="css_back" style="position:relative;top:5px;left:3px">全文</span>   
+        </div>   
+        <p id="remaining-desc"></p>
+        <p class="reward-item" style="text-align:center">
+            【${re.eligiType}】 ${startTime} & ${re.claimedAmt} / ${re.subAmt} : ${re.claimCount} / ${re.maxClaims}
+        </p>
+        <span class="progress">
+            <p class="css_back" onclick="_back()" id="click_back">Back</p>                         
+            <p class="css_back" style="margin-left:auto" onclick="_next()" id="click_next">Next</p>
+        </span>
+    </div>
+    <div class="new-container">
+        <div class="image-container" onclick="claimDN(${re_id})"> <!-- 傳遞 re_id -->
+            <img src="${re.imgUrl}" alt="photo">  
+        </div>            
+    </div>
+    <span class="progress">
+        <p class="css_back" onclick="open_edit()" id="editable">Edit</p>
+        <p class="css_back" style="margin-left:auto" onclick="claimDN(${re_id})" id="take">Take</p> <!-- 傳遞 re_id -->
+    </span>
+`;
 
     // 顯示完整描述邏輯
     const toggleLink = card.querySelector('#toggle-link');
@@ -79,8 +89,29 @@ function createDonaBox(re) {
         ellipsis.style.display = 'none';
         toggleLink.style.display = 'none';
     });
-
     container.appendChild(card);
+}
+
+async function claimDN(re_id) { 
+    try {
+        // 重新獲取與 re_id 對應的 `re` 數據
+        const re = await getSpecificDN(re_id);
+
+        if (re.isActive) {
+            if (await checkEgibility(re_id)) {
+                claimDona(re_id); // 發送交易請求
+                document.getElementById("take").style.display = "none";
+                showToast("送出交易，請等候..", "success");
+            } else {
+                showToast("唉呦！這個甜甜圈你吃不了", "error");
+            }
+        } else {
+            showToast("這個甜甜圈沒了", "error");
+        }
+    } catch (error) {
+        console.error("claimDN error:", error);
+        showToast("操作失敗，請稍後再試！", "error");
+    }
 }
 
 // 滾動事件監聽，實現無限滾動
