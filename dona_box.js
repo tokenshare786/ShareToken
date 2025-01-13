@@ -56,7 +56,7 @@ async function loadburgerBoxPage() {
             <div>
                      <div id="desc-container">
                          <span id="short-desc"></span>
-                         <span id="ellipsis">..</span>
+                         <span id="ellipsis">&nbsp..</span>
                          <span id="toggle-link" class="css_back" style="position:relative;top:5px;left:3px">全文</span>   
                     </div>   
                      <p id="remaining-desc"></p>
