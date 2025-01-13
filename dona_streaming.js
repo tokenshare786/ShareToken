@@ -103,17 +103,11 @@ function createDonaBox(re, re_id) {
        toggleLink.style.display = "none";
     }
     //const takeElement = card.querySelector('#take');
-    let eligible;
-    if(re.isActive){
-           eligible  = await checkEgibility(re_id);
-    } else {
-           eligible=false;
-    } 
-    //if( eligible) {
-    //          takeElement.style.display = "block";
-    //} else {
-    //          takeElement.style.display = "invisible";
-    //}
+    if (re.isActive && await checkEgibility(re_id)) {                
+            document.getElementById("take").style.display = "block";                
+    }else{
+           document.getElementById("take").style.display = "invisible"; 
+    }         
     //const re_creator = re.creator.toLowerCase() ;
     //const editElement = card.querySelector('#editable');
     //if( re_creator !== userAddress){ 
