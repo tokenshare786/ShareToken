@@ -80,11 +80,11 @@ function createDonaBox(re, re_id) {
         </div>
         <span class="progress">
             <p class="css_back" onclick="open_edit()" id="editable">Edit</p>
-            <p class="css_back" style="margin-left:auto" onclick="claimDN(${re_id})" id="take">Take</p> <!-- 传递 re_id -->
+            <p class="css_back" style="margin-left:auto" onclick="claimDN(${re_id})" id="take">Take</p> 
         </span>
     `;
     container.appendChild(card);
-    alert('updated 14');
+    alert('updated 15');
     // 显示完整描述逻辑
     // 初始化縮略文本    
     //document.getElementById("short-desc").textContent = shortDesc;  
@@ -104,15 +104,15 @@ function createDonaBox(re, re_id) {
     }    
     const takeElement = card.querySelector('#take');
     const eligible = await checkEgibility(re_id);
-    if (re.isActive) {           
+    if (re.isActive && eligible) {           
              takeElement.style.display = "block";                
     } else {
-            takeElement.style.visibility = "hidden" ;
+            takeElement.style.display = "none"; 
     }         
     const re_creator = re.creator.toLowerCase() ;
     const editElement = card.querySelector('#editable');
     if( re_creator !== userAddress){ 
-              editElement.style.visibility = "hidden";
+              editElement.style.display = "none"; 
     } else {
               editElement.style.display = "block";
     }     
@@ -122,7 +122,6 @@ function createDonaBox(re, re_id) {
 async function claimDN(re_id) { 
     try {
         const re = await getSpecificDN(re_id);
-
         if (re.isActive) {
             if (await checkEgibility(re_id)) {
                 claimDona(re_id); // 发送交易请求
