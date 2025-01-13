@@ -84,7 +84,7 @@ function createDonaBox(re, re_id) {
         </span>
     `;
     container.appendChild(card);
-    alert('updated 6');
+    alert('updated 7');
     // 显示完整描述逻辑
     // 初始化縮略文本    
     //document.getElementById("short-desc").textContent = shortDesc;  
@@ -103,7 +103,13 @@ function createDonaBox(re, re_id) {
        toggleLink.style.display = "none";
     }
     const takeElement = card.querySelector('#take');
-    const eligible =  await checkEgibility(re_id);
+    let eligible;
+    isactive = re.isActive ;
+    if(isactive){
+           eligible  = await checkEgibility(re_id);
+    } else {
+           eligible=false;
+    } 
     //if( eligible) {
     //          takeElement.style.display = "block";
     //} else {
