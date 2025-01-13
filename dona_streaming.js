@@ -33,7 +33,7 @@ async function loadMoreDonaBoxes() {
         try {
             const re = await getSpecificDN(i); // 获取数据
             if (re) {
-                createDonaBox(re, i); // 创建 Dona_box 并添加到页面
+               await createDonaBox(re, i); // 创建 Dona_box 并添加到页面
             }
         } catch (error) {
             console.error(`Error loading Dona_box ${i}:`, error);
@@ -46,7 +46,7 @@ async function loadMoreDonaBoxes() {
 }
 
 // 创建 Dona_box 的 DOM 元素
-function createDonaBox(re, re_id) {
+async function createDonaBox(re, re_id) {
     const container = document.getElementById('dona-container');
 
     const card = document.createElement('div');
@@ -102,21 +102,21 @@ function createDonaBox(re, re_id) {
        ellipsis.style.display = "none";
        toggleLink.style.display = "none";
     }   
-    alert('updated 17');
+    //alert('updated 17');
     const takeElement = card.querySelector('#take');
     const eligible = await checkEgibility(re_id);
-    //if (re.isActive && eligible) {           
-    //         takeElement.style.display = "block";                
-    //} else {
-    //        takeElement.style.display = "none"; 
-    //}         
-    //const re_creator = re.creator.toLowerCase() ;
-    //const editElement = card.querySelector('#editable');
-    //if( re_creator !== userAddress){ 
-    //          editElement.style.display = "none"; 
-    //} else {
-    //          editElement.style.display = "block";
-    //}     
+    if (re.isActive && eligible) {           
+             takeElement.style.display = "block";                
+    } else {
+             takeElement.style.display = "none"; 
+    }         
+    const re_creator = re.creator.toLowerCase() ;
+    const editElement = card.querySelector('#editable');
+    if( re_creator !== userAddress){ 
+              editElement.style.display = "none"; 
+    } else {
+              editElement.style.display = "block";
+    }     
 }
 
 // 点击领取甜甜圈
