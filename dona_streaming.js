@@ -73,7 +73,7 @@ function createDonaBox(re, re_id) {
                 【${re.eligiType}】 ${startTime} & ${re.claimedAmt} / ${re.subAmt} : ${re.claimCount} / ${re.maxClaims}
             </p>            
         </div>
-        <div class="new-container" style="position:relative;top:5px">
+        <div class="new-container" style="position:relative;top:7px">
             <div class="image-container" onclick="claimDN(${re_id})"> 
                 <img src="${re.imgUrl}" alt="photo">  
             </div>            
@@ -84,7 +84,7 @@ function createDonaBox(re, re_id) {
         </span>
     `;
     container.appendChild(card);
-    alert('updated 5');
+    alert('updated 6');
     // 显示完整描述逻辑
     // 初始化縮略文本    
     //document.getElementById("short-desc").textContent = shortDesc;  
@@ -102,8 +102,8 @@ function createDonaBox(re, re_id) {
        ellipsis.style.display = "none";
        toggleLink.style.display = "none";
     }
-    //const takeElement = card.querySelector('#take');
-    //const eligible =  await checkEgibility( re_id );
+    const takeElement = card.querySelector('#take');
+    const eligible =  await checkEgibility(re_id);
     //if( eligible) {
     //          takeElement.style.display = "block";
     //} else {
