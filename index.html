@@ -617,6 +617,7 @@
             walletButton.textContent = `${account.substring(0, 2)}..${account.slice(-4)}`;
         }    
     </script>
+    <div id="dona-container">
     <div class="notification" id="notice">
         <span class="material-symbols-outlined">brand_awareness</span>
         <span>The BlackDona white paper has been released, please check for details..</span>
@@ -638,6 +639,60 @@
             <button class="buttons button" id="activities_btn">Activities</button>
         </div>
     </div>
+    
+
+    <div class="progress-card">
+        <div class="progress">
+            <div>
+                <span id="link_icon" class="material-symbols-outlined">link</span>
+                <span class="symbol-match" id="linkcodeDisplay"></span>
+            </div>
+            <div>
+                <span class="material-symbols-outlined">heart_check</span>
+                <span class="symbol-match" id="fans_count"></span>
+            </div>
+            <div>
+                <span class="material-symbols-outlined">featured_seasonal_and_gifts</span>
+                <span class="symbol-match" id="re_count"></span>
+            </div>
+        </div>
+        <div class="progress">
+            <span> Bitcoin/USD：</span>
+            <span id="bitcoin-price"></span>
+            <div>
+                <span class="material-symbols-outlined">person</span>
+                <span class="symbol-match" id="holders_count"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification">
+        <div>
+            <span>Balance of BLKDONA：</span>
+            <p>Just updated</p>
+        </div>
+        <div>
+            <h2 id="balance">waiting..</h2>
+        </div>
+    </div>
+</div>
+<div id="loading" style="text-align: center; display: none;">
+    加載中...
+</div>
+    <footer>
+        <a onclick="notification()">
+            <span class="material-symbols-outlined">cell_tower</span>
+            Broadcast
+        </a>
+        <a id="activities" onclick="openModal()">
+            <span class="material-symbols-outlined">search</span>
+            活動
+        </a>
+        <a onclick="shareMyDona()">
+            <span class="material-symbols-outlined">share</span>
+            Share
+        </a>
+    </footer>
     <script>
         // Fetch and Replace Content
         document.getElementById("re_button").addEventListener("click", async (e) => {
@@ -646,7 +701,7 @@
             // Fetch the HTML content for red envelopes          
             try {
                 const script = document.createElement("script");
-                script.src = "dona_box.js";
+                script.src = "dona_streaming.js";
                 // Your JavaScript logic for dynamic interaction
                 document.body.appendChild(script);
                 //alert("script:"+ script );
@@ -693,55 +748,6 @@
             re_button.style.display = 'flex';
         });
     </script>
-
-    <div class="progress-card">
-        <div class="progress">
-            <div>
-                <span id="link_icon" class="material-symbols-outlined">link</span>
-                <span class="symbol-match" id="linkcodeDisplay"></span>
-            </div>
-            <div>
-                <span class="material-symbols-outlined">heart_check</span>
-                <span class="symbol-match" id="fans_count"></span>
-            </div>
-            <div>
-                <span class="material-symbols-outlined">featured_seasonal_and_gifts</span>
-                <span class="symbol-match" id="re_count"></span>
-            </div>
-        </div>
-        <div class="progress">
-            <span> Bitcoin/USD：</span>
-            <span id="bitcoin-price"></span>
-            <div>
-                <span class="material-symbols-outlined">person</span>
-                <span class="symbol-match" id="holders_count"></span>
-            </div>
-        </div>
-    </div>
-
-    <div class="notification">
-        <div>
-            <span>Balance of BLKDONA：</span>
-            <p>Just updated</p>
-        </div>
-        <div>
-            <h2 id="balance">waiting..</h2>
-        </div>
-    </div>
-    <footer>
-        <a onclick="notification()">
-            <span class="material-symbols-outlined">cell_tower</span>
-            Broadcast
-        </a>
-        <a id="activities" onclick="openModal()">
-            <span class="material-symbols-outlined">search</span>
-            活動
-        </a>
-        <a onclick="shareMyDona()">
-            <span class="material-symbols-outlined">share</span>
-            Share
-        </a>
-    </footer>
     <script>
         // 取得 linkcode 參數    
         var linkcode = getParameterByName('linkcode');
