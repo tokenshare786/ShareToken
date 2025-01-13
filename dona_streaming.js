@@ -73,7 +73,7 @@ function createDonaBox(re, re_id) {
                 【${re.eligiType}】 ${startTime} & ${re.claimedAmt} / ${re.subAmt} : ${re.claimCount} / ${re.maxClaims}
             </p>            
         </div>
-        <div class="new-container">
+        <div class="new-container" style="position:relative;top:5px">
             <div class="image-container" onclick="claimDN(${re_id})"> <!-- 传递 re_id -->
                 <img src="${re.imgUrl}" alt="photo">  
             </div>            
@@ -85,14 +85,12 @@ function createDonaBox(re, re_id) {
     `;
     container.appendChild(card);
     // 显示完整描述逻辑
-       // 初始化縮略文本
-    document.getElementById("short-desc").textContent = shortDesc;  
+    // 初始化縮略文本    
+    //document.getElementById("short-desc").textContent = shortDesc;  
     const remainingDescElement = document.getElementById("remaining-desc");
     const ellipsis = document.getElementById("ellipsis");
     const toggleLink = document.getElementById("toggle-link");
-    if(toolong){
-        remainingDescElement.textContent = remainingDesc;       
-    } else {
+    if(!toolong){        
        remainingDescElement.style.display = "none";
        ellipsis.style.display = "none";
        toggleLink.style.display = "none";
@@ -103,7 +101,8 @@ function createDonaBox(re, re_id) {
          toggleLink.style.display = "none"; // 隱藏 "詳看全文"
     });
     //
-    if(eligible){
+     
+    if(re.isActive && await checkEgibility( re_id )) {
                 document.getElementById("take").style.display = "block";
         } else {
                 document.getElementById("take").style.display = "invisible";
