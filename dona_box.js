@@ -46,15 +46,14 @@ async function loadburgerBoxPage() {
          const desc = re.desc; // 假設這是描述文本
          const maxLength = 16; // 最大顯示字數
          const shortDesc = desc.slice(0, maxLength);
-         const remainingDesc = desc.slice(maxLength);
-         
+         const remainingDesc = desc.slice(maxLength);         
          //<h2>${truncatedDesc}</h2>
          row.innerHTML = `
             <div>
                      <div id="desc-container">
                          <span id="short-desc"></span>
-                         <span id="ellipsis">... </span>
-                         <a id="toggle-link" href="javascript:void(0);">詳看全文</a>
+                         <span id="ellipsis">&</span>
+                         <a id="toggle-link" href="javascript:void(0);" class="css_back">詳看全文</a>
                          <span id="remaining-desc" style="display: none; font-size: 0.8em;"></span>
                     </div>                    
                      <p class="reward-item">【${re.eligiType}】 ${startTime} & ${re.claimedAmt} / ${re.subAmt} : ${re.claimCount} / ${re.maxClaims}</p>
@@ -75,16 +74,17 @@ async function loadburgerBoxPage() {
             `;       
          card.innerHTML = row.innerHTML ; 
          //
-  // 初始化縮略文本
+   // 初始化縮略文本
     document.getElementById("short-desc").textContent = shortDesc;   
     document.getElementById("remaining-desc").textContent = remainingDesc;
 
- // 點擊 "詳看全文" 切換顯示
+  // 點擊 "詳看全文" 切換顯示
    document.getElementById("toggle-link").addEventListener("click", function () {
     const remainingDescElement = document.getElementById("remaining-desc");
     const ellipsis = document.getElementById("ellipsis");
     const toggleLink = this;
-
+    // 新增 class
+    toggleLink.classList.add('css_back');
   if (remainingDescElement.style.display === "none") {
     // 展開剩餘文本
     remainingDescElement.style.display = "inline";
