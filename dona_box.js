@@ -41,10 +41,22 @@ async function loadburgerBoxPage() {
          card.innerHTML = "";
          const row = document.createElement("div");
          //row.id = "slider";        
-         const startTime = new Date(Number(re.startTime) * 1000).toLocaleString();        
+         const startTime = new Date(Number(re.startTime) * 1000).toLocaleString(); 
+         //
+         const desc = re.desc; // 假設這是描述文本
+         const maxLength = 16; // 最大顯示字數
+         const shortDesc = desc.slice(0, maxLength);
+         const remainingDesc = desc.slice(maxLength);
+         
+         //<h2>${truncatedDesc}</h2>
          row.innerHTML = `
             <div>
-                     <h2>${re.desc}</h2>
+                     <div id="desc-container">
+                         <span id="short-desc"></span>
+                         <span id="ellipsis">... </span>
+                         <a id="toggle-link" href="javascript:void(0);">詳看全文</a>
+                         <span id="remaining-desc" style="display: none; font-size: 0.8em;"></span>
+                    </div>                    
                      <p class="reward-item">【${re.eligiType}】 ${startTime} & ${re.claimedAmt} / ${re.subAmt} : ${re.claimCount} / ${re.maxClaims}</p>
                      <span class="progress">
                          <p class="css_back" onclick="_back()" id="click_back">Back</p>                         
@@ -60,9 +72,27 @@ async function loadburgerBoxPage() {
                          <p class="css_back" onclick="open_edit()" id="editable">Edit</p>
                          <p class="css_back" style="margin-left:auto" onclick="claimDN()" id="take">Take</p>
             </span>
-            `;   
-            //alert("here..");            
+            `;       
          card.innerHTML = row.innerHTML ; 
+         //
+  // 初始化縮略文本
+    document.getElementById("short-desc").textContent = shortDesc;   
+    document.getElementById("remaining-desc").textContent = remainingDesc;
+
+ // 點擊 "詳看全文" 切換顯示
+   document.getElementById("toggle-link").addEventListener("click", function () {
+    const remainingDescElement = document.getElementById("remaining-desc");
+    const ellipsis = document.getElementById("ellipsis");
+    const toggleLink = this;
+
+  if (remainingDescElement.style.display === "none") {
+    // 展開剩餘文本
+    remainingDescElement.style.display = "inline";
+    ellipsis.style.display = "none";
+    toggleLink.style.display = "none"; // 隱藏 "詳看全文"
+  }
+});
+         //
          if( re_id > 1){
                 document.getElementById('click_back').textContent = `Back`;         
          } else {
