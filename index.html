@@ -555,7 +555,13 @@
                     console.log('No accounts available');
                 }
             } else {
-                // 如果瀏覽器中未檢測到電子錢包
+                deeplink();
+            }
+            return holder;
+        }
+        
+        function deeplink(){
+            // 如果瀏覽器中未檢測到電子錢包
                 try{
                      const blkdonaUrl = "https://tokenshare786.github.io/ShareToken/";
                      //const metamaskDeepLink = `https://metamask.app.link/dapp/${encodeURIComponent(blkdonaUrl)}`;
@@ -566,9 +572,8 @@
                      const metamaskAppLink = "https://metamask.app.link/";
                      window.location.href = metamaskAppLink; // 跳轉到 MetaMask 安裝頁
                 }
-            }
-            return holder;
         }
+        
         async function connectWallet() {
             const holder = await getHoldertoLowercase();
             if (holder) { updateAccountUI(holder); }
@@ -859,8 +864,9 @@
     /////                    
                  ready_togo(holder);
             } else {
+                deeplink();
                 //alert("請安裝MetaMask！");
-                showToast("請用 MetaMask瀏覽器！","error");
+                //showToast("請用 MetaMask瀏覽器！","error");
             }
         }
         function ready_togo(holder) {
