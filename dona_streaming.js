@@ -84,7 +84,7 @@ function createDonaBox(re, re_id) {
         </span>
     `;
     container.appendChild(card);
-    alert('updated 15');
+    alert('updated 16');
     // 显示完整描述逻辑
     // 初始化縮略文本    
     //document.getElementById("short-desc").textContent = shortDesc;  
@@ -109,13 +109,13 @@ function createDonaBox(re, re_id) {
     } else {
             takeElement.style.display = "none"; 
     }         
-    const re_creator = re.creator.toLowerCase() ;
-    const editElement = card.querySelector('#editable');
-    if( re_creator !== userAddress){ 
-              editElement.style.display = "none"; 
-    } else {
-              editElement.style.display = "block";
-    }     
+    //const re_creator = re.creator.toLowerCase() ;
+    //const editElement = card.querySelector('#editable');
+    //if( re_creator !== userAddress){ 
+    //          editElement.style.display = "none"; 
+    //} else {
+    //          editElement.style.display = "block";
+    //}     
 }
 
 // 点击领取甜甜圈
