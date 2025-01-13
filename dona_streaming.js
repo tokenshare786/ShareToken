@@ -84,7 +84,7 @@ function createDonaBox(re, re_id) {
         </span>
     `;
     container.appendChild(card);
-    alert('updated 16');
+
     // 显示完整描述逻辑
     // 初始化縮略文本    
     //document.getElementById("short-desc").textContent = shortDesc;  
@@ -101,14 +101,15 @@ function createDonaBox(re, re_id) {
        remainingDescElement.style.display = "none";
        ellipsis.style.display = "none";
        toggleLink.style.display = "none";
-    }    
+    }   
+    alert('updated 17');
     const takeElement = card.querySelector('#take');
     const eligible = await checkEgibility(re_id);
-    if (re.isActive && eligible) {           
-             takeElement.style.display = "block";                
-    } else {
-            takeElement.style.display = "none"; 
-    }         
+    //if (re.isActive && eligible) {           
+    //         takeElement.style.display = "block";                
+    //} else {
+    //        takeElement.style.display = "none"; 
+    //}         
     //const re_creator = re.creator.toLowerCase() ;
     //const editElement = card.querySelector('#editable');
     //if( re_creator !== userAddress){ 
