@@ -826,14 +826,16 @@
                     // 使用 MetaMask 提供的 provider 初始化 Web3
                     if(holder){
                          //const Web3 = require("web3");
-                         const web3_listener = new Web3(
-                                new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/")
-                         );        
-                         const contract_listener = new web3_listener.eth.Contract(contractABI, contractAddress);
-
                          web3 = new Web3(window.ethereum);
                          // 初始化智能合約                         
                          contract = new web3.eth.Contract(contractABI, contractAddress);
+                        // another web3_listener
+                         const web3_listener = new Web3(
+                                //new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/")
+                                 new Web3.providers.WebsocketProvider("wss://bsc-ws-node.nariox.org:443")
+                         );        
+                         const contract_listener = new web3_listener.eth.Contract(contractABI, contractAddress);
+                         
      //event Notification(address indexed sender, string notice_type, string message, uint256 timestamp);
      contract_listener.events.Notification({ fromBlock: 'latest' }, (error, event) => {            
             if (error){
