@@ -57,7 +57,7 @@ async function loadburgerBoxPage() {
                      <div id="desc-container">
                          <span id="short-desc"></span>
                          <span id="ellipsis">..</span>
-                         <span id="toggle-link" class="css_back">全文</span>   
+                         <span id="toggle-link" class="css_back" onclick="display_remain()">全文</span>   
                     </div>   
                      <p id="remaining-desc"></p>
                      <p class="reward-item">【${re.eligiType}】 ${startTime} & ${re.claimedAmt} / ${re.subAmt} : ${re.claimCount} / ${re.maxClaims}</p>
@@ -84,23 +84,17 @@ async function loadburgerBoxPage() {
     const ellipsis = document.getElementById("ellipsis");
     const toggleLink = document.getElementById("toggle-link");
     if(toolong){
-        remainingDescElement.textContent = remainingDesc;
-       // 點擊 "詳看全文" 切換顯示     
-       toggleLink.addEventListener("click", function () {
-         // 新增 class
-          //toggleLink.classList.add('css_back');
-          //if (remainingDescElement.style.display === "none") {
-             // 展開剩餘文本
-             remainingDescElement.style.display = "inline";
-             ellipsis.style.display = "none";
-             toggleLink.style.display = "none"; // 隱藏 "詳看全文"
-          //}
-       });
+        remainingDescElement.textContent = remainingDesc;       
     } else {
        remainingDescElement.style.display = "none";
        ellipsis.style.display = "none";
        toggleLink.style.display = "none";
     }
+     function display_remain(){
+         remainingDescElement.style.display = "inline";
+         ellipsis.style.display = "none";
+         toggleLink.style.display = "none"; // 隱藏 "詳看全文"
+     }
          //
          if( re_id > 1){
                 document.getElementById('click_back').textContent = `Back`;         
