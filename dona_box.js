@@ -45,6 +45,10 @@ async function loadburgerBoxPage() {
          //
          const desc = re.desc; // 假設這是描述文本
          const maxLength = 16; // 最大顯示字數
+         let toolong = false;
+         if (desc.length > maxLength) {
+             toolong = true;
+         } 
          const shortDesc = desc.slice(0, maxLength);
          const remainingDesc = desc.slice(maxLength);         
          //<h2>${truncatedDesc}</h2>
@@ -52,7 +56,7 @@ async function loadburgerBoxPage() {
             <div>
                      <div id="desc-container">
                          <span id="short-desc"></span>
-                         <span id="ellipsis">&</span>
+                         <span id="ellipsis">..</span>
                          <a id="toggle-link" href="javascript:void(0);" class="css_back">詳看全文</a>
                          <span id="remaining-desc" style="display: none; font-size: 0.8em;"></span>
                     </div>                    
@@ -75,23 +79,28 @@ async function loadburgerBoxPage() {
          card.innerHTML = row.innerHTML ; 
          //
    // 初始化縮略文本
-    document.getElementById("short-desc").textContent = shortDesc;   
-    document.getElementById("remaining-desc").textContent = remainingDesc;
-
-  // 點擊 "詳看全文" 切換顯示
-   document.getElementById("toggle-link").addEventListener("click", function () {
+    document.getElementById("short-desc").textContent = shortDesc;  
     const remainingDescElement = document.getElementById("remaining-desc");
     const ellipsis = document.getElementById("ellipsis");
-    const toggleLink = this;
-    // 新增 class
-    toggleLink.classList.add('css_back');
-  if (remainingDescElement.style.display === "none") {
-    // 展開剩餘文本
-    remainingDescElement.style.display = "inline";
-    ellipsis.style.display = "none";
-    toggleLink.style.display = "none"; // 隱藏 "詳看全文"
-  }
-});
+    const toggleLink = document.getElementById("toggle-link");
+    if(toolong){
+        remainingDescElement.textContent = remainingDesc;
+       // 點擊 "詳看全文" 切換顯示     
+       toggleLink.addEventListener("click", function () {
+         // 新增 class
+          toggleLink.classList.add('css_back');
+          if (remainingDescElement.style.display === "none") {
+             // 展開剩餘文本
+             remainingDescElement.style.display = "inline";
+             ellipsis.style.display = "none";
+             toggleLink.style.display = "none"; // 隱藏 "詳看全文"
+          }
+       });
+    } else {
+       remainingDescElement.style.display = none;
+       ellipsis.style.display = none;
+       toggleLink.style.display = none;
+    }
          //
          if( re_id > 1){
                 document.getElementById('click_back').textContent = `Back`;         
