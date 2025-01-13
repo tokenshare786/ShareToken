@@ -6,6 +6,7 @@ let burgerCount = 0; // 總甜甜圈數量
 async function initializePage() {
     try {
         burgerCount = await getreID(); // 獲取甜甜圈總數
+        burger_count = Number(burger_count);
         if (burgerCount > 0) {
             await loadMoreDonaBoxes(); // 加載第一批 Dona_box
         } else {
