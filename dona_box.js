@@ -60,7 +60,7 @@ async function loadburgerBoxPage() {
                          <span id="toggle-link" class="css_back" style="position:relative;top:5px;left:3px">全文</span>   
                     </div>   
                      <p id="remaining-desc"></p>
-                     <p class="reward-item">【${re.eligiType}】 ${startTime} & ${re.claimedAmt} / ${re.subAmt} : ${re.claimCount} / ${re.maxClaims}</p>
+                     <p class="reward-item" style="text-align:center">【${re.eligiType}】 ${startTime} & ${re.claimedAmt} / ${re.subAmt} : ${re.claimCount} / ${re.maxClaims}</p>
                      <span class="progress">
                          <p class="css_back" onclick="_back()" id="click_back">Back</p>                         
                          <p class="css_back" style="margin-left:auto" onclick="_next()" id="click_next">Next</p>
