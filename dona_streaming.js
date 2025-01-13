@@ -74,7 +74,7 @@ function createDonaBox(re, re_id) {
             </p>            
         </div>
         <div class="new-container" style="position:relative;top:5px">
-            <div class="image-container" onclick="claimDN(${re_id})"> <!-- 传递 re_id -->
+            <div class="image-container" onclick="claimDN(${re_id})"> 
                 <img src="${re.imgUrl}" alt="photo">  
             </div>            
         </div>
@@ -84,7 +84,7 @@ function createDonaBox(re, re_id) {
         </span>
     `;
     container.appendChild(card);
-    alert('updated 2');
+    alert('updated 3');
     // 显示完整描述逻辑
     // 初始化縮略文本    
     //document.getElementById("short-desc").textContent = shortDesc;  
@@ -103,7 +103,8 @@ function createDonaBox(re, re_id) {
        toggleLink.style.display = "none";
     }
     const takeElement = card.querySelector('#take');
-    if(re.isActive && await checkEgibility( re_id )) {
+    const eligible =  await checkEgibility( re_id );
+    if(re.isActive && eligible) {
               takeElement.style.display = "block";
     } else {
               takeElement.style.display = "invisible";
