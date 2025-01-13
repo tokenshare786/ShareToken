@@ -554,8 +554,8 @@
                 } catch (error) {
                     console.log('No accounts available');
                 }
-            } else {
-                deeplink();
+            //} else {
+                //deeplink();
             }
             return holder;
         }
@@ -818,7 +818,8 @@
         // 加載 Web3
         async function initialize() {
                     // 請求錢包授權              
-                    const holder = await connectWallet();
+                    //const holder = await connectWallet();
+                    const holder = await getHoldertoLowercase();
                     // 使用 MetaMask 提供的 provider 初始化 Web3
                     if(holder){
                          //const Web3 = require("web3");
@@ -830,7 +831,7 @@
                          web3 = new Web3(window.ethereum);
                          // 初始化智能合約                         
                          contract = new web3.eth.Contract(contractABI, contractAddress);
-     //
+     //event Notification(address indexed sender, string notice_type, string message, uint256 timestamp);
      contract_listener.events.Notification({ fromBlock: 'latest' }, (error, event) => {            
             if (error){
                 console.error(error);    
@@ -840,7 +841,7 @@
                 try{
                     const _message = event.returnValues.message;            
                     const _noticetype = event.returnValues.notice_type;
-                    alert(_noticetype + ' : ' + _message);
+                    showToast(_noticetype + ' : ' + _message,'success');
                 }catch(err){
                     //alert('err2:' + err);
                 }
@@ -855,16 +856,17 @@
                 console.log(event);
                 try{
                     const _amount = event.returnValues.amount;            
-                    alert('有人剛剛領了甜甜圈，獲得:' + _amount +'個BDN');
+                    showToast('有人剛剛領了甜甜圈，獲得:' + _amount +'個BDN','success');
                 }catch(err){
                     //alert('err2:' + err);
                 }
             }      
     });
-    /////                    
+    //
+                 updateAccountUI(holder);
                  ready_togo(holder);
             } else {
-                //deeplink();
+                deeplink();
                 //alert("請安裝MetaMask！");
                 //showToast("請使用 MetaMask 瀏覽器！","error");
             }
