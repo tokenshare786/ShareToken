@@ -57,7 +57,7 @@ async function loadburgerBoxPage() {
                      <div id="desc-container">
                          <span id="short-desc"></span>
                          <span id="ellipsis">..</span>
-                         <span id="toggle-link" class="css_back" style="position:relative;top:10px">全文</span>   
+                         <span id="toggle-link" class="css_back" style="position:relative;top:5px;left:3px">全文</span>   
                     </div>   
                      <p id="remaining-desc"></p>
                      <p class="reward-item">【${re.eligiType}】 ${startTime} & ${re.claimedAmt} / ${re.subAmt} : ${re.claimCount} / ${re.maxClaims}</p>
