@@ -29,7 +29,7 @@ async function loadMoreDonaBoxes() {
     const start = (currentPage - 1) * itemsPerPage + 1; // 起始 re_id
     const end = Math.min(currentPage * itemsPerPage, burgerCount); // 结束 re_id
 
-    for (let i = start; i <= end; i++) {
+    for (let i = end ; i >= start ; i--) {
         try {
             const re = await getSpecificDN(i); // 获取数据
             if (re) {
