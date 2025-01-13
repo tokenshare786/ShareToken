@@ -2,7 +2,7 @@ let currentPage = 1; // 当前页数
 const itemsPerPage = 5; // 每次加载数量
 let isLoading = false; // 是否正在加载中
 let burgerCount = 0; // 总甜甜圈数量
-
+let userAddress;
 // 初始化页面
 async function initializePage() {
     try {
@@ -10,6 +10,7 @@ async function initializePage() {
         burgerCount = Number(burgerCount); // 确保是数字
         if (burgerCount > 0) {
             await loadMoreDonaBoxes(); // 加载第一批 Dona_box
+            userAddress = await getHoldertoLowercase();
         } else {
             alert("目前没有甜甜圈 ><");
         }
@@ -65,11 +66,7 @@ function createDonaBox(re, re_id) {
             <p id="remaining-desc" style="display: none;">${remainingDesc}</p>
             <p class="reward-item" style="text-align:center">
                 【${re.eligiType}】 ${startTime} & ${re.claimedAmt} / ${re.subAmt} : ${re.claimCount} / ${re.maxClaims}
-            </p>
-            <span class="progress">
-                <p class="css_back" onclick="_back()" id="click_back">Back</p>                         
-                <p class="css_back" style="margin-left:auto" onclick="_next()" id="click_next">Next</p>
-            </span>
+            </p>            
         </div>
         <div class="new-container">
             <div class="image-container" onclick="claimDN(${re_id})"> <!-- 传递 re_id -->
@@ -81,7 +78,7 @@ function createDonaBox(re, re_id) {
             <p class="css_back" style="margin-left:auto" onclick="claimDN(${re_id})" id="take">Take</p> <!-- 传递 re_id -->
         </span>
     `;
-
+    container.appendChild(card);
     // 显示完整描述逻辑
     const toggleLink = card.querySelector('#toggle-link');
     const remainingDescElement = card.querySelector('#remaining-desc');
@@ -92,8 +89,19 @@ function createDonaBox(re, re_id) {
         ellipsis.style.display = 'none';
         toggleLink.style.display = 'none';
     });
-
-    container.appendChild(card);
+    
+    if(eligible){
+                document.getElementById("take").style.display = "block";
+        } else {
+                document.getElementById("take").style.display = "invisible";
+        }
+        const re_creator = re.creator.toLowerCase() ;
+        if( re_creator !== userAddress){ 
+                document.getElementById("editable").style.display = "invisible";
+         } else {
+                //alert("It's editable！");  
+                document.getElementById("editable").style.display = "block";
+         }     
 }
 
 // 点击领取甜甜圈
