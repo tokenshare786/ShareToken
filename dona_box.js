@@ -44,7 +44,7 @@ async function loadburgerBoxPage() {
          const startTime = new Date(Number(re.startTime) * 1000).toLocaleString(); 
          //
          const desc = re.desc; // 假設這是描述文本
-         const maxLength = 16; // 最大顯示字數
+         const maxLength = 13; // 最大顯示字數
          let toolong = false;
          if (desc.length > maxLength) {
              toolong = true;
@@ -57,7 +57,7 @@ async function loadburgerBoxPage() {
                      <div id="desc-container">
                          <span id="short-desc"></span>
                          <span id="ellipsis">..</span>
-                         <span id="toggle-link" class="css_back" onclick="display_remain()">全文</span>   
+                         <span id="toggle-link" class="css_back" style="position:relative; top: -10px" onclick="display_remain()">全文</span>   
                     </div>   
                      <p id="remaining-desc"></p>
                      <p class="reward-item">【${re.eligiType}】 ${startTime} & ${re.claimedAmt} / ${re.subAmt} : ${re.claimCount} / ${re.maxClaims}</p>
