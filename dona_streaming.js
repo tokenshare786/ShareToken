@@ -53,22 +53,22 @@ async function createDonaBox(re, re_id) {
     card.className = 'dona-box'; // 添加样式类
 
     const startTime = new Date(Number(re.startTime) * 1000).toLocaleString();
-    const desc = re.desc; // 假設這是描述文本
+    const desc_ds = re.desc; // 假設這是描述文本
     const maxLength = 13; // 最大顯示字數
     let toolong = false;
     if (desc.length > maxLength) {
              toolong = true;
     } 
-    const shortDesc = desc.slice(0, maxLength);
-    const remainingDesc = desc.slice(maxLength);
+    const shortDesc_ds = desc_ds.slice(0, maxLength);
+    const remainingDesc_ds = desc_ds.slice(maxLength);
     card.innerHTML = `
         <div>
             <div id="desc-container">
-                <span id="short-desc">${shortDesc}</span>
+                <span id="short-desc">${shortDesc_ds}</span>
                 <span id="ellipsis">&nbsp..</span>
                 <span id="toggle-link" class="css_back" style="position:relative;top:5px;left:3px">全文</span>   
             </div>   
-            <p id="remaining-desc" style="display: none;">${remainingDesc}</p>
+            <p id="remaining-desc" style="display: none;">${remainingDesc_ds}</p>
             <p class="reward-item" style="text-align:center">
                 【${re.eligiType}】 ${startTime} & ${re.claimedAmt} / ${re.subAmt} : ${re.claimCount} / ${re.maxClaims}
             </p>            
