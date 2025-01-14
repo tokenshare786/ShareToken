@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLKDONA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000;
+            color: #fff;
+            padding: 10px;
+        }
+
+        .dona-box {
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #1a1a1a;
+        }
+
+        #desc-container {
+            display: flex;
+            justify-content: center;
+            /* 水平居中 */
+        }
+
+        #short-desc {
+            margin-bottom: 8px;
+            font-size: 1.125em;
+            font-weight: bold;
+            text-align: center;
+            color: #FFFFFF;
+        }
+
+        #remaining-desc {
+            font-size: 0.8em;
+            /* 展開後縮小的文字大小 */
+            display: none;
+            position: relative;
+            top: -8px;
+        }
+
+        #toast-container {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            /* 移到水平中心 */
+            transform: translateX(-50%);
+            /* 偏移到正中心 */
+            z-index: 1000;
+        }
+
+        .toast {
+            position: relative;
+            /* 為了讓偽元素相對定位 */
+            margin-bottom: 10px;
+            padding: 10px 20px;
+            background-color: #111;
+            color: white;
+            border-radius: 7px;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            max-width: 80%;
+            /* 限制寬度占整個視窗的比例 */
+            min-width: 200px;
+            /* 設置最小寬度，避免過窄 */
+            word-wrap: break-word;
+            /* 當內容過長時自動換行 */
+            opacity: 0;
+            transform: translateY(-100%);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast::before {
+            content: '';
+            position: absolute;
+            top: -12px;
+            /* 微調突出角的位置 */
+            left: 20px;
+            /* 調整突出角的水平位置 */
+            width: 0;
+            height: 0;
+            border-left: 12px solid transparent;
+            /* 左側透明邊 */
+            border-right: 12px solid transparent;
+            /* 右側透明邊 */
+            border-bottom: 12px solid white;
+            /* 白色邊框，與框的顏色一致 */
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+            /* 為三角形添加陰影，增強融合效果 */
+        }
+
+        .toast::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            /* 與三角形的底部對齊 */
+            left: 22px;
+            /* 將內部三角稍微縮小 */
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            /* 內側透明邊 */
+            border-right: 10px solid transparent;
+            /* 內側透明邊 */
+            border-bottom: 10px solid #111;
+            /* 與背景色一致，製造白框內嵌效果 */
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            /* 半透明背景 */
+            display: flex;
+            align-items: center;
+            /* 垂直居中 */
+            justify-content: center;
+            /* 水平居中 */
+            z-index: 1000;
+            /* 確保在最上層 */
+            visibility: hidden;
+            /* 初始設置為隱藏 */
+            opacity: 0;
+            /* 初始透明度 */
+            transition: opacity 0.3s ease;
+            /* 添加淡入動畫 */
+        }
+
+        /* 彈出窗口設置 */
+        .modal {
+            position: relative;
+            width: 90%;
+            /* 手機端自適應寬度 */
+            max-width: 400px;
+            /* 限制最大寬度 */
+            background: #1E1E1E;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            /* 添加陰影效果 */
+        }
+
+        /* 顯示彈窗時的樣式 */
+        .modal-overlay.show {
+            visibility: visible;
+            opacity: 1;
+            /* 淡入效果 */
+        }
+
+
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            color: #FFFFFF;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #BBBBBB;
+            /* 次要文本顏色 */
+        }
+
+        input,
+        select {
+            width: calc(100% - 20px);
+            /* 控制寬度，防止過長 */
+            padding: 10px;
+            border: 1px solid #333333;
+            border-radius: 5px;
+            background: #292929;
+            /* 深灰背景 */
+            color: #FFFFFF;
+            /* 白色字體 */
+            font-size: 14px;
+            box-sizing: border-box;
+            /* 包含內邊距和邊框 */
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #555555;
+            /* 聚焦時的邊框顏色 */
+        }
+
+        ._text {
+            word-wrap: break-word;
+            /* 長單詞換行 */
+            word-break: break-all;
+            /* 強制斷字換行（可選） */
+            overflow-wrap: break-word;
+            /* 現代瀏覽器首選 */
+            white-space: normal;
+            /* 允許正常換行 */
+            overflow: hidden;
+            /* 防止超出容器時內容溢出 */
+        }
+
+        ._buttons {
+            display: flex;
+            justify-content: center;
+            /* 讓按鈕水平置中 */
+            gap: 12px;
+            /* 設置按鈕間距 */
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 6px 12px;
+            /* 調整為您提供的樣式 */
+            font-size: 0.8em;
+            /* 字體大小 */
+            border-radius: 6px;
+            border: 2px solid #00d9ff;
+            /* 錢包按鈕的邊框顏色 */
+            color: #00d9ff;
+            /* 文字顏色 */
+            background: transparent;
+            /* 背景透明 */
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            /* 添加平滑過渡效果 */
+        }
+
+        button.cancel {
+            color: #FF6F61;
+            /* 可以為取消按鈕設置不同的顏色（如紅色） */
+            border-color: #FF6F61;
+            /* 與文字顏色保持一致 */
+        }
+
+        button.confirm {
+            color: #00d9ff;
+            /* 藍色字體 */
+            border-color: #00d9ff;
+            /* 藍色邊框 */
+        }
+
+        button:hover {
+            background: #00d9ff;
+            /* 添加藍色背景以突出效果 */
+            color: #121212;
+            /* 深色字體，確保在藍色背景上可見 */
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        header h1 {
+            margin-left: 4px;
+            /* 移除預設的 margin */
+            font-size: 1.5rem;
+            text-transform: capitalize;
+        }
+
+        header div {
+            margin-left: auto;
+            /* 將按鈕推到右側 */
+        }
+
+        .copy-icon {
+            display: inline-block;
+            font-size: 95%;
+            vertical-align: top;
+            /* 垂直對齊到頂部 */
+            margin-bottom: 4px;
+            margin-left: 4px;
+        }
+
+        .copy-message {
+            font-weight: bold;
+            display: none;
+            font-size: 90%;
+            margin-bottom: 4px;
+            margin-left: 4px;
+        }
+
+        .walletbutton {
+            margin-top: 2px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 2px solid #00d9ff;
+            color: #00d9ff;
+            background: transparent;
+            font-size: 0.8em;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .walletbutton:hover {
+            background: #00d9ff;
+            color: #000;
+        }
+
+        .claim_button {
+            margin-top: 3px;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            border: 2px solid #00d9ff;
+            color: #00d9ff;
+            background: transparent;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            line-height: 50px;
+            /* 與高度相同 */
+        }
+
+        .claim_button.active {
+            background: #00d9ff;
+            color: #000;
+        }
+
+        .re_button {
+            display: none;
+            margin-top: 3px;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            border: 2px solid #ff4500;
+            color: #ff4500;
+            background: transparent;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            justify-content: center;
+            align-items: center;
+            line-height: 50px;
+            /* 與高度相同 */
+        }
+
+        .re_button.active {
+            background: #ff4500;
+            color: #FFF;
+        }
+
+        .notification {
+            background-color: #1a1a1a;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            margin-bottom: 2px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notification span {
+            margin-left: 2px;
+        }
+
+        .notification h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .notification p {
+            margin: 0;
+            color: #aaaaaa;
+            font-size: 0.7rem;
+        }
+
+        .notification a {
+            color: #1e90ff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .css_back {
+            font-size: 0.8rem;
+            color: #1e90ff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            background-color: #1a1a1a;
+            padding: 6px 12px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+        }
+
+        .card h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .reward-item {
+            font-size: 0.8rem;
+            margin: 0;
+            color: #bbbbbb;
+            flex: 1;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 16px;
+        }
+
+        .buttons button {
+            flex: 1;
+            text-align: center;
+            margin: 0 4px;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.2;
+            cursor: pointer;
+            background-color: #4a4a4a;
+            color: #fff;
+            display: flex;
+            /* 关键：将按钮设置为 flexbox 布局 */
+            align-items: center;
+            /* 垂直居中 */
+            justify-content: center;
+            /* 水平居中 */
+        }
+
+        .buttons button.active {
+            background-color: #fff;
+            color: #000;
+        }
+
+        .progress-card {
+            background-color: #1a1a1a;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .progress-card p {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .progress {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .progress span {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .progress .steps {
+            display: flex;
+            gap: 8px;
+        }
+
+        .steps span {
+            width: 16px;
+            height: 16px;
+            background-color: #ff4500;
+            border-radius: 50%;
+        }
+
+        footer {
+            position: fixed;
+            /* 固定位置 */
+            bottom: 0;
+            /* 鎖定在視窗底部 */
+            left: 0;
+            /* 鎖定在視窗左側 */
+            width: 100%;
+            /* 讓 footer 寬度覆蓋整個視窗 */
+            display: flex;
+            justify-content: space-around;
+            margin: 0;
+            /* 移除 margin，以免出現偏移 */
+            padding-top: 10px;
+            padding-bottom: 10px;
+            /* 增加底部內距確保內容不擁擠 */
+            border-top: 1px solid #333;
+            background-color: #000;
+            /* 確保背景色與頁面內容區分開 */
+            z-index: 1000;
+            /* 確保 footer 不會被其他內容覆蓋 */
+        }
+
+
+
+        footer a {
+            color: #fff;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            gap: 4px;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 400,
+                'GRAD' -25,
+                'opsz' 40
+        }
+
+        .symbol-match {
+            display: inline-block;
+            vertical-align: middle;
+            margin-bottom: 12px;
+        }
+
+        .new-container {
+            //all: unset; /* 清除上層可能的樣式 */
+            display: flex;
+            justify-content: center;
+            /* 或使用 margin-left: auto; */
+        }
+
+        .image-container {
+            width: 90%;
+            display: flex;
+            justify-content: center;
+            //height: 300px;
+            //margin: 0 auto;
+        }
+
+        .image-container img {
+            max-width: 90%;
+            max-height: 400px;
+            border-radius: 8px;
+            /* 修圓角，50% 代表圓形 */
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+            /* 陰影效果 */
+            object-fit: cover;
+            /* 保持圖片比例，填滿容器 */
+        }
+
+        .text-container {
+            flex: 1;
+            /* 讓文字部分佔用剩餘空間 */
+        }
+
+        .main-title {
+            font-size: 24px;
+            /* 調整主標題字體大小 */
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <span class="material-symbols-outlined" id="hamburger">lunch_dining</span>
+        <h1>BLKDONA</h1>
+        <span class="material-symbols-outlined copy-icon" onclick="copyAddress()">content_copy</span>
+        <span id="copyMessage" class="copy-message">copied</span>
+        <div>
+            <button class="walletbutton" id="walletButton" onclick="connectWallet()">Login</button>
+        </div>
+    </header>
+    <script>
+        function copyAddress() {
+            // 获取合约地址文本
+            const contractAddress = "0xCdB05222c8a059a6c0e9202d62fDFb05D6B5D274";
+            navigator.clipboard.writeText(contractAddress)
+                .then(() => {
+                    const message = document.getElementById("copyMessage");
+                    message.style.display = "block";
+                    setTimeout(() => {
+                        message.style.display = "none";
+                    }, 2000);
+                })
+                .catch((err) => {
+                    console.error("copy failed:", err);
+                });
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- 引入 Web3.js -->
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+    <script>
+        // 取得推薦碼    
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return '';
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+        async function getHoldertoLowercase() {
+            var holder;
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    // Connect Wallet
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    holder = accounts[0].toLowerCase();
+                } catch (error) {
+                    console.log('No accounts available');
+                }
+                //} else {
+                //deeplink();
+            }
+            return holder;
+        }
+
+        function deeplink() {
+            // 如果瀏覽器中未檢測到電子錢包
+            try {
+                const blkdonaUrl = "https://tokenshare786.github.io/ShareToken/";
+                //const metamaskDeepLink = `https://metamask.app.link/dapp/${encodeURIComponent(blkdonaUrl)}`;
+                const metamaskDeepLink = `https://metamask.app.link/dapp/${blkdonaUrl}`;
+                window.location.href = metamaskDeepLink;
+            } catch (err) {
+                //showToast('請用 MetaMask 瀏覽器登入！','error');
+                const metamaskAppLink = "https://metamask.app.link/";
+                window.location.href = metamaskAppLink; // 跳轉到 MetaMask 安裝頁
+            }
+        }
+
+        async function connectWallet() {
+            const holder = await getHoldertoLowercase();
+            if (holder) {
+                updateAccountUI(holder);
+            } else {
+                deeplink();
+            }
+        }
+        // 監聽帳號變化
+        ethereum.on('accountsChanged', (accounts) => {
+            if (accounts.length > 0) {
+                location.reload();
+                //console.log('Account changed:', accounts[0]);
+                //ready_togo(accounts[0]);
+            } else {
+                console.log('No accounts available');
+            }
+        });
+        // 更新頁面上的帳號顯示
+        function updateAccountUI(account) {
+            const walletButton = document.getElementById('walletButton');
+            walletButton.textContent = `${account.substring(0, 2)}..${account.slice(-4)}`;
+            try {
+                const script = document.createElement("script");
+                script.src = "dona_streaming.js";
+                script.id = 'dona_streaming';
+                document.body.appendChild(script);                
+            } catch (err) {
+                console.error("Error loading content:", err);                
+            }
+        }    
+    </script>
+    <div id="dona-container">
+        <div class="notification" id="notice">
+            <span class="material-symbols-outlined">brand_awareness</span>
+            <span>The BlackDona white paper has been released, please check for details..</span>
+            <a href="white_paper.html">Details</a>
+        </div>
+        <div id="card" class="card">
+            <div class="progress" id="content">
+                <div>
+                    <h2 id="notice_ad" style="display: none"></h2>
+                    <h2 id="notice_title">AirDrop</h2>
+                    <p class="reward-item" id="linetext_1">Holder reward: 3%</p>
+                    <p class="reward-item" id="linetext_2">Referal reward: 1%</p>
+                </div>
+                <div class="claim_button" id="claim_button">Get</div>
+                <div class="re_button" id="re_button">Get</div>
+            </div>
+            <div class="buttons">
+                <button class="buttons button.active" id="airdrop_btn">Get Airdrop</button>
+                <button class="buttons button" id="activities_btn">Activities</button>
+            </div>
+        </div>
+
+
+        <div class="progress-card">
+            <div class="progress">
+                <div>
+                    <span id="link_icon" class="material-symbols-outlined">link</span>
+                    <span class="symbol-match" id="linkcodeDisplay"></span>
+                </div>
+                <div>
+                    <span class="material-symbols-outlined">heart_check</span>
+                    <span class="symbol-match" id="fans_count"></span>
+                </div>
+                <div>
+                    <span class="material-symbols-outlined">featured_seasonal_and_gifts</span>
+                    <span class="symbol-match" id="re_count"></span>
+                </div>
+            </div>
+            <div class="progress">
+                <span> Bitcoin/USD：</span>
+                <span id="bitcoin-price"></span>
+                <div>
+                    <span class="material-symbols-outlined">person</span>
+                    <span class="symbol-match" id="holders_count"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="notification">
+            <div>
+                <span>Balance of BLKDONA：</span>
+                <p>Just updated</p>
+            </div>
+            <div>
+                <h2 id="balance">waiting..</h2>
+            </div>
+        </div>
+    </div>
+    <div id="loading" style="text-align: center; display: none;">
+        加載中...
+    </div>
+    <footer>
+        <a onclick="notification()">
+            <span class="material-symbols-outlined">cell_tower</span>
+            Broadcast
+        </a>
+        <a id="activities" onclick="openModal()">
+            <span class="material-symbols-outlined">search</span>
+            活動
+        </a>
+        <a onclick="shareMyDona()">
+            <span class="material-symbols-outlined">share</span>
+            Share
+        </a>
+    </footer>
+    <script>
+        // Fetch and Replace Content
+        document.getElementById("re_button").addEventListener("click", async (e) => {
+            e.preventDefault(); // Prevent link navigation
+            document.getElementById("notice").style.display = "none";
+            // Fetch the HTML content for red envelopes          
+            try {
+                const script_remove = document.getElementById('dona_streaming');            
+                script_remove.remove();
+                const script = document.createElement("script");
+                script.src = "dona_box.js";                
+                document.body.appendChild(script);                
+            } catch (err) {
+                console.error("Error loading content:", err);                
+            }
+        });
+    </script>
+    <script>
+        //隨著不同的Button 切換不同的信息
+        const claim_button = document.getElementById('claim_button');
+        const re_button = document.getElementById('re_button');
+        const getAirdropButton = document.getElementById('airdrop_btn');
+        const activitiesButton = document.getElementById('activities_btn');
+        const titleElement = document.getElementById('notice_title');
+        const holderRewardElement = document.getElementById('linetext_1');
+        const referalRewardElement = document.getElementById('linetext_2');
+
+        getAirdropButton.classList.add('active');
+
+        function swapButtonStyles() {
+            getAirdropButton.classList.toggle('active');
+            activitiesButton.classList.toggle('active');
+        }
+
+        function updateContent(isAirdrop) {
+            titleElement.textContent = isAirdrop ? 'AirDrop' : 'Activities';
+            holderRewardElement.textContent = isAirdrop ? 'Holder reward: 3%' : 'My Activities:';
+            referalRewardElement.textContent = isAirdrop ? 'Referal reward: 1%' : 'Total Activities:';
+        }
+
+        getAirdropButton.addEventListener('click', () => {
+            swapButtonStyles();
+            updateContent(true);
+            claim_button.style.display = 'flex';
+            re_button.style.display = 'none';
+        });
+
+        activitiesButton.addEventListener('click', () => {
+            swapButtonStyles();
+            updateContent(false);
+            claim_button.style.display = 'none';
+            re_button.style.display = 'flex';
+        });
+    </script>
+    <script>
+        // 取得 linkcode 參數    
+        var linkcode = getParameterByName('linkcode');
+        //alert("to get linkcode:" + linkcode);
+        function getlinkcode() {
+            try {
+                if (linkcode != null) {
+                    // alert(`Welcome！`+ linkcode);
+                    // 假設 linkcode 變數已經定義且包含要顯示的連結
+                    const linkcodeDisplay = document.getElementById('linkcodeDisplay');
+                    // 如果 linkcode 有值，則將其內容設置為顯示物件的內文
+                    linkcodeDisplay.textContent = linkcode;
+                } else {
+                    // 如果 linkcode 沒有值，則顯示空白
+                    linkcodeDisplay.textContent = " ";
+                }
+            } catch (err) {
+                alert("error:" + err);
+            }
+        }
+    </script>
+    <script>
+        let clickHandler;
+        let clickHandler_hb;
+        //
+        function disable_get_btn(holder) {
+            const claim_btn = document.getElementById('claim_button');
+            //alert("clickHandler：" + clickHandler);
+            //change color
+            claim_btn.classList.remove('active');
+            // disable click
+            claim_btn.removeEventListener('click', clickHandler);
+        }
+        async function start_airdrop(holder) {
+            if (confirm("確定要開啟新一輪的空投嗎？")) {
+                // 點擊確認，開始執行    
+                // 呼叫智能合約的 startAirdrop 函數
+                try {
+                    const tx = await contract.methods.startAirdrop().send({ from: holder });
+                    // 顯示交易結果
+                    console.log("Transaction hash:", tx.transactionHash);
+                    alert("Airdrop started successfully!");
+                } catch (error) {
+                    console.error("Error starting airdrop:", error);
+                    //alert("Error starting airdrop. Please try again later.");
+                }
+            } else {
+                // 如果使用者點擊取消，則什麼都不做
+                console.log("使用者取消啟動空投");
+            }
+        }
+
+        async function claim_airdrop(holder) {
+            if (confirm("請注意！領取空投必須付出Gas，您確定繼續？")) {
+                try {
+                    // 呼叫智能合約的 claimAirdrop 函數
+                    await contract.methods.claimAirdrop().send({ from: holder });
+                    disable_get_btn();
+                    //getBalance(holder);                 
+                } catch (error) {
+                    console.error("Error claiming airdrop:", error);
+                    //alert("Claiming airdrop failure.Try again later." + error);
+                }
+            }
+        }
+        let intervalId;
+        function countdown(seconds) {
+            // 清除之前的計時器
+            clearInterval(intervalId);
+            const airdrop_btn = document.getElementById("airdrop_btn");
+            let count = seconds;
+
+            intervalId = setInterval(() => {
+                airdrop_btn.textContent = count.toLocaleString() + " secs";
+                count--;
+
+                if (count < 0) {
+                    clearInterval(intervalId);
+                    airdrop_btn.textContent = "Get AirDrop";
+                    // 倒數結束後的處理
+                }
+            }, 1000);
+        }
+
+        //</script>
+    <script>
+        // get balance of dona
+        let web3;
+        let contract;
+        // 合約地址和 ABI
+        const contractAddress = "0xCdB05222c8a059a6c0e9202d62fDFb05D6B5D274";
+        const contractABI = [
+            { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "holder", "type": "address" }, { "indexed": true, "internalType": "address", "name": "receiver", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "reward", "type": "uint256" }], "name": "ADClaimed", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "adCount", "type": "uint256" }], "name": "ADStarted", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "owner", "type": "address" }, { "indexed": true, "internalType": "address", "name": "spender", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" }], "name": "Approval", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "burner", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "Burn", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "donor", "type": "address" }, { "indexed": true, "internalType": "address", "name": "recipient", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "Donation", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "minter", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "Mint", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "sender", "type": "address" }, { "indexed": false, "internalType": "string", "name": "notice_type", "type": "string" }, { "indexed": false, "internalType": "string", "name": "message", "type": "string" }, { "indexed": false, "internalType": "uint256", "name": "timestamp", "type": "uint256" }], "name": "Notification", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "from", "type": "address" }, { "indexed": true, "internalType": "address", "name": "to", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" }], "name": "Transfer", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "id", "type": "uint256" }, { "indexed": true, "internalType": "address", "name": "claimer", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }, { "indexed": true, "internalType": "address", "name": "creator", "type": "address" }], "name": "donaClaimed", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "id", "type": "uint256" }, { "indexed": true, "internalType": "address", "name": "creator", "type": "address" }, { "indexed": false, "internalType": "uint8", "name": "eligiType", "type": "uint8" }, { "indexed": false, "internalType": "uint256", "name": "subAmt", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "maxClaims", "type": "uint256" }], "name": "donaCreated", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "holder", "type": "address" }, { "indexed": true, "internalType": "address", "name": "referer", "type": "address" }], "name": "refSet", "type": "event" }, { "inputs": [], "name": "_owner", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "name": "activeDNs", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "adCount", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "adDuration", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "adEnabled", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "adStartTime", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }, { "internalType": "address", "name": "", "type": "address" }], "name": "allowance", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "spender", "type": "address" }, { "internalType": "uint256", "name": "value", "type": "uint256" }], "name": "approve", "outputs": [{ "internalType": "bool", "name": "success", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }], "name": "balanceOf", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "name": "blkDona", "outputs": [{ "internalType": "uint256", "name": "subAmt", "type": "uint256" }, { "internalType": "uint256", "name": "claimedAmt", "type": "uint256" }, { "internalType": "uint256", "name": "maxClaims", "type": "uint256" }, { "internalType": "uint256", "name": "claimCount", "type": "uint256" }, { "internalType": "address", "name": "creator", "type": "address" }, { "internalType": "uint8", "name": "eligiType", "type": "uint8" }, { "internalType": "string", "name": "desc", "type": "string" }, { "internalType": "string", "name": "imgUrl", "type": "string" }, { "internalType": "uint256", "name": "startTime", "type": "uint256" }, { "internalType": "bool", "name": "isActive", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "linkcode", "type": "string" }, { "internalType": "uint256", "name": "id", "type": "uint256" }], "name": "checkEligible", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "claimAirdrop", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "linkcode", "type": "string" }, { "internalType": "uint256", "name": "id", "type": "uint256" }], "name": "claimDona", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "cost_Edit", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "decimals", "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "donaID", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "donateToBlackhole", "outputs": [{ "internalType": "bool", "name": "success", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "recipient", "type": "address" }, { "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "donation", "outputs": [{ "internalType": "bool", "name": "success", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "_nickname", "type": "string" }, { "internalType": "string", "name": "_desc", "type": "string" }, { "internalType": "string", "name": "_url", "type": "string" }], "name": "editMyProfile", "outputs": [{ "internalType": "bool", "name": "success", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "holderPercent", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }], "name": "holders", "outputs": [{ "internalType": "address", "name": "referrer", "type": "address" }, { "internalType": "uint256", "name": "fans_count", "type": "uint256" }, { "internalType": "uint256", "name": "holderReward", "type": "uint256" }, { "internalType": "uint256", "name": "referReward", "type": "uint256" }, { "internalType": "string", "name": "refCode", "type": "string" }, { "internalType": "string", "name": "nickname", "type": "string" }, { "internalType": "string", "name": "description", "type": "string" }, { "internalType": "string", "name": "imgUrl", "type": "string" }, { "internalType": "uint256", "name": "lastClaimedAD", "type": "uint256" }, { "internalType": "bool", "name": "isDistoStartDA", "type": "bool" }, { "internalType": "bool", "name": "isDistoRef", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "minRefAmount", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "minShareBox", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "minShareTime", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }, { "internalType": "uint256", "name": "", "type": "uint256" }], "name": "myDona", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }], "name": "myDonaCount", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }, { "internalType": "uint256", "name": "", "type": "uint256" }], "name": "myfans", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "name", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "notice_type", "type": "string" }, { "internalType": "string", "name": "message", "type": "string" }], "name": "notification", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "ownerPercent", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "", "type": "string" }], "name": "refCodeOwners", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "refPercent", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_amount", "type": "uint256" }], "name": "setAdDuration", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_amount", "type": "uint256" }], "name": "setCost_Edit", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "account", "type": "address" }, { "internalType": "bool", "name": "_disabled", "type": "bool" }, { "internalType": "bool", "name": "isRef", "type": "bool" }], "name": "setDisabled", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "totalShare", "type": "uint256" }, { "internalType": "uint256", "name": "countDN", "type": "uint256" }, { "internalType": "uint8", "name": "eligiType", "type": "uint8" }, { "internalType": "string", "name": "_desc", "type": "string" }, { "internalType": "string", "name": "_url", "type": "string" }], "name": "setDona", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_percentage", "type": "uint256" }], "name": "setHolderReward", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_amount", "type": "uint256" }], "name": "setMinRefAmount", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_amount", "type": "uint256" }], "name": "setMinShareTime", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "refCode", "type": "string" }], "name": "setMyRefCode", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_percentage", "type": "uint256" }], "name": "setOwnerReward", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_percentage", "type": "uint256" }], "name": "setReferalReward", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "refCode", "type": "string" }], "name": "setReferrer", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_amount", "type": "uint256" }], "name": "setminShareTime", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "startAirdrop", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "symbol", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "totalSupply", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "recipient", "type": "address" }, { "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "transfer", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "from", "type": "address" }, { "internalType": "address", "name": "to", "type": "address" }, { "internalType": "uint256", "name": "value", "type": "uint256" }], "name": "transferFrom", "outputs": [{ "internalType": "bool", "name": "success", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "id", "type": "uint256" }, { "internalType": "string", "name": "desc", "type": "string" }, { "internalType": "string", "name": "url", "type": "string" }], "name": "updateMyDona", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }, { "internalType": "address", "name": "", "type": "address" }], "name": "whoClaimed", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" }
+        ];
+
+        // 加載 Web3
+        async function initialize() {
+            // 請求錢包授權              
+            //const holder = await connectWallet();
+            const holder = await getHoldertoLowercase();
+            // 使用 MetaMask 提供的 provider 初始化 Web3
+            if (holder) {
+                //const Web3 = require("web3");
+                web3 = new Web3(window.ethereum);
+                // 初始化智能合約                         
+                contract = new web3.eth.Contract(contractABI, contractAddress);
+                // another web3_listener
+
+                const web3_listener = new Web3(
+                    //new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/")
+                    new Web3.providers.WebsocketProvider("wss://bsc-ws-node.nariox.org:443")
+                );
+                const contract_listener = new web3_listener.eth.Contract(contractABI, contractAddress);
+
+                //event Notification(address indexed sender, string notice_type, string message, uint256 timestamp);
+                contract_listener.events.Notification({ fromBlock: 'latest' }, (error, event) => {
+                    if (error) {
+                        console.error(error);
+                        //alert('err1:' + error);
+                    } else {
+                        console.log(event);
+                        try {
+                            const _message = event.returnValues.message;
+                            const _noticetype = event.returnValues.notice_type;
+                            showToast(_noticetype + ' : ' + _message, 'success');
+                        } catch (err) {
+                            //alert('err2:' + err);
+                        }
+                    }
+                });
+                //event donaClaimed(uint256 indexed id, address indexed claimer, uint256 amount, address indexed creator);     
+                contract_listener.events.donaClaimed({ fromBlock: 'latest' }, (error, event) => {
+                    if (error) {
+                        console.error(error);
+                        //alert('err1:' + error);
+                    } else {
+                        console.log(event);
+                        try {
+                            const _amount = event.returnValues.amount;
+                            showToast('有人剛剛領了甜甜圈，獲得:' + _amount + '個BDN', 'success');
+                        } catch (err) {
+                            //alert('err2:' + err);
+                        }
+                    }
+                });
+                //
+                updateAccountUI(holder);
+                ready_togo(holder);
+            } else {
+                deeplink();
+                //alert("請安裝MetaMask！");
+                //showToast("請使用 MetaMask 瀏覽器！","error");
+            }
+        }
+        function ready_togo(holder) {
+            //
+            getlinkcode();
+            getBalance(holder);
+            startup(holder);
+            whichAvailable(holder);
+        }
+
+        // 查詢餘額
+        async function getBalance(holder) {
+            if (!web3) {
+                alert("Web3加載失敗，請重試！");
+                return;
+            } else if (!contract) {
+                alert("合約未初始化，請重試！");
+                return;
+            }
+            if (!web3.utils.isAddress(holder)) {
+                //alert("請用 Metamask！");                
+                return;
+            }
+            try {
+                // 調用 balanceOf 函數
+                const balance = await contract.methods.balanceOf(holder).call();
+                document.getElementById('balance').textContent = `${format_amt(balance)} `;
+
+            } catch (error) {
+                console.error("查詢餘額發生錯誤:", error);
+                alert("getbalance error：" + error);
+            }
+        }
+        function format_amt(amt) {
+            const decimals = 18n; // 使用 BigInt 表示 18
+            // 將餘額轉換為人類可讀的格式
+            const readableBalance = amt / BigInt(10 ** Number(decimals));
+            // 格式化为本地格式
+            const formatted = readableBalance.toLocaleString();
+            return formatted;
+        }
+        async function startup(holder) {
+            const burger_icon = document.getElementById('hamburger');
+            try {
+                // Identify   
+                const _owner = await contract.methods._owner().call();
+                const owner = _owner.toLowerCase()
+                //Check If holder is Owner
+                //alert("holder / owner :" + owner );
+                // 定義事件處理函數，確保函數引用一致                  
+                if (holder === owner) {
+                    clickHandler_hb = () => start_airdrop(holder);
+                    // 使用事件處理函數
+                    burger_icon.addEventListener('click', clickHandler_hb);
+                } else {
+                    // 使用相同的處理函數引用
+                    burger_icon.removeEventListener('click', clickHandler_hb);
+                }
+                // call holder() 函數 
+                const holderInfo = await contract.methods.holders(holder).call();
+                const refaddress = holderInfo.referrer;
+                if (holderInfo.holderReward > 0) {
+                    document.getElementById('linetext_1').textContent = `HolderReward:${format_amt(holderInfo.holderReward)}`;
+                }
+                if (holderInfo.referReward > 0) {
+                    document.getElementById('linetext_2').textContent = `ReferalReward:${format_amt(holderInfo.referReward)}`;
+                }
+
+                //alert("refAddress: " + refaddress );
+                // 是該出現推薦人還是推薦碼
+                if (web3.utils.isAddress(refaddress) && refaddress !== "0x0000000000000000000000000000000000000000") {
+                    document.getElementById('link_icon').textContent = `face`;
+                    document.getElementById('linkcodeDisplay').textContent = `${refaddress.substring(0, 2)}..${refaddress.slice(-4)}`;
+                } else {
+                    document.getElementById('link_icon').textContent = `link`;
+                    getlinkcode();
+                }
+                //Query how many fans I have
+                fetchReferer(holder);
+                fetchReCount(holder);
+                fetchholdercount();
+                //終於要愉快地領空投了嗎？
+                const adEnabled = await contract.methods.adEnabled().call();
+                const lastClaimTime = holderInfo.lastClaimedAD;
+                //alert("現在能領空投嗎？"+ adEnabled.toString());
+                //當空投正在進行時
+                const claim_btn = document.getElementById('claim_button');
+                if (adEnabled) {
+                    const adCount = await contract.methods.adCount().call();
+                    const adStartTime = await contract.methods.adStartTime().call();
+                    const adDuration = await contract.methods.adDuration().call();
+                    const nowtime = BigInt(Math.floor(Date.now() / 1000));
+                    const _countdown = adStartTime + adDuration - nowtime;
+                    //倒數計時開始
+                    countdown(_countdown);
+                    const balance = await contract.methods.balanceOf(holder).call();
+                    //告示牌主題變了
+                    const notice_ad = document.getElementById('notice_ad');
+                    const notice_title = document.getElementById('notice_title');
+                    notice_ad.textContent = "第" + adCount.toString() + "輪空投已經開始..."
+                    notice_ad.style.display = 'block';
+                    notice_title.style.display = 'none';
+                    //當Holder本輪尚未領過空投
+                    if (lastClaimTime < adStartTime) {
+                        //當Holder的Dona大於0時,Get按鈕啟動
+                        if (balance > 0) {
+                            claim_btn.classList.add('active');
+                            // 定義事件處理函數，確保函數引用一致
+                            clickHandler = () => claim_airdrop(holder);
+                            claim_btn.addEventListener('click', clickHandler);
+                            //當Holder的Dona等於0時
+                        } else {
+                            disable_get_btn(holder);
+                        }
+                    } else {
+                        //本輪已經領過空投
+                        disable_get_btn(holder);
+                    }
+                } else {
+                    disable_get_btn(holder);
+                }
+            } catch (error) {
+                console.error("查詢餘額發生錯誤:", error);
+                alert("error3：" + error);
+            }
+        }
+        // 初始化
+        window.onload = initialize;  
+    </script>
+    <script>
+        // get Market price of bitcoin
+        const apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd';
+        function fetchBitcoinPrice() {
+            axios.get(apiUrl)
+                .then(response => {
+                    const bitcoinPrice = response.data.bitcoin.usd;
+                    const formattedPrice = bitcoinPrice.toLocaleString(); // 格式化为本地格式
+                    document.getElementById('bitcoin-price').textContent = `${formattedPrice}`;
+                })
+                .catch(error => {
+                    console.error('Error fetching:', error);
+                });
+        }
+
+        // 初次載入時即獲取價格，之後每 5 秒更新一次
+        fetchBitcoinPrice();
+        setInterval(fetchBitcoinPrice, 15000);
+
+
+    </script>
+    <script>
+        async function getable(re_id) {
+            try {
+                const _code = getParameterByName('linkcode');
+                //alert("linkcode:"+_code);
+                const result = await contract.methods.checkEligible(_code, re_id).call();
+                //alert("result:"+result);
+                return result;
+            } catch (error) {
+                //alert("ErrGetable:" + error);
+            }
+            return false;
+        }
+        async function checkEgibility(reid) {
+            if (reid < 1) { return false; }
+            let _linkcodeOwner;
+            try {
+                // Request account access
+                //const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+                const userAddress = await getHoldertoLowercase();
+                //alert("userAddress:"+userAddress);
+                const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+                const reidBigInt = BigInt(reid);
+                const dona = await contract.methods.blkDona(reidBigInt).call();
+                const creator = dona.creator.toLowerCase();
+                const claimed = await contract.methods.whoClaimed(reidBigInt, userAddress).call();
+                //alert(`領過？` + claimed);
+                if (claimed) {
+                    //alert(`領過了就別再領了吧？`);
+                    return false;
+                } else if (creator == userAddress) {
+                    //alert("自己發的就別領了吧？");
+                    return false;
+                }
+
+                const holders = await contract.methods.holders(userAddress).call();
+                const referrer = holders.referrer.toLowerCase();
+                //alert("referrer:"+referrer);
+                const linkcode = await getParameterByName('linkcode');
+                //alert("linkcode:"+linkcode);
+                //if(!linkcode){linkcode="";}
+                if (linkcode.length > 0) {
+                    _linkcodeOwner = await contract.methods.refCodeOwners(linkcode).call();
+                } else {
+                    _linkcodeOwner = ZERO_ADDRESS;
+                }
+                const linkcodeOwner = _linkcodeOwner.toLowerCase();
+                //alert("linkcodeOwner:" + linkcodeOwner);
+                if (
+                    (dona.eligiType == 0 &&
+                        (referrer == creator ||
+                            (referrer == ZERO_ADDRESS &&
+                                (linkcode.length == 0 ||
+                                    linkcodeOwner == creator)))) ||
+
+                    (dona.eligiType == 1 &&
+                        (referrer == ZERO_ADDRESS &&
+                            (linkcode.length == 0 ||
+                                linkcodeOwner == creator))) ||
+                    // Any subscriber could claim the redenvelope
+                    dona.eligiType == 2
+                ) {
+                    return true;
+                }
+            } catch (error) {
+                //console.error("Error fetching available red envelopes:", error);
+                alert("Error:" + error);
+            }
+            return false;
+        }
+    </script>
+    <script>
+
+        // 獲取特定 holder 的紅包資訊
+
+        async function getreID() {
+            const reid = await contract.methods.donaID().call();
+            //alert("reID:" + reid);
+            return reid;
+        }
+        async function getSpecificDN(reid) {
+            const reidBigInt = BigInt(reid);
+            try {
+                // 调用合约函数
+                const redEnvelopeInfo = await contract.methods.blkDona(reidBigInt).call();
+
+                // 确保字段类型正确
+                const subAmtInEther = web3.utils.fromWei(redEnvelopeInfo.subAmt.toString(), "ether");
+                const claimedAmtInEther = web3.utils.fromWei(redEnvelopeInfo.claimedAmt.toString(), "ether");
+                const maxClaims = parseInt(redEnvelopeInfo.maxClaims, 10);
+                const claimCount = parseInt(redEnvelopeInfo.claimCount, 10);
+
+                //const isActive = redEnvelopeInfo.isActive === "true" ? "Yes" : "No";
+                const isActive = redEnvelopeInfo.isActive === "true" || redEnvelopeInfo.isActive === true;
+                // 將描述轉換為 bytes
+                //redEnvelopeInfo.desc = web3.utils.hexToUtf8(redEnvelopeInfo.desc); 
+                // 转换为 BigInt 并计算精度
+                const decimals = 18;
+                redEnvelopeInfo.subAmt = (BigInt(redEnvelopeInfo.subAmt) / (BigInt(10) ** BigInt(decimals))).toString();
+                redEnvelopeInfo.claimedAmt = (BigInt(redEnvelopeInfo.claimedAmt) / (BigInt(10) ** BigInt(decimals))).toString();
+                return redEnvelopeInfo;
+            } catch (error) {
+                console.error("Error fetching red envelope info:", error);
+                alert("Failed to fetch red envelope info. Error: " + error.message);
+                return [];
+            }
+        }
+
+        async function fetchReCount(holderAddress) {
+            //alert("送過幾個甜甜圈？"+holderAddress);
+            //const re_count = document.getElementById('re_count')
+            re_count.textContent = `?`;
+            let index = 0;
+            let continueLoop = true;
+            try {
+                while (continueLoop) {
+                    // 查詢 myfans[index]
+                    const reid = await contract.methods.myDona(holderAddress, index).call();
+                    if (reid) {
+                        // 如果reID有效，增加計數器
+                        index++;
+                    } else {
+                        // 如果地址無效，結束迴圈
+                        continueLoop = false;
+                    }
+                }
+            } catch (error) {
+                console.error("查詢失敗:", error);
+                //alert("送過甜甜圈嗎？" + error.message);
+            }
+            re_count.textContent = `${index}`;
+        }
+        async function fetchReferer(holderAddress) {
+            const fans_count = document.getElementById('fans_count')
+            fans_count.textContent = `?`;
+            let index = 0;
+            let continueLoop = true;
+            try {
+                while (continueLoop) {
+                    // 查詢 myfans[index]
+                    const fanAddress = await contract.methods.myfans(holderAddress, index).call();
+                    if (fanAddress && fanAddress !== "0x0000000000000000000000000000000000000000") {
+                        // 如果地址有效，增加計數器
+                        index++;
+                    } else {
+                        // 如果地址無效，結束迴圈
+                        continueLoop = false;
+                    }
+                }
+            } catch (error) {
+                console.error("查詢失敗:", error);
+                //alert("查詢失敗: " + error.message);
+            }
+            document.getElementById('fans_count').textContent = `${index}`;
+        }
+        async function fetchholdercount() {
+            const holders_count = document.getElementById('holders_count')
+            holders_count.textContent = `?`;
+            let totalsupply;
+            try {
+                totalsupply = await contract.methods.totalSupply().call();
+            } catch (error) {
+                console.error("查詢失敗:", error);
+            }
+            holders_count.textContent = `${format_amt(totalsupply)}`;
+        }
+
+        async function shareMyDona() {
+            try {
+                const userAddress = await getHoldertoLowercase();
+                const holderInfo = await contract.methods.holders(userAddress).call();
+                //Get my refCode
+                const refCode = holderInfo.refCode;
+                //alert("4.refCode："+ refCode);
+                //      
+                if (refCode == "") {
+                    open_refCode(true);
+                } else {
+                    openShare();
+                }
+            } catch (error) {
+                console.error("Error setting referral code:", error);
+                //alert("Failed to set referral code: " + error.message);
+            }
+        }
+
+        async function claimDona(id) {
+            // 取得 linkcode 參數    
+            const linkcode = getParameterByName('linkcode');
+            try {
+                const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+                const userAddress = accounts[0];
+                const result = await contract.methods.claimDona(linkcode, id).send({ from: userAddress });
+                // 等待交易完成
+                showToast("領取中，請等候..", "success");
+            } catch (error) {
+                console.error("Error claiming red envelope:", error);
+                showToast("有點狀況，請重試！", "error");
+            }
+            //alert("執行完成:" + receipt);
+        }    
+    </script>
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal">
+            <h2>來發個甜甜圈，大家熟識一下</h2>
+            <form id="set-re-form">
+                <div class="form-group">
+                    <label for="totalShare">總共幾個甜甜圈？(愈多愈好，至少20個)</label>
+                    <input type="number" id="totalShare" name="totalShare" required>
+                </div>
+                <div class="form-group">
+                    <label for="countRE">想發給幾個人能領到？(人均至少10個)</label>
+                    <input type="number" id="countRE" name="countRE" required>
+                </div>
+                <div class="form-group">
+                    <label for="eligiType">誰能領這些甜甜圈？</label>
+                    <select id="eligiType" name="eligiType" required>
+                        <option value="0">我的粉絲和準粉(用我的連結碼進來的)</option>
+                        <option value="1">僅限準粉，專給那些用我連結碼進來的</option>
+                        <option value="2">天下為公，見者有分</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="_desc">那些年，關於我的甜甜圈</label>
+                    <input type="text" id="_desc" name="_desc" required>
+                </div>
+                <div class="form-group">
+                    <label for="_url">請貼上圖片連結網址</label>
+                    <input type="text" id="_url" name="_url" required>
+                </div>
+                <div class="_buttons">
+                    <button type="button" class="cancel" onclick="closeModal()">取消</button>
+                    <button type="submit" class="confirm">送出</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        function openModal() {
+            const overlay = document.getElementById('modal-overlay');
+            overlay.classList.add('show');
+        }
+
+        // Close modal
+        function closeModal() {
+            const overlay = document.getElementById('modal-overlay');
+            overlay.classList.remove('show');
+        }
+
+        document.getElementById("set-re-form").addEventListener("submit", async (event) => {
+            event.preventDefault(); // 防止表單默認提交行為
+            await setDona(); // 確保執行智能合約的邏輯
+        });
+
+        async function setDona() {
+            const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+            const userAddress = accounts[0];
+            // Get form data
+            const totalShare = document.getElementById("totalShare").value;
+            const countRE = document.getElementById("countRE").value;
+            const eligiType = document.getElementById("eligiType").value;
+            const desc = document.getElementById("_desc").value;
+            const url = document.getElementById("_url").value;
+            //alert( "totalShare："+ totalShare +"\ncountRE："+countRE + "\neligiType：" + eligiType + "\ndesc：" + desc + "\nurl："+url );
+            try {
+                // 转换为 BigInt 并计算精度
+                const decimals = 18;
+                const totalShareWithDecimals = (BigInt(totalShare) * (BigInt(10) ** BigInt(decimals))).toString();
+                const countREBigInt = countRE.toString();
+                //const descBytes = web3.utils.utf8ToHex(desc);  //轉換為字節      
+                if (!contract) {
+                    //alert("userAddress："+ userAddress);
+                    return;
+                }
+                //closeModal();
+                // 呼叫智能合约的 setRE 函式
+                const receipt = await contract.methods
+                    .setDona(
+                        totalShareWithDecimals, // 转换后的代币数量
+                        countREBigInt,          // 红包数量
+                        parseInt(eligiType),    // 转换为整数类型
+                        desc,                   // 描述
+                        url                     // 图片 URL
+                    )
+                    .send({ from: userAddress });
+                document.getElementById("set-re-form").reset();
+                showToast("送出設定，請等候..", "success");
+                // 關閉彈跳視窗
+                closeModal();
+            } catch (error) {
+                console.error("Error:", error);
+                showToast("唉呦！有狀況，請重試！", "error");
+            }
+            //closeModal();
+        }    
+    </script>
+
+    <div class="modal-overlay" id="edit_window">
+        <div class="modal">
+            <h2>甜甜圈有點狀況，我喬一下</h2>
+            <form id="form_edit">
+                <div class="form-group">
+                    <label for="edit_desc">那些年，關於我的甜甜圈</label>
+                    <input type="text" id="edit_desc" name="edit_desc" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit_url">請貼上圖片連結網址</label>
+                    <input type="text" id="edit_url" name="edit_url" required>
+                </div>
+                <div class="_buttons">
+                    <button type="button" class="cancel" onclick="close_edit()">取消</button>
+                    <button type="submit" class="confirm">送出</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-overlay" id="share_window">
+        <div class="modal">
+            <h2>分享我的黑色甜甜圈</h2>
+            <p style="color:#bbbbbb">我的推薦碼：</p>
+            <p id="refcode"></p>
+            <p style="color:#bbbbbb">推薦連結網址：</p>
+            <p id="share_link" class="_text"></p>
+            <form>
+                <div class="_buttons">
+                    <button type="button" class="cancel" onclick="closeShare()">取消</button>
+                    <button type="button" class="confirm" onclick="toShare(true)">複製推薦碼</button>
+                    <button type="button" class="confirm" onclick="toShare(false)">複製連結</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        async function openShare() {
+            const overlay = document.getElementById('share_window');
+            overlay.classList.add('show');
+            const userAddress = await getHoldertoLowercase();
+            const holderInfo = await contract.methods.holders(userAddress).call();
+            document.getElementById("refcode").textContent = `${holderInfo.refCode}`;
+            document.getElementById("share_link").textContent = `https://tokenshare786.github.io/ShareToken/?linkcode=${holderInfo.refCode}`;
+        }
+
+        // Close modal
+        function closeShare() {
+            //document.getElementById("share_window").style.display = "none";
+            const overlay = document.getElementById('share_window');
+            overlay.classList.remove('show');
+        }
+
+        function toShare(isCode) {
+            let contractAddress;
+            if (isCode) {
+                contractAddress = document.getElementById("refcode").textContent;
+            } else {
+                contractAddress = document.getElementById("share_link").textContent;
+            }
+            navigator.clipboard.writeText(contractAddress)
+            closeShare();
+        }    
+    </script>
+    <div class="modal-overlay" id="dn_window">
+        <div class="modal">
+            <div>
+                <div id="desc-container">
+                    <span id="short-desc"></span>
+                    <span id="ellipsis">&nbsp..</span>
+                    <span id="toggle-link" class="css_back" style="position:relative;top:5px;left:3px">全文</span>
+                </div>
+                <p id="remaining-desc"></p>
+                <p class="reward-item" style="text-align:center; position:relative; top: -10px" id="dn_info"></p>
+                <span class="progress" style="display:none">
+                    <p class="css_back" onclick="dn_back()" id="click_back">Back</p>
+                    <p class="css_back" style="margin-left:auto" onclick="dn_next()" id="click_next">Next</p>
+                </span>
+            </div>
+            <div class="new-container">
+                <div class="image-container">
+                    <img src="" alt="" id="dn_img">
+                </div>
+            </div>
+            <div class="_buttons">
+                <button type="button" class="cancel" onclick="close_DN()">關閉</button>
+                <button type="button" class="confirm" id="dn_claim">領取</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        let dnid;
+        async function whichAvailable(holder) {
+            //alert("which dona is available?");
+            let loops = true;
+            //alert("loops:"+loops);
+            let index = 0;
+            let _get = false;
+            dnid = 0;
+            try {
+                while (loops) {
+                    const id = await contract.methods.activeDNs(index).call();
+                    _get = await getable(id);
+                    if (_get) {
+                        loops = false;
+                        dnid = id;
+                        //alert("dnid:"+ dnid );
+                    } else {
+                        index++;
+                    }
+                }
+            } catch (err) {
+                //alert("ErrAvailable:"+err); 
+            }
+            if (dnid > 0) {
+                document.getElementById('re_button').classList.add('active');
+                open_DN();
+            }
+        }
+        async function open_DN() {
+            const overlay = document.getElementById('dn_window');
+            overlay.classList.add('show');
+            const dona = await getSpecificDN(dnid);
+            const startTime = new Date(Number(dona.startTime) * 1000).toLocaleString();
+            const dn_info = "【" + dona.eligiType + "】 " + startTime + " & " + dona.claimedAmt + " / " + dona.subAmt + " : " + dona.claimCount + " / " + dona.maxClaims;
+            document.getElementById("dn_img").src = dona.imgUrl;
+            //document.getElementById("dn_desc").textContent = dona.desc;
+            document.getElementById("dn_info").textContent = dn_info;
+            //
+            const desc = dona.desc; // 假設這是描述文本
+            const maxLength = 13; // 最大顯示字數
+            let toolong = false;
+            if (desc.length > maxLength) {
+                toolong = true;
+            }
+            const shortDesc = desc.slice(0, maxLength);
+            const remainingDesc = desc.slice(maxLength);
+            // 初始化縮略文本
+            document.getElementById("short-desc").textContent = shortDesc;
+            const remainingDescElement = document.getElementById("remaining-desc");
+            const ellipsis = document.getElementById("ellipsis");
+            const toggleLink = document.getElementById("toggle-link");
+            if (toolong) {
+                remainingDescElement.textContent = remainingDesc;
+            } else {
+                remainingDescElement.style.display = "none";
+                ellipsis.style.display = "none";
+                toggleLink.style.display = "none";
+            }
+            toggleLink.addEventListener("click", function () {
+                remainingDescElement.style.display = "inline";
+                ellipsis.style.display = "none";
+                toggleLink.style.display = "none"; // 隱藏 "詳看全文"
+            });
+        }
+        function close_DN() {
+            const overlay = document.getElementById('dn_window');
+            overlay.classList.remove('show');
+        }
+        document.getElementById("dn_claim").addEventListener("click", async (event) => {
+            event.preventDefault(); // 防止表單默認提交行為
+            await claimDona(dnid);
+            close_DN();
+        });
+    </script>
+    <div class="modal-overlay" id="set_refCode">
+        <div class="modal">
+            <h2>設定我的推薦碼</h2>
+            <form class="form-group" id="form_setrefcode">
+                <div class="form-group">
+                    <label for="in_refCode">1.請輸入想要的推薦碼(限a~z 0~9
+                        _-@)<br>2.這項功能會消耗掉10個BLKDONA。<br>3.可能需要幾分鐘甚至更長的時間，請耐心等候。</label>
+                    <input type="text" id="in_refCode" required>
+                </div>
+                <div class="_buttons">
+                    <button type="button" class="cancel" onclick="close_refCode()">取消</button>
+                    <button type="submit" class="confirm" id="cfm_refCode">送出</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="toast-container"></div>
+
+    <script>
+        let refCode = "";
+        let _address;
+        async function open_refCode(isnew) {
+            const overlay = document.getElementById('set_refCode');
+            overlay.classList.add('show');
+            _address = await getHoldertoLowercase();
+            if (false) {
+                const holderInfo = await contract.methods.holders(_address).call();
+                refCode = holderInfo.refCode;
+                document.getElementById("in_refCode").textContent = refCode;
+            }
+            document.getElementById("in_refCode").focus();
+        }
+        function close_refCode() {
+            const overlay = document.getElementById('set_refCode');
+            overlay.classList.remove('show');
+        }
+        document.getElementById("cfm_refCode").addEventListener("click", async (event) => {
+            event.preventDefault(); // 防止表單默認提交行為
+            await set_refCode();
+            document.getElementById("form_setrefcode").reset();
+            close_refCode();
+        });
+
+        async function set_refCode() {
+            const code = document.getElementById("in_refCode").value;
+            //alert(code + " / "+refCode);
+            if (code != refCode) {
+                await contract.methods.setMyRefCode(code).send({ from: _address });
+            }
+        }
+        async function notification() {
+            //alert("here we are...");
+            if (_address == null) {
+                _address = await getHoldertoLowercase();
+            }
+            const notice_type = "Hello";
+            const message = "Good day...";
+            try {
+                const receipt = await contract.methods
+                    .notification(
+                        notice_type,
+                        message
+                    )
+                    .send({ from: _address });
+                showToast("送出交易，請等候..", "success");
+            } catch (err) {
+                showToast("交易被中止，請重試！", "error");
+            }
+        }
+
+        function showToast(message, type = "info") {
+            const container = document.getElementById("toast-container");
+            const toast = document.createElement("div");
+            toast.className = `toast ${type}`;
+            toast.innerText = message;
+
+            container.appendChild(toast);
+
+            // 顯示動畫
+            setTimeout(() => toast.classList.add("show"), 10);
+
+            // 自動消失
+            setTimeout(() => {
+                toast.classList.remove("show");
+                setTimeout(() => toast.remove(), 300); // 等動畫完成後移除
+            }, 5000);
+        }
+
+        // 示例調用
+        //showToast("交易成功！", "success");
+        //showToast("發生錯誤！", "error");
+    </script>
+</body>
+
+</html>
