@@ -13,7 +13,46 @@
             background-color: #000;
             color: #fff;
             padding: 10px;
-        }        
+        }     
+
+        .share-options {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #1a1a1a; /* 深色背景 */
+    color: #ffffff; /* 白色文字 */
+    border-radius: 15px; /* 圓角 */
+    padding: 20px; /* 內部間距 */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6); /* 陰影 */
+    z-index: 1000; /* 保證位於最上層 */
+    width: 80%; /* 寬度自適應，適合不同裝置 */
+    max-width: 400px; /* 最大寬度 */
+    text-align: center; /* 文字居中 */
+}
+
+.share-options a {
+    display: inline-block; /* 讓按鈕排成行 */
+    color: #1e90ff; /* 藍色文字 */
+    text-decoration: none; /* 去掉底線 */
+    margin: 10px 0; /* 上下間距 */
+    font-size: 1em; /* 適中字體大小 */
+}
+
+.share-options button {
+    margin-top: 15px; /* 與分享選項的間距 */
+    padding: 10px 20px; /* 按鈕內部間距 */
+    background-color: #333; /* 按鈕背景色 */
+    color: #fff; /* 按鈕文字顏色 */
+    border: none; /* 去掉邊框 */
+    border-radius: 5px; /* 圓角 */
+    cursor: pointer; /* 鼠標樣式 */
+    font-size: 0.9em; /* 按鈕文字大小 */
+}
+
+.share-options button:hover {
+    background-color: #444; /* 滑過效果 */
+}
 
         .dona-streaming {
             margin-top: 10px;
