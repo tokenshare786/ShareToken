@@ -1,4 +1,4 @@
-alert('Im new 16');
+//alert('Im new 16');
 let currentPage = 1; // 当前页数
 const itemsPerPage = 5; // 每次加载数量
 let isLoading = false; // 是否正在加载中
