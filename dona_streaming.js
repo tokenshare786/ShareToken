@@ -80,8 +80,8 @@ async function createDonaBox(re, re_id) {
             </p>            
         </div>
         <div class="new-container" style="position:relative;top:7px">
-            <div class="image-container" onclick="claimDN(${re_id})"> 
-                <img src="${re.imgUrl}" alt="photo">                  
+            <div id="image-container-ds" class="image-container" onclick="claimDN(${re_id})"> 
+                                  
             </div>            
         </div>
         <span class="progress">
@@ -125,7 +125,35 @@ async function createDonaBox(re, re_id) {
     } else {
               //alert(re_creator+'/'+re_id+':1');
               editElement.style.display = "block";
-    }     
+    }
+    let contentElement;
+if (re.imgUrl.includes('youtube.com/shorts') || re.imgUrl.includes('youtube.com/watch')) {
+    // 提取視頻 ID
+    const videoId = new URL(re.imgUrl).pathname.split('/')[2] || new URL(re.imgUrl).searchParams.get('v');
+    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+    
+    // 創建 iframe 用於嵌入 YouTube 視頻
+    contentElement = document.createElement('iframe');
+    contentElement.src = embedUrl;
+    contentElement.width = '100%';
+    contentElement.height = '200'; // 設定高度，根據需求調整
+    contentElement.frameBorder = '0';
+    contentElement.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    contentElement.allowFullscreen = true;
+} else {
+    // 默認使用 img 顯示圖片
+    contentElement = document.createElement('img');
+    contentElement.src = re.imgUrl;
+    contentElement.alt = 'photo';
+    contentElement.style.width = '100%'; // 設置圖片寬度
+    contentElement.style.height = 'auto'; // 自適應高度
+}
+//<img src="${re.imgUrl}" alt="photo"> 
+// 添加到網頁
+const imageContainer = document.getElementById('image-container-ds');
+//imageContainer.className = 'image-container';
+imageContainer.appendChild(contentElement);
+//container.appendChild(imageContainer);
 }
 
 // 点击领取甜甜圈
