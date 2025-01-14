@@ -50,7 +50,7 @@ async function createDonaBox(re, re_id) {
     const container = document.getElementById('dona-container');
 
     const card = document.createElement('div');
-    card.className = 'dona-box'; // 添加样式类
+    card.className = 'dona-streaming'; // 添加样式类
 
     const startTime = new Date(Number(re.startTime) * 1000).toLocaleString();
     const desc_ds = re.desc; // 假設這是描述文本
