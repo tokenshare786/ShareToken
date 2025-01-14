@@ -1,4 +1,4 @@
-//alert('Im new 14');
+alert('Im new 15');
 let currentPage = 1; // 当前页数
 const itemsPerPage = 5; // 每次加载数量
 let isLoading = false; // 是否正在加载中
@@ -169,54 +169,5 @@ function debounce(func, wait) {
 
 // 初始化页面
 initializePage();
-let dnid_edit;
-function open_edit(dnid) {   
-      dnid_edit = dnid;
-      alert('dnid:'+dnid);
-      const dona = await getSpecificDN(dnid); // 获取数据
-      const overlay = document.getElementById('edit_window');
-      overlay.classList.add('show');
-      //alert("re:"+ re.desc + "/" +  re.imgUrl);
-      document.getElementById("edit_desc").value = dona.desc;             
-      document.getElementById("edit_url").value = dona.imgUrl;
-}
 
-// Close modal
-function close_edit() {
-      //document.getElementById("edit_window").style.display = "none";
-      const overlay = document.getElementById('edit_window');
-      overlay.classList.remove('show'); 
-}           
-             
-document.getElementById("form_edit").addEventListener("submit", async (event) => {
-        event.preventDefault(); // 防止表單默認提交行為
-              //alert("What's up?");
-              await editDona(); // 確保執行智能合約的邏輯
-});
-
-async function editDona(){
-        // Get form data
-        const dona = await getSpecificDN(dnid_edit);
-        const edit_desc = document.getElementById("edit_desc").value;
-        const edit_url = document.getElementById("edit_url").value;       
-        //alert("editDona:"+ edit_desc  + "/" +  edit_url);
-      try{
-        // 呼叫智能合约的 setRE 函式
-        if( edit_desc != dona.desc || edit_url != dona.imgUrl){                
-        await contract.methods
-            .updateMyDona(
-                dnid_edit,                   
-                edit_desc,
-                edit_url
-            )
-            .send({ from: _useraddress });
-        }             
-
-        // 關閉彈跳視窗
-        close_edit();
-        loadMoreDonaBoxes();
-        } catch (error) {
-            console.error("Error:", error);
-        }     
-    }
 
