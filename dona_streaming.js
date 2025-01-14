@@ -68,7 +68,7 @@ async function createDonaBox(re, re_id) {
                 <span id="ellipsis-ds">&nbsp..</span>
                 <span id="toggle-link-ds" class="css_back" style="position:relative;top:5px;left:3px">全文</span>   
             </div>   
-            <p id="remaining-desc-ds" class="remaining-desc" style="display: none;">${remainingDesc_ds}</p>
+            <p id="remaining-desc-ds" class="remaining-desc">${remainingDesc_ds}</p>
             <p class="reward-item" style="text-align:center">
                 【${re.eligiType}】 ${startTime} & ${re.claimedAmt} / ${re.subAmt} : ${re.claimCount} / ${re.maxClaims}
             </p>            
