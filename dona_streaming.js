@@ -3,7 +3,7 @@ let currentPage = 1; // 当前页数
 const itemsPerPage = 5; // 每次加载数量
 let isLoading = false; // 是否正在加载中
 let donaCount = 0; // 总甜甜圈数量
-let user_ds;
+//let user_ds;
 
 // 初始化页面
 async function initializePage() {
@@ -13,8 +13,8 @@ async function initializePage() {
         //alert('donaCount:' + donaCount);
         if (donaCount > 0) {
             await loadMoreDonaBoxes(); // 加载第一批 Dona_box
-            user_ds = await getHoldertoLowercase();
-            alert('user_ds:'+user_ds);
+            //user_ds = await getHoldertoLowercase();
+            //alert('user_ds:'+user_ds);
         } else {
             alert("目前没有甜甜圈 ><");
         }
@@ -121,7 +121,7 @@ async function createDonaBox(re, re_id) {
     const re_creator = re.creator.toLowerCase() ;
     const editElement = card.querySelector('#editable-ds');
     if( re_creator !== _useraddress){ 
-              alert(re_creator+'/'+re_id+':0');
+              //alert(re_creator+'/'+re_id+':0');
               editElement.style.display = "none"; 
     } else {
                alert(re_creator+'/'+re_id+':1');
