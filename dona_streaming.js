@@ -1,3 +1,4 @@
+alert('updated 18');
 let currentPage = 1; // 当前页数
 const itemsPerPage = 5; // 每次加载数量
 let isLoading = false; // 是否正在加载中
@@ -98,11 +99,11 @@ async function createDonaBox(re, re_id) {
         toggleLink.style.display = 'none';
     });
     if(!toolong){        
-       remainingDescElement.style.display = "none";
+       //remainingDescElement.style.display = "none";
        ellipsis.style.display = "none";
        toggleLink.style.display = "none";
     }   
-    //alert('updated 17');
+ 
     const takeElement = card.querySelector('#take-ds');
     const eligible = await checkEgibility(re_id);
     if (re.isActive && eligible) {           
