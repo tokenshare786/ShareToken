@@ -1,4 +1,4 @@
-alert('Im new 12');
+alert('Im new 13');
 let currentPage = 1; // 当前页数
 const itemsPerPage = 5; // 每次加载数量
 let isLoading = false; // 是否正在加载中
@@ -118,7 +118,7 @@ async function createDonaBox(re, re_id) {
     }         
     const re_creator = re.creator.toLowerCase() ;
     const editElement = card.querySelector('#editable-ds');
-    if( re_creator !== userAddress){ 
+    if( re_creator !== user_ds){ 
               editElement.style.display = "none"; 
     } else {
               editElement.style.display = "block";
