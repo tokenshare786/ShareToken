@@ -28,10 +28,11 @@ async function loadMoreDonaBoxes() {
     isLoading = true;
     document.getElementById('loading').style.display = 'block';
 
-    const start = (currentPage - 1) * itemsPerPage + 1; // 起始 re_id
-    const end = Math.min(currentPage * itemsPerPage, donaCount ); // 结束 re_id
+    // 確定起始和結束的 re_id
+    const start = donaCount - (currentPage - 1) * itemsPerPage; // 當前頁面的最大 re_id
+    const end = Math.max(donaCount - currentPage * itemsPerPage + 1, 1);// 當前頁面的最小 re_id
 
-    for (let i = end ; i >= start ; i--) {
+    for (let i = start; i >= end; i--) {
         try {
             const dona = await getSpecificDN(i); // 获取数据
             if (dona) {
@@ -53,7 +54,7 @@ async function loadMoreDonaBoxes() {
 //
 // 创建 Dona_box 的 DOM 元素
 async function createDonaBox(re, re_id) {
-    alert('re_id:' + re_id);
+    //alert('re_id:' + re_id);
     const container = document.getElementById('dona-container');
     const card = document.createElement('div');
     card.className = 'dona-streaming'; // 添加样式类
