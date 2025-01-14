@@ -54,12 +54,12 @@ async function loadburgerBoxPage() {
          //<h2>${truncatedDesc}</h2>
          row.innerHTML = `
             <div>
-                     <div id="desc-container">
-                         <span id="short-desc"></span>
+                     <div id="desc-container" class='desc-container'>
+                         <span id="short-desc" class='short-desc'></span>
                          <span id="ellipsis">&nbsp..</span>
                          <span id="toggle-link" class="css_back" style="position:relative;top:5px;left:3px">全文</span>   
                     </div>   
-                     <p id="remaining-desc"></p>
+                     <p id="remaining-desc"  class='remaining-desc'></p>
                      <p class="reward-item" style="text-align:center">【${re.eligiType}】 ${startTime} & ${re.claimedAmt} / ${re.subAmt} : ${re.claimCount} / ${re.maxClaims}</p>
                      <span class="progress">
                          <p class="css_back" onclick="_back()" id="click_back">Back</p>                         
