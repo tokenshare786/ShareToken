@@ -1,4 +1,4 @@
-alert('Im new 13');
+alert('Im new 14');
 let currentPage = 1; // 当前页数
 const itemsPerPage = 5; // 每次加载数量
 let isLoading = false; // 是否正在加载中
@@ -123,6 +123,27 @@ async function createDonaBox(re, re_id) {
     } else {
               editElement.style.display = "block";
     }     
+}
+
+// 点击领取甜甜圈
+async function claimDN(re_id) { 
+    try {
+        const re = await getSpecificDN(re_id);
+        if (re.isActive) {
+            if (await checkEgibility(re_id)) {
+                claimDona(re_id); // 发送交易请求
+                document.getElementById("take-ds").style.display = "none";
+                showToast("送出交易，请稍候..", "success");
+            } else {
+                showToast("唉呦！这个甜甜圈你吃不了", "error");
+            }
+        } else {
+            showToast("这个甜甜圈没了", "error");
+        }
+    } catch (error) {
+        console.error("claimDN error:", error);
+        showToast("操作失败，请稍后再试！", "error");
+    }
 }
 //
 // 滚动事件监听，实现无限滚动
