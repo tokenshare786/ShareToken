@@ -150,7 +150,7 @@ if (re.imgUrl.includes('youtube.com/shorts') || re.imgUrl.includes('youtube.com/
 }
 //<img src="${re.imgUrl}" alt="photo"> 
 // 添加到網頁
-const imageContainer = document.getElementById('image-container-ds');
+const imageContainer = card.querySelector('#image-container-ds');
 //imageContainer.className = 'image-container';
 imageContainer.appendChild(contentElement);
 //container.appendChild(imageContainer);
