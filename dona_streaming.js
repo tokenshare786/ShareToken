@@ -120,8 +120,10 @@ async function createDonaBox(re, re_id) {
     const re_creator = re.creator.toLowerCase() ;
     const editElement = card.querySelector('#editable-ds');
     if( re_creator !== user_ds){ 
+              alert(re_id+':0');
               editElement.style.display = "none"; 
     } else {
+               alert(re_id+':1');
               editElement.style.display = "block";
     }     
 }
