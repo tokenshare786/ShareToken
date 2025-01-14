@@ -1471,7 +1471,7 @@
             overlay.classList.add('show');
             const userAddress = await getHoldertoLowercase();
             const holderInfo = await contract.methods.holders(userAddress).call();            
-            document.getElementById("sharelink").textContent = `https://tokenshare786.github.io/ShareToken/?linkcode=${holderInfo.refCode}&dona_id=${dn_id}`;
+            document.getElementById("sharelink").textContent = `https://tokenshare786.github.io/ShareToken/?linkcode=${holderInfo.refCode}&dnid=${dn_id}`;
         }
         function toShareDona() {
             const share_text = document.getElementById("sharelink").textContent;          
@@ -1537,14 +1537,15 @@
         </div>
     </div>
     <script>
-        let dnid;
+        let dnid=0;
         async function whichAvailable(holder) {
             //alert("which dona is available?");
             let loops = true;
             //alert("loops:"+loops);
             let index = 0;
             let _get = false;
-            dnid = 0;
+            dnid = getParameterByName('dnid');            
+            if(dnid>0){loops=false;}     
             try {
                 while (loops) {
                     const id = await contract.methods.activeDNs(index).call();
