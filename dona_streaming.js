@@ -124,7 +124,7 @@ async function createDonaBox(re, re_id) {
               //alert(re_creator+'/'+re_id+':0');
               editElement.style.display = "none"; 
     } else {
-               alert(re_creator+'/'+re_id+':1');
+              //alert(re_creator+'/'+re_id+':1');
               editElement.style.display = "block";
     }     
 }
