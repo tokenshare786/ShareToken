@@ -35,7 +35,7 @@ async function loadburgerBoxPage() {
                 eligible=false;
         }     
         //alert("eligible:" + eligible);
-    try {  
+    //try {  
          card = document.getElementById("card");
          //const content = document.getElementById("content");
          card.innerHTML = "";
@@ -67,8 +67,8 @@ async function loadburgerBoxPage() {
                      </span>
             </div>
             <div  class="new-container">
-               <div class="image-container" onclick="claimDN()">
-                  <img src="${re.imgUrl}" alt="photo">  
+               <div class="image-container" id="image-container" onclick="claimDN()">
+                   
                </div>            
             </div>
             <span class="progress">
@@ -118,10 +118,38 @@ async function loadburgerBoxPage() {
                 //alert("It's editable！");  
                 document.getElementById("editable").style.display = "block";
          }          
-    } catch (err) {
+    //} catch (err) {
         //console.error("Error loading content:", err);
-        alert("Failed to display:" + err);            
-    }
+    //   alert("Failed to display:" + err);            
+    //}
+ let contentElement;
+if (re.imgUrl.includes('youtube.com/shorts') || re.imgUrl.includes('youtube.com/watch')) {
+    // 提取視頻 ID
+    const videoId = new URL(re.imgUrl).pathname.split('/')[2] || new URL(re.imgUrl).searchParams.get('v');
+    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+    
+    // 創建 iframe 用於嵌入 YouTube 視頻
+    contentElement = document.createElement('iframe');
+    contentElement.src = embedUrl;
+    contentElement.width = '100%';
+    contentElement.height = '200'; // 設定高度，根據需求調整
+    contentElement.frameBorder = '0';
+    contentElement.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    contentElement.allowFullscreen = true;
+} else {
+    // 默認使用 img 顯示圖片
+    contentElement = document.createElement('img');
+    contentElement.src = re.imgUrl;
+    contentElement.alt = 'photo';
+    contentElement.style.width = '100%'; // 設置圖片寬度
+    contentElement.style.height = 'auto'; // 自適應高度
+}
+//<img src="${re.imgUrl}" alt="photo"> 
+// 添加到網頁
+const imageContainer = document.getElementById('image-container');
+//imageContainer.className = 'image-container';
+imageContainer.appendChild(contentElement);
+container.appendChild(imageContainer);
 }
 
 
