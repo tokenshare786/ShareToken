@@ -63,12 +63,12 @@ async function createDonaBox(re, re_id) {
     const remainingDesc_ds = desc_ds.slice(maxLength);
     card.innerHTML = `
         <div>
-            <div id="desc-container">
-                <span id="short-desc">${shortDesc_ds}</span>
-                <span id="ellipsis">&nbsp..</span>
-                <span id="toggle-link" class="css_back" style="position:relative;top:5px;left:3px">全文</span>   
+            <div id="desc-container-ds" class="desc-container">
+                <span class="short-desc">${shortDesc_ds}</span>
+                <span id="ellipsis-ds">&nbsp..</span>
+                <span id="toggle-link-ds" class="css_back" style="position:relative;top:5px;left:3px">全文</span>   
             </div>   
-            <p id="remaining-desc" style="display: none;">${remainingDesc_ds}</p>
+            <p id="remaining-desc-ds" class="remaining-desc" style="display: none;">${remainingDesc_ds}</p>
             <p class="reward-item" style="text-align:center">
                 【${re.eligiType}】 ${startTime} & ${re.claimedAmt} / ${re.subAmt} : ${re.claimCount} / ${re.maxClaims}
             </p>            
@@ -79,8 +79,8 @@ async function createDonaBox(re, re_id) {
             </div>            
         </div>
         <span class="progress">
-            <p class="css_back" onclick="open_edit()" id="editable">Edit</p>
-            <p class="css_back" style="margin-left:auto" onclick="claimDN(${re_id})" id="take">Take</p> 
+            <p class="css_back" onclick="open_edit()" id="editable-ds">Edit</p>
+            <p class="css_back" style="margin-left:auto" onclick="claimDN(${re_id})" id="take-ds">Take</p> 
         </span>
     `;
     container.appendChild(card);
@@ -89,9 +89,9 @@ async function createDonaBox(re, re_id) {
     // 初始化縮略文本    
     //document.getElementById("short-desc").textContent = shortDesc;  
     // 顯示完整描述邏輯
-    const toggleLink = card.querySelector('#toggle-link');
-    const remainingDescElement = card.querySelector('#remaining-desc');
-    const ellipsis = card.querySelector('#ellipsis');
+    const toggleLink = card.querySelector('#toggle-link-ds');
+    const remainingDescElement = card.querySelector('#remaining-desc-ds');
+    const ellipsis = card.querySelector('#ellipsis-ds');
     toggleLink.addEventListener('click', () => {
         remainingDescElement.style.display = 'inline';
         ellipsis.style.display = 'none';
@@ -103,7 +103,7 @@ async function createDonaBox(re, re_id) {
        toggleLink.style.display = "none";
     }   
     //alert('updated 17');
-    const takeElement = card.querySelector('#take');
+    const takeElement = card.querySelector('#take-ds');
     const eligible = await checkEgibility(re_id);
     if (re.isActive && eligible) {           
              takeElement.style.display = "block";                
@@ -111,7 +111,7 @@ async function createDonaBox(re, re_id) {
              takeElement.style.display = "none"; 
     }         
     const re_creator = re.creator.toLowerCase() ;
-    const editElement = card.querySelector('#editable');
+    const editElement = card.querySelector('#editable-ds');
     if( re_creator !== userAddress){ 
               editElement.style.display = "none"; 
     } else {
@@ -126,7 +126,7 @@ async function claimDN(re_id) {
         if (re.isActive) {
             if (await checkEgibility(re_id)) {
                 claimDona(re_id); // 发送交易请求
-                document.getElementById("take").style.display = "none";
+                document.getElementById("take-ds").style.display = "none";
                 showToast("送出交易，请稍候..", "success");
             } else {
                 showToast("唉呦！这个甜甜圈你吃不了", "error");
