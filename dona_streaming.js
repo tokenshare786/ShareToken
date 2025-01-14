@@ -83,7 +83,7 @@ async function createDonaBox(re, re_id) {
             <div class="image-container" onclick="claimDN(${re_id})"> 
                 <img src="${re.imgUrl}" alt="photo">  
                 <div class="watermark" onclick="shareContent(${re_id})">
-               <img src="https://www.gstatic.com/images/icons/material/system/2x/share_black_24dp.png" alt="Share">
+                    <span class="material-symbols-outlined share-icon">share</span>
                </div>
             </div>            
         </div>
