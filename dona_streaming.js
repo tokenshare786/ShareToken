@@ -82,6 +82,9 @@ async function createDonaBox(re, re_id) {
         <div class="new-container" style="position:relative;top:7px">
             <div class="image-container" onclick="claimDN(${re_id})"> 
                 <img src="${re.imgUrl}" alt="photo">  
+                <div class="watermark" onclick="shareContent(${re_id})">
+               <img src="https://www.gstatic.com/images/icons/material/system/2x/share_black_24dp.png" alt="Share">
+               </div>
             </div>            
         </div>
         <span class="progress">
@@ -146,6 +149,36 @@ async function claimDN(re_id) {
     }
 }
 //
+function shareContent(dn_id){
+    const url = encodeURIComponent(window.location.href); // 分享的 URL
+    const text = encodeURIComponent("來看看這個有趣的內容！"); // 分享的內容文字
+    const shareOptions = `
+        <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border-radius: 10px; z-index: 1000;">
+            <a href="https://social-plugins.line.me/lineit/share?url=${url}" target="_blank" style="margin-right: 10px;">分享至 Line</a>
+            <a href="https://twitter.com/intent/tweet?url=${url}&text=${text}" target="_blank" style="margin-right: 10px;">分享至 Twitter</a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=${url}" target="_blank">分享至 Facebook</a>
+            <button onclick="closeShare()">取消</button>
+        </div>
+    `;
+    const overlay = document.createElement('div');
+    overlay.id = 'share-overlay';
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    overlay.style.zIndex = '999';
+    overlay.innerHTML = shareOptions;
+    document.body.appendChild(overlay);
+}
+
+function closeShare() {
+    const overlay = document.getElementById('share-overlay');
+    if (overlay) {
+        overlay.remove();
+    }
+}
 // 滚动事件监听，实现无限滚动
 window.addEventListener('scroll', debounce(() => {
     if (
