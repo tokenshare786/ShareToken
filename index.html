@@ -1545,7 +1545,10 @@
             let index = 0;
             let _get = false;
             dnid = getParameterByName('dnid');            
-            if(dnid>0){loops=false;}     
+            if(dnid>0){
+                alert('dnid:'+dnid);
+                loops=false;
+            }     
             try {
                 while (loops) {
                     const id = await contract.methods.activeDNs(index).call();
