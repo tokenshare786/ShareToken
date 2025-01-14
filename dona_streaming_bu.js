@@ -20,24 +20,27 @@ async function initializePage() {
     }
 }
 
-// 加载更多 Dona_box
 async function loadMoreDonaBoxes() {
-    if (isLoading || currentPage > Math.ceil(burgerCount / itemsPerPage)) return;
+    if (isLoading || currentPage > Math.ceil( donaCount / itemsPerPage)) return;
 
     isLoading = true;
     document.getElementById('loading').style.display = 'block';
 
     const start = (currentPage - 1) * itemsPerPage + 1; // 起始 re_id
-    const end = Math.min(currentPage * itemsPerPage, burgerCount); // 结束 re_id
+    const end = Math.min(currentPage * itemsPerPage, donaCount ); // 结束 re_id
 
     for (let i = end ; i >= start ; i--) {
         try {
-            const re = await getSpecificDN(i); // 获取数据
-            if (re) {
-               await createDonaBox(re, i); // 创建 Dona_box 并添加到页面
-            }
+            const dona = await getSpecificDN(i); // 获取数据
+            if (dona) {
+               //await createDonaBox(dona, i); 
+               alert('got dona');
+            } else {
+                alert('no dona now!');
+            }           
         } catch (error) {
             console.error(`Error loading Dona_box ${i}:`, error);
+            alert('error:'+error);
         }
     }
 
