@@ -171,7 +171,7 @@ function debounce(func, wait) {
 initializePage();
 
 let dnid_edit;
-function open_edit(dnid) {   
+async function open_edit(dnid) {   
       dnid_edit = dnid;
       alert('dnid:'+dnid);
       const dona = await getSpecificDN(dnid); // 获取数据
