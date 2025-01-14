@@ -1,4 +1,4 @@
-alert('Im new 7');
+alert('Im new 8');
 let currentPage = 1; // 当前页数
 const itemsPerPage = 5; // 每次加载数量
 let isLoading = false; // 是否正在加载中
@@ -9,7 +9,7 @@ async function initializePage() {
     try {
         donaCount = await getreID(); // 获取甜甜圈总数
         donaCount = Number(donaCount); // 确保是数字
-        if (burgerCount > 0) {
+        if (donaCount > 0) {
             await loadMoreDonaBoxes(); // 加载第一批 Dona_box
             user_ds = await getHoldertoLowercase();
         } else {
