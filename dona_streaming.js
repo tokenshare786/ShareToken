@@ -150,13 +150,14 @@ async function claimDN(re_id) {
 }
 //
 function shareContent(dn_id){
-    const url = encodeURIComponent(window.location.href); // 分享的 URL
-    const text = encodeURIComponent("來看看這個有趣的內容！"); // 分享的內容文字
-    const shareOptions = `
-        <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border-radius: 10px; z-index: 1000;">
-            <a href="https://social-plugins.line.me/lineit/share?url=${url}" target="_blank" style="margin-right: 10px;">分享至 Line</a>
-            <a href="https://twitter.com/intent/tweet?url=${url}&text=${text}" target="_blank" style="margin-right: 10px;">分享至 Twitter</a>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=${url}" target="_blank">分享至 Facebook</a>
+    const url = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent("來看看這個有趣的內容！");
+    const shareHTML = `
+        <div class="share-options">
+            <h3>分享至：</h3>
+            <a href="https://social-plugins.line.me/lineit/share?url=${url}" target="_blank">Line</a><br>
+            <a href="https://twitter.com/intent/tweet?url=${url}&text=${text}" target="_blank">Twitter</a><br>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=${url}" target="_blank">Facebook</a>
             <button onclick="closeShare()">取消</button>
         </div>
     `;
@@ -167,9 +168,9 @@ function shareContent(dn_id){
     overlay.style.left = '0';
     overlay.style.width = '100%';
     overlay.style.height = '100%';
-    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)'; /* 半透明背景 */
     overlay.style.zIndex = '999';
-    overlay.innerHTML = shareOptions;
+    overlay.innerHTML = shareHTML;
     document.body.appendChild(overlay);
 }
 
