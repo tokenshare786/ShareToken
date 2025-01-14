@@ -53,6 +53,7 @@ async function loadMoreDonaBoxes() {
 //
 // 创建 Dona_box 的 DOM 元素
 async function createDonaBox(re, re_id) {
+    alert('re_id:' + re_id);
     const container = document.getElementById('dona-container');
     const card = document.createElement('div');
     card.className = 'dona-streaming'; // 添加样式类
