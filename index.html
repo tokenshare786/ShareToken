@@ -15,7 +15,7 @@
             padding: 10px;
         }
 
-        .dona-box {
+        .dona-streaming {
             padding: 15px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             background-color: #1a1a1a;
@@ -766,6 +766,13 @@
             try {
                 const script_remove = document.getElementById('dona_streaming');            
                 script_remove.remove();
+                // 選擇所有 class 為 'dona-box' 的元素
+                const donaBoxes = document.querySelectorAll('.dona-box');
+
+                // 遍歷每個元素並設置其 style.display 為 'none'
+                donaBoxes.forEach(box => {
+                      box.style.display = 'none';
+                });
                 const script = document.createElement("script");
                 script.src = "dona_box.js";                
                 document.body.appendChild(script);                
