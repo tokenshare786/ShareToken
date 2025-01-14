@@ -81,14 +81,12 @@ async function createDonaBox(re, re_id) {
         </div>
         <div class="new-container" style="position:relative;top:7px">
             <div class="image-container" onclick="claimDN(${re_id})"> 
-                <img src="${re.imgUrl}" alt="photo">  
-                <div class="watermark" onclick="shareContent(${re_id})">
-                    <span class="material-symbols-outlined share-icon">share</span>
-               </div>
+                <img src="${re.imgUrl}" alt="photo">                  
             </div>            
         </div>
         <span class="progress">
             <p class="css_back" onclick="open_edit()" id="editable-ds">Edit</p>
+            <p class="css_back" onclick="shareDona(${re_id})">Share</p>
             <p class="css_back" style="margin-left:auto" onclick="claimDN(${re_id})" id="take-ds">Take</p> 
         </span>
     `;
@@ -148,38 +146,7 @@ async function claimDN(re_id) {
         showToast("操作失败，请稍后再试！", "error");
     }
 }
-//
-function shareContent(dn_id){
-    const url = encodeURIComponent(window.location.href);
-    const text = encodeURIComponent("來看看這個有趣的內容！");
-    const shareHTML = `
-        <div class="share-options">
-            <h3>分享至：</h3>
-            <a href="https://social-plugins.line.me/lineit/share?url=${url}" target="_blank">Line</a><br>
-            <a href="https://twitter.com/intent/tweet?url=${url}&text=${text}" target="_blank">Twitter</a><br>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=${url}" target="_blank">Facebook</a>
-            <button onclick="closeShare()">取消</button>
-        </div>
-    `;
-    const overlay = document.createElement('div');
-    overlay.id = 'share-overlay';
-    overlay.style.position = 'fixed';
-    overlay.style.top = '0';
-    overlay.style.left = '0';
-    overlay.style.width = '100%';
-    overlay.style.height = '100%';
-    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)'; /* 半透明背景 */
-    overlay.style.zIndex = '999';
-    overlay.innerHTML = shareHTML;
-    document.body.appendChild(overlay);
-}
 
-function closeShare() {
-    const overlay = document.getElementById('share-overlay');
-    if (overlay) {
-        overlay.remove();
-    }
-}
 // 滚动事件监听，实现无限滚动
 window.addEventListener('scroll', debounce(() => {
     if (
