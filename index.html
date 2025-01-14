@@ -1452,7 +1452,27 @@
             </form>
         </div>
     </div>
+    <div class="modal-overlay" id="shareDona_window">
+        <div class="modal">
+            <h2>分享黑色甜甜圈</h2>            
+            <p style="color:#bbbbbb">推薦連結網址：</p>
+            <p id="share_link" class="_text"></p>
+            <form>
+                <div class="_buttons">
+                    <button type="button" class="cancel" onclick="closeShare()">取消</button>
+                    <button type="button" class="confirm" onclick="toShare(false)">複製連結</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <script>
+        async function shareDona(dn_id) {
+            const overlay = document.getElementById('shareDona_window');
+            overlay.classList.add('show');
+            const userAddress = await getHoldertoLowercase();
+            const holderInfo = await contract.methods.holders(userAddress).call();            
+            document.getElementById("share_link").textContent = `https://tokenshare786.github.io/ShareToken/?linkcode=${holderInfo.refCode}&dona_id=${dn_id}`;
+        }
         async function openShare() {
             const overlay = document.getElementById('share_window');
             overlay.classList.add('show');
