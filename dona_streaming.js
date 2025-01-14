@@ -1,4 +1,4 @@
-alert('Im new 5');
+alert('Im new 6');
 let currentPage = 1; // 当前页数
 const itemsPerPage = 5; // 每次加载数量
 let isLoading = false; // 是否正在加载中
@@ -34,9 +34,10 @@ async function loadMoreDonaBoxes() {
             if (dona) {
                //await createDonaBox(dona, i); 
                alert('got dona');
-            }
+            }            
         } catch (error) {
             console.error(`Error loading Dona_box ${i}:`, error);
+            alert('error:'+error);
         }
     }
 
