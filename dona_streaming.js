@@ -71,8 +71,8 @@ async function createDonaBox(re, re_id) {
         <div>
             <div id="desc-container-ds" class="desc-container">
                 <span class="short-desc">${shortDesc}</span>
-                <span id="ellipsis-ds">&nbsp..</span>
-                <span id="toggle-link-ds" class="css_back" style="position:relative;top:5px;left:3px">全文</span>   
+                <span id="ellipsis-ds" style="position:relative;top:10px;left:2px">&nbsp..</span>
+                <span id="toggle-link-ds" class="css_back" style="position:relative;top:15px;left:3px">全文</span>   
             </div>   
             <p id="remaining-desc-ds" class="remaining-desc">${remainingDesc}</p>
             <p class="reward-item" style="text-align:center">
