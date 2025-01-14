@@ -1,4 +1,4 @@
-alert('Im new 4');
+alert('Im new 5');
 let currentPage = 1; // 当前页数
 const itemsPerPage = 5; // 每次加载数量
 let isLoading = false; // 是否正在加载中
@@ -20,13 +20,13 @@ async function initializePage() {
     }
 }
 async function loadMoreDonaBoxes() {
-    if (isLoading || currentPage > Math.ceil(burgerCount / itemsPerPage)) return;
+    if (isLoading || currentPage > Math.ceil( donaCount / itemsPerPage)) return;
 
     isLoading = true;
     document.getElementById('loading').style.display = 'block';
 
     const start = (currentPage - 1) * itemsPerPage + 1; // 起始 re_id
-    const end = Math.min(currentPage * itemsPerPage, burgerCount); // 结束 re_id
+    const end = Math.min(currentPage * itemsPerPage, donaCount ); // 结束 re_id
 
     for (let i = end ; i >= start ; i--) {
         try {
