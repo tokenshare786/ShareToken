@@ -181,7 +181,7 @@ async function claimDN(re_id) {
 // 滚动事件监听，实现无限滚动
 window.addEventListener('scroll', debounce(() => {
     if (
-        window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 &&
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - 200 &&
         !isLoading
     ) {
         loadMoreDonaBoxes();
