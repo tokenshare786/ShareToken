@@ -1526,8 +1526,7 @@
                 </span>
             </div>
             <div class="new-container">
-                <div class="image-container" style="position:relative;top:8px">
-                    <img src="" alt="" id="dn_img">
+                <div class="image-container" id="image-container" style="position:relative;top:8px">                    
                 </div>
             </div>
             <div class="_buttons">
@@ -1569,7 +1568,7 @@
             const dona = await getSpecificDN(dnid);
             const startTime = new Date(Number(dona.startTime) * 1000).toLocaleString();
             const dn_info = "【" + dona.eligiType + "】 " + startTime + " & " + dona.claimedAmt + " / " + dona.subAmt + " : " + dona.claimCount + " / " + dona.maxClaims;
-            document.getElementById("dn_img").src = dona.imgUrl;
+            //document.getElementById("dn_img").src = dona.imgUrl;
             //document.getElementById("dn_desc").textContent = dona.desc;
             document.getElementById("dn_info").textContent = dn_info;
             //
@@ -1598,6 +1597,32 @@
                 ellipsis.style.display = "none";
                 toggleLink.style.display = "none"; // 隱藏 "詳看全文"
             });
+            let contentElement;
+            if (dona.imgUrl.includes('youtube.com/shorts') || dona.imgUrl.includes('youtube.com/watch')) {
+               // 提取視頻 ID
+               const videoId = new URL(dona.imgUrl).pathname.split('/')[2] || new URL(dona.imgUrl).searchParams.get('v');
+               const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+    
+                // 創建 iframe 用於嵌入 YouTube 視頻
+                contentElement = document.createElement('iframe');
+                contentElement.src = embedUrl;
+                contentElement.width = '100%';
+                contentElement.height = '200'; // 設定高度，根據需求調整
+                contentElement.frameBorder = '0';
+                contentElement.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+                contentElement.allowFullscreen = true;
+            } else {
+                 // 默認使用 img 顯示圖片
+                 contentElement = document.createElement('img');
+                 contentElement.src = dona.imgUrl;
+                 contentElement.alt = 'photo';
+                 contentElement.style.width = '100%'; // 設置圖片寬度
+                 contentElement.style.height = 'auto'; // 自適應高度
+             }
+
+              // 添加到網頁
+            const imageContainer = document.getElementById('image-container');
+            imageContainer.appendChild(contentElement);
         }
         function close_DN() {
             const overlay = document.getElementById('dn_window');
