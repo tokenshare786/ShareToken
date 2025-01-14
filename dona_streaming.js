@@ -172,6 +172,7 @@ initializePage();
 let dnid_edit;
 function open_edit(dnid) {   
       dnid_edit = dnid;
+      alert('dnid:'+dnid);
       const dona = await getSpecificDN(dnid); // 获取数据
       const overlay = document.getElementById('edit_window');
       overlay.classList.add('show');
