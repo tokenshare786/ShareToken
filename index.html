@@ -21,13 +21,13 @@
             background-color: #1a1a1a;
         }
 
-        #desc-container {
+        desc-container {
             display: flex;
             justify-content: center;
             /* 水平居中 */
         }
 
-        #short-desc {
+        short-desc {
             margin-bottom: 8px;
             font-size: 1.125em;
             font-weight: bold;
@@ -35,7 +35,7 @@
             color: #FFFFFF;
         }
 
-        #remaining-desc {
+        remaining-desc {
             font-size: 0.8em;
             /* 展開後縮小的文字大小 */
             display: none;
@@ -1476,12 +1476,12 @@
     <div class="modal-overlay" id="dn_window">
         <div class="modal">
             <div>
-                <div id="desc-container">
-                    <span id="short-desc"></span>
+                <div id="desc-container" class="desc-container">
+                    <span id="short-desc"  class="short-desc"></span>
                     <span id="ellipsis">&nbsp..</span>
                     <span id="toggle-link" class="css_back" style="position:relative;top:5px;left:3px">全文</span>
                 </div>
-                <p id="remaining-desc"></p>
+                <p id="remaining-desc" class="remaining-desc"></p>
                 <p class="reward-item" style="text-align:center; position:relative; top: -10px" id="dn_info"></p>
                 <span class="progress" style="display:none">
                     <p class="css_back" onclick="dn_back()" id="click_back">Back</p>
