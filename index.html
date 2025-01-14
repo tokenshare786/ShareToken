@@ -1454,11 +1454,11 @@
         <div class="modal">
             <h2>分享黑色甜甜圈</h2>            
             <p style="color:#bbbbbb">推薦連結網址：</p>
-            <p id="share_link" class="_text"></p>
+            <p id="sharelink" class="_text"></p>
             <form>
                 <div class="_buttons">
                     <button type="button" class="cancel" onclick="closeShare()">取消</button>
-                    <button type="button" class="confirm" onclick="toShare(false)">複製連結</button>
+                    <button type="button" class="confirm" onclick="toShareDona()">複製連結</button>
                 </div>
             </form>
         </div>
@@ -1469,8 +1469,19 @@
             overlay.classList.add('show');
             const userAddress = await getHoldertoLowercase();
             const holderInfo = await contract.methods.holders(userAddress).call();            
-            document.getElementById("share_link").textContent = `https://tokenshare786.github.io/ShareToken/?linkcode=${holderInfo.refCode}&dona_id=${dn_id}`;
+            document.getElementById("sharelink").textContent = `https://tokenshare786.github.io/ShareToken/?linkcode=${holderInfo.refCode}&dona_id=${dn_id}`;
         }
+        function toShareDona() {
+            const share_text = document.getElementById("sharelink").textContent;          
+            navigator.clipboard.writeText(share_text)
+            closeShareDona();
+        } 
+        // Close modal
+        function closeShareDona() {
+            const overlay = document.getElementById('shareDona_window');
+            overlay.classList.remove('show');
+        }
+        
         async function openShare() {
             const overlay = document.getElementById('share_window');
             overlay.classList.add('show');
@@ -1482,19 +1493,18 @@
 
         // Close modal
         function closeShare() {
-            //document.getElementById("share_window").style.display = "none";
             const overlay = document.getElementById('share_window');
             overlay.classList.remove('show');
         }
 
         function toShare(isCode) {
-            let contractAddress;
+            let share_text;
             if (isCode) {
-                contractAddress = document.getElementById("refcode").textContent;
+                share_text = document.getElementById("refcode").textContent;
             } else {
-                contractAddress = document.getElementById("share_link").textContent;
+                share_text = document.getElementById("share_link").textContent;
             }
-            navigator.clipboard.writeText(contractAddress)
+            navigator.clipboard.writeText(share_text)
             closeShare();
         }    
     </script>
