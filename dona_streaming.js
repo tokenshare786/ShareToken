@@ -49,27 +49,26 @@ async function loadMoreDonaBoxes() {
 // 创建 Dona_box 的 DOM 元素
 async function createDonaBox(re, re_id) {
     const container = document.getElementById('dona-container');
-
     const card = document.createElement('div');
     card.className = 'dona-streaming'; // 添加样式类
 
     const startTime = new Date(Number(re.startTime) * 1000).toLocaleString();
-    const desc_ds = re.desc; // 假設這是描述文本
+    const desc = re.desc; // 假設這是描述文本
     const maxLength = 13; // 最大顯示字數
     let toolong = false;
     if (desc.length > maxLength) {
              toolong = true;
     } 
-    const shortDesc_ds = desc_ds.slice(0, maxLength);
-    const remainingDesc_ds = desc_ds.slice(maxLength);
+    const shortDesc = desc.slice(0, maxLength);
+    const remainingDesc = desc.slice(maxLength);
     card.innerHTML = `
         <div>
             <div id="desc-container-ds" class="desc-container">
-                <span class="short-desc">${shortDesc_ds}</span>
+                <span class="short-desc">${shortDesc}</span>
                 <span id="ellipsis-ds">&nbsp..</span>
                 <span id="toggle-link-ds" class="css_back" style="position:relative;top:5px;left:3px">全文</span>   
             </div>   
-            <p id="remaining-desc-ds" class="remaining-desc">${remainingDesc_ds}</p>
+            <p id="remaining-desc-ds" class="remaining-desc">${remainingDesc}</p>
             <p class="reward-item" style="text-align:center">
                 【${re.eligiType}】 ${startTime} & ${re.claimedAmt} / ${re.subAmt} : ${re.claimCount} / ${re.maxClaims}
             </p>            
