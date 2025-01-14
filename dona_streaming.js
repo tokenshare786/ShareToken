@@ -1,4 +1,4 @@
-alert('Im new 15');
+alert('Im new 16');
 let currentPage = 1; // 当前页数
 const itemsPerPage = 5; // 每次加载数量
 let isLoading = false; // 是否正在加载中
@@ -170,4 +170,13 @@ function debounce(func, wait) {
 // 初始化页面
 initializePage();
 
-
+let dnid_edit;
+function open_edit(dnid) {   
+      dnid_edit = dnid;
+      alert('dnid:'+dnid);
+      const dona = await getSpecificDN(dnid); // 获取数据
+      const overlay = document.getElementById('edit_window');
+      overlay.classList.add('show');
+      document.getElementById("edit_desc").value = dona.desc;             
+      document.getElementById("edit_url").value = dona.imgUrl;
+}
