@@ -143,7 +143,7 @@
         /* 彈出窗口設置 */
         .modal {
             position: relative;
-            width: 90%;
+            width: 95%;
             /* 手機端自適應寬度 */
             max-width: 400px;
             /* 限制最大寬度 */
@@ -1546,24 +1546,18 @@
             let _get = false;
             dnid = getParameterByName('dnid');            
             if(dnid>0){
-                alert('dnid:'+dnid);
                 loops=false;
             }     
-            try {
-                while (loops) {
+            while (loops) {
                     const id = await contract.methods.activeDNs(index).call();
                     _get = await getable(id);
                     if (_get) {
                         loops = false;
                         dnid = id;
-                        //alert("dnid:"+ dnid );
                     } else {
                         index++;
                     }
-                }
-            } catch (err) {
-                //alert("ErrAvailable:"+err); 
-            }
+            }            
             if (dnid > 0) {
                 document.getElementById('re_button').classList.add('active');
                 open_DN();
