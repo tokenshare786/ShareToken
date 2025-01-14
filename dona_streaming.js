@@ -14,6 +14,7 @@ async function initializePage() {
         if (donaCount > 0) {
             await loadMoreDonaBoxes(); // 加载第一批 Dona_box
             user_ds = await getHoldertoLowercase();
+            alert('user_ds:'+user_ds);
         } else {
             alert("目前没有甜甜圈 ><");
         }
@@ -120,10 +121,10 @@ async function createDonaBox(re, re_id) {
     const re_creator = re.creator.toLowerCase() ;
     const editElement = card.querySelector('#editable-ds');
     if( re_creator !== user_ds){ 
-              alert(re_id+':0');
+              alert(re_creator+'/'+re_id+':0');
               editElement.style.display = "none"; 
     } else {
-               alert(re_id+':1');
+               alert(re_creator+'/'+re_id+':1');
               editElement.style.display = "block";
     }     
 }
