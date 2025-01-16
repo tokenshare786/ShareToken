@@ -1,4 +1,4 @@
-import app from './firebaseConfig'; // 引入 Firebase 配置
+//import app from './firebaseConfig'; // 引入 Firebase 配置
 
 //import { getDatabase, ref, get, update, remove, push, set, child } from "firebase/database";
 
