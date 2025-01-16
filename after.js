@@ -2,7 +2,7 @@
   //import { initializeApp } from "firebase/app";
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
   //import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
-  //import { getDatabase, ref, get, update, remove, push, set, child } from "firebase/database";
+  import { getDatabase, ref, get, update, remove, push, set, child } from "firebase/database";
 
 // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
@@ -60,4 +60,4 @@ document.getElementById("comment-form").addEventListener("submit", async (event)
 // 暴露到全局作用域
 window.open_comment = open_comment;
 window.close_comment = close_comment;
-alert('after all 29');
+alert('after all 30');
