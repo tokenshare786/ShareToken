@@ -27,10 +27,15 @@ let _message='';
 
 function open_comment(dn_id,comment_id = null) {
     alert('open_comment');
-    const overlay = document.getElementById('comment_window');
-    overlay.classList.add('show');    
-    _dnid = dn_id;
-    _commentid = comment_id;
+    try{
+       const overlay = document.getElementById('comment_window');
+       overlay.classList.add('show');    
+       _dnid = dn_id;
+       _commentid = comment_id;
+    }catch(err){
+       alert('openError:'+err);
+    }
+    
 }
 
 // Close modal
