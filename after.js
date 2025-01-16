@@ -51,7 +51,7 @@ function closeModal() {
 document.getElementById("comment-form").addEventListener("submit", async (event) => {
     event.preventDefault(); // 防止表單默認提交行為
     _message = document.getElementById("mycomment").value;
-    //await addComment(_dnid, _commentid, _useraddress, _message); // 確保執行智能合約的邏輯
+    await addComment(_dnid, _commentid, _useraddress, _message); // 確保執行智能合約的邏輯
 });
 
 
