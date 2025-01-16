@@ -38,7 +38,7 @@ function open_comment(dn_id,comment_id = null) {
        const overlay = document.getElementById('comment_window');
        overlay.classList.add('show');    
       _dnid = dn_id;
-       //_commentid = comment_id;
+       _commentid = comment_id;
     //}catch(err){
        //alert('openError:'+err);  
     //}    
@@ -60,4 +60,4 @@ document.getElementById("comment-form").addEventListener("submit", async (event)
 // 暴露到全局作用域
 window.open_comment = open_comment;
 window.close_comment = close_comment;
-alert('after all 26');
+alert('after all 27');
