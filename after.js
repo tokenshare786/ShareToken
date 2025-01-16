@@ -1,7 +1,10 @@
   // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
+  import { initializeApp } from "firebase/app";
+  //import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+  //import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
+  import { getDatabase, ref, get, update, remove, push, set, child } from "firebase/database";
+
+// TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
 
   // Your web app's Firebase configuration
@@ -19,7 +22,9 @@
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
+  //const analytics = getAnalytics(app);
+  // 獲取 Realtime Database 實例
+  const database = getDatabase(app);
 
 let _dnid;
 let _commentid = null;
@@ -27,15 +32,14 @@ let _message='';
 
 function open_comment(dn_id,comment_id = null) {
     alert('open_comment');
-    try{
-       //const overlay = document.getElementById('comment_window');
-       //overlay.classList.add('show');    
+    //try{
+       const overlay = document.getElementById('comment_window');
+       overlay.classList.add('show');    
        _dnid = dn_id;
-       //_commentid = comment_id;
-    }catch(err){
-       alert('openError:'+err);
-    }
-    
+       _commentid = comment_id;
+    //}catch(err){
+       //alert('openError:'+err);
+    //}    
 }
 
 // Close modal
@@ -50,4 +54,25 @@ document.getElementById("comment-form").addEventListener("submit", async (event)
     await addComment(_dnid, _commentid, _useraddress, _message); // 確保執行智能合約的邏輯
 });
 
-alert('after all 11');
+async function addComment(dona_id, comment_id, message) {
+    try {        
+        const commentsRef = ref(database, `comments/${donaId}`);
+        // 添加新的留言，Firebase 會自動生成唯一的 commentId
+        const newCommentRef = push(commentsRef);
+
+        // 保存留言
+        await set(newCommentRef, {        
+            dona_id,   
+            commentId: comment_id || null, // 如果是回覆留言，使用 comment_id,如果是對 Dona 的留言，則記為null
+            _useraddress,                  //這是個全域變數
+            message,
+            timestamp: Date.now()
+        });
+
+        console.log("Comment added successfully!");
+    } catch (error) {
+        console.error("Error adding comment:", error);
+    }
+}
+
+alert('after all 12');
