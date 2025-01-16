@@ -6,7 +6,7 @@ let donaCount = 0; // 总甜甜圈数量
 //let user_ds;
 
 // 初始化页面
-async function initializePage() {
+async function initializeDonaStreaming() {
     try {
         donaCount = await getreID(); // 获取甜甜圈总数
         donaCount = Number(donaCount); // 确保是数字
