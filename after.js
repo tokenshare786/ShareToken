@@ -2,7 +2,7 @@
   //import { initializeApp } from "firebase/app";
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
   //import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
-  import { getDatabase, ref, get, update, remove, push, set, child } from "firebase/database";
+  //import { getDatabase, ref, get, update, remove, push, set, child } from "firebase/database";
 
 // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
@@ -51,28 +51,9 @@ function closeModal() {
 document.getElementById("comment-form").addEventListener("submit", async (event) => {
     event.preventDefault(); // 防止表單默認提交行為
     _message = document.getElementById("mycomment").value;
-    await addComment(_dnid, _commentid, _useraddress, _message); // 確保執行智能合約的邏輯
+    //await addComment(_dnid, _commentid, _useraddress, _message); // 確保執行智能合約的邏輯
 });
 
-async function addComment(dona_id, comment_id, message) {
-    try {        
-        const commentsRef = ref(database, `comments/${dona_id}`);
-        // 添加新的留言，Firebase 會自動生成唯一的 commentId
-        const newCommentRef = push(commentsRef);
 
-        // 保存留言
-        await set(newCommentRef, {        
-            dona_id,   
-            commentId: comment_id || null, // 如果是回覆留言，使用 comment_id,如果是對 Dona 的留言，則記為null
-            _useraddress,                  //這是個全域變數
-            message,
-            timestamp: Date.now()
-        });
 
-        console.log("Comment added successfully!");
-    } catch (error) {
-        console.error("Error adding comment:", error);
-    }
-}
-
-alert('after all 13');
+alert('after all 14');
