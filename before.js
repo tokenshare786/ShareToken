@@ -78,7 +78,7 @@ let _useraddress;
             walletButton.textContent = `${account.substring(0, 2)}..${account.slice(-4)}`;
             try {
                 const script = document.createElement("script");
-                script.src = "/dona_streaming.js";
+                script.src = "./dona_streaming.js";
                 script.id = 'dona_streaming';
                 document.body.appendChild(script);                
             } catch (err) {
