@@ -58,5 +58,5 @@ document.getElementById("comment-form").addEventListener("submit", async (event)
 
 // 暴露到全局作用域
 window.open_comment = open_comment;
-window.open_comment = close_comment;
-alert('after all 18');
+window.close_comment = close_comment;
+alert('after all 19');
