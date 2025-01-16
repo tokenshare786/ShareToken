@@ -24,10 +24,11 @@
 let _dnid;
 let _commentid = null;
 let _message='';
+
 function open_comment(dn_id,comment_id = null) {
-    const overlay = document.getElementById('comment_window');
-    overlay.classList.add('show');
     alert('open_comment');
+    const overlay = document.getElementById('comment_window');
+    overlay.classList.add('show');    
     _dnid = dn_id;
     _commentid = comment_id;
 }
@@ -44,4 +45,4 @@ document.getElementById("comment-form").addEventListener("submit", async (event)
     await addComment(_dnid, _commentid, _useraddress, _message); // 確保執行智能合約的邏輯
 });
 
-alert('after all 8');
+alert('after all 9');
