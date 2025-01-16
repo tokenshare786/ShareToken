@@ -199,7 +199,7 @@ function debounce(func, wait) {
 }
 
 // 初始化页面
-initializePage();
+//initializePage();
 
 let dnid_edit;
 async function open_edit(dnid) {   
