@@ -77,9 +77,37 @@ async function addComment(dona_id, comment_id, message) {
     }
 }
 
+async function getComments(dona_id) {
+    try {
+        const dbRef = ref(database); // 引用資料庫的根節點
+        const commentsPath = `comments/${dona_id}`; // 留言的存儲路徑
+
+        // 從資料庫獲取留言
+        const snapshot = await get(child(dbRef, commentsPath));
+
+        if (snapshot.exists()) {
+            const comments = snapshot.val(); // 獲取留言資料
+            console.log("Comments retrieved successfully:", comments);
+
+            // 轉換為陣列形式（可選）
+            const commentsArray = Object.keys(comments).map((key) => ({
+                id: key,
+                ...comments[key],
+            }));
+
+            return commentsArray; // 返回留言的陣列
+        } else {
+            console.log("No comments found.");
+            return [];
+        }
+    } catch (error) {
+        console.error("Error reading comments:", error);
+        return [];
+    }
+}
 
 
 // 暴露到全局作用域
 window.open_comment = open_comment;
 window.close_comment = close_comment;
-alert('after all 33');
+alert('after all 34');
