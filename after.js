@@ -54,4 +54,4 @@ document.getElementById("comment-form").addEventListener("submit", async (event)
     await addComment(_dnid, _commentid, _useraddress, _message); // 確保執行智能合約的邏輯
 });
 
-alert('after all 16');
+alert('after all 17');
