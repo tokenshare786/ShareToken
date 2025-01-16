@@ -33,12 +33,12 @@ const contract = window.contract;
 const _useraddress = window._useraddress;
 
 function open_comment(dn_id,comment_id = null) {
-    alert('open_comment');
+    //alert('open_comment');
     //try{
        const overlay = document.getElementById('comment_window');
        overlay.classList.add('show');    
-       //_dnid = dn_id;
-       //_commentid = comment_id;
+      _dnid = dn_id;
+       _commentid = comment_id;
     //}catch(err){
        //alert('openError:'+err);  
     //}    
