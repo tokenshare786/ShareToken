@@ -1,7 +1,7 @@
   // Import the functions you need from the SDKs you need
   //import { initializeApp } from "firebase/app";
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
+  //import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
   //import { getDatabase, ref, get, update, remove, push, set, child } from "firebase/database";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -22,9 +22,9 @@
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
+  //const analytics = getAnalytics(app);
   // 獲取 Realtime Database 實例
-  //const database = getDatabase(app);
+  const database = getDatabase(app);
 
 let _dnid;
 let _commentid = null;
@@ -60,4 +60,4 @@ document.getElementById("comment-form").addEventListener("submit", async (event)
 // 暴露到全局作用域
 window.open_comment = open_comment;
 window.close_comment = close_comment;
-alert('after all 28');
+alert('after all 29');
