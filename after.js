@@ -29,6 +29,8 @@
 let _dnid;
 let _commentid = null;
 let _message='';
+const contract = window.contract;
+const _useraddress = window._useraddress;
 
 function open_comment(dn_id,comment_id = null) {
     alert('open_comment');
@@ -43,7 +45,7 @@ function open_comment(dn_id,comment_id = null) {
 }
 
 // Close modal
-function closeModal() {
+function close_comment() {
     const overlay = document.getElementById('comment_window');
     overlay.classList.remove('show');
 }
@@ -54,4 +56,7 @@ document.getElementById("comment-form").addEventListener("submit", async (event)
     await addComment(_dnid, _commentid, _useraddress, _message); // 確保執行智能合約的邏輯
 });
 
-alert('after all 17');
+// 暴露到全局作用域
+window.open_comment = open_comment;
+window.open_comment = close_comment;
+alert('after all 18');
