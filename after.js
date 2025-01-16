@@ -28,10 +28,10 @@ let _message='';
 function open_comment(dn_id,comment_id = null) {
     alert('open_comment');
     try{
-       const overlay = document.getElementById('comment_window');
-       overlay.classList.add('show');    
+       //const overlay = document.getElementById('comment_window');
+       //overlay.classList.add('show');    
        _dnid = dn_id;
-       _commentid = comment_id;
+       //_commentid = comment_id;
     }catch(err){
        alert('openError:'+err);
     }
@@ -50,4 +50,4 @@ document.getElementById("comment-form").addEventListener("submit", async (event)
     await addComment(_dnid, _commentid, _useraddress, _message); // 確保執行智能合約的邏輯
 });
 
-alert('after all 10');
+alert('after all 11');
