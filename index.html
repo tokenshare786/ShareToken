@@ -903,7 +903,10 @@
             if (dnid > 0) {
                 document.getElementById('re_button').classList.add('active');
                 open_DN();
+            } else {
+                initializeDonaStreaming();
             }
+            
         }
         async function open_DN() {
             const overlay = document.getElementById('dn_window');
@@ -970,6 +973,7 @@
         function close_DN() {
             const overlay = document.getElementById('dn_window');
             overlay.classList.remove('show');
+            initializeDonaStreaming();
         }
         document.getElementById("dn_claim").addEventListener("click", async (event) => {
             event.preventDefault(); // 防止表單默認提交行為
