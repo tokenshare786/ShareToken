@@ -1,6 +1,6 @@
   // Import the functions you need from the SDKs you need
-  import { initializeApp } from "firebase/app";
-  //import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+  //import { initializeApp } from "firebase/app";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
   //import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
   import { getDatabase, ref, get, update, remove, push, set, child } from "firebase/database";
 
