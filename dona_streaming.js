@@ -85,10 +85,11 @@ async function createDonaBox(re, re_id) {
                                   
             </div>            
         </div>
-        <span class="progress">
+        <span class="progress" style='position:relative;top=5px'>
             <p class="css_back" onclick="open_edit(${re_id})" id="editable-ds">Edit</p>
             <p class="css_back" onclick="claimDN(${re_id})" id="take-ds">Take</p> 
-            <p class="css_back" onclick="shareDona(${re_id})">Share</p>            
+            <p class="css_back" onclick="shareDona(${re_id})">Share</p> 
+            <p class="css_back" onclick="open_comment(${re_id})">Comment</p>  
         </span>
     `;
     container.appendChild(card);
