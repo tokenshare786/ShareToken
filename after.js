@@ -24,7 +24,7 @@
   const app = initializeApp(firebaseConfig);
   //const analytics = getAnalytics(app);
   // 獲取 Realtime Database 實例
-  const database = getDatabase(app);
+  //const database = getDatabase(app);
 
 let _dnid;
 let _commentid = null;
