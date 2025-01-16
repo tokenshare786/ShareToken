@@ -24,7 +24,7 @@
   const app = initializeApp(firebaseConfig);
   //const analytics = getAnalytics(app);
   // 獲取 Realtime Database 實例
-  //const database = getDatabase(app);
+  const database = getDatabase(app);
 
 let _dnid;
 let _commentid = null;
@@ -33,12 +33,12 @@ const contract = window.contract;
 const _useraddress = window._useraddress;
 
 function open_comment(dn_id,comment_id = null) {
-    alert('open_comment');
+    //alert('open_comment');
     //try{
-       //const overlay = document.getElementById('comment_window');
-       //overlay.classList.add('show');    
-       //_dnid = dn_id;
-       //_commentid = comment_id;
+       const overlay = document.getElementById('comment_window');
+       overlay.classList.add('show');    
+       _dnid = dn_id;
+       _commentid = comment_id;
     //}catch(err){
        //alert('openError:'+err);  
     //}    
@@ -56,7 +56,28 @@ document.getElementById("comment-form").addEventListener("submit", async (event)
     await addComment(_dnid, _commentid, _useraddress, _message); // 確保執行智能合約的邏輯
 });
 
+async function addComment(dona_id, comment_id, message) {
+    try {        
+        const commentsRef = ref(database, `comments/${dona_id}`);
+        // 添加新的留言，Firebase 會自動生成唯一的 commentId
+        const newCommentRef = push(commentsRef);
+
+        // 保存留言
+        await set(newCommentRef, {        
+            dona_id,   
+            commentId: comment_id || null, // 如果是回覆留言，使用 comment_id,如果是對 Dona 的留言，則記為null
+            _useraddress,                  //這是個全域變數
+            message,
+            timestamp: Date.now()
+        });
+
+        console.log("Comment added successfully!");
+    } catch (error) {
+        console.error("Error adding comment:", error);
+    }
+}
+
 // 暴露到全局作用域
 window.open_comment = open_comment;
 window.close_comment = close_comment;
-alert('after all 19');
+alert('after all 20');
