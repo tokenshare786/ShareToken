@@ -56,7 +56,7 @@ document.getElementById("comment-form").addEventListener("submit", async (event)
 
 async function addComment(dona_id, comment_id, message) {
     try {        
-        const commentsRef = ref(database, `comments/${donaId}`);
+        const commentsRef = ref(database, `comments/${dona_id}`);
         // 添加新的留言，Firebase 會自動生成唯一的 commentId
         const newCommentRef = push(commentsRef);
 
@@ -75,4 +75,4 @@ async function addComment(dona_id, comment_id, message) {
     }
 }
 
-alert('after all 12');
+alert('after all 13');
