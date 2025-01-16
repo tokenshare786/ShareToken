@@ -7,9 +7,8 @@
     <title>BLKDONA</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
 </head>
-
 <body>
     <header>
         <span class="material-symbols-outlined" id="hamburger">lunch_dining</span>
@@ -19,106 +18,17 @@
         <div>
             <button class="walletbutton" id="walletButton" onclick="connectWallet()">Login</button>
         </div>
-    </header>
-    <script>
-        let _useraddress;
-        function copyAddress() {
-            // 获取合约地址文本
-            const contractAddress = "0xCdB05222c8a059a6c0e9202d62fDFb05D6B5D274";
-            navigator.clipboard.writeText(contractAddress)
-                .then(() => {
-                    const message = document.getElementById("copyMessage");
-                    message.style.display = "block";
-                    setTimeout(() => {
-                        message.style.display = "none";
-                    }, 2000);
-                })
-                .catch((err) => {
-                    console.error("copy failed:", err);
-                });
-        }
-    </script>
+    </header>    
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- 引入 Web3.js -->
     <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
-    <script>
-        // 取得推薦碼    
-        function getParameterByName(name, url) {
-            if (!url) url = window.location.href;
-            name = name.replace(/[\[\]]/g, '\\$&');
-            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-                results = regex.exec(url);
-            if (!results) return '';
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, ' '));
-        }
-        async function getHoldertoLowercase() {
-            var holder;
-            if (typeof window.ethereum !== 'undefined') {
-                try {
-                    // Connect Wallet
-                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                    holder = accounts[0].toLowerCase();
-                } catch (error) {
-                    console.log('No accounts available');
-                }
-                //} else {
-                //deeplink();
-            }
-            return holder;
-        }
-
-        function deeplink() {
-            // 如果瀏覽器中未檢測到電子錢包
-            try {
-                const blkdonaUrl = "https://tokenshare786.github.io/ShareToken/";
-                //const metamaskDeepLink = `https://metamask.app.link/dapp/${encodeURIComponent(blkdonaUrl)}`;
-                const metamaskDeepLink = `https://metamask.app.link/dapp/${blkdonaUrl}`;
-                window.location.href = metamaskDeepLink;
-            } catch (err) {
-                //showToast('請用 MetaMask 瀏覽器登入！','error');
-                const metamaskAppLink = "https://metamask.app.link/";
-                window.location.href = metamaskAppLink; // 跳轉到 MetaMask 安裝頁
-            }
-        }
-
-        async function connectWallet() {
-            const holder = await getHoldertoLowercase();
-            if (holder) {
-                updateAccountUI(holder);
-            } else {
-                deeplink();
-            }
-        }
-        // 監聽帳號變化
-        ethereum.on('accountsChanged', (accounts) => {
-            if (accounts.length > 0) {
-                location.reload();
-                //console.log('Account changed:', accounts[0]);
-                //ready_togo(accounts[0]);
-            } else {
-                console.log('No accounts available');
-            }
-        });
-        // 更新頁面上的帳號顯示
-        function updateAccountUI(account) {
-            const walletButton = document.getElementById('walletButton');
-            walletButton.textContent = `${account.substring(0, 2)}..${account.slice(-4)}`;
-            try {
-                const script = document.createElement("script");
-                script.src = "dona_streaming.js";
-                script.id = 'dona_streaming';
-                document.body.appendChild(script);                
-            } catch (err) {
-                console.error("Error loading content:", err);                
-            }
-        }    
-    </script>
+    
+    <script src="/before.js"></script>
     <div id="dona-container">
         <div class="notification" id="notice">
             <span class="material-symbols-outlined">brand_awareness</span>
             <span>The BlackDona white paper has been released, please check for details..</span>
-            <a href="white_paper.html">Details</a>
+            <a href="/white_paper.html">Details</a>
         </div>
         <div id="card" class="card">
             <div class="progress" id="content">
@@ -136,8 +46,6 @@
                 <button class="buttons button" id="activities_btn">Activities</button>
             </div>
         </div>
-
-
         <div class="progress-card">
             <div class="progress">
                 <div>
@@ -208,7 +116,7 @@
                 });
                 //alert('Updated index:3');
                 const script = document.createElement("script");
-                script.src = "dona_box.js";                
+                script.src = "/dona_box.js";                
                 document.body.appendChild(script);                
             } catch (err) {
                 console.error("Error loading content:", err);                
@@ -906,7 +814,7 @@
             overlay.classList.add('show');
             const userAddress = await getHoldertoLowercase();
             const holderInfo = await contract.methods.holders(userAddress).call();            
-            document.getElementById("sharelink").textContent = `https://tokenshare786.github.io/ShareToken/?linkcode=${holderInfo.refCode}&dnid=${dn_id}`;
+            document.getElementById("sharelink").textContent = `https://blkdona.web.app/ShareToken/?linkcode=${holderInfo.refCode}&dnid=${dn_id}`;
         }
         function toShareDona() {
             const share_text = document.getElementById("sharelink").textContent;          
@@ -925,7 +833,7 @@
             const userAddress = await getHoldertoLowercase();
             const holderInfo = await contract.methods.holders(userAddress).call();
             document.getElementById("refcode").textContent = `${holderInfo.refCode}`;
-            document.getElementById("share_link").textContent = `https://tokenshare786.github.io/ShareToken/?linkcode=${holderInfo.refCode}`;
+            document.getElementById("share_link").textContent = `https://blkdona.web.app/ShareToken/?linkcode=${holderInfo.refCode}`;
         }
 
         // Close modal
@@ -1160,6 +1068,23 @@
         // 示例調用
         //showToast("交易成功！", "success");
         //showToast("發生錯誤！", "error");
-    </script>   
+    </script>
+    <div class="modal-overlay" id="comment_window">
+      <div class="modal">
+          <h2>來留個言，說個看法</h2>
+          <form id="comment-form">
+              <div class="form-group">
+                  <label for="mycomment" id="reply_to"></label>
+                  <input type="text" id="mycomment" name="mycomment" required>
+              </div>              
+              <div class="_buttons">
+                  <button type="button" class="cancel" onclick="close_comment()">取消</button>
+                  <button type="submit" class="confirm">送出</button>
+              </div>
+          </form>
+      </div>
+  </div>   
+  <script src="/after.js"></script>
+  <script src="/realtimedb.js"></script>
 </body>
 </html>
