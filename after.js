@@ -53,7 +53,7 @@ function close_comment() {
 document.getElementById("comment-form").addEventListener("submit", async (event) => {
     event.preventDefault(); // 防止表單默認提交行為
     _message = document.getElementById("mycomment").value;
-    await addComment(_dnid, _commentid, _useraddress, _message); // 確保執行智能合約的邏輯
+    await addComment(_dnid, _commentid, _message); // 確保執行智能合約的邏輯
 });
 
 async function addComment(dona_id, comment_id, message) {
@@ -82,4 +82,4 @@ async function addComment(dona_id, comment_id, message) {
 // 暴露到全局作用域
 window.open_comment = open_comment;
 window.close_comment = close_comment;
-alert('after all 32');
+alert('after all 33');
