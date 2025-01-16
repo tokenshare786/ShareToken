@@ -76,12 +76,12 @@ let _useraddress;
         function updateAccountUI(account) {
             const walletButton = document.getElementById('walletButton');
             walletButton.textContent = `${account.substring(0, 2)}..${account.slice(-4)}`;
-            try {
-                const script = document.createElement("script");
-                script.src = "./dona_streaming.js";
-                script.id = 'dona_streaming';
-                document.body.appendChild(script);                
-            } catch (err) {
-                console.error("Error loading content:", err);                
-            }
+            //try {
+                //const script = document.createElement("script");
+                //script.src = "./dona_streaming.js";
+                //script.id = 'dona_streaming';
+                //document.body.appendChild(script);                
+            //} catch (err) {
+                //console.error("Error loading content:", err);                
+            //}
         }  
