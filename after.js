@@ -27,6 +27,7 @@ let _message='';
 function open_comment(dn_id,comment_id = null) {
     const overlay = document.getElementById('comment_window');
     overlay.classList.add('show');
+    alert('open_comment');
     _dnid = dn_id;
     _commentid = comment_id;
 }
