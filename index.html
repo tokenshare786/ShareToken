@@ -1088,7 +1088,10 @@
           </form>
       </div>
   </div>   
-  <script type="module" src="./after.js"></script>
+  <script type="module" src="./after.js">
+          window.contract = contract;
+          window._useraddress = _useraddress;
+  </script>
   <script id='dona_streaming' src="./dona_streaming.js"></script>
 </body> 
 </html>
