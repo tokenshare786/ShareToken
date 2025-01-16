@@ -21,4 +21,26 @@
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
 
+let _dnid;
+let _commentid = null;
+let _message='';
+function open_comment(dn_id,comment_id = null) {
+    const overlay = document.getElementById('comment_window');
+    overlay.classList.add('show');
+    _dnid = dn_id;
+    _commentid = comment_id;
+}
+
+// Close modal
+function closeModal() {
+    const overlay = document.getElementById('comment_window');
+    overlay.classList.remove('show');
+}
+
+document.getElementById("comment-form").addEventListener("submit", async (event) => {
+    event.preventDefault(); // 防止表單默認提交行為
+    _message = document.getElementById("mycomment").value;
+    await addComment(_dnid, _commentid, _useraddress, _message); // 確保執行智能合約的邏輯
+});
+
 alert('after all 6');
