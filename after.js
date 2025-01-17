@@ -28,11 +28,13 @@ let _message = '';
 let _lastLoadedTimestamp = null;
 const commentsPerLoad = 10;
 const contract = window.contract;
-const _useraddress = await getUserAddress();
+let _useraddress;
+
+await getUserAddress();
 
 async function getUserAddress() {
     // 假設這是一個異步操作來獲取地址
-    return window._useraddress || null;
+    _useraddress = window._useraddress || null;
 }
 
 function open_comment(dn_id, comment_id = null) {
@@ -53,10 +55,10 @@ function close_comment() {
 // 留言提交事件
 document.getElementById("comment_submit").addEventListener("click", async (event) => {
     event.preventDefault(); // 防止表單默認提交行為
+    //_useraddress = await getUserAddress();
     _message = document.getElementById("mycomment").value;
     if (!_message.trim()) return;
-    if (!_useraddress) return;
-  
+    if (!_useraddress) return;  
     document.getElementById('mycomment').value = ''; // 清空輸入框
     // 儲存留言並更新視圖
     await addComment(_dnid, _commentid, _message);    
@@ -159,4 +161,4 @@ async function getComments(dona_id, commentsPerLoad) {
 window.open_comment = open_comment;
 window.close_comment = close_comment;
 
-alert('after all 51');
+alert('after all 52');
