@@ -5,6 +5,15 @@ body {
             padding: 10px;
         }   
 
+.material-symbols-outlined[data-state="filled"] {
+  font-variation-settings: 'FILL' 1;
+}
+
+.material-symbols-outlined[data-state="outline"] {
+  font-variation-settings: 'FILL' 0;
+}
+
+
         .dona-streaming {
             margin-top: 10px;
             padding: 15px;
