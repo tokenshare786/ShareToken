@@ -90,8 +90,8 @@ async function createDonaBox(re, re_id) {
             <p class="css_back" onclick="claimDN(${re_id})" id="take-ds">Take</p> 
             <p class="css_back" onclick="shareDona(${re_id})">Share</p> 
             <p class="css_back" onclick="open_comment(${re_id})">Comment</p>  
-            <span class="material-symbols-outlined" id="like_btn">thumb_up</span>
-            <span class="material-symbols-outlined" id="dislike_btn">thumb_down</span>            
+            <span class="material-symbols-outlined" id="like_btn" style='position:relative;top=5px'>thumb_up</span>
+            <span class="material-symbols-outlined" id="dislike_btn" style='position:relative;top=5px'>thumb_down</span>            
         </span>
     `;
     container.appendChild(card);
@@ -176,7 +176,7 @@ if(likeordislike!=null){
        }  
 }
 likebtn.addEventListener('click', () => {
-  alert('I like it');
+  alert('like');
   if (likebtn.classList.contains('material-symbols-outlined')) {
     likebtn.classList.remove('material-symbols-outlined');
     likebtn.classList.add('material-symbols-filled');
@@ -187,7 +187,7 @@ likebtn.addEventListener('click', () => {
 });
 
 dislikebtn.addEventListener('click', () => {
-  alert('I dislike it');
+  alert('dislike');
   if (dislikebtn.classList.contains('material-symbols-outlined')) {
     dislikebtn.classList.remove('material-symbols-outlined');
     dislikebtn.classList.add('material-symbols-filled');
