@@ -32,7 +32,7 @@ let _message='';
 const contract = window.contract;
 const _useraddress = window._useraddress;
 const commentsPerLoad = 10;
-let lastLoadedTimestamp = null;
+let _lastLoadedTimestamp = null;
 
 function open_comment(dn_id,comment_id = null) {
        const overlay = document.getElementById('comment_window');
@@ -91,7 +91,7 @@ async function loadComments(donaId, isInitialLoad = false) {
     }
 
     // 模拟获取评论（从最近到最早）
-    const comments = await getComments(donaId, commentsPerLoad, lastLoadedTimestamp);
+    const comments = await getComments(donaId, commentsPerLoad);
 
     if (comments.length === 0 && isInitialLoad) {
       noComments.style.display = 'block'; // 显示无评论提示
@@ -111,7 +111,7 @@ async function loadComments(donaId, isInitialLoad = false) {
     });
 
     // 更新最后加载的时间戳
-    lastLoadedTimestamp = comments[comments.length - 1]?.timestamp || null;
+    _lastLoadedTimestamp = comments[comments.length - 1]?.timestamp || null;
   } catch (error) {
     console.error('Error loading comments:', error);
   }
@@ -126,7 +126,7 @@ function displayComment(comment) {
   commentContainer.appendChild(commentElement);
 }
 
-async function getComments(dona_id, commentsPerLoad, lastLoadedTimestamp) {
+async function getComments(dona_id, commentsPerLoad) {
   try {
     // 获取指定 Dona ID 的评论引用
     const commentsRef = ref(database, `comments/${dona_id}`);
@@ -148,7 +148,7 @@ async function getComments(dona_id, commentsPerLoad, lastLoadedTimestamp) {
 
     // 过滤评论，根据 lastLoadedTimestamp 和分页限制
     const filteredComments = commentsArray.filter(
-      (comment) => !lastLoadedTimestamp || comment.timestamp < lastLoadedTimestamp
+      (comment) => !_lastLoadedTimestamp || comment.timestamp < _lastLoadedTimestamp
     );
 
     // 返回符合条件的评论，最多返回 commentsPerLoad 条
@@ -162,4 +162,4 @@ async function getComments(dona_id, commentsPerLoad, lastLoadedTimestamp) {
 // 暴露到全局作用域
 window.open_comment = open_comment;
 window.close_comment = close_comment;
-alert('after all 40');
+alert('after all 41');
