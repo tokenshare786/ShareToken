@@ -25,7 +25,7 @@
   //const analytics = getAnalytics(app);
   // 獲取 Realtime Database 實例
   const database = getDatabase(app);
-
+alert('New world 1');
 let _dnid;
 let _commentid = null;
 let _message = '';
