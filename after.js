@@ -32,7 +32,12 @@ let _message = '';
 let _lastLoadedTimestamp = null;
 const commentsPerLoad = 10;
 const contract = window.contract;
-const _useraddress = await getHoldertoLowercase();
+const _useraddress = await getUserAddress();
+
+async function getUserAddress() {
+    // 假設這是一個異步操作來獲取地址
+    return window._useraddress || null;
+}
 
 function open_comment(dn_id, comment_id = null) {
     const overlay = document.getElementById('comment_window');
@@ -156,4 +161,4 @@ async function getComments(dona_id, commentsPerLoad) {
 window.open_comment = open_comment;
 window.close_comment = close_comment;
 
-alert('after all 44');
+alert('after all 45');
