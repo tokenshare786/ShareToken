@@ -175,28 +175,26 @@ if(likeordislike!=null){
              dislikebtn.classList.add('filled');
        }  
 }
+
 likebtn.addEventListener('click', () => {
   alert('like');
-  if (likebtn.classList.contains('material-symbols-outlined')) {
-    likebtn.classList.remove('material-symbols-outlined');
-    likebtn.classList.add('material-symbols-filled');
+  if (likebtn.dataset.state === 'outline') {
+    likebtn.dataset.state = 'filled'; // 改為實心
+    dislikebtn.dataset.state = 'outline'; // 確保 dislike 按鈕回到空心
   } else {
-    likebtn.classList.remove('material-symbols-filled');
-    likebtn.classList.add('material-symbols-outlined');
+    likebtn.dataset.state = 'outline'; // 改回空心
   }
 });
 
 dislikebtn.addEventListener('click', () => {
   alert('dislike');
-  if (dislikebtn.classList.contains('material-symbols-outlined')) {
-    dislikebtn.classList.remove('material-symbols-outlined');
-    dislikebtn.classList.add('material-symbols-filled');
+  if (dislikebtn.dataset.state === 'outline') {
+    dislikebtn.dataset.state = 'filled'; // 改為實心
+    likebtn.dataset.state = 'outline'; // 確保 like 按鈕回到空心
   } else {
-    dislikebtn.classList.remove('material-symbols-filled');
-    dislikebtn.classList.add('material-symbols-outlined');
+    dislikebtn.dataset.state = 'outline'; // 改回空心
   }
-});
-
+});    
    
 
 }
