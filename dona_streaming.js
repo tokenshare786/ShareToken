@@ -170,9 +170,9 @@ const likebtn = card.querySelector('#like_btn');
 const dislikebtn = card.querySelector('#dislike_btn');
 if(likeordislike!=null){    
        if (likeordislike === 'like') {
-          likebtn.classList.add('filled');
+           likebtn.dataset.state = 'filled'; // 改為實心
        } else if (likeordislike === 'dislike') {
-             dislikebtn.classList.add('filled');
+           dislikebtn.dataset.state = 'filled'; // 改為實心
        }  
 }
 
