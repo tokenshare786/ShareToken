@@ -177,7 +177,7 @@ if(likeordislike!=null){
 }
 
 likebtn.addEventListener('click', () => {
-  alert('like');
+  alert('like it');
   if (likebtn.dataset.state === 'outline') {
     likebtn.dataset.state = 'filled'; // 改為實心
     dislikebtn.dataset.state = 'outline'; // 確保 dislike 按鈕回到空心
@@ -187,7 +187,7 @@ likebtn.addEventListener('click', () => {
 });
 
 dislikebtn.addEventListener('click', () => {
-  alert('dislike');
+  alert('dislike it');
   if (dislikebtn.dataset.state === 'outline') {
     dislikebtn.dataset.state = 'filled'; // 改為實心
     likebtn.dataset.state = 'outline'; // 確保 like 按鈕回到空心
