@@ -40,7 +40,6 @@ let _useraddress;
             }
             return _useraddress;
         }
-        window.getHoldertoLowercase = getHoldertoLowercase;
 
         function deeplink() {
             // 如果瀏覽器中未檢測到電子錢包
