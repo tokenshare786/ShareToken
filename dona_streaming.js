@@ -169,10 +169,12 @@ if(likeordislike!=null){
        }  
 }
 likebtn.addEventListener('click', () => {
+  alert('I like it');
   likebtn.classList.add('filled');
   dislikebtn.classList.remove('filled'); // 確保只有一個按鈕被選中
 });
 dislikebtn.addEventListener('click', () => {
+  alert('I dislike it');
   dislikebtn.classList.add('filled');
   likebtn.classList.remove('filled'); // 確保只有一個按鈕被選中
 });
