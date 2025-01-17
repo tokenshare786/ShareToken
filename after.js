@@ -231,4 +231,4 @@ window.open_comment = open_comment;
 window.close_comment = close_comment;
 window.addLikeOrDislike = addLikeOrDislike;
 window.getLikeOrDislike = getLikeOrDislike;
-alert('after all 66');
+//alert('after all 66');
