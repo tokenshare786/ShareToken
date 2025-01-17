@@ -249,6 +249,8 @@
         // get balance of dona
         let web3;
         let contract;
+        window.contract = contract;
+       
         // 合約地址和 ABI
         const contractAddress = "0xCdB05222c8a059a6c0e9202d62fDFb05D6B5D274";
         const contractABI = [
@@ -1072,8 +1074,7 @@
         // 示例調用
         //showToast("交易成功！", "success");
         //showToast("發生錯誤！", "error");
-        window.contract = contract;
-        window._useraddress = _useraddress;
+
     </script>
     <div class="modal-overlay" id="comment_window">
   <div class="modal">
