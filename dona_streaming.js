@@ -158,6 +158,24 @@ const imageContainer = card.querySelector('#image-container-ds');
 //imageContainer.className = 'image-container';
 imageContainer.appendChild(contentElement);
 //container.appendChild(imageContainer);
+const likeordislike =  await getLikeOrDislike(re_id); 
+const likeBtn = card.querySelector('#like_btn');
+const dislikebtn = card.querySelector('#dislike_btn');
+if (likeordislike === 'like') {
+  likeBtn.classList.add('filled');
+} else if (likeordislike === 'dislike') {
+  dislikeBtn.classList.add('filled');
+}  
+    likeBtn.addEventListener('click', () => {
+  // 切換 class
+  likeBtn.classList.toggle('filled');
+});
+    dislikeBtn.addEventListener('click', () => {
+  // 切換 class
+  dislikeBtn.classList.toggle('filled');
+});
+   
+
 }
 
 // 点击领取甜甜圈
