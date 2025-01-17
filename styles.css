@@ -172,7 +172,11 @@ body {
 
 .comments-container .comment {
   border-bottom: 1px solid #eee;
-  padding: 10px 0;
+  padding: 10px 0;            
+    flex: 1; /* 填滿剩餘空間 */
+    overflow-y: auto; /* 啟用垂直滾動條 */
+    padding: 16px;
+    max-height: 70%; /* 限制留言區域高度 */
 }
 
 #comment-form {
