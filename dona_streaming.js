@@ -159,20 +159,20 @@ const imageContainer = card.querySelector('#image-container-ds');
 imageContainer.appendChild(contentElement);
 //container.appendChild(imageContainer);
 const likeordislike =  await getLikeOrDislike(re_id); 
-const likeBtn = card.querySelector('#like_btn');
+const likebtn = card.querySelector('#like_btn');
 const dislikebtn = card.querySelector('#dislike_btn');
 if (likeordislike === 'like') {
-  likeBtn.classList.add('filled');
+  likebtn.classList.add('filled');
 } else if (likeordislike === 'dislike') {
-  dislikeBtn.classList.add('filled');
+  dislikebtn.classList.add('filled');
 }  
-    likeBtn.addEventListener('click', () => {
+    likebtn.addEventListener('click', () => {
   // 切換 class
-  likeBtn.classList.toggle('filled');
+  likebtn.classList.toggle('filled');
 });
-    dislikeBtn.addEventListener('click', () => {
+    dislikebtn.addEventListener('click', () => {
   // 切換 class
-  dislikeBtn.classList.toggle('filled');
+  dislikebtn.classList.toggle('filled');
 });
    
 
