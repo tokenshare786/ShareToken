@@ -162,6 +162,28 @@ async function getComments(dona_id, commentsPerLoad) {
     }
 }
 
+async function getLikeOrDislike(dona_id, comment_id=null) {
+    let currentStatus=null;
+    try {
+        // 確定操作的是貼文還是留言
+        const targetRef = comment_id
+            ? ref(database, `comments/${dona_id}/${comment_id}/likes/${_useraddress}`)
+            : ref(database, `dona/${dona_id}/likes/${_useraddress}`);
+        //alert('dona_id:'+dona_id);
+        // 檢查用戶是否已經表達過讚或倒讚
+        const snapshot = await get(targetRef);        
+        // 如果用戶已經點過讚或倒讚
+        if (snapshot.exists()) {
+            currentStatus = snapshot.val();  
+        } 
+    } catch (error) {
+        alert('LikeError:'+error);
+        console.error("Error adding like or dislike:", error);
+    }
+  return currentStatus;
+}
+
+
 async function addLikeOrDislike(dona_id, comment_id=null, action = null) {
     try {
         // 確定操作的是貼文還是留言
@@ -208,5 +230,5 @@ async function addLikeOrDislike(dona_id, comment_id=null, action = null) {
 window.open_comment = open_comment;
 window.close_comment = close_comment;
 window.addLikeOrDislike = addLikeOrDislike;
-
-alert('after all 65');
+window.getLikeOrDislike = getLikeOrDislike;
+alert('after all 66');
