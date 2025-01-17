@@ -1,4 +1,5 @@
-import { initializeApp } from "firebase/app";
+//import { initializeApp } from "firebase/app";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
