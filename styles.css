@@ -191,19 +191,6 @@ body {
   padding: 8px;
 }
 
-#comment_submit {
-  padding: 8px 16px;
-  background: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#comment_submit:hover {
-  background: #0056b3;
-}
-
 #no-comments {
   text-align: center;
   color: #999;
