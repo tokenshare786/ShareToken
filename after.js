@@ -100,7 +100,7 @@ async function loadComments(donaId, isInitialLoad = false) {
 
         // 獲取留言
         const comments = await getComments(donaId, commentsPerLoad);
-        alert('comments.length:'+comments.length);
+        //alert('comments.length:'+comments.length);
         //if (comments.length === 0 && isInitialLoad) {
         //    noComments.style.display = 'block'; // 顯示“沒有留言”
         //    return;
@@ -119,7 +119,7 @@ async function loadComments(donaId, isInitialLoad = false) {
             `;
             commentsContainer.appendChild(commentNode);
       });
-      alert('commentsContainer:'+commentsContainer.innerHTML);
+      //alert('commentsContainer:'+commentsContainer.innerHTML);
         // 更新最後加載的時間戳
         _lastLoadedTimestamp = comments[comments.length - 1]?.timestamp || null;      
     } catch (error) {
