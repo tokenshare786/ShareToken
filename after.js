@@ -106,7 +106,7 @@ async function loadComments(donaId, isInitialLoad = false) {
 
         // 顯示留言
         comments.forEach((comment) => {
-            const user_add = comment._useraddress;
+            const user_add = comment.useraddress;
             const user = `${user_add.substring(0, 2)}..${user_add.slice(-4)}`;
             const commentNode = document.createElement('div');
             commentNode.className = 'comment';
@@ -159,4 +159,4 @@ async function getComments(dona_id, commentsPerLoad) {
 window.open_comment = open_comment;
 window.close_comment = close_comment;
 
-alert('after all 49');
+alert('after all 50');
