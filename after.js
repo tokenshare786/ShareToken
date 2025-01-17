@@ -119,7 +119,7 @@ async function loadComments(donaId, isInitialLoad = false) {
             `;
             commentsContainer.appendChild(commentNode);
       });
-      alert('commentNode:'+commentNode);
+      alert('commentsContainer:'+commentsContainer.innerHTML);
         // 更新最後加載的時間戳
         _lastLoadedTimestamp = comments[comments.length - 1]?.timestamp || null;      
     } catch (error) {
@@ -163,4 +163,4 @@ async function getComments(dona_id, commentsPerLoad) {
 window.open_comment = open_comment;
 window.close_comment = close_comment;
 
-alert('after all 59');
+alert('after all 60');
