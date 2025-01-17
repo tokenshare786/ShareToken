@@ -3,7 +3,12 @@ body {
             background-color: #000;
             color: #fff;
             padding: 10px;
-        }    
+        }   
+
+.material-symbols-outlined.filled {
+  /* filled 的樣式 */
+  color: white; /* 例如，將顏色改為藍色 */
+}
 
         .dona-streaming {
             margin-top: 10px;
