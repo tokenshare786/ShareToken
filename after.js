@@ -1,4 +1,5 @@
-  // Import the functions you need from the SDKs you need
+  try{
+    // Import the functions you need from the SDKs you need
   //import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
   import { getDatabase, ref, get, update, remove, push, set, child } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
   import app from './firebaseConfig'; // 引入 Firebase 配置
@@ -20,6 +21,9 @@
   //const app = initializeApp(firebaseConfig);
   // 獲取 Realtime Database 實例
   const database = getDatabase(app);
+  }catch(err){
+    alert('err:'+err);
+  }
 //alert('New world 1');
 let _dnid;
 let _commentid = null;
