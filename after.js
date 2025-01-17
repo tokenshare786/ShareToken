@@ -70,8 +70,7 @@ async function addComment(dona_id, comment_id, message) {
             message,
             timestamp: Date.now()
         });
-
-        console.log("Comment added successfully!");
+        showToast("Comment added successfully!");
     } catch (error) {
         console.error("Error adding comment:", error);
     }
