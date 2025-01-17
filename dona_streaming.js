@@ -158,7 +158,14 @@ const imageContainer = card.querySelector('#image-container-ds');
 //imageContainer.className = 'image-container';
 imageContainer.appendChild(contentElement);
 //container.appendChild(imageContainer);
-const likeordislike =  await getLikeOrDislike(re_id); 
+    let likeordislike;
+    try{
+        likeordislike =  await getLikeOrDislike(re_id); 
+        alert('likeordislike'+ likeordislike);
+    }catch(err){
+        alert('error:'+ err);
+    }
+
 const likebtn = card.querySelector('#like_btn');
 const dislikebtn = card.querySelector('#dislike_btn');
 if(likeordislike!=null){    
