@@ -170,9 +170,9 @@ const likebtn = card.querySelector('#like_btn');
 const dislikebtn = card.querySelector('#dislike_btn');
 if(likeordislike!=null){    
        if (likeordislike === 'like') {
-           likebtn.dataset.state = 'filled'; // 改為實心
+           likebtn.textContent = 'thumb_up_alt'; // 改為實心
        } else if (likeordislike === 'dislike') {
-           dislikebtn.dataset.state = 'filled'; // 改為實心
+           dislikebtn.textContent = 'thumb_down_alt'; // 改為實心圖標
        }  
 }
 
@@ -195,9 +195,6 @@ likebtn.addEventListener('click', () => {
         dislikebtn.textContent = 'thumb_down'; // 改回空心圖標
       }
     });
-});    
-   
-
 }
 
 // 点击领取甜甜圈
