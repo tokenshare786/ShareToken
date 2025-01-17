@@ -142,7 +142,7 @@ body {
             padding: 20px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
             /* 添加陰影效果 */
-                max-height: 80vh; /* 限制弹窗最大高度 */
+                max-height: 90vh; /* 限制弹窗最大高度 */
                 overflow: hidden;        
         }
 
@@ -156,7 +156,7 @@ body {
   flex: 1;
   overflow-y: auto;
   margin-bottom: 10px;       
-                max-height: calc(80vh - 120px); /* 动态计算最大高度 */
+                max-height: calc(90vh - 120px); /* 动态计算最大高度 */
                 scrollbar-width: thin;
                 scrollbar-color: #888 transparent;
 }
