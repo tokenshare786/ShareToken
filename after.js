@@ -162,8 +162,49 @@ async function getComments(dona_id, commentsPerLoad) {
     }
 }
 
+async function addLikeOrDislike(dona_id, comment_id=null, action = null) {
+    try {
+        // 確定操作的是貼文還是留言
+        const targetRef = comment_id
+            ? ref(database, `comments/${dona_id}/${comment_id}/likes/${_useraddress}`)
+            : ref(database, `dona/${donaId}/likes/${_useraddress}`);
+        
+        // 檢查用戶是否已經表達過讚或倒讚
+        const snapshot = await get(targetRef);
+        
+        // 如果用戶已經點過讚或倒讚
+        if (snapshot.exists()) {
+            const currentStatus = snapshot.val();
+            
+            // 取消讚或倒讚
+            if (action === null) {
+                // 移除用戶的點讚或倒讚
+                await remove(targetRef);
+                console.log('Like or Dislike removed successfully!');
+            } else if (currentStatus !== action) {
+                // 如果當前狀態與用戶想要操作的不同，則更新為新的狀態
+                await set(targetRef, action);
+                console.log(`${action === 'like' ? 'Like' : 'Dislike'} updated successfully!`);
+            } else {
+                console.log(`You already expressed ${action === 'like' ? 'like' : 'dislike'}.`);
+            }
+        } else {
+            // 如果用戶未曾點過，設置為新選擇的狀態
+            if (action !== null) {
+                await set(targetRef, action);
+                console.log(`${action === 'like' ? 'Like' : 'Dislike'} added successfully!`);
+            } else {
+                console.log('No action taken.');
+            }
+        }
+    } catch (error) {
+        console.error("Error adding like or dislike:", error);
+    }
+}
+
+
 // 暴露到全局作用域
 window.open_comment = open_comment;
 window.close_comment = close_comment;
 
-alert('after all 62');
+alert('after all 63');
