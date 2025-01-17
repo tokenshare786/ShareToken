@@ -1,4 +1,6 @@
 let _useraddress;
+ window._useraddress = _useraddress;
+
       function copyAddress() {
           // 获取合约地址文本
           const contractAddress = "0xCdB05222c8a059a6c0e9202d62fDFb05D6B5D274";
