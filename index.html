@@ -482,7 +482,7 @@
             try {
                 // Request account access
                 //const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-                const userAddress = await getHoldertoLowercase();
+                const userAddress = _useraddress;
                 //alert("userAddress:"+userAddress);
                 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
                 const reidBigInt = BigInt(reid);
