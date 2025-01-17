@@ -49,7 +49,7 @@ function close_comment() {
     overlay.classList.remove('show');
 }
 
-document.getElementById("comment-form").addEventListener("submit", async (event) => {
+document.getElementById("comment_submit").addEventListener("click", async (event) => {
     event.preventDefault(); // 防止表單默認提交行為
     _message = document.getElementById("mycomment").value;
   if (!_message.trim()) return;
