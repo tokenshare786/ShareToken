@@ -1076,20 +1076,27 @@
         window._useraddress = _useraddress;
     </script>
     <div class="modal-overlay" id="comment_window">
-      <div class="modal">
-          <h2>來留個言，說個看法</h2>
-          <form id="comment-form">
-              <div class="form-group">
-                  <label for="mycomment" id="reply_to"></label>
-                  <input type="text" id="mycomment" name="mycomment" required>
-              </div>              
-              <div class="_buttons">
-                  <button type="button" class="cancel" onclick="close_comment()">取消</button>
-                  <button type="submit" class="confirm">送出</button>
-              </div>
-          </form>
+  <div class="modal">
+    <!-- 右上角关闭按钮 -->
+    <button class="close-btn" onclick="close_comment()">×</button>
+    <h2>留言板</h2>
+
+    <!-- 留言区域 -->
+    <div class="comments-container" id="comments-container">
+      <p id="no-comments" style="display: none;">这则贴文还没有留言</p>
+    </div>
+
+    <!-- 固定表单 -->
+    <form id="comment-form">
+      <div class="form-singleline">
+        <label for="mycomment" id="reply_to"></label>
+        <input type="text" id="mycomment" name="mycomment" placeholder="留下你的留言..." required />
+        <button type="submit" class="confirm">送出</button>
       </div>
-  </div>   
+    </form>
+  </div>
+</div>
+
   <script type="module" src="./after.js"></script>
   <script id='dona_streaming' src="./dona_streaming.js"></script>
 </body> 
