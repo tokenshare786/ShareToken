@@ -55,29 +55,29 @@ document.getElementById("comment_submit").addEventListener("click", async (event
     event.preventDefault(); // 防止表單默認提交行為
     _message = document.getElementById("mycomment").value;
     if (!_message.trim()) return;
-
+    if (!_useraddress) return;
+  
     document.getElementById('mycomment').value = ''; // 清空輸入框
-
     // 儲存留言並更新視圖
-    await addComment(_dnid, _commentid, _message);
-    loadComments(_dnid, false); // 重新加載留言，不清空已經顯示的內容
+    await addComment(_dnid, _commentid, _message);    
 });
 
 async function addComment(dona_id, comment_id, message) {
     try {        
         const commentsRef = ref(database, `comments/${dona_id}`);
         const newCommentRef = push(commentsRef); // 自動生成新的 commentId
-
+         
         // 保存留言
         await set(newCommentRef, {        
             dona_id,   
             commentId: comment_id || null, // 回覆留言使用 comment_id, 否則為 null
-            _useraddress,                  // 用戶地址
+            useraddress:_useraddress,                  // 用戶地址
             message,
             timestamp: Date.now()
         });
         close_comment()
         showToast('留言成功！','success');
+        loadComments(_dnid, false); // 重新加載留言，不清空已經顯示的內容
     } catch (error) {
         console.error("添加留言錯誤:", error);
         //alert('ErrAddComment:' + error);
