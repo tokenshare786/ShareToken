@@ -92,7 +92,7 @@ async function addComment(dona_id, comment_id, message) {
 async function loadComments(donaId, isInitialLoad = false) {
     try {
         const commentsContainer = document.getElementById('comments-container');
-        const noComments = document.getElementById('no-comments');
+        //const noComments = document.getElementById('no-comments');
 
         if (isInitialLoad) {
             commentsContainer.innerHTML = ''; // 初次加載清空舊內容
@@ -101,11 +101,11 @@ async function loadComments(donaId, isInitialLoad = false) {
         // 獲取留言
         const comments = await getComments(donaId, commentsPerLoad);
         alert('comments.length:'+comments.length);
-        if (comments.length === 0 && isInitialLoad) {
-            noComments.style.display = 'block'; // 顯示“沒有留言”
-            return;
-        }
-        noComments.style.display = 'none'; // 隱藏“沒有留言”
+        //if (comments.length === 0 && isInitialLoad) {
+        //    noComments.style.display = 'block'; // 顯示“沒有留言”
+        //    return;
+        //}
+        //noComments.style.display = 'none'; // 隱藏“沒有留言”
 
         // 顯示留言
         comments.forEach((comment) => {
@@ -163,4 +163,4 @@ async function getComments(dona_id, commentsPerLoad) {
 window.open_comment = open_comment;
 window.close_comment = close_comment;
 
-alert('after all 60');
+alert('after all 61');
