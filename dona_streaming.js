@@ -161,7 +161,7 @@ imageContainer.appendChild(contentElement);
     let likeordislike;
     try{
         likeordislike =  await getLikeOrDislike(re_id); 
-        alert('likeordislike'+ likeordislike);
+        //alert('likeordislike'+ likeordislike);
     }catch(err){
         alert('error:'+ err);
     }
@@ -177,13 +177,24 @@ if(likeordislike!=null){
 }
 likebtn.addEventListener('click', () => {
   alert('I like it');
-  likebtn.classList.add('filled');
-  dislikebtn.classList.remove('filled'); // 確保只有一個按鈕被選中
+  if (likebtn.classList.contains('material-symbols-outlined')) {
+    likebtn.classList.remove('material-symbols-outlined');
+    likebtn.classList.add('material-symbols-filled');
+  } else {
+    likebtn.classList.remove('material-symbols-filled');
+    likebtn.classList.add('material-symbols-outlined');
+  }
 });
+
 dislikebtn.addEventListener('click', () => {
   alert('I dislike it');
-  dislikebtn.classList.add('filled');
-  likebtn.classList.remove('filled'); // 確保只有一個按鈕被選中
+  if (dislikebtn.classList.contains('material-symbols-outlined')) {
+    dislikebtn.classList.remove('material-symbols-outlined');
+    dislikebtn.classList.add('material-symbols-filled');
+  } else {
+    dislikebtn.classList.remove('material-symbols-filled');
+    dislikebtn.classList.add('material-symbols-outlined');
+  }
 });
 
    
