@@ -28,138 +28,132 @@
 
 let _dnid;
 let _commentid = null;
-let _message='';
+let _message = '';
+let _lastLoadedTimestamp = null;
+const commentsPerLoad = 10;
 const contract = window.contract;
 const _useraddress = window._useraddress;
-const commentsPerLoad = 10;
-let _lastLoadedTimestamp = null;
 
-function open_comment(dn_id,comment_id = null) {
-       const overlay = document.getElementById('comment_window');
-       overlay.classList.add('show');    
-      _dnid = dn_id;
-      _commentid = comment_id;
-      _lastLoadedTimestamp = null;
-      loadComments(donaId, true); 
+function open_comment(dn_id, comment_id = null) {
+    const overlay = document.getElementById('comment_window');
+    overlay.classList.add('show');    
+    _dnid = dn_id;
+    _commentid = comment_id;
+    _lastLoadedTimestamp = null;
+    loadComments(dn_id, true); // 初次加載留言
 }
 
-// Close modal
+// 關閉留言視窗
 function close_comment() {
     const overlay = document.getElementById('comment_window');
     overlay.classList.remove('show');
 }
 
+// 留言提交事件
 document.getElementById("comment_submit").addEventListener("click", async (event) => {
     event.preventDefault(); // 防止表單默認提交行為
     _message = document.getElementById("mycomment").value;
-  if (!_message.trim()) return;
-  document.getElementById('mycomment').value = '';
-  loadComments(_dnid, true); // 重新加载评论
-    await addComment(_dnid, _commentid, _message); // 確保執行智能合約的邏輯
+    if (!_message.trim()) return;
+
+    document.getElementById('mycomment').value = ''; // 清空輸入框
+
+    // 儲存留言並更新視圖
+    await addComment(_dnid, _commentid, _message);
+    loadComments(_dnid, false); // 重新加載留言，不清空已經顯示的內容
 });
 
 async function addComment(dona_id, comment_id, message) {
     try {        
         const commentsRef = ref(database, `comments/${dona_id}`);
-        // 添加新的留言，Firebase 會自動生成唯一的 commentId
-        const newCommentRef = push(commentsRef);
+        const newCommentRef = push(commentsRef); // 自動生成新的 commentId
 
         // 保存留言
         await set(newCommentRef, {        
             dona_id,   
-            commentId: comment_id || null, // 如果是回覆留言，使用 comment_id,如果是對 Dona 的留言，則記為null
-            _useraddress,                  //這是個全域變數
+            commentId: comment_id || null, // 回覆留言使用 comment_id, 否則為 null
+            _useraddress,                  // 用戶地址
             message,
             timestamp: Date.now()
         });
-        // 更新到 comment_window
-        displayComment(message);
+
+        console.log("留言成功！");
     } catch (error) {
-        console.error("Error adding comment:", error);
-        alert('ErrAddComment:'+error);
+        console.error("添加留言錯誤:", error);
+        alert('ErrAddComment:' + error);
     }
 }
 
-// 模拟从数据库加载评论
+// 從 Firebase 加載留言
 async function loadComments(donaId, isInitialLoad = false) {
-  try {
-    const commentsContainer = document.getElementById('comments-container');
-    const noComments = document.getElementById('no-comments');
+    try {
+        const commentsContainer = document.getElementById('comments-container');
+        const noComments = document.getElementById('no-comments');
 
-    if (isInitialLoad) {
-      commentsContainer.innerHTML = ''; // 初次加载清空旧内容
+        if (isInitialLoad) {
+            commentsContainer.innerHTML = ''; // 初次加載清空舊內容
+        }
+
+        // 獲取留言
+        const comments = await getComments(donaId, commentsPerLoad);
+
+        if (comments.length === 0 && isInitialLoad) {
+            noComments.style.display = 'block'; // 顯示“沒有留言”
+            return;
+        }
+
+        noComments.style.display = 'none'; // 隱藏“沒有留言”
+
+        // 顯示留言
+        comments.forEach((comment) => {
+            const commentNode = document.createElement('div');
+            commentNode.className = 'comment';
+            commentNode.innerHTML = `
+                <p><strong>${comment._useraddress}</strong> 於 ${new Date(comment.timestamp).toLocaleString()} 說：</p>
+                <p>${comment.message}</p>
+            `;
+            commentsContainer.appendChild(commentNode);
+        });
+
+        // 更新最後加載的時間戳
+        _lastLoadedTimestamp = comments[comments.length - 1]?.timestamp || null;
+    } catch (error) {
+        console.error('加載留言錯誤:', error);
     }
-
-    // 模拟获取评论（从最近到最早）
-    const comments = await getComments(donaId, commentsPerLoad);
-
-    if (comments.length === 0 && isInitialLoad) {
-      noComments.style.display = 'block'; // 显示无评论提示
-      return;
-    }
-
-    noComments.style.display = 'none'; // 隐藏无评论提示
-
-    comments.forEach((comment) => {
-      const commentNode = document.createElement('div');
-      commentNode.className = 'comment';
-      commentNode.innerHTML = `
-        <p><strong>${comment.useraddress}</strong> 于 ${new Date(comment.timestamp).toLocaleString()} 说：</p>
-        <p>${comment.message}</p>
-      `;
-      commentsContainer.appendChild(commentNode);
-    });
-
-    // 更新最后加载的时间戳
-    _lastLoadedTimestamp = comments[comments.length - 1]?.timestamp || null;
-  } catch (error) {
-    console.error('Error loading comments:', error);
-  }
 }
 
-// 示例函数：将评论显示在页面中
-function displayComment(comment) {
-  const commentContainer = document.getElementById("comments-container");
-  const commentElement = document.createElement("div");
-  commentElement.className = "comment";
-  commentElement.textContent = `${comment.message} - ${new Date(comment.timestamp).toLocaleString()}`;
-  commentContainer.appendChild(commentElement);
-}
-
+// 獲取留言
 async function getComments(dona_id, commentsPerLoad) {
-  try {
-    // 获取指定 Dona ID 的评论引用
-    const commentsRef = ref(database, `comments/${dona_id}`);
-    const snapshot = await get(commentsRef);
+    try {
+        const commentsRef = ref(database, `comments/${dona_id}`);
+        const snapshot = await get(commentsRef);
 
-    if (!snapshot.exists()) {
-      return []; // 如果没有评论，返回空数组
+        if (!snapshot.exists()) {
+            return []; // 沒有留言時返回空數組
+        }
+
+        const comments = snapshot.val();
+        const commentsArray = Object.keys(comments).map((key) => ({
+            id: key,
+            ...comments[key],
+        }));
+
+        // 按時間戳降序排序
+        commentsArray.sort((a, b) => b.timestamp - a.timestamp);
+
+        // 過濾留言並返回最多 commentsPerLoad 條
+        const filteredComments = commentsArray.filter(
+            (comment) => !_lastLoadedTimestamp || comment.timestamp < _lastLoadedTimestamp
+        );
+
+        return filteredComments.slice(0, commentsPerLoad);
+    } catch (error) {
+        console.error("獲取留言錯誤:", error);
+        return [];
     }
-
-    // 将评论对象转换为数组形式
-    const comments = snapshot.val();
-    const commentsArray = Object.keys(comments).map((key) => ({
-      id: key,
-      ...comments[key],
-    }));
-
-    // 按时间戳降序排序
-    commentsArray.sort((a, b) => b.timestamp - a.timestamp);
-
-    // 过滤评论，根据 lastLoadedTimestamp 和分页限制
-    const filteredComments = commentsArray.filter(
-      (comment) => !_lastLoadedTimestamp || comment.timestamp < _lastLoadedTimestamp
-    );
-
-    // 返回符合条件的评论，最多返回 commentsPerLoad 条
-    return filteredComments.slice(0, commentsPerLoad);
-  } catch (error) {
-    console.error("Error fetching comments:", error);
-    return [];
-  }
 }
 
 // 暴露到全局作用域
 window.open_comment = open_comment;
 window.close_comment = close_comment;
-alert('after all 41');
+
+alert('after all 42');
