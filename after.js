@@ -206,5 +206,6 @@ async function addLikeOrDislike(dona_id, comment_id=null, action = null) {
 // 暴露到全局作用域
 window.open_comment = open_comment;
 window.close_comment = close_comment;
+window.addLikeOrDislike = addLikeOrDislike;
 
-alert('after all 63');
+//alert('after all 63');
