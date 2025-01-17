@@ -1,6 +1,4 @@
 let _useraddress;
- window._useraddress = _useraddress;
-
       function copyAddress() {
           // 获取合约地址文本
           const contractAddress = "0xCdB05222c8a059a6c0e9202d62fDFb05D6B5D274";
@@ -27,19 +25,19 @@ let _useraddress;
             return decodeURIComponent(results[2].replace(/\+/g, ' '));
       }
       async function getHoldertoLowercase() {
-            var holder;
+            //var holder;
             if (typeof window.ethereum !== 'undefined') {
                 try {
                     // Connect Wallet
                     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                    holder = accounts[0].toLowerCase();
+                    _useraddress = accounts[0].toLowerCase();
+                    window._useraddress = _useraddress;
                 } catch (error) {
                     console.log('No accounts available');
                 }
                 //} else {
                 //deeplink();
-            }
-            return holder;
+            }            
         }
 
         function deeplink() {
