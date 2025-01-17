@@ -114,7 +114,7 @@ async function loadComments(donaId, isInitialLoad = false) {
             const commentNode = document.createElement('div');
             commentNode.className = 'comment';
             commentNode.innerHTML = `
-                <p><strong>${user}</strong> 於 ${new Date(comment.timestamp).toLocaleString()} 說：</p>
+                <p><strong>${user}</strong> / ${new Date(comment.timestamp).toLocaleString()}</p>
                 <p>${comment.message}</p>
             `;
             commentsContainer.appendChild(commentNode);
@@ -163,4 +163,4 @@ async function getComments(dona_id, commentsPerLoad) {
 window.open_comment = open_comment;
 window.close_comment = close_comment;
 
-alert('after all 61');
+//alert('after all 61');
