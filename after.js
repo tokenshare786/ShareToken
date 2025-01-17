@@ -77,10 +77,10 @@ async function addComment(dona_id, comment_id, message) {
         });
         close_comment()
         showToast('留言成功！','success');
-        loadComments(_dnid, false); // 重新加載留言，不清空已經顯示的內容
+        loadComments(dona_id, false); // 重新加載留言，不清空已經顯示的內容
     } catch (error) {
         console.error("添加留言錯誤:", error);
-        //alert('ErrAddComment:' + error);
+        alert('ErrAddComment:' + error);
     }
 }
 
@@ -159,4 +159,4 @@ async function getComments(dona_id, commentsPerLoad) {
 window.open_comment = open_comment;
 window.close_comment = close_comment;
 
-alert('after all 50');
+alert('after all 51');
