@@ -168,7 +168,7 @@ async function addLikeOrDislike(dona_id, comment_id=null, action = null) {
         const targetRef = comment_id
             ? ref(database, `comments/${dona_id}/${comment_id}/likes/${_useraddress}`)
             : ref(database, `dona/${donaId}/likes/${_useraddress}`);
-        
+        alert('dona_id:'+dona_id);
         // 檢查用戶是否已經表達過讚或倒讚
         const snapshot = await get(targetRef);
         
@@ -208,4 +208,4 @@ window.open_comment = open_comment;
 window.close_comment = close_comment;
 window.addLikeOrDislike = addLikeOrDislike;
 
-//alert('after all 63');
+alert('after all 64');
