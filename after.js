@@ -198,6 +198,7 @@ async function addLikeOrDislike(dona_id, comment_id=null, action = null) {
             }
         }
     } catch (error) {
+        alert('LikeError:'+error);
         console.error("Error adding like or dislike:", error);
     }
 }
