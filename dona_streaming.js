@@ -161,16 +161,18 @@ imageContainer.appendChild(contentElement);
 const likeordislike =  await getLikeOrDislike(re_id); 
 const likebtn = card.querySelector('#like_btn');
 const dislikebtn = card.querySelector('#dislike_btn');
-if (likeordislike === 'like') {
-  likebtn.classList.add('filled');
-} else if (likeordislike === 'dislike') {
-  dislikebtn.classList.add('filled');
-}  
-    likebtn.addEventListener('click', () => {
+if(likeordislike!=null){    
+       if (likeordislike === 'like') {
+          likebtn.classList.add('filled');
+       } else if (likeordislike === 'dislike') {
+             dislikebtn.classList.add('filled');
+       }  
+}
+likebtn.addEventListener('click', () => {
   // 切換 class
   likebtn.classList.toggle('filled');
 });
-    dislikebtn.addEventListener('click', () => {
+dislikebtn.addEventListener('click', () => {
   // 切換 class
   dislikebtn.classList.toggle('filled');
 });
