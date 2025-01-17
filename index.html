@@ -1068,7 +1068,7 @@
                 setTimeout(() => toast.remove(), 300); // 等動畫完成後移除
             }, 5000);
         }
-
+        window.showToast = showToast;
         // 示例調用
         //showToast("交易成功！", "success");
         //showToast("發生錯誤！", "error");
