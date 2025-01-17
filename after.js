@@ -25,7 +25,7 @@
   //const analytics = getAnalytics(app);
   // 獲取 Realtime Database 實例
   const database = getDatabase(app);
-alert('New world 1');
+//alert('New world 1');
 let _dnid;
 let _commentid = null;
 let _message = '';
@@ -80,11 +80,11 @@ async function addComment(dona_id, comment_id, message) {
             message,
             timestamp: Date.now()
         });
-
-        console.log("留言成功！");
+        close_comment()
+        showToast('留言成功！','success');
     } catch (error) {
         console.error("添加留言錯誤:", error);
-        alert('ErrAddComment:' + error);
+        //alert('ErrAddComment:' + error);
     }
 }
 
