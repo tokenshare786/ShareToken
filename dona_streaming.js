@@ -89,7 +89,7 @@ async function createDonaBox(re, re_id) {
             <p class="css_back" onclick="open_edit(${re_id})" id="editable-ds">Edit</p>
             <p class="css_back" onclick="claimDN(${re_id})" id="take-ds">Take</p> 
             <p class="css_back" onclick="shareDona(${re_id})">Share</p> 
-            <p class="css_back" onclick="addLikeOrDislike(${re_id})">Like</p> 
+            <span id='like-btn' class="material-icons outlined">thumb_up</span><span id='dislike-btn' class="material-icons outlined">thumb_down</span>
             <p class="css_back" onclick="open_comment(${re_id})">Comment</p>  
         </span>
     `;
