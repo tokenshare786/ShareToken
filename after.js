@@ -42,7 +42,7 @@ function open_comment(dn_id, comment_id = null) {
     const overlay = document.getElementById('comment_window');
     overlay.classList.add('show');    
     _dnid = dn_id;
-    _commentid = comment_id;
+    //_commentid = comment_id;
     _lastLoadedTimestamp = null;
     loadComments(dn_id, true); // 初次加載留言
 }
@@ -100,12 +100,11 @@ async function loadComments(donaId, isInitialLoad = false) {
 
         // 獲取留言
         const comments = await getComments(donaId, commentsPerLoad);
-
+        alert('comments.length:'+comments.length);
         if (comments.length === 0 && isInitialLoad) {
             noComments.style.display = 'block'; // 顯示“沒有留言”
             return;
         }
-
         noComments.style.display = 'none'; // 隱藏“沒有留言”
 
         // 顯示留言
@@ -164,4 +163,4 @@ async function getComments(dona_id, commentsPerLoad) {
 window.open_comment = open_comment;
 window.close_comment = close_comment;
 
-alert('after all 57');
+alert('after all 58');
