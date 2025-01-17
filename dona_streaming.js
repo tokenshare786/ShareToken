@@ -169,13 +169,14 @@ if(likeordislike!=null){
        }  
 }
 likebtn.addEventListener('click', () => {
-  // 切換 class
-  likebtn.classList.toggle('filled');
+  likebtn.classList.add('filled');
+  dislikebtn.classList.remove('filled'); // 確保只有一個按鈕被選中
 });
 dislikebtn.addEventListener('click', () => {
-  // 切換 class
-  dislikebtn.classList.toggle('filled');
+  dislikebtn.classList.add('filled');
+  likebtn.classList.remove('filled'); // 確保只有一個按鈕被選中
 });
+
    
 
 }
