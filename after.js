@@ -1,24 +1,23 @@
   // Import the functions you need from the SDKs you need
-  //import { initializeApp } from "firebase/app";  
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+  //import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
   import { getDatabase, ref, get, update, remove, push, set, child } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
-  //import app from './firebaseConfig'; // 引入 Firebase 配置
+  import app from './firebaseConfig'; // 引入 Firebase 配置
   // TODO: Add SDKs for Firebase products that you want to use
   // Your web app's Firebase configuration
   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyBBXYWCp5OfBakqTqJ9YaEFUjoWwRxsFp8",
-    authDomain: "blkdona.firebaseapp.com",
-    databaseURL: "https://blkdona-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "blkdona",
-    storageBucket: "blkdona.firebasestorage.app",
-    messagingSenderId: "975346537680",
-    appId: "1:975346537680:web:acef40c00988add3ee3ad5",
-    measurementId: "G-RE8D65CLWZ"
-  };
+  //const firebaseConfig = {
+  //  apiKey: "AIzaSyBBXYWCp5OfBakqTqJ9YaEFUjoWwRxsFp8",
+  //  authDomain: "blkdona.firebaseapp.com",
+  //  databaseURL: "https://blkdona-default-rtdb.asia-southeast1.firebasedatabase.app",
+  //  projectId: "blkdona",
+  //  storageBucket: "blkdona.firebasestorage.app",
+  //  messagingSenderId: "975346537680",
+  //  appId: "1:975346537680:web:acef40c00988add3ee3ad5",
+  //  measurementId: "G-RE8D65CLWZ"
+  //};
 
   // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
+  //const app = initializeApp(firebaseConfig);
   // 獲取 Realtime Database 實例
   const database = getDatabase(app);
 //alert('New world 1');
@@ -164,4 +163,4 @@ async function getComments(dona_id, commentsPerLoad) {
 window.open_comment = open_comment;
 window.close_comment = close_comment;
 
-//alert('after all 61');
+//alert('after all 62');
