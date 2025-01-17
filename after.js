@@ -35,6 +35,7 @@ await getUserAddress();
 async function getUserAddress() {
     // 假設這是一個異步操作來獲取地址
     _useraddress = window._useraddress || null;
+  alert('_useraddress:'+_useraddress);
 }
 
 function open_comment(dn_id, comment_id = null) {
@@ -58,7 +59,7 @@ document.getElementById("comment_submit").addEventListener("click", async (event
     //_useraddress = await getUserAddress();
     _message = document.getElementById("mycomment").value;
     if (!_message.trim()) return;
-    if (!_useraddress) return;  
+    //if (!_useraddress) return;  
     document.getElementById('mycomment').value = ''; // 清空輸入框
     // 儲存留言並更新視圖
     await addComment(_dnid, _commentid, _message);    
@@ -161,4 +162,4 @@ async function getComments(dona_id, commentsPerLoad) {
 window.open_comment = open_comment;
 window.close_comment = close_comment;
 
-alert('after all 53');
+alert('after all 54');
