@@ -106,10 +106,12 @@ async function loadComments(donaId, isInitialLoad = false) {
 
         // 顯示留言
         comments.forEach((comment) => {
+            const user_add = comment._useraddress;
+            const user = = `${user_add.substring(0, 2)}..${user_add.slice(-4)}`;
             const commentNode = document.createElement('div');
             commentNode.className = 'comment';
             commentNode.innerHTML = `
-                <p><strong>${comment._useraddress}</strong> 於 ${new Date(comment.timestamp).toLocaleString()} 說：</p>
+                <p><strong>${user}</strong> 於 ${new Date(comment.timestamp).toLocaleString()} 說：</p>
                 <p>${comment.message}</p>
             `;
             commentsContainer.appendChild(commentNode);
@@ -157,4 +159,4 @@ async function getComments(dona_id, commentsPerLoad) {
 window.open_comment = open_comment;
 window.close_comment = close_comment;
 
-alert('after all 48');
+alert('after all 49');
