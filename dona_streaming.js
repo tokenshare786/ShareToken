@@ -177,23 +177,24 @@ if(likeordislike!=null){
 }
 
 likebtn.addEventListener('click', () => {
-  alert('like it');
-  if (likebtn.dataset.state === 'outline') {
-    likebtn.dataset.state = 'filled'; // 改為實心
-    dislikebtn.dataset.state = 'outline'; // 確保 dislike 按鈕回到空心
-  } else {
-    likebtn.dataset.state = 'outline'; // 改回空心
-  }
-});
+    alert('ilike');
+      if (likebtn.textContent === 'thumb_up') {
+        likebtn.textContent = 'thumb_up_alt'; // 改為實心圖標
+        dislikebtn.textContent = 'thumb_down'; // 確保 dislike 是空心
+      } else {
+        likebtn.textContent = 'thumb_up'; // 改回空心圖標
+      }
+    });
 
-dislikebtn.addEventListener('click', () => {
-  alert('dislike it');
-  if (dislikebtn.dataset.state === 'outline') {
-    dislikebtn.dataset.state = 'filled'; // 改為實心
-    likebtn.dataset.state = 'outline'; // 確保 like 按鈕回到空心
-  } else {
-    dislikebtn.dataset.state = 'outline'; // 改回空心
-  }
+    dislikebtn.addEventListener('click', () => {
+        alert('idonotilike');
+      if (dislikebtn.textContent === 'thumb_down') {
+        dislikebtn.textContent = 'thumb_down_alt'; // 改為實心圖標
+        likebtn.textContent = 'thumb_up'; // 確保 like 是空心
+      } else {
+        dislikebtn.textContent = 'thumb_down'; // 改回空心圖標
+      }
+    });
 });    
    
 
