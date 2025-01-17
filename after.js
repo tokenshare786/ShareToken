@@ -32,7 +32,7 @@ let _message = '';
 let _lastLoadedTimestamp = null;
 const commentsPerLoad = 10;
 const contract = window.contract;
-const _useraddress = getHoldertoLowercase();
+const _useraddress = await getHoldertoLowercase();
 
 function open_comment(dn_id, comment_id = null) {
     const overlay = document.getElementById('comment_window');
@@ -156,4 +156,4 @@ async function getComments(dona_id, commentsPerLoad) {
 window.open_comment = open_comment;
 window.close_comment = close_comment;
 
-alert('after all 43');
+alert('after all 44');
