@@ -163,4 +163,4 @@ async function getComments(dona_id, commentsPerLoad, lastLoadedTimestamp) {
 // 暴露到全局作用域
 window.open_comment = open_comment;
 window.close_comment = close_comment;
-alert('after all 35');
+alert('after all 36');
