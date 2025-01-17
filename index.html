@@ -248,9 +248,7 @@
     <script>
         // get balance of dona
         let web3;
-        let contract;
-        window.contract = contract;
-       
+        let contract;       
         // 合約地址和 ABI
         const contractAddress = "0xCdB05222c8a059a6c0e9202d62fDFb05D6B5D274";
         const contractABI = [
@@ -261,16 +259,16 @@
         async function initialize() {
             // 請求錢包授權              
             //const holder = await connectWallet();
-            const holder = await getHoldertoLowercase();
-            _useraddress = holder;
+            await getHoldertoLowercase();
+            //_useraddress = holder;
             // 使用 MetaMask 提供的 provider 初始化 Web3
-            if (holder) {
+            if (_useraddress) {
                 //const Web3 = require("web3");
                 web3 = new Web3(window.ethereum);
                 // 初始化智能合約                         
                 contract = new web3.eth.Contract(contractABI, contractAddress);
+                window.contract = contract;
                 // another web3_listener
-
                 const web3_listener = new Web3(
                     //new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/")
                     new Web3.providers.WebsocketProvider("wss://bsc-ws-node.nariox.org:443")
