@@ -34,7 +34,7 @@ await getUserAddress();
 
 async function getUserAddress() {
     // 假設這是一個異步操作來獲取地址
-    _useraddress = window._useraddress || null;
+    _useraddress = await getHoldertoLowercase();
   alert('_useraddress:'+_useraddress);
 }
 
