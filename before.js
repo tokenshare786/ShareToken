@@ -37,7 +37,8 @@ let _useraddress;
                 }
                 //} else {
                 //deeplink();
-            }            
+            }
+            return _useraddress;
         }
 
         function deeplink() {
