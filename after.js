@@ -51,6 +51,7 @@ function open_comment(dn_id, comment_id = null) {
 function close_comment() {
     const overlay = document.getElementById('comment_window');
     overlay.classList.remove('show');
+    _lastLoadedTimestamp = null; //
 }
 
 // 留言提交事件
@@ -162,4 +163,4 @@ async function getComments(dona_id, commentsPerLoad) {
 window.open_comment = open_comment;
 window.close_comment = close_comment;
 
-alert('after all 55');
+alert('after all 56');
