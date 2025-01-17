@@ -151,6 +151,64 @@ body {
             /* 淡入效果 */
         }
 
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.comments-container {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+.comments-container .comment {
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+}
+
+#comment-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-singleline {
+  display: flex;
+  flex: 1;
+}
+
+#mycomment {
+  flex: 1;
+  padding: 8px;
+}
+
+.confirm {
+  padding: 8px 16px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.confirm:hover {
+  background: #0056b3;
+}
+
+#no-comments {
+  text-align: center;
+  color: #999;
+  margin-top: 20px;
+}
         h2 {
             margin-bottom: 20px;
             font-size: 18px;
