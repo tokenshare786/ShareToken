@@ -76,6 +76,7 @@ async function addComment(dona_id, comment_id, message) {
         displayComment(message);
     } catch (error) {
         console.error("Error adding comment:", error);
+        alert('ErrAddComment:'+error);
     }
 }
 
