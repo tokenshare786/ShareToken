@@ -35,7 +35,7 @@ await getUserAddress();
 async function getUserAddress() {
     // 假設這是一個異步操作來獲取地址
     _useraddress = await getHoldertoLowercase();
-  alert('_useraddress:'+_useraddress);
+    //alert('_useraddress:'+_useraddress);
 }
 
 function open_comment(dn_id, comment_id = null) {
@@ -66,8 +66,8 @@ document.getElementById("comment_submit").addEventListener("click", async (event
 });
 
 async function addComment(dona_id, comment_id, message) {
-    try {        
-        const commentsRef = ref(database, `newComments/${dona_id}`);
+      try {        
+        const commentsRef = ref(database, `comments/${dona_id}`);
         const newCommentRef = push(commentsRef); // 自動生成新的 commentId
          
         // 保存留言
@@ -130,7 +130,7 @@ async function loadComments(donaId, isInitialLoad = false) {
 // 獲取留言
 async function getComments(dona_id, commentsPerLoad) {
     try {
-        const commentsRef = ref(database, `newComments/${dona_id}`);
+        const commentsRef = ref(database, `comments/${dona_id}`);
         const snapshot = await get(commentsRef);
 
         if (!snapshot.exists()) {
@@ -162,4 +162,4 @@ async function getComments(dona_id, commentsPerLoad) {
 window.open_comment = open_comment;
 window.close_comment = close_comment;
 
-alert('after all 54');
+alert('after all 55');
