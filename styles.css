@@ -3,7 +3,17 @@ body {
             background-color: #000;
             color: #fff;
             padding: 10px;
-        }       
+        }     
+
+.material-icons.outlined {
+  /* outlined 的樣式 */
+  color: #aaaaaa; /* 例如，灰色 */
+}
+
+.material-icons.filled {
+  /* filled 的樣式 */
+  color: #aaaaaa; /* 例如，藍色 */
+}
 
         .dona-streaming {
             margin-top: 10px;
