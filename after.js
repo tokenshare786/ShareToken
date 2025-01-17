@@ -119,6 +119,7 @@ async function loadComments(donaId, isInitialLoad = false) {
             `;
             commentsContainer.appendChild(commentNode);
       });
+      commentsContainer.scrollTop = 0;
       //alert('commentsContainer:'+commentsContainer.innerHTML);
         // 更新最後加載的時間戳
         _lastLoadedTimestamp = comments[comments.length - 1]?.timestamp || null;      
