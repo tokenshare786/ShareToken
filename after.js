@@ -31,17 +31,16 @@ let _commentid = null;
 let _message='';
 const contract = window.contract;
 const _useraddress = window._useraddress;
+const commentsPerLoad = 10;
+let lastLoadedTimestamp = null;
 
 function open_comment(dn_id,comment_id = null) {
-    //alert('open_comment');
-    //try{
        const overlay = document.getElementById('comment_window');
        overlay.classList.add('show');    
       _dnid = dn_id;
-       _commentid = comment_id;
-    //}catch(err){
-       //alert('openError:'+err);  
-    //}    
+      _commentid = comment_id;
+      _lastLoadedTimestamp = null;
+      loadComments(donaId, true); 
 }
 
 // Close modal
@@ -53,6 +52,9 @@ function close_comment() {
 document.getElementById("comment-form").addEventListener("submit", async (event) => {
     event.preventDefault(); // 防止表單默認提交行為
     _message = document.getElementById("mycomment").value;
+  if (!_message.trim()) return;
+  document.getElementById('mycomment').value = '';
+  loadComments(_dnid, true); // 重新加载评论
     await addComment(_dnid, _commentid, _message); // 確保執行智能合約的邏輯
 });
 
@@ -70,43 +72,95 @@ async function addComment(dona_id, comment_id, message) {
             message,
             timestamp: Date.now()
         });
-        showToast("Comment added successfully!");
+        // 更新到 comment_window
+        displayComment(message);
     } catch (error) {
         console.error("Error adding comment:", error);
     }
 }
 
-async function getComments(dona_id) {
-    try {
-        const dbRef = ref(database); // 引用資料庫的根節點
-        const commentsPath = `comments/${dona_id}`; // 留言的存儲路徑
+// 模拟从数据库加载评论
+async function loadComments(donaId, isInitialLoad = false) {
+  try {
+    const commentsContainer = document.getElementById('comments-container');
+    const noComments = document.getElementById('no-comments');
 
-        // 從資料庫獲取留言
-        const snapshot = await get(child(dbRef, commentsPath));
-
-        if (snapshot.exists()) {
-            const comments = snapshot.val(); // 獲取留言資料
-            console.log("Comments retrieved successfully:", comments);
-
-            // 轉換為陣列形式（可選）
-            const commentsArray = Object.keys(comments).map((key) => ({
-                id: key,
-                ...comments[key],
-            }));
-
-            return commentsArray; // 返回留言的陣列
-        } else {
-            console.log("No comments found.");
-            return [];
-        }
-    } catch (error) {
-        console.error("Error reading comments:", error);
-        return [];
+    if (isInitialLoad) {
+      commentsContainer.innerHTML = ''; // 初次加载清空旧内容
     }
+
+    // 模拟获取评论（从最近到最早）
+    const comments = await getComments(donaId, commentsPerLoad, lastLoadedTimestamp);
+
+    if (comments.length === 0 && isInitialLoad) {
+      noComments.style.display = 'block'; // 显示无评论提示
+      return;
+    }
+
+    noComments.style.display = 'none'; // 隐藏无评论提示
+
+    comments.forEach((comment) => {
+      const commentNode = document.createElement('div');
+      commentNode.className = 'comment';
+      commentNode.innerHTML = `
+        <p><strong>${comment.useraddress}</strong> 于 ${new Date(comment.timestamp).toLocaleString()} 说：</p>
+        <p>${comment.message}</p>
+      `;
+      commentsContainer.appendChild(commentNode);
+    });
+
+    // 更新最后加载的时间戳
+    lastLoadedTimestamp = comments[comments.length - 1]?.timestamp || null;
+  } catch (error) {
+    console.error('Error loading comments:', error);
+  }
 }
+
+// 示例函数：将评论显示在页面中
+function displayComment(comment) {
+  const commentContainer = document.getElementById("comments-container");
+  const commentElement = document.createElement("div");
+  commentElement.className = "comment";
+  commentElement.textContent = `${comment.message} - ${new Date(comment.timestamp).toLocaleString()}`;
+  commentContainer.appendChild(commentElement);
+}
+
+async function getComments(dona_id, commentsPerLoad, lastLoadedTimestamp) {
+  try {
+    // 获取指定 Dona ID 的评论引用
+    const commentsRef = ref(database, `comments/${dona_id}`);
+    const snapshot = await get(commentsRef);
+
+    if (!snapshot.exists()) {
+      return []; // 如果没有评论，返回空数组
+    }
+
+    // 将评论对象转换为数组形式
+    const comments = snapshot.val();
+    const commentsArray = Object.keys(comments).map((key) => ({
+      id: key,
+      ...comments[key],
+    }));
+
+    // 按时间戳降序排序
+    commentsArray.sort((a, b) => b.timestamp - a.timestamp);
+
+    // 过滤评论，根据 lastLoadedTimestamp 和分页限制
+    const filteredComments = commentsArray.filter(
+      (comment) => !lastLoadedTimestamp || comment.timestamp < lastLoadedTimestamp
+    );
+
+    // 返回符合条件的评论，最多返回 commentsPerLoad 条
+    return filteredComments.slice(0, commentsPerLoad);
+  } catch (error) {
+    console.error("Error fetching comments:", error);
+    return [];
+  }
+}
+
 
 
 // 暴露到全局作用域
 window.open_comment = open_comment;
 window.close_comment = close_comment;
-alert('after all 34');
+alert('after all 35');
