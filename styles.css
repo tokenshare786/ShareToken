@@ -191,7 +191,7 @@ body {
   padding: 8px;
 }
 
-.confirm {
+#comment_submit {
   padding: 8px 16px;
   background: #007bff;
   color: #fff;
@@ -200,7 +200,7 @@ body {
   cursor: pointer;
 }
 
-.confirm:hover {
+#comment_submit:hover {
   background: #0056b3;
 }
 
