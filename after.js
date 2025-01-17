@@ -51,7 +51,7 @@ function open_comment(dn_id, comment_id = null) {
 function close_comment() {
     const overlay = document.getElementById('comment_window');
     overlay.classList.remove('show');
-    _lastLoadedTimestamp = null; //
+    //_lastLoadedTimestamp = null; //
 }
 
 // 留言提交事件
@@ -122,7 +122,7 @@ async function loadComments(donaId, isInitialLoad = false) {
         });
 
         // 更新最後加載的時間戳
-        _lastLoadedTimestamp = comments[comments.length - 1]?.timestamp || null;
+        _lastLoadedTimestamp = comments[comments.length - 1]?.timestamp || null;      
     } catch (error) {
         console.error('加載留言錯誤:', error);
     }
@@ -146,13 +146,14 @@ async function getComments(dona_id, commentsPerLoad) {
 
         // 按時間戳降序排序
         commentsArray.sort((a, b) => b.timestamp - a.timestamp);
+        return commentsArray.slice(0, commentsPerLoad);
 
         // 過濾留言並返回最多 commentsPerLoad 條
-        const filteredComments = commentsArray.filter(
-            (comment) => !_lastLoadedTimestamp || comment.timestamp < _lastLoadedTimestamp
-        );
+        //const filteredComments = commentsArray.filter(
+        //    (comment) => !_lastLoadedTimestamp || comment.timestamp < _lastLoadedTimestamp
+        //);
 
-        return filteredComments.slice(0, commentsPerLoad);
+        //return filteredComments.slice(0, commentsPerLoad);
     } catch (error) {
         console.error("獲取留言錯誤:", error);
         return [];
@@ -163,4 +164,4 @@ async function getComments(dona_id, commentsPerLoad) {
 window.open_comment = open_comment;
 window.close_comment = close_comment;
 
-alert('after all 56');
+alert('after all 57');
