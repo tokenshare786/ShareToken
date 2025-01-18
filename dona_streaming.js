@@ -1,4 +1,4 @@
-alert('Im new 21');
+alert('Im new 22');
 let currentPage = 1; // 当前页数
 const itemsPerPage = 5; // 每次加载数量
 let isLoading = false; // 是否正在加载中
@@ -167,83 +167,94 @@ imageContainer.appendChild(contentElement);
 
 const likebtn = card.querySelector('#like_btn');
 const dislikebtn = card.querySelector('#dislike_btn');
-const likeCount = document.querySelector('#like_count');
-const dissCount = document.querySelector('#diss_count');
+const likeCount = card.querySelector('#like_count');
+const dissCount = card.querySelector('#diss_count');
 
-const(countofLike,countofDislike,likeordiss)= await getCountLikeOrDiss(re_id); 
-    
-if(countofLike>0){
+const { countofLike, countofDislike, likeordiss } = await getCountLikeOrDiss(re_id);
+
+// 更新按鈕和計數器的狀態
+updateView();
+
+async function updateView() {
+  if (countofLike > 0) {
     likeCount.classList.remove('hidden');
     likeCount.textContent = countofLike;
-} else {
+  } else {
     likeCount.classList.add('hidden');
-}
-if(countofLike>0){
+  }
+
+  if (countofDislike > 0) {
     dissCount.classList.remove('hidden');
     dissCount.textContent = countofDislike;
-}else{
+  } else {
     dissCount.classList.add('hidden');
-}
-if(likeordiss!='none'){
-    if(likeordiss=='like'){
-        likebtn .classList.add('active');
-        likeCount.classList.add('active');
-        dislikebtn.classList.remove('active');
-        dissCount.classList.remove('active');
-    }else if(likeordiss=='diss'){
-        dislikebtn.classList.add('active');
-        dissCount.classList.add('active');
-        likebtn .classList.remove('active');
-        likeCount .classList.remove('active');
+  }
+
+  if (likeordiss !== 'none') {
+    if (likeordiss === 'like') {
+      likebtn.classList.add('active');
+      likeCount.classList.add('active');
+      dislikebtn.classList.remove('active');
+      dissCount.classList.remove('active');
+    } else if (likeordiss === 'diss') {
+      dislikebtn.classList.add('active');
+      dissCount.classList.add('active');
+      likebtn.classList.remove('active');
+      likeCount.classList.remove('active');
     }
+  }
 }
 
-    // 點擊事件處理邏輯
-    likebtn .addEventListener('click', () => {
-      const likeActive = likebtn .classList.contains('active');
-      await updateCountLikeorDiss(re_id,'like');
-      if (!likeActive) {
-        likebtn .classList.add('active');
-        likeCount.classList.add('active');
-        dislikebtn.classList.remove('active');
-        dissCount.classList.remove('active');
-        updateCount(likeCount, 1);
-        updateCount(dissCount, -1);
-      } else {
-        likebtn .classList.remove('active');
-        likeCount .classList.remove('active');
-        updateCount(likeCount, -1);
-      }
-    });
-    dislikebtn.addEventListener('click', () => {
-      const dissActive = dislikebtn.classList.contains('active');
-      await updateCountLikeorDiss(re_id,'diss');
-      if (!dissActive) {
-        dislikebtn.classList.add('active');
-        dissCount.classList.add('active');
-        likebtn .classList.remove('active');
-        likeCount .classList.remove('active');
-        updateCount(dissCount, 1);
-        updateCount(likeCount, -1);
-      } else {
-        dislikebtn.classList.remove('active');
-        dissCount .classList.remove('active');
-        updateCount(dissCount, -1);
-      }
-    });
+// 點擊事件處理邏輯
+likebtn.addEventListener('click', async () => {
+  const likeActive = likebtn.classList.contains('active');
+  await updateCountLikeOrDiss(re_id, 'like');
+  if (!likeActive) {
+    setActive(likebtn, likeCount, true);
+    setActive(dislikebtn, dissCount, false);
+  } else {
+    setActive(likebtn, likeCount, false);
+  }
+});
 
-    // 更新計數器的顯示邏輯
-    function updateCount(counter, change) {
-      let count = parseInt(counter.textContent, 10) || 0;
-      count += change;
-      if (count <= 0) {
-        counter.textContent = '0';
-        counter.classList.add('hidden');
-      } else {
-        counter.textContent = count;
-        counter.classList.remove('hidden');
-      }
-    }
+dislikebtn.addEventListener('click', async () => {
+  const dissActive = dislikebtn.classList.contains('active');
+  await updateCountLikeOrDiss(re_id, 'diss');
+  if (!dissActive) {
+    setActive(dislikebtn, dissCount, true);
+    setActive(likebtn, likeCount, false);
+  } else {
+    setActive(dislikebtn, dissCount, false);
+  }
+});
+
+// 更新按鈕和計數器的狀態
+function setActive(button, counter, isActive) {
+  if (isActive) {
+    button.classList.add('active');
+    counter.classList.remove('hidden');
+    counter.classList.add('active');
+    updateCount(counter, 1);
+  } else {
+    button.classList.remove('active');
+    counter.classList.remove('active');
+    updateCount(counter, -1);
+  }
+}
+
+// 更新計數器的顯示邏輯
+function updateCount(counter, change) {
+  let count = parseInt(counter.textContent, 10) || 0;
+  count += change;
+  if (count <= 0) {
+    counter.textContent = '0';
+    counter.classList.add('hidden');
+  } else {
+    counter.textContent = count;
+    counter.classList.remove('hidden');
+  }
+}
+
 }
 
 // 点击领取甜甜圈
