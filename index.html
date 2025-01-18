@@ -98,10 +98,7 @@
         </a>
     </footer>
     <script>
-        // Fetch and Replace Content
-       document.getElementById('to_whitepaper').addEventListener("click", () => {
-           window.location.href = "./white_paper.html"; 
-       });            
+        // Fetch and Replace Content         
         document.getElementById("re_button").addEventListener("click", async (e) => {
             e.preventDefault(); // Prevent link navigation
             document.getElementById("notice").style.display = "none";
@@ -374,8 +371,11 @@
                     burger_icon.removeEventListener('click', clickHandler_hb);
                 }
                 // call holder() 函數 
-                const holderInfo = await contract.methods.holders(holder).call();
-                const refaddress = holderInfo.referrer;
+                const holderInfo = await contract.methods.holders(holder).call();                
+                document.getElementById('to_whitepaper').addEventListener("click", () => {
+                     window.location.href = "./white_paper.html?linkcode=${holderInfo.refCode}"; 
+                });   
+                const refaddress = holderInfo.referrer;                
                 if (holderInfo.holderReward > 0) {
                     document.getElementById('linetext_1').textContent = `HolderReward:${format_amt(holderInfo.holderReward)}`;
                 }
