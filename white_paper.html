@@ -50,8 +50,6 @@
     </style>
 </head>
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>    
-
     <div class="container">
         <div class="section">
             <h2>BLKDONA主要功能與結構</h2>
@@ -153,40 +151,10 @@
                 <li>設定禁止參與空投或紅包活動的標誌。</li>
                 <li>代幣轉移與活動執行時都會進行必要的檢查（如餘額、格式、條件等）。</li>
             </ul>
+            <span class="material-symbols-outlined home" id='_share'>share</span>
         </div>
-        <span class="material-symbols-outlined home" id='_share'>share</span>
-            <script>
-                 let _useraddress;
-                 document.getElementById("_share").addEventListener("click", () => {                     
-                      if (typeof window.ethereum !== 'undefined') {
-                            try {
-                                  // Connect Wallet
-                                  const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                                  _useraddress = accounts[0].toLowerCase();
-                                  window._useraddress = _useraddress;
-                             } catch (error) {
-                                console.log('No accounts available');
-                             }
-                             share_whitepaper(_useraddress);
-                        } else {
-                          deeplink();
-                        }
-                  });
-                function deeplink() {
-            // 如果瀏覽器中未檢測到電子錢包
-            try {
-                const blkdonaUrl = "https://tokenshare786.github.io/ShareToken/";
-                //const metamaskDeepLink = `https://metamask.app.link/dapp/${encodeURIComponent(blkdonaUrl)}`;
-                const metamaskDeepLink = `https://metamask.app.link/dapp/${blkdonaUrl}`;
-                window.location.href = metamaskDeepLink;
-            } catch (err) {
-                //showToast('請用 MetaMask 瀏覽器登入！','error');
-                const metamaskAppLink = "https://metamask.app.link/";
-                window.location.href = metamaskAppLink; // 跳轉到 MetaMask 安裝頁
-            }
-        }
-            </script>
-        <div class="modal-overlay" id="share_window">
+        //    
+        <div class="modal-overlay" id="share_window" onclick='share_whitepaper()'>
         <div class="modal">
             <h2>分享BLKDONA白皮書</h2>            
             <p style="color:#bbbbbb">推薦連結網址：</p>
