@@ -769,7 +769,7 @@
     <div class="modal-overlay" id="edit_window">
         <div class="modal">
             <h2>甜甜圈有點狀況，我喬一下</h2>
-            <form id="form_edit">
+            <form id="form_edit" class='comments-container'>
                 <div class="form-group">
                     <label for="edit_desc">那些年，關於我的甜甜圈</label>
                     <input type="text" id="edit_desc" name="edit_desc" required>
@@ -865,28 +865,30 @@
     </script>
     <div class="modal-overlay" id="dn_window">
         <div class="modal">
-            <div>
+            
                 <div id="desc-container" class="desc-container">
                     <span class="material-symbols-outlined" id='link_redir'>captive_portal</span>
                     <span id="short-desc"  class="short-desc"></span>
                     <span id="ellipsis" style="position:relative;top:10px;left:2px">&nbsp..</span>
                     <span id="toggle-link" class="css_back" style="position:relative;top:15px;left:3px">全文</span>                    
                 </div>
-                <p id="remaining-desc" class="remaining-desc"></p>
-                <p class="reward-item" style="text-align:center" id="dn_info"></p>
-                <span class="progress" style="display:none">
-                    <p class="css_back" onclick="dn_back()" id="click_back">Back</p>
-                    <p class="css_back" style="margin-left:auto" onclick="dn_next()" id="click_next">Next</p>
-                </span>
-            </div>
-            <div class="new-container">
-                <div class="image-container" id="image-container" style="position:relative;top:8px">                    
-            </div>
-            </div>
-            <div class="_buttons">
-                <button type="button" class="cancel" onclick="close_DN()">關閉</button>
-                <button type="button" class="confirm" id="dn_claim">領取</button>
-            </div>
+                <form class='comments-container'>
+                    <p id="remaining-desc" class="remaining-desc"></p>
+                    <p class="reward-item" style="text-align:center" id="dn_info"></p>
+                    <span class="progress" style="display:none">
+                        <p class="css_back" onclick="dn_back()" id="click_back">Back</p>
+                        <p class="css_back" style="margin-left:auto" onclick="dn_next()" id="click_next">Next</p>
+                    </span>
+            
+                    <div class="new-container">
+                        <div class="image-container" id="image-container" style="position:relative;top:8px">                    
+                        </div>
+                    </div>
+                    <div class="_buttons">
+                        <button type="button" class="cancel" onclick="close_DN()">關閉</button>
+                        <button type="button" class="confirm" id="dn_claim">領取</button>
+                    </div>
+                </form>
         </div>
     </div>
     <script>
@@ -1095,7 +1097,7 @@
 
     </script>
     <div class="modal-overlay" id="comment_window">
-  <div class="modal_comment">
+  <div class="modal">
     <!-- 右上角关闭按钮 -->
     <span class="close-btn" onclick="close_comment()">×</span>
     <h2 id='guestbook_title' style='display:none'></h2>
