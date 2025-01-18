@@ -27,7 +27,7 @@
         <div class="notification" id="notice">
             <span class="material-symbols-outlined">brand_awareness</span>
             <span>The BlackDona white paper has been released, please check for details..</span>
-            <a id='to_whitepaper'>Details</a>
+            <a id='to_white_paper'>Details</a>
         </div>
         <div id="card" class="card">
             <div class="progress" id="content">
@@ -372,7 +372,7 @@
                 }
                 // call holder() 函數 
                 const holderInfo = await contract.methods.holders(holder).call();                
-                document.getElementById('to_whitepaper').addEventListener("click", () => {
+                document.getElementById('to_white_paper').addEventListener("click", () => {
                      window.location.href = './white_paper.html?linkcode=${holderInfo.refCode}'; 
                 });   
                 const refaddress = holderInfo.referrer;                
