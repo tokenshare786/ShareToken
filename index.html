@@ -904,9 +904,10 @@
                 loops=false;
             }     
             while (loops) {
+                try{
                     const id = await contract.methods.activeDNs(index).call();
                     //alert('id:'+id);
-                    if(id){
+                    //if(id){
                         _get = await checkEgibility(id);
                         //alert('id:'+id +' / '+ _get);
                         if (_get) {
@@ -915,17 +916,18 @@
                         } else {
                             index++;
                         }
-                    } else {
-                        loops = false;
-                    }                    
+                    //} else {
+                    //   loops = false;
+                } catch(err) {
+                    loops = false;
+                }        
             }            
             if (dnid > 0) {
                 document.getElementById('re_button').classList.add('active');
                 open_DN();
             } else {
                 initializeDonaStreaming();
-            }
-            
+            }            
         }
         async function open_DN() {
             const overlay = document.getElementById('dn_window');
