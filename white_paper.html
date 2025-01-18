@@ -151,9 +151,9 @@
                 <li>設定禁止參與空投或紅包活動的標誌。</li>
                 <li>代幣轉移與活動執行時都會進行必要的檢查（如餘額、格式、條件等）。</li>
             </ul>
-            <span class="material-symbols-outlined home" id='_share'>share</span>
+            <span class="material-symbols-outlined home"  onclick='share_whitepaper()'>share</span>
         </div>
-        <div class="modal-overlay" id="share_window" onclick='share_whitepaper()'>
+        <div class="modal-overlay" id="share_window">
         <div class="modal">
             <h2>分享BLKDONA白皮書</h2>            
             <p style="color:#bbbbbb">推薦連結網址：</p>
@@ -168,7 +168,7 @@
     </div>
         <script>
         async function share_whitepaper() {
-            const overlay = document.getElementById('shareDona_window');
+            const overlay = document.getElementById('share_window');
             overlay.classList.add('show');    
             const linkcode = getParameterByName('linkcode');
             document.getElementById("sharelink").textContent = `https://blkdona.web.app/white_paper.html?linkcode=${_linkcode}`;
