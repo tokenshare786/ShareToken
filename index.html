@@ -905,10 +905,10 @@
             }     
             while (loops) {
                     const id = await contract.methods.activeDNs(index).call();
-                    alert('id:'+id);
+                    //alert('id:'+id);
                     if(id){
-                        _get = await getable(id);
-                        alert('id:'+id +' / '+ _get);
+                        _get = await checkEgibility(id);
+                        //alert('id:'+id +' / '+ _get);
                         if (_get) {
                             loops = false;
                             dnid = id;
