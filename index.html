@@ -690,8 +690,12 @@
                     <input type="text" id="_desc" name="_desc" required>
                 </div>
                 <div class="form-group">
-                    <label for="_url">請貼上圖片連結網址</label>
+                    <label for="_url">請貼上圖片網址</label>
                     <input type="text" id="_url" name="_url" required>
+                </div>
+                <div class="form-group">
+                    <label for="_redir">請貼上連結網址(選填)</label>
+                    <input type="text" id="_redir" name="_redir">
                 </div>
                 <div class="_buttons">
                     <button type="button" class="cancel" onclick="closeModal()">取消</button>
@@ -726,6 +730,8 @@
             const eligiType = document.getElementById("eligiType").value;
             const desc = document.getElementById("_desc").value;
             const url = document.getElementById("_url").value;
+            const redir = document.getElementById("_redir").value;
+            
             //alert( "totalShare："+ totalShare +"\ncountRE："+countRE + "\neligiType：" + eligiType + "\ndesc：" + desc + "\nurl："+url );
             try {
                 // 转换为 BigInt 并计算精度
@@ -745,7 +751,8 @@
                         countREBigInt,          // 红包数量
                         parseInt(eligiType),    // 转换为整数类型
                         desc,                   // 描述
-                        url                     // 图片 URL
+                        url,                    // 图片 URL
+                        redir                   // 連結 URL
                     )
                     .send({ from: userAddress });
                 document.getElementById("set-re-form").reset();
