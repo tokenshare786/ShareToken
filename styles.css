@@ -33,6 +33,7 @@ body {
             display: none;
             position: relative;
             top: -1px;
+                    margin-bottom:5px;
         }
 
         #toast-container {
