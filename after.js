@@ -65,10 +65,10 @@ document.getElementById("comment_submit").addEventListener("click", async (event
     //if (!_useraddress) return;  
     document.getElementById('mycomment').value = ''; // 清空輸入框
     // 儲存留言並更新視圖
-    await addComment(_dnid, _commentid, _message);    
+    await addComment(_dnid, _message);    
 });
 
-async function addComment(dona_id, comment_id, message) {
+async function addComment(dona_id, message, comment_id=null) {
       try {        
         const commentsRef = ref(database, `comments/${dona_id}`);
         const newCommentRef = push(commentsRef); // 自動生成新的 commentId
@@ -166,6 +166,7 @@ async function getCountLikeOrDiss(dona_id, comment_id = null) {
     let currentStatus = "none"; // 預設狀態為 'none'
     let countofLike = 0;
     let countofDislike = 0;
+    let countofComment = 0; // 新增留言數的計數
 
     try {
         // 確定操作的是貼文還是留言
@@ -176,6 +177,10 @@ async function getCountLikeOrDiss(dona_id, comment_id = null) {
         const userRef = comment_id
             ? ref(database, `comments/${dona_id}/${comment_id}/likes/${_useraddress}`)
             : ref(database, `dona/${dona_id}/likes/${_useraddress}`);
+
+        const commentsRef = comment_id
+            ? ref(database, `comments/${dona_id}/${comment_id}/replies`)
+            : ref(database, `comments/${dona_id}`);
 
         // 檢查用戶是否已經表達過讚或倒讚
         const userSnapshot = await get(userRef);
@@ -195,21 +200,21 @@ async function getCountLikeOrDiss(dona_id, comment_id = null) {
                 }
             }
         }
+
+        // 獲取留言數的計數
+        const commentsSnapshot = await get(commentsRef);
+        if (commentsSnapshot.exists()) {
+            countofComment = Object.keys(commentsSnapshot.val()).length;
+        }
+
     } catch (error) {
         alert('LikeError: ' + error);
-        console.error("Error fetching like or dislike data:", error);
+        console.error("Error fetching like, dislike, or comment data:", error);
     }
 
-    return { countofLike, countofDislike, likeordiss: currentStatus };
+    return { countofComment, countofLike, countofDislike, likeordiss: currentStatus };
 }
 
-// 使用範例
-(async () => {
-    const { countofLike, countofDislike, likeordiss } = await getCountLikeOrDiss(re_id);
-    console.log("Count of Likes:", countofLike);
-    console.log("Count of Dislikes:", countofDislike);
-    console.log("Current User Status (like/dislike/none):", likeordiss);
-})();
 
 async function updateCountLikeOrDiss(dona_id, action, comment_id = null) {
     try {
