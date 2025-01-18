@@ -21,14 +21,13 @@
     </header>    
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- 引入 Web3.js -->
-    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>    
     <script src="./before.js"></script>
     <div id="dona-container">
         <div class="notification" id="notice">
             <span class="material-symbols-outlined">brand_awareness</span>
             <span>The BlackDona white paper has been released, please check for details..</span>
-            <a href="./white_paper.html">Details</a>
+            <a id='to_whitepaper'>Details</a>
         </div>
         <div id="card" class="card">
             <div class="progress" id="content">
@@ -100,6 +99,9 @@
     </footer>
     <script>
         // Fetch and Replace Content
+       document.getElementById('to_whitepaper').addEventListener("click", () => {
+           window.location.href = "./white_paper.html"; 
+       });            
         document.getElementById("re_button").addEventListener("click", async (e) => {
             e.preventDefault(); // Prevent link navigation
             document.getElementById("notice").style.display = "none";
@@ -162,7 +164,7 @@
     </script>
     <script>
         // 取得 linkcode 參數    
-        var linkcode = getParameterByName('linkcode');
+        const linkcode = getParameterByName('linkcode');
         //alert("to get linkcode:" + linkcode);
         function getlinkcode() {
             try {
