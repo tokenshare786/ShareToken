@@ -52,7 +52,12 @@
     <div class="container">
         <div class="section">
             <h2>BLKDONA主要功能與結構</h2>
-            <span class="material-symbols-outlined home" onclick="location.href='index.html'">home</span>
+            <span class="material-symbols-outlined home" id='goBack'>home</span>
+            <script>
+                 document.getElementById("goBack").addEventListener("click", () => {
+                      history.back();
+                  });
+            </script>
             <h3>合約的基本屬性</h3>
             <span class="_text">
                 這是一個基於以太坊ERC20協定，並發行於BSC(Binance Smart Chain)的代幣系統，內建了許多功能，主要用於代幣的分配、推薦關係的建立、空投活動（Airdrop），以及甜甜圈分享事件（setDona, 即多人隨機分享代幣的功能）。結合了推薦系統、代幣經濟與社交互動，特別適合用於建立社區激勵機制或去中心化的互動平台。以下是其功能與結構的詳細解釋：
