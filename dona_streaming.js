@@ -319,6 +319,7 @@ async function open_edit(dnid) {
       overlay.classList.add('show');
       document.getElementById("edit_desc").value = dona.desc;             
       document.getElementById("edit_url").value = dona.imgUrl;
+      document.getElementById("_redir").value = dona.redirect;
 }
 // Close modal
 function close_edit() {
@@ -337,7 +338,9 @@ async function editDona(){
         // Get form data
         const dona = await getSpecificDN(dnid_edit);
         const edit_desc = document.getElementById("edit_desc").value;
-        const edit_url = document.getElementById("edit_url").value;       
+        const edit_url = document.getElementById("edit_url").value;
+        const edit_redir = document.getElementById("edit_redir").value;
+
         //alert("editDona:"+ edit_desc  + "/" +  edit_url);
       try{
         // 呼叫智能合约的 setRE 函式
@@ -346,7 +349,8 @@ async function editDona(){
             .updateMyDona(
                 dnid_edit,                   
                 edit_desc,
-                edit_url
+                edit_url,
+                edit_redir
             )
             .send({ from: _useraddress });
         }             
