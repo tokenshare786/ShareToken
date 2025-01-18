@@ -1,4 +1,4 @@
-alert('Im new 17');
+alert('Im new 18');
 let currentPage = 1; // 当前页数
 const itemsPerPage = 5; // 每次加载数量
 let isLoading = false; // 是否正在加载中
@@ -89,9 +89,15 @@ async function createDonaBox(re, re_id) {
             <p class="css_back" onclick="open_edit(${re_id})" id="editable-ds">Edit</p>
             <p class="css_back" onclick="claimDN(${re_id})" id="take-ds">Take</p> 
             <p class="css_back" onclick="shareDona(${re_id})">Share</p> 
-            <p class="css_back" onclick="open_comment(${re_id})">Comment</p>  
-            <span class="material-symbols-outlined" id="like_btn" style='position:relative;top=5px'>thumb_up</span>
-            <span class="material-symbols-outlined" id="dislike_btn" style='position:relative;top=5px'>thumb_down</span>            
+            <p class="css_back" onclick="open_comment(${re_id})">Comment</p>
+            <div>
+            <span class="css_back" id="like_btn">Like</span>
+            <span class="css_back" id="like_count">Like</span>
+            </div>
+            <div>
+            <span class="css_back" id="dislike_btn">Diss</span> 
+            <span class="css_back" id="diss_count">Like</span>
+            </div>
         </span>
     `;
     container.appendChild(card);
@@ -170,25 +176,54 @@ const likebtn = card.querySelector('#like_btn');
 const dislikebtn = card.querySelector('#dislike_btn');
 if(likeordislike!=null){    
        if (likeordislike === 'like') {
-           likebtn.textContent = 'thumb_up_alt'; // 改為實心
+           likeBtn.classList.add('active');
        } else if (likeordislike === 'dislike') {
-           dislikebtn.textContent = 'thumb_down_alt'; // 改為實心圖標
+           dislikebtn.classList.add('active');
        }  
 }
 
-likebtn.addEventListener('click', () => {
-      likebtn.classList.toggle('filled');
-      likebtn.classList.toggle('outlined');
-      dislikebtn.classList.remove('filled');
-      dislikebtn.classList.add('outlined');
+const likeCount = document.querySelector('#like_count');
+const dissCount = document.querySelector('#diss_count');
+
+    // 點擊事件處理邏輯
+    likeBtn.addEventListener('click', () => {
+      const likeActive = likeBtn.classList.contains('active');
+      if (!likeActive) {
+        likeBtn.classList.add('active');
+        dissBtn.classList.remove('active');
+        updateCount(likeCount, 1);
+        updateCount(dissCount, -1);
+      } else {
+        likeBtn.classList.remove('active');
+        updateCount(likeCount, -1);
+      }
     });
 
-    dislikebtn.addEventListener('click', () => {
-      dislikebtn.classList.toggle('filled');
-      dislikebtn.classList.toggle('outlined');
-      likebtn.classList.remove('filled');
-      likebtn.classList.add('outlined');
+    dissBtn.addEventListener('click', () => {
+      const dissActive = dissBtn.classList.contains('active');
+      if (!dissActive) {
+        dissBtn.classList.add('active');
+        likeBtn.classList.remove('active');
+        updateCount(dissCount, 1);
+        updateCount(likeCount, -1);
+      } else {
+        dissBtn.classList.remove('active');
+        updateCount(dissCount, -1);
+      }
     });
+
+    // 更新計數器的顯示邏輯
+    function updateCount(counter, change) {
+      let count = parseInt(counter.textContent, 10) || 0;
+      count += change;
+      if (count <= 0) {
+        counter.textContent = '0';
+        counter.classList.add('hidden');
+      } else {
+        counter.textContent = count;
+        counter.classList.remove('hidden');
+      }
+    }
 }
 
 // 点击领取甜甜圈
