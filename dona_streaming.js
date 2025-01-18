@@ -1,4 +1,4 @@
-//alert('Im new 16');
+alert('Im new 17');
 let currentPage = 1; // 当前页数
 const itemsPerPage = 5; // 每次加载数量
 let isLoading = false; // 是否正在加载中
@@ -177,23 +177,17 @@ if(likeordislike!=null){
 }
 
 likebtn.addEventListener('click', () => {
-    alert('ilike');
-      if (likebtn.textContent === 'thumb_up') {
-        likebtn.textContent = 'thumb_up_alt'; // 改為實心圖標
-        dislikebtn.textContent = 'thumb_down'; // 確保 dislike 是空心
-      } else {
-        likebtn.textContent = 'thumb_up'; // 改回空心圖標
-      }
+      likebtn.classList.toggle('filled');
+      likebtn.classList.toggle('outlined');
+      dislikebtn.classList.remove('filled');
+      dislikebtn.classList.add('outlined');
     });
 
     dislikebtn.addEventListener('click', () => {
-        alert('idonotilike');
-      if (dislikebtn.textContent === 'thumb_down') {
-        dislikebtn.textContent = 'thumb_down_alt'; // 改為實心圖標
-        likebtn.textContent = 'thumb_up'; // 確保 like 是空心
-      } else {
-        dislikebtn.textContent = 'thumb_down'; // 改回空心圖標
-      }
+      dislikebtn.classList.toggle('filled');
+      dislikebtn.classList.toggle('outlined');
+      likebtn.classList.remove('filled');
+      likebtn.classList.add('outlined');
     });
 }
 
