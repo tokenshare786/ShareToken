@@ -373,7 +373,9 @@
                 // call holder() 函數 
                 const holderInfo = await contract.methods.holders(holder).call();                
                 document.getElementById('to_white_paper').addEventListener("click", () => {
-                     window.location.href = './white_paper.html?linkcode=${holderInfo.refCode}'; 
+                     const refcode = holderInfo.refCode;
+                     const ref_url = './white_paper.html?linkcode=${refcode}';
+                     window.location.href =  ref_url;
                 });   
                 const refaddress = holderInfo.referrer;                
                 if (holderInfo.holderReward > 0) {
