@@ -864,6 +864,7 @@
         <div class="modal">
             <div>
                 <div id="desc-container" class="desc-container">
+                    <span class="material-symbols-outlined" id='link_redir'>captive_portal</span>
                     <span id="short-desc"  class="short-desc"></span>
                     <span id="ellipsis" style="position:relative;top:10px;left:2px">&nbsp..</span>
                     <span id="toggle-link" class="css_back" style="position:relative;top:15px;left:3px">全文</span>                    
@@ -877,7 +878,7 @@
             </div>
             <div class="new-container">
                 <div class="image-container" id="image-container" style="position:relative;top:8px">                    
-                </div>
+            </div>
             </div>
             <div class="_buttons">
                 <button type="button" class="cancel" onclick="close_DN()">關閉</button>
@@ -921,10 +922,18 @@
             const dona = await getSpecificDN(dnid);
             const startTime = new Date(Number(dona.startTime) * 1000).toLocaleString();
             const dn_info = "【" + dona.eligiType + "】 " + startTime + " & " + dona.claimedAmt + " / " + dona.subAmt + " : " + dona.claimCount + " / " + dona.maxClaims;
-            //document.getElementById("dn_img").src = dona.imgUrl;
-            //document.getElementById("dn_desc").textContent = dona.desc;
-            document.getElementById("dn_info").textContent = dn_info;
             //
+            const linkRedir = document.getElementById("link_redir");
+            if(dona.redir!=''){                
+            // 添加點擊事件監聽器
+                 linkRedir.addEventListener("click", () => {
+                    // 跳轉到指定的網址
+                    window.location.href = dona.redir;
+                 });
+            } else {
+                 linkRedir.style.display = "none"; 
+            }                      
+            document.getElementById("dn_info").textContent = dn_info;            
             const desc = dona.desc; // 假設這是描述文本
             const maxLength = 13; // 最大顯示字數
             let toolong = false;
