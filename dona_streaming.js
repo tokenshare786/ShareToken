@@ -166,7 +166,7 @@ imageContainer.appendChild(contentElement);
 //container.appendChild(imageContainer);
     let likeordislike;
     try{
-        likeordislike =  await getLikeOrDislike(re_id); 
+        likeordislike =  await getLikeOrDiss(re_id); 
         //alert('likeordislike'+ likeordislike);
     }catch(err){
         alert('error:'+ err);
@@ -174,44 +174,64 @@ imageContainer.appendChild(contentElement);
 
 const likebtn = card.querySelector('#like_btn');
 const dislikebtn = card.querySelector('#dislike_btn');
-if(likeordislike!=null){    
+if(likeordislike != null){    
        if (likeordislike === 'like') {
            likebtn.classList.add('active');
+           dislikebtn.classList.remove('active');
        } else if (likeordislike === 'dislike') {
            dislikebtn.classList.add('active');
+           likebtn.classList.remove('active');
        }  
 }
 
 const likeCount = document.querySelector('#like_count');
 const dissCount = document.querySelector('#diss_count');
-    
-likeCount.classList.add('hidden');
-dissCount.classList.add('hidden');
 
+let(countofLike,countofDislike,likeordiss)= await getCountLikeOrDiss(re_id); 
+    
+if(countofLike>0){
+    likeCount.classList.remove('hidden');
+    likeCount.textContent = countofLike;
+} else {
+    likeCount.classList.add('hidden');
+}
+if(countofLike>0){
+    dissCount.classList.remove('hidden');
+    dissCount.textContent = countofDislike;
+}else{
+    dissCount.classList.add('hidden');
+}
 
     // 點擊事件處理邏輯
     likebtn .addEventListener('click', () => {
       const likeActive = likebtn .classList.contains('active');
+      await updateCountLikeorDiss(re_id,'like');
       if (!likeActive) {
         likebtn .classList.add('active');
+        likeCount.classList.add('active');
         dislikebtn.classList.remove('active');
+        dissCount.classList.remove('active');
         updateCount(likeCount, 1);
         updateCount(dissCount, -1);
       } else {
         likebtn .classList.remove('active');
+        likeCount .classList.remove('active');
         updateCount(likeCount, -1);
       }
     });
-
-    dissBtn.addEventListener('click', () => {
-      const dissActive = dissBtn.classList.contains('active');
+    dislikebtn.addEventListener('click', () => {
+      const dissActive = dislikebtn.classList.contains('active');
+      await updateCountLikeorDiss(re_id,'diss');
       if (!dissActive) {
         dislikebtn.classList.add('active');
+        dissCount.classList.add('active');
         likebtn .classList.remove('active');
+        likeCount .classList.remove('active');
         updateCount(dissCount, 1);
         updateCount(likeCount, -1);
       } else {
         dislikebtn.classList.remove('active');
+        dissCount .classList.remove('active');
         updateCount(dissCount, -1);
       }
     });
