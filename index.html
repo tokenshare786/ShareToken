@@ -826,7 +826,7 @@
             overlay.classList.add('show');
             const userAddress = await getHoldertoLowercase();
             const holderInfo = await contract.methods.holders(userAddress).call();            
-            document.getElementById("sharelink").textContent = `https://blkdona.web.app/ShareToken/?linkcode=${holderInfo.refCode}&dnid=${dn_id}`;
+            document.getElementById("sharelink").textContent = `https://blkdona.web.app/?linkcode=${holderInfo.refCode}&dnid=${dn_id}`;
         }
         function toShareDona() {
             const share_text = document.getElementById("sharelink").textContent;          
@@ -845,7 +845,7 @@
             const userAddress = await getHoldertoLowercase();
             const holderInfo = await contract.methods.holders(userAddress).call();
             document.getElementById("refcode").textContent = `${holderInfo.refCode}`;
-            document.getElementById("share_link").textContent = `https://blkdona.web.app/ShareToken/?linkcode=${holderInfo.refCode}`;
+            document.getElementById("share_link").textContent = `https://blkdona.web.app/?linkcode=${holderInfo.refCode}`;
         }
 
         // Close modal
