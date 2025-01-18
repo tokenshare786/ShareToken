@@ -905,6 +905,7 @@
             }     
             while (loops) {
                     const id = await contract.methods.activeDNs(index).call();
+                    alert('id:'+id);
                     if(id){
                         _get = await getable(id);
                         if (_get) {
