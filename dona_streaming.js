@@ -107,7 +107,7 @@ async function createDonaBox(re, re_id) {
     container.appendChild(card);
     //
     const linkRedir = document.getElementById("link_redir");
-    if(re.redir!=''){                
+    if( re.redirect != ''){                
         // 添加點擊事件監聽器
        linkRedir.addEventListener("click", () => {
          // 跳轉到指定的網址
