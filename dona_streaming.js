@@ -71,6 +71,7 @@ async function createDonaBox(re, re_id) {
     card.innerHTML = `
         <div>
             <div id="desc-container-ds" class="desc-container">
+                <span class="material-symbols-outlined" id='link_redir'>captive_portal</span>
                 <span class="short-desc">${shortDesc}</span>
                 <span id="ellipsis-ds" style="position:relative;top:10px;left:2px">&nbsp..</span>
                 <span id="toggle-link-ds" class="css_back" style="position:relative;top:15px;left:3px">全文</span>   
@@ -104,10 +105,17 @@ async function createDonaBox(re, re_id) {
         </span>
     `;
     container.appendChild(card);
-
-    // 显示完整描述逻辑
-    // 初始化縮略文本    
-    //document.getElementById("short-desc").textContent = shortDesc;  
+    //
+    const linkRedir = document.getElementById("link_redir");
+    if(dona.redir!=''){                
+        // 添加點擊事件監聽器
+       linkRedir.addEventListener("click", () => {
+         // 跳轉到指定的網址
+         window.location.href = dona.redirect;
+       });
+    } else {
+           linkRedir.style.display = "none"; 
+    }  
     // 顯示完整描述邏輯
     const toggleLink = card.querySelector('#toggle-link-ds');
     const remainingDescElement = card.querySelector('#remaining-desc-ds');
