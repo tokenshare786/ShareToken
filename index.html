@@ -905,13 +905,17 @@
             }     
             while (loops) {
                     const id = await contract.methods.activeDNs(index).call();
-                    _get = await getable(id);
-                    if (_get) {
-                        loops = false;
-                        dnid = id;
+                    if(id){
+                        _get = await getable(id);
+                        if (_get) {
+                            loops = false;
+                            dnid = id;
+                        } else {
+                            index++;
+                        }
                     } else {
-                        index++;
-                    }
+                        loops = false;
+                    }                    
             }            
             if (dnid > 0) {
                 document.getElementById('re_button').classList.add('active');
