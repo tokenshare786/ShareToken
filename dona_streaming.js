@@ -1,4 +1,4 @@
-alert('Im new 19');
+alert('Im new 20');
 let currentPage = 1; // 当前页数
 const itemsPerPage = 5; // 每次加载数量
 let isLoading = false; // 是否正在加载中
@@ -92,11 +92,11 @@ async function createDonaBox(re, re_id) {
             <p class="css_back" onclick="open_comment(${re_id})">Comment</p>
             <div>
             <span class="css_back" id="like_btn">Like</span>
-            <span class="css_back" id="like_count">Like</span>
+            <span class="css_back" id="like_count"></span>
             </div>
             <div>
             <span class="css_back" id="dislike_btn">Diss</span> 
-            <span class="css_back" id="diss_count">Like</span>
+            <span class="css_back" id="diss_count"></span>
             </div>
         </span>
     `;
@@ -184,6 +184,10 @@ if(likeordislike!=null){
 
 const likeCount = document.querySelector('#like_count');
 const dissCount = document.querySelector('#diss_count');
+    
+likeCount.classList.add('hidden');
+dissCount.classList.add('hidden');
+
 
     // 點擊事件處理邏輯
     likebtn .addEventListener('click', () => {
