@@ -110,8 +110,9 @@ async function createDonaBox(re, re_id) {
     if( re.redirect != ''){                
         // 添加點擊事件監聽器
        linkRedir.addEventListener("click", () => {
-         // 跳轉到指定的網址
-         window.location.href = re.redirect;
+           alert('re.redirect:'+re.redirect);
+           // 跳轉到指定的網址
+           window.location.href = re.redirect;
        });
     } else {
            linkRedir.style.display = "none"; 
