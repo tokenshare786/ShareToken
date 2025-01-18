@@ -162,66 +162,95 @@ async function getComments(dona_id, commentsPerLoad) {
     }
 }
 
-async function getLikeOrDislike(dona_id, comment_id=null) {
-    let currentStatus=null;
+async function getCountLikeOrDiss(dona_id, comment_id = null) {
+    let currentStatus = "none"; // 預設狀態為 'none'
+    let countofLike = 0;
+    let countofDislike = 0;
+
     try {
         // 確定操作的是貼文還是留言
-        const targetRef = comment_id
+        const targetLikesRef = comment_id
+            ? ref(database, `comments/${dona_id}/${comment_id}/likes`)
+            : ref(database, `dona/${dona_id}/likes`);
+
+        const userRef = comment_id
             ? ref(database, `comments/${dona_id}/${comment_id}/likes/${_useraddress}`)
             : ref(database, `dona/${dona_id}/likes/${_useraddress}`);
-        //alert('dona_id:'+dona_id);
-        // 檢查用戶是否已經表達過讚或倒讚
-        const snapshot = await get(targetRef);        
-        // 如果用戶已經點過讚或倒讚
-        if (snapshot.exists()) {
-            currentStatus = snapshot.val();  
-        } 
-    } catch (error) {
-        alert('LikeError:'+error);
-        console.error("Error adding like or dislike:", error);
-    }
-  return currentStatus;
-}
 
-
-async function addLikeOrDislike(dona_id, comment_id=null, action = null) {
-    try {
-        // 確定操作的是貼文還是留言
-        const targetRef = comment_id
-            ? ref(database, `comments/${dona_id}/${comment_id}/likes/${_useraddress}`)
-            : ref(database, `dona/${dona_id}/likes/${_useraddress}`);
-        alert('dona_id:'+dona_id);
         // 檢查用戶是否已經表達過讚或倒讚
-        const snapshot = await get(targetRef);
-        
-        // 如果用戶已經點過讚或倒讚
-        if (snapshot.exists()) {
-            const currentStatus = snapshot.val();
-            
-            // 取消讚或倒讚
-            if (action === null) {
-                // 移除用戶的點讚或倒讚
-                await remove(targetRef);
-                console.log('Like or Dislike removed successfully!');
-            } else if (currentStatus !== action) {
-                // 如果當前狀態與用戶想要操作的不同，則更新為新的狀態
-                await set(targetRef, action);
-                console.log(`${action === 'like' ? 'Like' : 'Dislike'} updated successfully!`);
-            } else {
-                console.log(`You already expressed ${action === 'like' ? 'like' : 'dislike'}.`);
-            }
-        } else {
-            // 如果用戶未曾點過，設置為新選擇的狀態
-            if (action !== null) {
-                await set(targetRef, action);
-                console.log(`${action === 'like' ? 'Like' : 'Dislike'} added successfully!`);
-            } else {
-                console.log('No action taken.');
+        const userSnapshot = await get(userRef);
+        if (userSnapshot.exists()) {
+            currentStatus = userSnapshot.val() === true ? "like" : "diss";
+        }
+
+        // 獲取所有讚與倒讚的計數
+        const likesSnapshot = await get(targetLikesRef);
+        if (likesSnapshot.exists()) {
+            const likesData = likesSnapshot.val();
+            for (const key in likesData) {
+                if (likesData[key] === true) {
+                    countofLike++;
+                } else if (likesData[key] === false) {
+                    countofDislike++;
+                }
             }
         }
     } catch (error) {
-        alert('LikeError:'+error);
-        console.error("Error adding like or dislike:", error);
+        alert('LikeError: ' + error);
+        console.error("Error fetching like or dislike data:", error);
+    }
+
+    return { countofLike, countofDislike, likeordiss: currentStatus };
+}
+
+// 使用範例
+(async () => {
+    const { countofLike, countofDislike, likeordiss } = await getCountLikeOrDiss(re_id);
+    console.log("Count of Likes:", countofLike);
+    console.log("Count of Dislikes:", countofDislike);
+    console.log("Current User Status (like/dislike/none):", likeordiss);
+})();
+
+async function updateCountLikeOrDiss(dona_id, action, comment_id = null) {
+    try {
+        // 確定操作的是貼文還是留言
+        const userRef = comment_id
+            ? ref(database, `comments/${dona_id}/${comment_id}/likes/${_useraddress}`)
+            : ref(database, `dona/${dona_id}/likes/${_useraddress}`);
+
+        // 獲取當前使用者狀態
+        const userSnapshot = await get(userRef);
+        let currentStatus = "none";
+        if (userSnapshot.exists()) {
+            currentStatus = userSnapshot.val() === true ? "like" : "diss";
+        }
+
+        // 根據操作進行狀態更新
+        let newStatus;
+        if (action === "like") {
+            if (currentStatus === "like") {
+                newStatus = null; // 更改為 'none'
+            } else {
+                newStatus = true; // 更改為 'like'
+            }
+        } else if (action === "diss") {
+            if (currentStatus === "diss") {
+                newStatus = null; // 更改為 'none'
+            } else {
+                newStatus = false; // 更改為 'diss'
+            }
+        }
+
+        // 更新到資料庫
+        if (newStatus === null) {
+            await remove(userRef); // 刪除節點表示 'none'
+        } else {
+            await set(userRef, newStatus); // 設置新的狀態
+        }
+
+    } catch (error) {
+        alert('UpdateError: ' + error);
+        console.error("Error updating like or dislike status:", error);
     }
 }
 
@@ -229,6 +258,6 @@ async function addLikeOrDislike(dona_id, comment_id=null, action = null) {
 // 暴露到全局作用域
 window.open_comment = open_comment;
 window.close_comment = close_comment;
-window.addLikeOrDislike = addLikeOrDislike;
-window.getLikeOrDislike = getLikeOrDislike;
+window.updateCountLikeOrDiss = updateCountLikeOrDiss;
+window.getCountLikeOrDiss = getCountLikeOrDiss;
 //alert('after all 66');
