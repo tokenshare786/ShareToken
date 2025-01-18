@@ -1,4 +1,4 @@
-alert('Im new 22');
+//alert('Im new 22');
 let currentPage = 1; // 当前页数
 const itemsPerPage = 5; // 每次加载数量
 let isLoading = false; // 是否正在加载中
@@ -89,7 +89,10 @@ async function createDonaBox(re, re_id) {
             <p class="css_back" onclick="open_edit(${re_id})" id="editable-ds">Edit</p>
             <p class="css_back" onclick="claimDN(${re_id})" id="take-ds">Take</p> 
             <p class="css_back" onclick="shareDona(${re_id})">Share</p> 
-            <p class="css_back" onclick="open_comment(${re_id})">Comment</p>
+            <div>
+            <span class="css_back" onclick="open_comment(${re_id})">Comment</span>
+            <span class="css_back" id="comment_count"></span>
+            </div>
             <div>
             <span class="css_back" id="like_btn">Like</span>
             <span class="css_back" id="like_count"></span>
@@ -164,18 +167,25 @@ const imageContainer = card.querySelector('#image-container-ds');
 //imageContainer.className = 'image-container';
 imageContainer.appendChild(contentElement);
 //container.appendChild(imageContainer);
-
+const commentCount = card.querySelector('#comment_count');
 const likebtn = card.querySelector('#like_btn');
 const dislikebtn = card.querySelector('#dislike_btn');
 const likeCount = card.querySelector('#like_count');
 const dissCount = card.querySelector('#diss_count');
 
-const { countofLike, countofDislike, likeordiss } = await getCountLikeOrDiss(re_id);
+const { countofComment, countofLike, countofDislike, likeordiss } = await getCountLikeOrDiss(re_id);
+    
 
 // 更新按鈕和計數器的狀態
 updateView();
 
 async function updateView() {
+  if (countofComment > 0) {
+    commentCount.classList.remove('hidden');
+    commentCount.textContent = countofComment;
+  } else {
+    commentCount.classList.add('hidden');
+  }
   if (countofLike > 0) {
     likeCount.classList.remove('hidden');
     likeCount.textContent = countofLike;
