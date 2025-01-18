@@ -1,4 +1,4 @@
-alert('Im new 18');
+alert('Im new 19');
 let currentPage = 1; // 当前页数
 const itemsPerPage = 5; // 每次加载数量
 let isLoading = false; // 是否正在加载中
@@ -176,7 +176,7 @@ const likebtn = card.querySelector('#like_btn');
 const dislikebtn = card.querySelector('#dislike_btn');
 if(likeordislike!=null){    
        if (likeordislike === 'like') {
-           likeBtn.classList.add('active');
+           likebtn.classList.add('active');
        } else if (likeordislike === 'dislike') {
            dislikebtn.classList.add('active');
        }  
@@ -186,15 +186,15 @@ const likeCount = document.querySelector('#like_count');
 const dissCount = document.querySelector('#diss_count');
 
     // 點擊事件處理邏輯
-    likeBtn.addEventListener('click', () => {
-      const likeActive = likeBtn.classList.contains('active');
+    likebtn .addEventListener('click', () => {
+      const likeActive = likebtn .classList.contains('active');
       if (!likeActive) {
-        likeBtn.classList.add('active');
-        dissBtn.classList.remove('active');
+        likebtn .classList.add('active');
+        dislikebtn.classList.remove('active');
         updateCount(likeCount, 1);
         updateCount(dissCount, -1);
       } else {
-        likeBtn.classList.remove('active');
+        likebtn .classList.remove('active');
         updateCount(likeCount, -1);
       }
     });
@@ -202,12 +202,12 @@ const dissCount = document.querySelector('#diss_count');
     dissBtn.addEventListener('click', () => {
       const dissActive = dissBtn.classList.contains('active');
       if (!dissActive) {
-        dissBtn.classList.add('active');
-        likeBtn.classList.remove('active');
+        dislikebtn.classList.add('active');
+        likebtn .classList.remove('active');
         updateCount(dissCount, 1);
         updateCount(likeCount, -1);
       } else {
-        dissBtn.classList.remove('active');
+        dislikebtn.classList.remove('active');
         updateCount(dissCount, -1);
       }
     });
