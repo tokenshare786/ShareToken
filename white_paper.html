@@ -170,7 +170,7 @@
         async function share_whitepaper() {
             const overlay = document.getElementById('share_window');
             overlay.classList.add('show');    
-            const linkcode = getParameterByName('linkcode');
+            const _linkcode = getParameterByName('linkcode');
             document.getElementById("sharelink").textContent = `https://blkdona.web.app/white_paper.html?linkcode=${_linkcode}`;
         }
         function toShareDona() {
