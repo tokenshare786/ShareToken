@@ -1,4 +1,4 @@
- //alert("Updated! 47");
+//alert("Updated! 47");
 let burger_count;
 let re_id;
 let re;
@@ -8,51 +8,51 @@ let isactive;
 let userAddress;
 
 async function initializePage() {
-try {   
+    try {
         burger_count = await getreID();
         re_id = burger_count;
-        if(re_id > 0){
-             re = await getSpecificDN(re_id);
-             userAddress = await getHoldertoLowercase();
-             await loadburgerBoxPage();
+        if (re_id > 0) {
+            re = await getSpecificDN(re_id);
+            userAddress = await getHoldertoLowercase();
+            await loadburgerBoxPage();
         } else {
-                alert("目前沒有甜甜圈 ><");
-                return;
-        }            
+            alert("目前沒有甜甜圈 ><");
+            return;
+        }
     } catch (error) {
         alert("initial Error:" + error);
-    }  
+    }
 }
 //alert("here..");
 initializePage();
 
 // Load burgerBoxPage and Display a Single Result
 async function loadburgerBoxPage() {
-        isactive = re.isActive ;
-        if(isactive){
-             eligible  = await checkEgibility(re_id);
-        } else {
-                eligible=false;
-        }     
-        //alert("eligible:" + eligible);
+    isactive = re.isActive;
+    if (isactive) {
+        eligible = await checkEgibility(re_id);
+    } else {
+        eligible = false;
+    }
+    //alert("eligible:" + eligible);
     //try {  
-         card = document.getElementById("card");
-         //const content = document.getElementById("content");
-         card.innerHTML = "";
-         const row = document.createElement("div");
-         //row.id = "slider";        
-         const startTime = new Date(Number(re.startTime) * 1000).toLocaleString(); 
-         //
-         const desc = re.desc; // 假設這是描述文本
-         const maxLength = 13; // 最大顯示字數
-         let toolong = false;
-         if (desc.length > maxLength) {
-             toolong = true;
-         } 
-         const shortDesc = desc.slice(0, maxLength);
-         const remainingDesc = desc.slice(maxLength);         
-         //<h2>${truncatedDesc}</h2>
-         row.innerHTML = `
+    card = document.getElementById("card");
+    //const content = document.getElementById("content");
+    card.innerHTML = "";
+    const row = document.createElement("div");
+    //row.id = "slider";        
+    const startTime = new Date(Number(re.startTime) * 1000).toLocaleString();
+    //
+    const desc = re.desc; // 假設這是描述文本
+    const maxLength = 13; // 最大顯示字數
+    let toolong = false;
+    if (desc.length > maxLength) {
+        toolong = true;
+    }
+    const shortDesc = desc.slice(0, maxLength);
+    const remainingDesc = desc.slice(maxLength);
+    //<h2>${truncatedDesc}</h2>
+    row.innerHTML = `
             <div>
                      <div id="desc-container" class='desc-container'>
                          <span id="short-desc" class='short-desc'></span>
@@ -75,103 +75,103 @@ async function loadburgerBoxPage() {
                          <p class="css_back" onclick="open_edit()" id="editable">Edit</p>
                          <p class="css_back" style="margin-left:auto" onclick="claimDN()" id="take">Take</p>
             </span>
-            `;       
-         card.innerHTML = row.innerHTML ; 
-         //
-   // 初始化縮略文本
-    document.getElementById("short-desc").textContent = shortDesc;  
+            `;
+    card.innerHTML = row.innerHTML;
+    //
+    // 初始化縮略文本
+    document.getElementById("short-desc").textContent = shortDesc;
     const remainingDescElement = document.getElementById("remaining-desc");
     const ellipsis = document.getElementById("ellipsis");
     const toggleLink = document.getElementById("toggle-link");
-    if(toolong){
-        remainingDescElement.textContent = remainingDesc;       
+    if (toolong) {
+        remainingDescElement.textContent = remainingDesc;
     } else {
-       remainingDescElement.style.display = "none";
-       ellipsis.style.display = "none";
-       toggleLink.style.display = "none";
+        remainingDescElement.style.display = "none";
+        ellipsis.style.display = "none";
+        toggleLink.style.display = "none";
     }
     toggleLink.addEventListener("click", function () {
-         remainingDescElement.style.display = "inline";
-         ellipsis.style.display = "none";
-         toggleLink.style.display = "none"; // 隱藏 "詳看全文"
+        remainingDescElement.style.display = "inline";
+        ellipsis.style.display = "none";
+        toggleLink.style.display = "none"; // 隱藏 "詳看全文"
     });
-         //
-         if( re_id > 1){
-                document.getElementById('click_back').textContent = `Back`;         
-         } else {
-                document.getElementById('click_back').textContent = `Home`; 
-         }                             
-        if(re_id < burger_count ){
-                document.getElementById("click_next").style.display = "block";
-        } else {
-                document.getElementById("click_next").style.display = "none";
-        }
-        if(eligible){
-                document.getElementById("take").style.display = "block";
-        } else {
-                document.getElementById("take").style.display = "none";
-        }
-        const re_creator = re.creator.toLowerCase() ;
-        if( re_creator !== userAddress){ 
-                document.getElementById("editable").style.display = "none";
-         } else {
-                //alert("It's editable！");  
-                document.getElementById("editable").style.display = "block";
-         }          
+    //
+    if (re_id > 1) {
+        document.getElementById('click_back').textContent = `Back`;
+    } else {
+        document.getElementById('click_back').textContent = `Home`;
+    }
+    if (re_id < burger_count) {
+        document.getElementById("click_next").style.display = "block";
+    } else {
+        document.getElementById("click_next").style.display = "none";
+    }
+    if (eligible) {
+        document.getElementById("take").style.display = "block";
+    } else {
+        document.getElementById("take").style.display = "none";
+    }
+    const re_creator = re.creator.toLowerCase();
+    if (re_creator !== userAddress) {
+        document.getElementById("editable").style.display = "none";
+    } else {
+        //alert("It's editable！");  
+        document.getElementById("editable").style.display = "block";
+    }
     //} catch (err) {
-        //console.error("Error loading content:", err);
+    //console.error("Error loading content:", err);
     //   alert("Failed to display:" + err);            
     //}
- let contentElement;
-if (re.imgUrl.includes('youtube.com/shorts') || re.imgUrl.includes('youtube.com/watch')) {
-    // 提取視頻 ID
-    const videoId = new URL(re.imgUrl).pathname.split('/')[2] || new URL(re.imgUrl).searchParams.get('v');
-    const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-    
-    // 創建 iframe 用於嵌入 YouTube 視頻
-    contentElement = document.createElement('iframe');
-    contentElement.src = embedUrl;
-    contentElement.width = '100%';
-    contentElement.height = '200'; // 設定高度，根據需求調整
-    contentElement.frameBorder = '0';
-    contentElement.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-    contentElement.allowFullscreen = true;
-} else {
-    // 默認使用 img 顯示圖片
-    contentElement = document.createElement('img');
-    contentElement.src = re.imgUrl;
-    contentElement.alt = 'photo';
-    contentElement.style.width = '100%'; // 設置圖片寬度
-    contentElement.style.height = 'auto'; // 自適應高度
+    let contentElement;
+    if (re.imgUrl.includes('youtube.com/shorts') || re.imgUrl.includes('youtube.com/watch')) {
+        // 提取視頻 ID
+        const videoId = new URL(re.imgUrl).pathname.split('/')[2] || new URL(re.imgUrl).searchParams.get('v');
+        const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+
+        // 創建 iframe 用於嵌入 YouTube 視頻
+        contentElement = document.createElement('iframe');
+        contentElement.src = embedUrl;
+        contentElement.width = '100%';
+        contentElement.height = '200'; // 設定高度，根據需求調整
+        contentElement.frameBorder = '0';
+        contentElement.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        contentElement.allowFullscreen = true;
+    } else {
+        // 默認使用 img 顯示圖片
+        contentElement = document.createElement('img');
+        contentElement.src = re.imgUrl;
+        contentElement.alt = 'photo';
+        contentElement.style.width = '100%'; // 設置圖片寬度
+        contentElement.style.height = 'auto'; // 自適應高度
+    }
+    //<img src="${re.imgUrl}" alt="photo"> 
+    // 添加到網頁
+    const imageContainer = document.getElementById('image-container');
+    //imageContainer.className = 'image-container';
+    imageContainer.appendChild(contentElement);
+    //container.appendChild(imageContainer);
 }
-//<img src="${re.imgUrl}" alt="photo"> 
-// 添加到網頁
-const imageContainer = document.getElementById('image-container');
-//imageContainer.className = 'image-container';
-imageContainer.appendChild(contentElement);
-//container.appendChild(imageContainer);
-}
 
 
 
-function claimDN(){ 
-        if(isactive){
-              if(eligible){
-                   //if(confirm("準備吃個甜甜圈：" + re_id)){            
-                            claimDona(re_id); 
-                            document.getElementById("take").style.display = "none";
-                            showToast("送出交易，請等候..", "success");
-                   //} else{
-                           //alert("Why not?"); 
-                   //}  
-             } else {
-                            //alert("這個甜甜圈你吃不了：" + re_id);
-                            showToast("唉呦！這個甜甜圈你吃不了", "error");
-             }   
+function claimDN() {
+    if (isactive) {
+        if (eligible) {
+            //if(confirm("準備吃個甜甜圈：" + re_id)){            
+            claimDona(re_id);
+            document.getElementById("take").style.display = "none";
+            showToast("送出交易，請等候..", "success");
+            //} else{
+            //alert("Why not?"); 
+            //}  
         } else {
-                  //alert("這個甜甜圈沒了：" + re_id);
-                  showToast("這個甜甜圈沒了", "error");
-        }          
+            //alert("這個甜甜圈你吃不了：" + re_id);
+            showToast("唉呦！這個甜甜圈你吃不了", "error");
+        }
+    } else {
+        //alert("這個甜甜圈沒了：" + re_id);
+        showToast("這個甜甜圈沒了", "error");
+    }
 }
 
 async function _next() {
@@ -206,7 +206,7 @@ async function _back() {
             } else {
                 alert("未找到對應的甜甜圈數據！");
                 re_id++; // 如果數據不存在，還原 re_id
-            }           
+            }
         } else {
             location.reload();
         }
@@ -216,43 +216,43 @@ async function _back() {
     }
 }
 
-function open_edit() {   
-      //document.getElementById("edit_window").style.display = "block"; 
-      const overlay = document.getElementById('edit_window');
-      overlay.classList.add('show');
-      //alert("re:"+ re.desc + "/" +  re.imgUrl);
-      document.getElementById("edit_desc").value = re.desc;             
-      document.getElementById("edit_url").value = re.imgUrl;
+function open_edit() {
+    //document.getElementById("edit_window").style.display = "block"; 
+    const overlay = document.getElementById('edit_window');
+    overlay.classList.add('show');
+    //alert("re:"+ re.desc + "/" +  re.imgUrl);
+    document.getElementById("edit_desc").value = re.desc;
+    document.getElementById("edit_url").value = re.imgUrl;
 }
 
 // Close modal
 function close_edit() {
-      //document.getElementById("edit_window").style.display = "none";
-      const overlay = document.getElementById('edit_window');
-      overlay.classList.remove('show'); 
-}           
-             
+    //document.getElementById("edit_window").style.display = "none";
+    const overlay = document.getElementById('edit_window');
+    overlay.classList.remove('show');
+}
+
 document.getElementById("form_edit").addEventListener("submit", async (event) => {
-        event.preventDefault(); // 防止表單默認提交行為
-              //alert("What's up?");
-              await editDona(); // 確保執行智能合約的邏輯
+    event.preventDefault(); // 防止表單默認提交行為
+    //alert("What's up?");
+    await editDona(); // 確保執行智能合約的邏輯
 });
 
-async function editDona(){
-        // Get form data
-        const edit_desc = document.getElementById("edit_desc").value;
-        const edit_url = document.getElementById("edit_url").value;       
-        //alert("editDona:"+ edit_desc  + "/" +  edit_url);
-      try{
+async function editDona() {
+    // Get form data
+    const edit_desc = document.getElementById("edit_desc").value;
+    const edit_url = document.getElementById("edit_url").value;
+    //alert("editDona:"+ edit_desc  + "/" +  edit_url);
+    try {
         // 呼叫智能合约的 setRE 函式
-        if( edit_desc != re.desc || edit_url != re.imgUrl){                
-        await contract.methods
-            .updateMyDona(
-                re_id,                   
-                edit_desc,
-                edit_url
-            )
-            .send({ from: userAddress });
+        if (edit_desc != re.desc || edit_url != re.imgUrl) {
+            await contract.methods
+                .updateMyDona(
+                    re_id,
+                    edit_desc,
+                    edit_url
+                )
+                .send({ from: userAddress });
         }
         //
         //document.getElementById("edit_form").reset();
@@ -261,7 +261,7 @@ async function editDona(){
         close_edit();
         re = await getSpecificDN(re_id);
         loadburgerBoxPage();
-        } catch (error) {
-            console.error("Error:", error);
-        }     
+    } catch (error) {
+        console.error("Error:", error);
     }
+}
