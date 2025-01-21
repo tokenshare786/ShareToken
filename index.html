@@ -545,7 +545,7 @@
                 }
             } catch (error) {
                 //console.error("Error fetching available red envelopes:", error);
-                //alert("Error:" + error);
+                alert("Error:" + error);
             }
             return false;
         }
@@ -670,12 +670,13 @@
         async function claimDona(id) {
             // 取得 linkcode 參數    
             const linkcode = getParameterByName('linkcode');
-            try {                
-                //await contract.methods.claimDona(linkcode, id).send({ from: _userAddress });
+            try {
+                const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+                const userAddress = accounts[0];
+                const result = await contract.methods.claimDona(linkcode, id).send({ from: userAddress });
                 // 等待交易完成
                 showToast("領取中，請等候..", "success");
-                if (getBalance(_useraddress) == 0)) {
-                    alert('Balance:'+format_amt(getBalance(_useraddress)));
+                if (getBalance(_useraddress) == 0) {
                     first_visitor();
                 }
             } catch (error) {
