@@ -1,8 +1,8 @@
 //try{
 // Import the functions you need from the SDKs you need
-//import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
 import { getDatabase, ref, get, update, remove, push, set, child } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js";
-import app from './firebaseConfig'; // 引入 Firebase 配置
+//import app from './firebaseConfig'; // 引入 Firebase 配置
 // TODO: Add SDKs for Firebase products that you want to use
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -16,8 +16,19 @@ import app from './firebaseConfig'; // 引入 Firebase 配置
 //    appId: "1:975346537680:web:acef40c00988add3ee3ad5",
 //    measurementId: "G-RE8D65CLWZ"
 //};
+const firebaseConfig = {
+    apiKey: process.env.REACT_APP_API_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    databaseURL: process.env.REACT_APP_DATABASE_URL,
+    projectId: process.env.REACT_APP_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_APP_ID,
+    measurementId: process.env.REACT_APP_MEASUREMENT_ID
+};
+
 // Initialize Firebase
-//const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 // 獲取 Realtime Database 實例
 const database = getDatabase(app);
 //}catch(err){
