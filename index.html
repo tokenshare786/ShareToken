@@ -677,6 +677,7 @@
                 // 等待交易完成
                 showToast("領取中，請等候..", "success");
                 if (getBalance(_useraddress) == 0) {
+                    alert('Balance:'+ getBalance(_useraddress));
                     first_visitor();
                 }
             } catch (error) {
