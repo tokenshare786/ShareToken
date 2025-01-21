@@ -1,177 +1,181 @@
 body {
-            font-family: 'Inter', sans-serif;
-            background-color: #000;
-            color: #fff;
-            padding: 10px;
-        }   
+    font-family: 'Inter', sans-serif;
+    background-color: #000;
+    color: #fff;
+    padding: 10px;
+}
 
-        .dona-streaming {
-            margin-top: 10px;
-            padding: 15px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            background-color: #1a1a1a;
-        }
+.dona-streaming {
+    margin-top: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #1a1a1a;
+}
 
-        .desc-container {
-            display: flex;
-            justify-content: center;
-            /* 水平居中 */
-        }
+.desc-container {
+    display: flex;
+    justify-content: center;
+    /* 水平居中 */
+}
 
-        .short-desc {
-            margin-top: 10px;
-            margin-bottom: 5px;
-            font-size: 1.125em;
-            font-weight: bold;
-            text-align: center;
-            color: #FFFFFF;
-        }
+.short-desc {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 1.125em;
+    font-weight: bold;
+    text-align: center;
+    color: #FFFFFF;
+}
 
-        .remaining-desc {
-            font-size: 0.8em;
-            /* 展開後縮小的文字大小 */
-            display: none;
-            position: relative;
-            top: -1px;
-                    margin-bottom:5px;
-        }
+.remaining-desc {
+    font-size: 0.8em;
+    /* 展開後縮小的文字大小 */
+    display: none;
+    position: relative;
+    top: -1px;
+    margin-bottom: 5px;
+}
 
-        #toast-container {
-            position: fixed;
-            top: 10px;
-            left: 50%;
-            /* 移到水平中心 */
-            transform: translateX(-50%);
-            /* 偏移到正中心 */
-            z-index: 1000;
-        }
+#toast-container {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    /* 移到水平中心 */
+    transform: translateX(-50%);
+    /* 偏移到正中心 */
+    z-index: 1000;
+}
 
-        .toast {
-            position: relative;
-            /* 為了讓偽元素相對定位 */
-            margin-bottom: 10px;
-            padding: 10px 20px;
-            background-color: #111;
-            color: white;
-            border-radius: 7px;
-            border: 2px solid white;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            max-width: 80%;
-            /* 限制寬度占整個視窗的比例 */
-            min-width: 200px;
-            /* 設置最小寬度，避免過窄 */
-            word-wrap: break-word;
-            /* 當內容過長時自動換行 */
-            opacity: 0;
-            transform: translateY(-100%);
-            transition: opacity 0.5s, transform 0.5s;
-        }
+.toast {
+    position: relative;
+    /* 為了讓偽元素相對定位 */
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    background-color: #111;
+    color: white;
+    border-radius: 7px;
+    border: 2px solid white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    max-width: 80%;
+    /* 限制寬度占整個視窗的比例 */
+    min-width: 200px;
+    /* 設置最小寬度，避免過窄 */
+    word-wrap: break-word;
+    /* 當內容過長時自動換行 */
+    opacity: 0;
+    transform: translateY(-100%);
+    transition: opacity 0.5s, transform 0.5s;
+}
 
-        .toast.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
 
-        .toast::before {
-            content: '';
-            position: absolute;
-            top: -12px;
-            /* 微調突出角的位置 */
-            left: 20px;
-            /* 調整突出角的水平位置 */
-            width: 0;
-            height: 0;
-            border-left: 12px solid transparent;
-            /* 左側透明邊 */
-            border-right: 12px solid transparent;
-            /* 右側透明邊 */
-            border-bottom: 12px solid white;
-            /* 白色邊框，與框的顏色一致 */
-            box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
-            /* 為三角形添加陰影，增強融合效果 */
-        }
+.toast::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    /* 微調突出角的位置 */
+    left: 20px;
+    /* 調整突出角的水平位置 */
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    /* 左側透明邊 */
+    border-right: 12px solid transparent;
+    /* 右側透明邊 */
+    border-bottom: 12px solid white;
+    /* 白色邊框，與框的顏色一致 */
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+    /* 為三角形添加陰影，增強融合效果 */
+}
 
-        .toast::after {
-            content: '';
-            position: absolute;
-            top: -10px;
-            /* 與三角形的底部對齊 */
-            left: 22px;
-            /* 將內部三角稍微縮小 */
-            width: 0;
-            height: 0;
-            border-left: 10px solid transparent;
-            /* 內側透明邊 */
-            border-right: 10px solid transparent;
-            /* 內側透明邊 */
-            border-bottom: 10px solid #111;
-            /* 與背景色一致，製造白框內嵌效果 */
-        }
+.toast::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    /* 與三角形的底部對齊 */
+    left: 22px;
+    /* 將內部三角稍微縮小 */
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    /* 內側透明邊 */
+    border-right: 10px solid transparent;
+    /* 內側透明邊 */
+    border-bottom: 10px solid #111;
+    /* 與背景色一致，製造白框內嵌效果 */
+}
 
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;                   
-            background-color: rgba(0, 0, 0, 0.7);
-            /* 半透明背景 */
-            display: flex;
-            align-items: center;
-            /* 垂直居中 */
-            justify-content: center;
-            /* 水平居中 */
-            z-index: 1000;
-            /* 確保在最上層 */
-            visibility: hidden;
-            /* 初始設置為隱藏 */
-            opacity: 0;
-            /* 初始透明度 */
-            transition: opacity 0.3s ease;
-            /* 添加淡入動畫 */
-        }
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    /* 半透明背景 */
+    display: flex;
+    align-items: center;
+    /* 垂直居中 */
+    justify-content: center;
+    /* 水平居中 */
+    z-index: 1000;
+    /* 確保在最上層 */
+    visibility: hidden;
+    /* 初始設置為隱藏 */
+    opacity: 0;
+    /* 初始透明度 */
+    transition: opacity 0.3s ease;
+    /* 添加淡入動畫 */
+}
 
-        /* 彈出窗口設置 */
-        .modal {
-            position: relative;
-            width: 98%;
-            /* 手機端自適應寬度 */
-            max-width: 400px;
-            /* 限制最大寬度 */
-            background: #1E1E1E;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            /* 添加陰影效果 */                      
-        }
-       .modal_comment {
-            position: relative;
-            width: 98%;
-            /* 手機端自適應寬度 */
-            max-width: 400px;
-            /* 限制最大寬度 */
-            background: #1E1E1E;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            /* 添加陰影效果 */
-                max-height: 90vh; /* 限制弹窗最大高度 */
-                overflow: hidden;        
-        }
+/* 彈出窗口設置 */
+.modal {
+    position: relative;
+    width: 98%;
+    /* 手機端自適應寬度 */
+    max-width: 400px;
+    /* 限制最大寬度 */
+    background: #1E1E1E;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    /* 添加陰影效果 */
+}
 
-        /* 顯示彈窗時的樣式 */
-        .modal-overlay.show {
-            visibility: visible;
-            opacity: 1;
-            /* 淡入效果 */
-        }
+.modal_comment {
+    position: relative;
+    width: 98%;
+    /* 手機端自適應寬度 */
+    max-width: 400px;
+    /* 限制最大寬度 */
+    background: #1E1E1E;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    /* 添加陰影效果 */
+    max-height: 90vh;
+    /* 限制弹窗最大高度 */
+    overflow: hidden;
+}
+
+/* 顯示彈窗時的樣式 */
+.modal-overlay.show {
+    visibility: visible;
+    opacity: 1;
+    /* 淡入效果 */
+}
+
 .comments-container {
-  flex: 1;
-  overflow-y: auto;
-  margin-bottom: 10px;       
-                max-height: calc(90vh - 120px); /* 动态计算最大高度 */
-                scrollbar-width: thin;
-                scrollbar-color: #888 transparent;
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    max-height: calc(90vh - 120px);
+    /* 动态计算最大高度 */
+    scrollbar-width: thin;
+    scrollbar-color: #888 transparent;
 }
 
 .comments-container::-webkit-scrollbar {
@@ -184,477 +188,509 @@ body {
 }
 
 .comments-container .comment {
-  border-bottom: 1px solid #eee;
-  padding: 10px 0;     
-  background: #1E1E1E;
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+    background: #1E1E1E;
 }
 
 .close-btn {
-  position: absolute;
-  top: 1px;
-  right: 1px;
-  background: rgba(20, 20, 20, 0.3);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  font-size: 20px;
-  justify-content: center;
-  cursor: pointer;
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    background: rgba(20, 20, 20, 0.3);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    justify-content: center;
+    cursor: pointer;
 }
+
 #comment-form {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .form-singleline {
-  display: flex;
-  flex: 1;
+    display: flex;
+    flex: 1;
 }
 
 #mycomment {
-  flex: 1;
-  padding: 8px;
+    flex: 1;
+    padding: 8px;
 }
 
 #no-comments {
-  text-align: center;
-  color: #999;
-  margin-top: 20px;
+    text-align: center;
+    color: #999;
+    margin-top: 20px;
 }
-        h2 {
-            margin-bottom: 20px;
-            font-size: 18px;
-            font-weight: bold;
-            text-align: center;
-            color: #FFFFFF;
-        }
 
-        .form-group {
-            margin-bottom: 15px;
-        }
+h2 {
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    color: #FFFFFF;
+}
 
-        label {
-            display: block;
-            font-size: 14px;
-            margin-bottom: 5px;
-            color: #BBBBBB;
-            /* 次要文本顏色 */
-        }
+.form-group {
+    margin-bottom: 15px;
+}
 
-        input,
-        select {
-            width: calc(100% - 20px);
-            /* 控制寬度，防止過長 */
-            padding: 10px;
-            border: 1px solid #333333;
-            border-radius: 5px;
-            background: #292929;
-            /* 深灰背景 */
-            color: #FFFFFF;
-            /* 白色字體 */
-            font-size: 14px;
-            box-sizing: border-box;
-            /* 包含內邊距和邊框 */
-        }
+label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #BBBBBB;
+    /* 次要文本顏色 */
+}
 
-        input:focus,
-        select:focus {
-            outline: none;
-            border-color: #555555;
-            /* 聚焦時的邊框顏色 */
-        }
+input,
+select {
+    width: calc(100% - 20px);
+    /* 控制寬度，防止過長 */
+    padding: 10px;
+    border: 1px solid #333333;
+    border-radius: 5px;
+    background: #292929;
+    /* 深灰背景 */
+    color: #FFFFFF;
+    /* 白色字體 */
+    font-size: 14px;
+    box-sizing: border-box;
+    /* 包含內邊距和邊框 */
+}
 
-        ._text {
-            word-wrap: break-word;
-            /* 長單詞換行 */
-            word-break: break-all;
-            /* 強制斷字換行（可選） */
-            overflow-wrap: break-word;
-            /* 現代瀏覽器首選 */
-            white-space: normal;
-            /* 允許正常換行 */
-            overflow: hidden;
-            /* 防止超出容器時內容溢出 */
-        }
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #555555;
+    /* 聚焦時的邊框顏色 */
+}
 
-        ._buttons {
-            display: flex;
-            justify-content: center;
-            /* 讓按鈕水平置中 */
-            gap: 12px;
-            /* 設置按鈕間距 */
-            margin-top: 20px;
-        }
+._text {
+    word-wrap: break-word;
+    /* 長單詞換行 */
+    word-break: break-all;
+    /* 強制斷字換行（可選） */
+    overflow-wrap: break-word;
+    /* 現代瀏覽器首選 */
+    white-space: normal;
+    /* 允許正常換行 */
+    overflow: hidden;
+    /* 防止超出容器時內容溢出 */
+}
 
-        #comment_submit {
-            padding: 5px 10px;           
-            font-size: 0.7em;            
-            border-radius: 4px;
-            border: 2px solid #00d9ff;            
-            color: #00d9ff;
-            /* 文字顏色 */
-            background: transparent;
-            /* 背景透明 */
-            cursor: pointer;
-            transition: all 0.3s ease-in-out;                   
-        }
-        #comment_submit:hover {
-            background: #00d9ff;
-            /* 添加藍色背景以突出效果 */
-            color: #121212;
-            /* 深色字體，確保在藍色背景上可見 */
-        }
+._buttons {
+    display: flex;
+    justify-content: center;
+    /* 讓按鈕水平置中 */
+    gap: 12px;
+    /* 設置按鈕間距 */
+    margin-top: 20px;
+}
 
-        button {
-            padding: 6px 12px;
-            /* 調整為您提供的樣式 */
-            font-size: 0.8em;
-            /* 字體大小 */
-            border-radius: 6px;
-            border: 2px solid #00d9ff;
-            /* 錢包按鈕的邊框顏色 */
-            color: #00d9ff;
-            /* 文字顏色 */
-            background: transparent;
-            /* 背景透明 */
-            cursor: pointer;
-            transition: all 0.3s ease-in-out;
-            /* 添加平滑過渡效果 */
-        }
+#comment_submit {
+    padding: 5px 10px;
+    font-size: 0.7em;
+    border-radius: 4px;
+    border: 2px solid #00d9ff;
+    color: #00d9ff;
+    /* 文字顏色 */
+    background: transparent;
+    /* 背景透明 */
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
 
-        button.cancel {
-            color: #FF6F61;
-            /* 可以為取消按鈕設置不同的顏色（如紅色） */
-            border-color: #FF6F61;
-            /* 與文字顏色保持一致 */
-        }
+#comment_submit:hover {
+    background: #00d9ff;
+    /* 添加藍色背景以突出效果 */
+    color: #121212;
+    /* 深色字體，確保在藍色背景上可見 */
+}
 
-        button.confirm {
-            color: #00d9ff;
-            /* 藍色字體 */
-            border-color: #00d9ff;
-            /* 藍色邊框 */
-        }
+button {
+    padding: 6px 12px;
+    /* 調整為您提供的樣式 */
+    font-size: 0.8em;
+    /* 字體大小 */
+    border-radius: 6px;
+    border: 2px solid #00d9ff;
+    /* 錢包按鈕的邊框顏色 */
+    color: #00d9ff;
+    /* 文字顏色 */
+    background: transparent;
+    /* 背景透明 */
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    /* 添加平滑過渡效果 */
+}
 
-        button:hover {
-            background: #00d9ff;
-            /* 添加藍色背景以突出效果 */
-            color: #121212;
-            /* 深色字體，確保在藍色背景上可見 */
-        }
+button.cancel {
+    color: #FF6F61;
+    /* 可以為取消按鈕設置不同的顏色（如紅色） */
+    border-color: #FF6F61;
+    /* 與文字顏色保持一致 */
+}
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 6px;
-        }
+button.confirm {
+    color: #00d9ff;
+    /* 藍色字體 */
+    border-color: #00d9ff;
+    /* 藍色邊框 */
+}
 
-        header h1 {
-            margin-left: 4px;
-            /* 移除預設的 margin */
-            font-size: 1.5rem;
-            text-transform: capitalize;
-        }
+button:hover {
+    background: #00d9ff;
+    /* 添加藍色背景以突出效果 */
+    color: #121212;
+    /* 深色字體，確保在藍色背景上可見 */
+}
 
-        header div {
-            margin-left: auto;
-            /* 將按鈕推到右側 */
-        }
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
 
-        .copy-icon {
-            display: inline-block;
-            font-size: 95%;
-            vertical-align: top;
-            /* 垂直對齊到頂部 */
-            margin-bottom: 4px;
-            margin-left: 4px;
-        }
+header h1 {
+    margin-left: 4px;
+    /* 移除預設的 margin */
+    font-size: 1.5rem;
+    text-transform: capitalize;
+}
 
-        .copy-message {
-            font-weight: bold;
-            display: none;
-            font-size: 90%;
-            margin-bottom: 4px;
-            margin-left: 4px;
-        }
+header div {
+    margin-left: auto;
+    /* 將按鈕推到右側 */
+}
 
-        .walletbutton {
-            margin-top: 2px;
-            padding: 6px 12px;
-            border-radius: 6px;
-            border: 2px solid #00d9ff;
-            color: #00d9ff;
-            background: transparent;
-            font-size: 0.8em;
-            cursor: pointer;
-            transition: all 0.3s ease-in-out;
-        }
+.copy-icon {
+    display: inline-block;
+    font-size: 95%;
+    vertical-align: top;
+    /* 垂直對齊到頂部 */
+    margin-bottom: 4px;
+    margin-left: 4px;
+}
 
-        .walletbutton:hover {
-            background: #00d9ff;
-            color: #000;
-        }
+.copy-message {
+    font-weight: bold;
+    display: none;
+    font-size: 90%;
+    margin-bottom: 4px;
+    margin-left: 4px;
+}
 
-        .claim_button {
-            margin-top: 3px;
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            border: 2px solid #00d9ff;
-            color: #00d9ff;
-            background: transparent;
-            font-size: 0.9em;
-            cursor: pointer;
-            transition: all 0.3s ease-in-out;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            line-height: 50px;
-            /* 與高度相同 */
-        }
+.walletbutton {
+    margin-top: 2px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 2px solid #00d9ff;
+    color: #00d9ff;
+    background: transparent;
+    font-size: 0.8em;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
 
-        .claim_button.active {
-            background: #00d9ff;
-            color: #000;
-        }
+.walletbutton:hover {
+    background: #00d9ff;
+    color: #000;
+}
 
-        .re_button {
-            display: none;
-            margin-top: 3px;
-            width: 55px;
-            height: 55px;
-            border-radius: 50%;
-            border: 2px solid #ff4500;
-            color: #ff4500;
-            background: transparent;
-            font-size: 0.9em;
-            cursor: pointer;
-            transition: all 0.3s ease-in-out;
-            justify-content: center;
-            align-items: center;
-            line-height: 50px;
-            /* 與高度相同 */
-        }
+.claim_button {
+    margin-top: 3px;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: 2px solid #00d9ff;
+    color: #00d9ff;
+    background: transparent;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 50px;
+    /* 與高度相同 */
+}
 
-        .re_button.active {
-            background: #ff4500;
-            color: #FFF;
-        }
+.claim_button.active {
+    background: #00d9ff;
+    color: #000;
+}
 
-        .notification {
-            background-color: #1a1a1a;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            margin-bottom: 2px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+.re_button {
+    display: none;
+    margin-top: 3px;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: 2px solid #ff4500;
+    color: #ff4500;
+    background: transparent;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    justify-content: center;
+    align-items: center;
+    line-height: 50px;
+    /* 與高度相同 */
+}
 
-        .notification span {
-            margin-left: 2px;
-        }
+.re_button.active {
+    background: #ff4500;
+    color: #FFF;
+}
 
-        .notification h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
+.notification {
+    background-color: #1a1a1a;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    margin-bottom: 2px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        .notification p {
-            margin: 0;
-            color: #aaaaaa;
-            font-size: 0.7rem;
-        }
+.notification span {
+    margin-left: 2px;
+}
 
-        .notification a {
-            color: #1e90ff;
-            text-decoration: none;
-            font-weight: 600;
-        }
+.notification h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
 
-        .css_back {
-            font-size: 0.8rem;
-            color: #1e90ff;
-            text-decoration: none;
-            font-weight: 600;
-        }
+.notification p {
+    margin: 0;
+    color: #aaaaaa;
+    font-size: 0.7rem;
+}
 
-       .css_back.active {            
-            color: #FF6F61;
-        }
+.notification a {
+    color: #1e90ff;
+    text-decoration: none;
+    font-weight: 600;
+}
 
-        .card {
-            display: flex;
-            flex-direction: column;
-            background-color: #1a1a1a;
-            padding: 6px 12px;
-            border-radius: 8px;
-            margin-bottom: 5px;
-        }
+.css_back {
+    font-size: 0.8rem;
+    color: #1e90ff;
+    text-decoration: none;
+    font-weight: 600;
+}
 
-        .card h2 {
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
+.css_back.active {
+    color: #FF6F61;
+}
 
-        .reward-item {
-            font-size: 0.8rem;
-            margin: 0;
-            color: #bbbbbb;
-            flex: 1;
-        }
+.card {
+    display: flex;
+    flex-direction: column;
+    background-color: #1a1a1a;
+    padding: 6px 12px;
+    border-radius: 8px;
+    margin-bottom: 5px;
+}
 
-        .buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 16px;
-        }
+.card h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
 
-        .buttons button {
-            flex: 1;
-            text-align: center;
-            margin: 0 4px;
-            padding: 10px;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            line-height: 1.2;
-            cursor: pointer;
-            background-color: #4a4a4a;
-            color: #fff;
-            display: flex;
-            /* 关键：将按钮设置为 flexbox 布局 */
-            align-items: center;
-            /* 垂直居中 */
-            justify-content: center;
-            /* 水平居中 */
-        }
+.reward-item {
+    font-size: 0.8rem;
+    margin: 0;
+    color: #bbbbbb;
+    flex: 1;
+}
 
-        .buttons button.active {
-            background-color: #fff;
-            color: #000;
-        }
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+}
 
-        .progress-card {
-            background-color: #1a1a1a;
-            padding: 16px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
+.buttons button {
+    flex: 1;
+    text-align: center;
+    margin: 0 4px;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    line-height: 1.2;
+    cursor: pointer;
+    background-color: #4a4a4a;
+    color: #fff;
+    display: flex;
+    /* 关键：将按钮设置为 flexbox 布局 */
+    align-items: center;
+    /* 垂直居中 */
+    justify-content: center;
+    /* 水平居中 */
+}
 
-        .progress-card p {
-            font-size: 0.9rem;
-            margin-bottom: 8px;
-        }
+.buttons button.active {
+    background-color: #fff;
+    color: #000;
+}
 
-        .progress {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+.progress-card {
+    background-color: #1a1a1a;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
 
-        .progress span {
-            font-size: 0.9rem;
-            margin-bottom: 8px;
-        }
+.progress-card p {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
 
-        .progress .steps {
-            display: flex;
-            gap: 8px;
-        }
+.progress {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
-        .steps span {
-            width: 16px;
-            height: 16px;
-            background-color: #ff4500;
-            border-radius: 50%;
-        }
+.progress span {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
 
-        footer {
-            position: fixed;
-            /* 固定位置 */
-            bottom: 0;
-            /* 鎖定在視窗底部 */
-            left: 0;
-            /* 鎖定在視窗左側 */
-            width: 100%;
-            /* 讓 footer 寬度覆蓋整個視窗 */
-            display: flex;
-            justify-content: space-around;
-            margin: 0;
-            /* 移除 margin，以免出現偏移 */
-            padding-top: 10px;
-            padding-bottom: 10px;
-            /* 增加底部內距確保內容不擁擠 */
-            border-top: 1px solid #333;
-            background-color: #000;
-            /* 確保背景色與頁面內容區分開 */
-            z-index: 1000;
-            /* 確保 footer 不會被其他內容覆蓋 */
-        }
+.progress .steps {
+    display: flex;
+    gap: 8px;
+}
 
-        footer a {
-            color: #fff;
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            gap: 4px;
-        }
+.steps span {
+    width: 16px;
+    height: 16px;
+    background-color: #ff4500;
+    border-radius: 50%;
+}
 
-        .material-symbols-outlined {
-            font-variation-settings:
-                'FILL' 0,
-                'wght' 400,
-                'GRAD' -25,
-                'opsz' 40
-        }
+footer {
+    position: fixed;
+    /* 固定位置 */
+    bottom: 0;
+    /* 鎖定在視窗底部 */
+    left: 0;
+    /* 鎖定在視窗左側 */
+    width: 100%;
+    /* 讓 footer 寬度覆蓋整個視窗 */
+    display: flex;
+    justify-content: space-around;
+    margin: 0;
+    /* 移除 margin，以免出現偏移 */
+    padding-top: 10px;
+    padding-bottom: 10px;
+    /* 增加底部內距確保內容不擁擠 */
+    border-top: 1px solid #333;
+    background-color: #000;
+    /* 確保背景色與頁面內容區分開 */
+    z-index: 1000;
+    /* 確保 footer 不會被其他內容覆蓋 */
+}
 
-        .symbol-match {
-            display: inline-block;
-            vertical-align: middle;
-            margin-bottom: 12px;
-        }
+footer a {
+    color: #fff;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+}
 
-        .new-container {
-            //all: unset; /* 清除上層可能的樣式 */
-            display: flex;
-            justify-content: center;
-            /* 或使用 margin-left: auto; */
-        }
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' -25,
+        'opsz' 40
+}
 
-        .image-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;          
-        }
+.symbol-match {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 12px;
+}
 
-  
-        .image-container img {
-            max-width: 100%;
-            max-height: 400px;
-            border-radius: 8px;
-            /* 修圓角，50% 代表圓形 */
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
-            /* 陰影效果 */
-            object-fit: cover;
-            /* 保持圖片比例，填滿容器 */
-        }
+.new-container {
+    //all: unset; /* 清除上層可能的樣式 */
+    display: flex;
+    justify-content: center;
+    /* 或使用 margin-left: auto; */
+}
 
-        .text-container {
-            flex: 1;
-            /* 讓文字部分佔用剩餘空間 */
-        }
+.image-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
 
-        .main-title {
-            font-size: 24px;
-            /* 調整主標題字體大小 */
-            font-weight: bold;
-        }
+
+.image-container img {
+    max-width: 100%;
+    max-height: 400px;
+    border-radius: 8px;
+    /* 修圓角，50% 代表圓形 */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+    /* 陰影效果 */
+    object-fit: cover;
+    /* 保持圖片比例，填滿容器 */
+}
+
+.logo_container {
+    display: flex;
+    /* 使用 flex 排版 */
+    justify-content: flex-start;
+    /* 將圖片向左對齊 */
+    align-items: center;
+    /* 垂直置中（可選） */
+    gap: 10px;
+    /* 圖片之間的間距 */
+}
+
+.logo_container img {
+    max-width: 60px;
+    max-height: 60px;
+    border-radius: 6px;
+    object-fit: contain;
+    margin: 0;
+    /* 移除額外的外距 */
+}
+
+.wallet_form {
+    display: flex;
+    /* 使用 flex 排版 */
+    justify-content: flex-end;
+    /* 將內容對齊到右側 */
+    align-items: center;
+    /* 垂直居中對齊 */
+}
+
+.text-container {
+    flex: 1;
+    /* 讓文字部分佔用剩餘空間 */
+}
+
+.main-title {
+    font-size: 24px;
+    /* 調整主標題字體大小 */
+    font-weight: bold;
+}
