@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.26;
 
-contract DonaToken {
+contract BlackDona {
     address public _owner;
     modifier onlyOwner() {
         require(msg.sender == _owner, "Only owner");
@@ -23,24 +23,26 @@ contract DonaToken {
         string nickname;
         string description;
         string imgUrl;
+        string url;
         uint256 lastClaimedAD;
-        bool isDistoStartRE;
-        bool isDistoRef;
+        bool disDN;
+        bool disRef;
     }
-    mapping(address => Holder) public holders;
+    mapping(address => Holder) public holders;        
     uint256 public adCount = 0;
     uint256 public adStartTime;
-    uint256 public adDuration = 72 hours;
+    uint256 public adDuration = 24 hours;
     //Percentage of each type
     uint256 public holderPercent = 300; // *100
     uint256 public refPercent = 100; // *100
     uint256 public ownerPercent = 100; // *100
-    uint256 public cost_Edit = 200 * 10**18;
-    uint256 public minRefAmount = 100 * 10**18;
+    uint256 public cost_Edit = 10 * 10**18;
+    uint256 public cost_ntf = 10 * 10**18;
+    uint256 public minRefAmount = 10 * 10**18;
     bool public adEnabled = false;
     mapping(string => address) public refCodeOwners;
     mapping(address => address[]) public myfans;
-    struct reInfo {
+    struct donaInfo {
         uint256 subAmt; // Total shares of this event of RE
         uint256 claimedAmt; // Shares of Already claimed
         uint256 maxClaims; // Maximum Times could be claimed
@@ -49,21 +51,25 @@ contract DonaToken {
         uint8 eligiType; // Who is eligible to claim the RE
         string desc;
         string imgUrl;
+        string redirect;
         uint256 startTime;
         bool isActive; // Still active
     }
-    mapping(uint256 => reInfo) public redEnv;
+    mapping(uint256 => donaInfo) public blkDona;
     // Whoever Claimed which Dona
     // Stores the ID set of currently valid Dina
     mapping(uint256 => mapping(address => bool)) public whoClaimed;
-    uint256[] public activeREs;
-    mapping(address => uint256[]) public myRE;
-    mapping(address => uint256) public myReCount;
-    uint256 public MinSharePerRE = 100 * 10**18;
-    uint256 public MinREshare = 200 * 10**18;
-    uint256 public reID = 0;
+    uint256[] public activeDNs;
+    mapping(uint256 => uint8) public limitedDN;
+    mapping(address => uint256[]) public myDona;
+    mapping(address => uint256) public myDonaCount;
+    uint256 public minShareBox = 10 * 10**18;
+    uint256 public minShareTime = 20 * 10**18;
+    uint256 public donaID = 0;
     //Events for establishing recommended relationships
     event refSet(address indexed holder, address indexed referer);
+    event Mint(address indexed minter, uint256 amount);
+
     // Someone made a transfer
     event Transfer(address indexed from, address indexed to, uint256 value);
     event Approval(
@@ -71,6 +77,13 @@ contract DonaToken {
         address indexed spender,
         uint256 value
     );
+    event Donation(
+        address indexed dona,
+        address indexed recipient,
+        uint256 amount
+    );
+    event Burn(address indexed burner, uint256 amount);
+
     // Owner initiate a AirDrop event
     event ADStarted(uint256 indexed adCount);
     // Some holder claimed a airdrop
@@ -80,76 +93,88 @@ contract DonaToken {
         uint256 reward
     );
     //Someone created a red envelope event
-    event reCreated(
+    event donaCreated(
         uint256 indexed id,
         address indexed creator,
+        uint8 eligiType,
         uint256 subAmt,
         uint256 maxClaims
     );
     //Someone claimed a red envelope
-    event reClaimed(
+    event donaClaimed(
         uint256 indexed id,
         address indexed claimer,
         uint256 amount,
         address indexed creator
     );
+    event Notification(
+        address indexed sender,
+        string notice_type,
+        string message,
+        uint256 timestamp
+    );
 
     constructor() {
         _owner = msg.sender;
         _mint(msg.sender, INITIAL_SUPPLY);
-        name = "DONA";
+        name = "BLKDONA";
         symbol = "DONA";
         decimals = 18;
     }
 
-    //Check holder's existing referral code
-    function getMyRefCode() public view returns (string memory) {
-        return holders[msg.sender].refCode;
+    function notification(string memory notice_type, string memory message)
+        public
+    {
+        if (msg.sender != _owner) {
+            _burn(msg.sender, cost_ntf);
+        }
+        emit Notification(msg.sender, notice_type, message, block.timestamp);
     }
 
     // Set or edit referral code
-    function setMyRefCode(string memory refCode) external returns (uint8) {
+    function setMyRefCode(string memory refCode) external {
+        require(bytes(refCode).length > 0, "invalid code");
         if (
             // "Insufficient SHARE"
             balanceOf[msg.sender] < cost_Edit
         ) {
-            return 1;
+            return;
         } else if (
             // "Invalid format"
             !isValidRefCode(refCode)
         ) {
-            return 2;
+            return;
         }
 
         // Delete old mapping ofrefCode (if exists)
         string memory oldrefCode = holders[msg.sender].refCode;
         if (
             bytes(oldrefCode).length > 0 &&
-            refCodeOwners[oldrefCode] != address(0)
+            refCodeOwners[toLower(oldrefCode)] == msg.sender
         ) {
-            delete refCodeOwners[oldrefCode];
+            delete refCodeOwners[toLower(oldrefCode)];
         }
 
         // Convert the referral code to lowercase
         // avoid duplication of uppercase and lowercase letters
-        string memory lowerRefCode = toLower(refCode);
+        //string memory lowerRefCode = toLower(refCode);
         if (
             // "Referral code already used by another holder"
-            refCodeOwners[lowerRefCode] != address(0)
+            refCodeOwners[toLower(refCode)] != address(0)
         ) {
-            return 3;
+            return;
         }
         // Deduct the fee for setting the referral code
         _burn(msg.sender, cost_Edit);
         // Set a new referral code. The referral code can be case sensitive.
         holders[msg.sender].refCode = refCode;
         //Always store referral codes in lowercase in the refCodeOwners map to avoid confusion.
-        refCodeOwners[lowerRefCode] = msg.sender;
-        return 0;
+        refCodeOwners[toLower(refCode)] = msg.sender;
+        //return ;
     }
 
     // Convert the referral code to lowercase
-    function toLower(string memory str) public pure returns (string memory) {
+    function toLower(string memory str) internal pure returns (string memory) {
         bytes memory strBytes = bytes(str);
         for (uint256 i = 0; i < strBytes.length; i++) {
             if (strBytes[i] >= 0x41 && strBytes[i] <= 0x5A) {
@@ -161,7 +186,11 @@ contract DonaToken {
 
     // Verify whether the referral code format is valid
     // (only a~z, 0~9,-_@ combinations are allowed)
-    function isValidRefCode(string memory refCode) public pure returns (bool) {
+    function isValidRefCode(string memory refCode)
+        internal
+        pure
+        returns (bool)
+    {
         bytes memory codeBytes = bytes(refCode);
         for (uint256 i = 0; i < codeBytes.length; i++) {
             bytes1 char = codeBytes[i];
@@ -192,9 +221,9 @@ contract DonaToken {
         bool isRef
     ) external onlyOwner {
         if (isRef) {
-            holders[account].isDistoStartRE = _disabled;
+            holders[account].disDN = _disabled;
         } else {
-            holders[account].isDistoRef = _disabled;
+            holders[account].disRef = _disabled;
         }
     }
 
@@ -208,7 +237,7 @@ contract DonaToken {
             holders[recipient].referrer == address(0) &&
             // Make sure the Sender is not a contract address
             !isContract(msg.sender) &&
-            !holders[msg.sender].isDistoRef
+            !holders[msg.sender].disRef
         ) {
             holders[recipient].referrer = msg.sender;
             holders[msg.sender].fans_count++;
@@ -219,39 +248,40 @@ contract DonaToken {
     }
 
     // Manually set referrer
-    function setReferrer(string memory refCode) public returns (uint8) {
-        address referrer = refCodeOwners[refCode];
+    function setReferrer(string memory refCode) external {
+        require(bytes(refCode).length > 0, "Invalid string");
+        address referrer = refCodeOwners[toLower(refCode)];
         if (
             //"Referrer already set"
             holders[msg.sender].referrer != address(0)
         ) {
-            return 1;
+            return;
         } else if (
-            // Invalid code or referrer is Disabled
-            bytes(refCode).length == 0 || holders[referrer].isDistoRef
+            // referrer is not Disabled
+            holders[referrer].disRef
         ) {
-            return 2;
+            return;
         } else if (
             //referrer != address(0)
             referrer == address(0)
         ) {
-            return 3;
+            return;
         } else if (
             //"Can not refer yourself"
             referrer == msg.sender
         ) {
-            return 4;
+            return;
         }
         // Set referral
         holders[msg.sender].referrer = referrer;
         holders[referrer].fans_count++;
         myfans[referrer].push(msg.sender);
         emit refSet(msg.sender, referrer);
-        return 0;
+        //return 0;
     }
 
     //Owner set a new round of airdrop
-    function startAirdrop() public onlyOwner {
+    function startAirdrop() external onlyOwner {
         require(!adEnabled, "Airdrop enabled");
         uint256 ownerReward = (totalSupply * ownerPercent) / 10000;
         _mint(_owner, ownerReward);
@@ -261,36 +291,23 @@ contract DonaToken {
         emit ADStarted(adCount);
     }
 
-    //get datas of latest airdrop
-    function getAirDropInfo()
-        public
-        view
-        returns (
-            uint256,
-            uint256,
-            uint256
-        )
-    {
-        return (adCount, adStartTime, adDuration);
-    }
-
-    function toClaimAirdrop(address addr) internal returns (uint8) {
+    function toClaimAirdrop(address addr) internal {
         if (
             //Airdrop not enabled
             !adEnabled
         ) {
-            return 1;
+            return;
         } else if (
             //Airdrop expired
             block.timestamp > adStartTime + adDuration
         ) {
             adEnabled = false;
-            return 2;
+            //return ; who close the door can still get the last airdrop.
         } else if (
             //addr Already claimed airdrop
             holders[addr].lastClaimedAD > adStartTime
         ) {
-            return 3;
+            return;
         }
         // initial 3% of holder's balance
         uint256 holderReward = (balanceOf[addr] * holderPercent) / 10000;
@@ -310,179 +327,169 @@ contract DonaToken {
             emit ADClaimed(addr, referrer, referReward);
             holders[referrer].referReward += referReward;
         }
-        //Succeed to claim the airDrop"
-        return 4;
     }
 
     // Claim airdrop,holder no need to keyin address for security consideration
-    function claimAirdrop() public returns (uint8) {
-        uint8 result = toClaimAirdrop(msg.sender);
-        return result;
+    function claimAirdrop() external {
+        toClaimAirdrop(msg.sender);
     }
 
     //Owner setup holderPercent
-    function setRewardPercentage(uint256 _type, uint8 _percentage)
-        external
-        onlyOwner
-        returns (bool)
-    {
-        if (_percentage < 1 || _percentage > 400 || adEnabled) {
-            return false;
-        }
-        if (_type == 1) {
-            holderPercent = _percentage;
-        } else if (_type == 2) {
-            refPercent = _percentage;
-        } else if (_type == 3) {
-            ownerPercent = _percentage;
-        } else {
-            return false;
-        }
-        return true;
+    function setHolderReward(uint256 _percentage) external onlyOwner {
+        require(_percentage > 1 && _percentage < 500, "Invalid percentge");
+        holderPercent = _percentage;
     }
 
-    //Owner setup Parameters
-    function setParameter(uint8 _type, uint256 _amount)
-        external
-        onlyOwner
-        returns (bool)
-    {
-        if (_amount <= 0) {
-            return false;
-        }
-        //
-        else if (_type == 1) {
-            // Set a minimum recommended transfer amount,100
-            minRefAmount = _amount;
-        } else if (_type == 2) {
-            // Set the minimum share that each red envelope should contain,100
-            MinSharePerRE = _amount;
-        } else if (_type == 3) {
-            // Set the minimum number of shares that should be included
-            // when initiating a red envelope event
-            MinREshare = _amount;
-        } else if (_type == 4) {
-            // Set the number of shares required to edit data
-            cost_Edit = _amount;
-        } else if (_type == 5 && !adEnabled && _amount >= 3600) {
-            // Set airdrop duration
-            adDuration = _amount;
-        } else {
-            return false;
-        }
-        return true;
+    //Owner setup refPercent
+    function setReferalReward(uint256 _percentage) external onlyOwner {
+        require(_percentage > 1 && _percentage < 500, "Invalid percentge");
+        refPercent = _percentage;
     }
 
-    //how many shares I have rewarded via airdrop as a holder
-    //function getReward(bool isref) public view returns (uint256) {
-    //    if (isref) {
-    //        return holders
-    //[msg.sender].referReward;
-    //    }
-    //    return holders
-    //[msg.sender].holderReward;
-    //}
+    //Owner setup refPercent
+    function setOwnerReward(uint256 _percentage) external onlyOwner {
+        require(_percentage > 1 && _percentage < 500, "Invalid percentge");
+        ownerPercent = _percentage;
+    }
 
+    function setMinRefAmount(uint256 _amount) external onlyOwner {
+        require(_amount > 0, "amount must >0");
+        minRefAmount = _amount;
+    }
+
+    function setMinShareTime(uint256 _amount) external onlyOwner {
+        require(_amount > 0, "amount must >0");
+        minShareTime = _amount;
+    }
+
+    function setMinShareBox(uint256 _amount) external onlyOwner {
+        require(_amount > 0, "amount must >0");
+        minShareBox = _amount;
+    }
+
+    function setCost_Edit(uint256 _amount) external onlyOwner {
+        require(_amount > 0, "amount must >0");
+        cost_Edit = _amount;
+    }
+
+    function setCost_Notification(uint256 _amount) external onlyOwner {
+        require(_amount > 0, "amount must >0");
+        cost_ntf = _amount;
+    }
+
+    function setAdDuration(uint256 _duration) external onlyOwner {
+        require(_duration >= 3600, "Duration at least 1 hour");
+        adDuration = _duration;
+    }
+    //When a donut really doesn't work, make it invalid,
+    //and in serious cases, make its creator invalid as well.
+    //when reason=0,means Dona is OK to access
+    function limitDona(uint256 id, uint8 reason,bool discreator) external onlyOwner {
+        donaInfo storage dona = blkDona[id];
+        limitedDN[id] = reason;
+        if (discreator) {
+            holders[dona.creator].disDN = true;
+        }
+    }
     // initiating a red envelope event
-    function setRE(
+    function setDona(
         uint256 totalShare,
-        uint256 countRE,
+        uint256 countDN,
         uint8 eligiType,
         string memory _desc,
-        string memory _url
-    ) external returns (bool) {
-        uint256 sum = countRE * MinSharePerRE;
-        uint256 minShare = MinREshare > sum ? MinREshare : sum;
+        string memory _url,
+        string memory _redirect
+    ) external {
+        uint256 sum = countDN * minShareBox;
+        uint256 minShare = minShareTime > sum ? minShareTime : sum;
+        require(bytes(_desc).length < 1024,"Desc. is too long");
         if (
             totalShare < minShare || //"At least SHARE each");
             eligiType > 2 ||
             eligiType < 0 || //"Invalid eligible type");
             balanceOf[msg.sender] < totalShare || //"Insufficient balance");
-            holders[msg.sender].isDistoStartRE
+            holders[msg.sender].disDN
         ) {
-            return false;
+            return;
         }
         // Transfer the total share of the red envelope to the contract address
         _transfer(msg.sender, address(this), totalShare);
         // Initialize a red envelope event
-        reID++;
-        redEnv[reID] = reInfo({
+        donaID++;
+        blkDona[donaID] = donaInfo({
             subAmt: totalShare,
             claimedAmt: 0,
-            maxClaims: countRE,
+            maxClaims: countDN,
             claimCount: 0,
             creator: msg.sender,
             eligiType: eligiType,
             desc: _desc,
             imgUrl: _url,
+            redirect: _redirect,
             startTime: block.timestamp,
             isActive: true
         });
-        myRE[msg.sender].push(reID);
-        myReCount[msg.sender]++;
-        activeREs.push(reID);
-        emit reCreated(reID, msg.sender, totalShare, countRE);
-        return true;
+        myDona[msg.sender].push(donaID);
+        myDonaCount[msg.sender]++;
+        activeDNs.push(donaID);
+        emit donaCreated(donaID, msg.sender, eligiType, totalShare, countDN);
     }
 
     //
     // Set or edit my profile description and picture
-    function updateMyRE(
+    function updateMyDona(
         uint256 id,
-        bool isdesc,
-        string memory data
-    ) external returns (bool) {
-        reInfo storage re = redEnv[id];
-        if (re.creator == msg.sender && bytes(data).length > 0) {
-            if (isdesc) {
-                re.desc = data;
-                return true;
-            } else {
-                re.imgUrl = data;
-                return true;
+        string memory desc,
+        string memory url
+    ) external {
+        require(bytes(desc).length < 1024,"Desc. is too long");
+        donaInfo storage dona = blkDona[id];
+        if (dona.creator == msg.sender) {
+            if (bytes(desc).length > 0) {
+                dona.desc = desc;
+            }
+            if (bytes(url).length > 0) {
+                dona.imgUrl = url;
             }
         }
-        return false;
     }
 
-    // Claim a redenvelope
-    function claimRE(string memory linkcode, uint256 id)
-        external
-        returns (bool)
-    {
-        reInfo storage re = redEnv[id];
+
+    // Claim a blkDonaelope
+    function claimDona(string memory linkcode, uint256 id) external {
+        donaInfo storage dona = blkDona[id];
         if (
-            !re.isActive ||
-            re.claimCount >= re.maxClaims ||
+            !dona.isActive ||
+            dona.claimCount >= dona.maxClaims ||
             !checkEligible(linkcode, id)
         ) {
-            return false;
+            return;
         }
         // Set a random amount (get a random share of the red envelope)
-        uint256 remainsAmt = re.subAmt - re.claimedAmt;
-        uint256 remainClaims = re.maxClaims - re.claimCount;
+        uint256 remainsAmt = dona.subAmt - dona.claimedAmt;
+        uint256 remainClaims = dona.maxClaims - dona.claimCount;
         uint256 claimAmount = remainClaims == 1
             ? remainsAmt
             : randomAmt(remainsAmt, remainClaims);
         // Update red envelope status
-        re.claimedAmt += claimAmount;
-        re.claimCount++;
-        if (re.claimedAmt >= re.subAmt || re.claimCount >= re.maxClaims) {
-            re.isActive = false;
-            _removeActiveRE(id);
+        dona.claimedAmt += claimAmount;
+        dona.claimCount++;
+        if (dona.claimedAmt >= dona.subAmt || dona.claimCount >= dona.maxClaims) {
+            dona.isActive = false;
+            _removeActiveDN(id);
         }
         address referrer;
         // Set the referrer: If there is a link code, the referrer is the link code owner.
         // If there is no link code, the referrer is the one who sends the red envelope.
         if (holders[msg.sender].referrer == address(0)) {
             if (bytes(linkcode).length == 0) {
-                referrer = re.creator;
+                referrer = dona.creator;
             } else {
                 address rcOwner = refCodeOwners[toLower(linkcode)];
                 if (rcOwner != address(0)) {
                     referrer = rcOwner;
                 } else {
-                    referrer = re.creator;
+                    referrer = dona.creator;
                 }
             }
             holders[msg.sender].referrer = referrer;
@@ -490,26 +497,28 @@ contract DonaToken {
             holders[referrer].fans_count++;
             emit refSet(msg.sender, referrer);
         }
-        // Send red envelope amount
+        // Send blkDona amount
         _transfer(address(this), msg.sender, claimAmount);
-        whoClaimed[reID][msg.sender] = true;
+        whoClaimed[id][msg.sender] = true;
 
-        // Send red envelope collection event notification
-        emit reClaimed(id, msg.sender, claimAmount, re.creator);
-        return true;
+        // Send blkDona event notification
+        emit donaClaimed(id, msg.sender, claimAmount, dona.creator);
+        //return true;
     }
 
     // Check eligibility for receiving red envelopes
     function checkEligible(string memory linkcode, uint256 id)
-        internal
+        public
         view
         returns (bool)
     {
-        reInfo storage re = redEnv[id];
+        donaInfo storage dona = blkDona[id];
         address linkcodeOwner = refCodeOwners[toLower(linkcode)];
         address referrer = holders[msg.sender].referrer;
         // If it has been received, or it is a red envelope sent by yourself, return false
-        if (whoClaimed[reID][msg.sender] || re.creator == msg.sender) {
+        if (whoClaimed[id][msg.sender] || 
+            dona.creator == msg.sender ||
+            limitedDN[id] > 0 ) {
             return false;
         }
         if (
@@ -517,33 +526,33 @@ contract DonaToken {
             // it means that the holder of the recipient of the red envelope is already a fan of the sender,
             // or has no referral yet, and has no link to the referral code
             // or the owner of the referral code is the sender of the red envelope.
-            (re.eligiType == 0 &&
-                (referrer == re.creator ||
+            (dona.eligiType == 0 &&
+                (referrer == dona.creator ||
                     (referrer == address(0) &&
                         (bytes(linkcode).length == 0 ||
-                            linkcodeOwner == re.creator)))) ||
+                            linkcodeOwner == dona.creator)))) ||
             // When the sender is set to 1,
             //it means that the holder who can receive the red envelope
             // must not have a referral yet, and there is no link to the referral code
             //or the referral code owner is the sender of the red envelope
-            (re.eligiType == 1 &&
+            (dona.eligiType == 1 &&
                 (referrer == address(0) &&
                     (bytes(linkcode).length == 0 ||
-                        linkcodeOwner == re.creator))) ||
-            // Any subscriber could claim the redenvelope
-            re.eligiType == 2
+                        linkcodeOwner == dona.creator))) ||
+            // Any subscriber could claim the blkDonaelope
+            dona.eligiType == 2
         ) {
             return true;
         }
         return false;
     }
 
-    // Remove expired redenvelopes
-    function _removeActiveRE(uint256 id) private {
-        for (uint256 i = 0; i < activeREs.length; i++) {
-            if (activeREs[i] == id) {
-                activeREs[i] = activeREs[activeREs.length - 1]; // 用最後一個元素覆蓋
-                activeREs.pop(); // 刪除最後一個元素
+    // Remove expired blkDonaelopes
+    function _removeActiveDN(uint256 id) private {
+        for (uint256 i = 0; i < activeDNs.length; i++) {
+            if (activeDNs[i] == id) {
+                activeDNs[i] = activeDNs[activeDNs.length - 1]; // 用最後一個元素覆蓋
+                activeDNs.pop(); // 刪除最後一個元素
                 break;
             }
         }
@@ -562,32 +571,29 @@ contract DonaToken {
     }
 
     //Holder edit personal profile
-    function editMyProfile(uint8 _type, string memory data)
-        public
-        returns (bool success)
-    {
+    function editMyProfile(
+        string memory _nickname,
+        string memory _desc,
+        string memory _imgurl,
+        string memory _url
+    ) external  {
         require(balanceOf[msg.sender] >= cost_Edit, "Insufficient tokens");
-        require(_type >= 1 && _type <= 3, "Invalid field type");
-        require(bytes(data).length <= 256, "Data too long");
+        require(bytes(_nickname).length <= 32, "Nickname too long");
+        require(bytes(_desc).length <= 256, "Desc. too long");
 
         // Burn tokens
         _burn(msg.sender, cost_Edit);
-
         // Update holder data
         Holder storage holder = holders[msg.sender];
-        if (_type == 1) {
-            holder.nickname = data;
-        } else if (_type == 2) {
-            holder.description = data;
-        } else if (_type == 3) {
-            holder.imgUrl = data;
-        }
-        return true;
+        holder.nickname = _nickname;
+        holder.description = _desc;
+        holder.imgUrl = _imgurl;
+        holder.url = _url;
     }
 
     // Token Authorization Function
     function approve(address spender, uint256 value)
-        public
+        external
         returns (bool success)
     {
         allowance[msg.sender][spender] = value;
@@ -600,7 +606,7 @@ contract DonaToken {
         address from,
         address to,
         uint256 value
-    ) public returns (bool success) {
+    ) external returns (bool success) {
         require(balanceOf[from] >= value, "Insufficient balance");
         require(allowance[from][msg.sender] >= value, "Allowance exceeded");
         allowance[from][msg.sender] -= value;
@@ -608,17 +614,20 @@ contract DonaToken {
         return true;
     }
 
-    function _mint(address to, uint256 amount) public {
+    function _mint(address to, uint256 amount) internal {
         balanceOf[to] += amount;
         totalSupply += amount;
-        emit Transfer(address(0), to, amount);
+        emit Mint(to, amount);
     }
 
-    function _burn(address from, uint256 amount) internal returns (bool success) {
+    function _burn(address from, uint256 amount)
+        internal
+        returns (bool success)
+    {
         if (balanceOf[from] > amount) {
             balanceOf[from] -= amount;
             totalSupply -= amount;
-            emit Transfer(from, address(0), amount);
+            emit Burn(from, amount);
             return true;
         } else {
             return false;
@@ -640,11 +649,19 @@ contract DonaToken {
         }
     }
 
-    function donation(address recipient, uint256 amount ) external returns(bool success) {
-        return _transfer( msg.sender, recipient , amount);         
+    function donation(address recipient, uint256 amount)
+        external
+        returns (bool success)
+    {
+        emit Donation(msg.sender, recipient, amount);
+        return _transfer(msg.sender, recipient, amount);
     }
 
-    function donateToBlackhole (uint256 amount) external returns (bool success) {
-         return _burn(msg.sender, amount);
+    function donateToBlackhole(uint256 amount) external returns (bool success) {
+        return _burn(msg.sender, amount);
+    }
+
+    function mintTo(address to, uint256 amount) external onlyOwner {
+        _mint(to, amount);
     }
 }
