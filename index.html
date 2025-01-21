@@ -339,10 +339,10 @@
         let _balance;
         async function getBalance(holder) {
             if (!web3) {
-                alert("Web3加載失敗，請重試！");
+                //alert("Web3加載失敗，請重試！");
                 return;
             } else if (!contract) {
-                alert("合約未初始化，請重試！");
+                //alert("合約未初始化，請重試！");
                 return;
             }
             if (!web3.utils.isAddress(holder)) {
@@ -354,7 +354,7 @@
                 const balance = await contract.methods.balanceOf(holder).call();
                 document.getElementById('balance').textContent = `${format_amt(balance)} `;
                 _balance = format_amt(balance);
-                return format_amt(balance);
+                //return format_amt(balance);
             } catch (error) {
                 console.error("查詢餘額發生錯誤:", error);
                 alert("getbalance error：" + error);
@@ -675,7 +675,7 @@
             try {
                 //const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
                 //const userAddress = accounts[0];
-                //const result = await contract.methods.claimDona(linkcode, id).send({ from: userAddress });
+                await contract.methods.claimDona(linkcode, id).send({ from: _userAddress });
                 // 等待交易完成
                 //alert('user:'+ _useraddress +'/'+getBalance(_useraddress));                
                 showToast("領取中，請等候..", "success");
