@@ -5,10 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BLKDONA</title>
+    <!-- Open Graph 標籤 -->
+    <meta property="og:title" content="BLKDONA撸空投" id="og-title">
+    <meta property="og:description" content="如果天上掉下來的不只是餡餅，咱是不是該好好來研究一下？#加密貨幣#撸空投..." id="og-description">
+    <meta property="og:image" content="https://img.youtube.com/vi/sOc-bn4avX0/maxresdefault.jpg">
+    <meta property="og:type" content="video.other" id="og-type">
+    <meta property="og:video:url" content="https://www.youtube.com/watch?v=sOc-bn4avX0" id="og-video-url">
+    <meta property="og:video:secure_url" content="https://www.youtube.com/watch?v=sOc-bn4avX0" id="og-video-secure-url">
+    <meta property="og:video:type" content="text/html" id="og-video-type">
+    <meta property="og:video:width" content="1280" id="og-video-width">
+    <meta property="og:video:height" content="720" id="og-video-height">
+    <meta property="og:url" content="https://www.youtube.com/watch?v=sOc-bn4avX0">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap">
     <link rel="stylesheet" href="./styles.css">
 </head>
+
 <body>
     <header>
         <span class="material-symbols-outlined" id="hamburger">lunch_dining</span>
@@ -18,10 +31,10 @@
         <div>
             <button class="walletbutton" id="walletButton" onclick="connectWallet()">Login</button>
         </div>
-    </header>    
+    </header>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- 引入 Web3.js -->
-    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>    
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
     <script src="./before.js"></script>
     <div id="dona-container">
         <div class="notification" id="notice">
@@ -104,21 +117,21 @@
             document.getElementById("notice").style.display = "none";
             // Fetch the HTML content for red envelopes          
             try {
-                const script_remove = document.getElementById('dona_streaming');            
+                const script_remove = document.getElementById('dona_streaming');
                 script_remove.remove();
                 // 選擇所有 class 為 'dona-box' 的元素
                 const donaBoxes = document.querySelectorAll('.dona-streaming');
 
                 // 遍歷每個元素並設置其 style.display 為 'none'
                 donaBoxes.forEach(box => {
-                      box.style.display = 'none';
+                    box.style.display = 'none';
                 });
                 //alert('Updated index:3');
                 const script = document.createElement("script");
-                script.src = "./dona_box.js";                
-                document.body.appendChild(script);                
+                script.src = "./dona_box.js";
+                document.body.appendChild(script);
             } catch (err) {
-                console.error("Error loading content:", err);                
+                console.error("Error loading content:", err);
             }
         });
     </script>
@@ -247,17 +260,17 @@
     <script>
         // get balance of dona
         let web3;
-        let contract;       
+        let contract;
         // 合約地址和 ABI
-        const contractAddress = "0x8028d3D1516080566c57655c21b5628eC7550DE9";        
+        const contractAddress = "0x8028d3D1516080566c57655c21b5628eC7550DE9";
         const contractABI = [
-            {"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"holder","type":"address"},{"indexed":true,"internalType":"address","name":"receiver","type":"address"},{"indexed":false,"internalType":"uint256","name":"reward","type":"uint256"}],"name":"ADClaimed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"adCount","type":"uint256"}],"name":"ADStarted","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"burner","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"Burn","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"dona","type":"address"},{"indexed":true,"internalType":"address","name":"recipient","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"Donation","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"minter","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"Mint","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"sender","type":"address"},{"indexed":false,"internalType":"string","name":"notice_type","type":"string"},{"indexed":false,"internalType":"string","name":"message","type":"string"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"Notification","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"},{"indexed":true,"internalType":"address","name":"claimer","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"},{"indexed":true,"internalType":"address","name":"creator","type":"address"}],"name":"donaClaimed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"uint256","name":"id","type":"uint256"},{"indexed":true,"internalType":"address","name":"creator","type":"address"},{"indexed":false,"internalType":"uint8","name":"eligiType","type":"uint8"},{"indexed":false,"internalType":"uint256","name":"subAmt","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"maxClaims","type":"uint256"}],"name":"donaCreated","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"holder","type":"address"},{"indexed":true,"internalType":"address","name":"referer","type":"address"}],"name":"refSet","type":"event"},{"inputs":[],"name":"_owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"activeDNs","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"adCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"adDuration","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"adEnabled","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"adStartTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"address","name":"","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"blkDona","outputs":[{"internalType":"uint256","name":"subAmt","type":"uint256"},{"internalType":"uint256","name":"claimedAmt","type":"uint256"},{"internalType":"uint256","name":"maxClaims","type":"uint256"},{"internalType":"uint256","name":"claimCount","type":"uint256"},{"internalType":"address","name":"creator","type":"address"},{"internalType":"uint8","name":"eligiType","type":"uint8"},{"internalType":"string","name":"desc","type":"string"},{"internalType":"string","name":"imgUrl","type":"string"},{"internalType":"string","name":"redirect","type":"string"},{"internalType":"uint256","name":"startTime","type":"uint256"},{"internalType":"bool","name":"isActive","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"linkcode","type":"string"},{"internalType":"uint256","name":"id","type":"uint256"}],"name":"checkEligible","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"claimAirdrop","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"linkcode","type":"string"},{"internalType":"uint256","name":"id","type":"uint256"}],"name":"claimDona","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"cost_Edit","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"cost_ntf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"donaID","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"donateToBlackhole","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"donation","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"_nickname","type":"string"},{"internalType":"string","name":"_desc","type":"string"},{"internalType":"string","name":"_imgurl","type":"string"},{"internalType":"string","name":"_url","type":"string"}],"name":"editMyProfile","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"holderPercent","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"holders","outputs":[{"internalType":"address","name":"referrer","type":"address"},{"internalType":"uint256","name":"fans_count","type":"uint256"},{"internalType":"uint256","name":"holderReward","type":"uint256"},{"internalType":"uint256","name":"referReward","type":"uint256"},{"internalType":"string","name":"refCode","type":"string"},{"internalType":"string","name":"nickname","type":"string"},{"internalType":"string","name":"description","type":"string"},{"internalType":"string","name":"imgUrl","type":"string"},{"internalType":"string","name":"url","type":"string"},{"internalType":"uint256","name":"lastClaimedAD","type":"uint256"},{"internalType":"bool","name":"disDN","type":"bool"},{"internalType":"bool","name":"disRef","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"uint8","name":"reason","type":"uint8"},{"internalType":"bool","name":"discreator","type":"bool"}],"name":"limitDona","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"limitedDN","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"minRefAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"minShareBox","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"minShareTime","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"mintTo","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"myDona","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"myDonaCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"myfans","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"notice_type","type":"string"},{"internalType":"string","name":"message","type":"string"}],"name":"notification","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"ownerPercent","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"","type":"string"}],"name":"refCodeOwners","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"refPercent","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_duration","type":"uint256"}],"name":"setAdDuration","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"setCost_Edit","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"setCost_Notification","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"},{"internalType":"bool","name":"_disabled","type":"bool"},{"internalType":"bool","name":"isRef","type":"bool"}],"name":"setDisabled","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"totalShare","type":"uint256"},{"internalType":"uint256","name":"countDN","type":"uint256"},{"internalType":"uint8","name":"eligiType","type":"uint8"},{"internalType":"string","name":"_desc","type":"string"},{"internalType":"string","name":"_url","type":"string"},{"internalType":"string","name":"_redirect","type":"string"}],"name":"setDona","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_percentage","type":"uint256"}],"name":"setHolderReward","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"setMinRefAmount","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"setMinShareBox","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"setMinShareTime","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"refCode","type":"string"}],"name":"setMyRefCode","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_percentage","type":"uint256"}],"name":"setOwnerReward","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_percentage","type":"uint256"}],"name":"setReferalReward","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"refCode","type":"string"}],"name":"setReferrer","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"startAirdrop","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"id","type":"uint256"},{"internalType":"string","name":"desc","type":"string"},{"internalType":"string","name":"url","type":"string"}],"name":"updateMyDona","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"address","name":"","type":"address"}],"name":"whoClaimed","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"}
-       ];
-        
+            { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "holder", "type": "address" }, { "indexed": true, "internalType": "address", "name": "receiver", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "reward", "type": "uint256" }], "name": "ADClaimed", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "adCount", "type": "uint256" }], "name": "ADStarted", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "owner", "type": "address" }, { "indexed": true, "internalType": "address", "name": "spender", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" }], "name": "Approval", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "burner", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "Burn", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "dona", "type": "address" }, { "indexed": true, "internalType": "address", "name": "recipient", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "Donation", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "minter", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "Mint", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "sender", "type": "address" }, { "indexed": false, "internalType": "string", "name": "notice_type", "type": "string" }, { "indexed": false, "internalType": "string", "name": "message", "type": "string" }, { "indexed": false, "internalType": "uint256", "name": "timestamp", "type": "uint256" }], "name": "Notification", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "from", "type": "address" }, { "indexed": true, "internalType": "address", "name": "to", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" }], "name": "Transfer", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "id", "type": "uint256" }, { "indexed": true, "internalType": "address", "name": "claimer", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }, { "indexed": true, "internalType": "address", "name": "creator", "type": "address" }], "name": "donaClaimed", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "uint256", "name": "id", "type": "uint256" }, { "indexed": true, "internalType": "address", "name": "creator", "type": "address" }, { "indexed": false, "internalType": "uint8", "name": "eligiType", "type": "uint8" }, { "indexed": false, "internalType": "uint256", "name": "subAmt", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "maxClaims", "type": "uint256" }], "name": "donaCreated", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "holder", "type": "address" }, { "indexed": true, "internalType": "address", "name": "referer", "type": "address" }], "name": "refSet", "type": "event" }, { "inputs": [], "name": "_owner", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "name": "activeDNs", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "adCount", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "adDuration", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "adEnabled", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "adStartTime", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }, { "internalType": "address", "name": "", "type": "address" }], "name": "allowance", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "spender", "type": "address" }, { "internalType": "uint256", "name": "value", "type": "uint256" }], "name": "approve", "outputs": [{ "internalType": "bool", "name": "success", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }], "name": "balanceOf", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "name": "blkDona", "outputs": [{ "internalType": "uint256", "name": "subAmt", "type": "uint256" }, { "internalType": "uint256", "name": "claimedAmt", "type": "uint256" }, { "internalType": "uint256", "name": "maxClaims", "type": "uint256" }, { "internalType": "uint256", "name": "claimCount", "type": "uint256" }, { "internalType": "address", "name": "creator", "type": "address" }, { "internalType": "uint8", "name": "eligiType", "type": "uint8" }, { "internalType": "string", "name": "desc", "type": "string" }, { "internalType": "string", "name": "imgUrl", "type": "string" }, { "internalType": "string", "name": "redirect", "type": "string" }, { "internalType": "uint256", "name": "startTime", "type": "uint256" }, { "internalType": "bool", "name": "isActive", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "linkcode", "type": "string" }, { "internalType": "uint256", "name": "id", "type": "uint256" }], "name": "checkEligible", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "claimAirdrop", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "linkcode", "type": "string" }, { "internalType": "uint256", "name": "id", "type": "uint256" }], "name": "claimDona", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "cost_Edit", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "cost_ntf", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "decimals", "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "donaID", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "donateToBlackhole", "outputs": [{ "internalType": "bool", "name": "success", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "recipient", "type": "address" }, { "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "donation", "outputs": [{ "internalType": "bool", "name": "success", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "_nickname", "type": "string" }, { "internalType": "string", "name": "_desc", "type": "string" }, { "internalType": "string", "name": "_imgurl", "type": "string" }, { "internalType": "string", "name": "_url", "type": "string" }], "name": "editMyProfile", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "holderPercent", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }], "name": "holders", "outputs": [{ "internalType": "address", "name": "referrer", "type": "address" }, { "internalType": "uint256", "name": "fans_count", "type": "uint256" }, { "internalType": "uint256", "name": "holderReward", "type": "uint256" }, { "internalType": "uint256", "name": "referReward", "type": "uint256" }, { "internalType": "string", "name": "refCode", "type": "string" }, { "internalType": "string", "name": "nickname", "type": "string" }, { "internalType": "string", "name": "description", "type": "string" }, { "internalType": "string", "name": "imgUrl", "type": "string" }, { "internalType": "string", "name": "url", "type": "string" }, { "internalType": "uint256", "name": "lastClaimedAD", "type": "uint256" }, { "internalType": "bool", "name": "disDN", "type": "bool" }, { "internalType": "bool", "name": "disRef", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "id", "type": "uint256" }, { "internalType": "uint8", "name": "reason", "type": "uint8" }, { "internalType": "bool", "name": "discreator", "type": "bool" }], "name": "limitDona", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "name": "limitedDN", "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "minRefAmount", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "minShareBox", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "minShareTime", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "to", "type": "address" }, { "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "mintTo", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }, { "internalType": "uint256", "name": "", "type": "uint256" }], "name": "myDona", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }], "name": "myDonaCount", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }, { "internalType": "uint256", "name": "", "type": "uint256" }], "name": "myfans", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "name", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "notice_type", "type": "string" }, { "internalType": "string", "name": "message", "type": "string" }], "name": "notification", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "ownerPercent", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "", "type": "string" }], "name": "refCodeOwners", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "refPercent", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_duration", "type": "uint256" }], "name": "setAdDuration", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_amount", "type": "uint256" }], "name": "setCost_Edit", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_amount", "type": "uint256" }], "name": "setCost_Notification", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "account", "type": "address" }, { "internalType": "bool", "name": "_disabled", "type": "bool" }, { "internalType": "bool", "name": "isRef", "type": "bool" }], "name": "setDisabled", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "totalShare", "type": "uint256" }, { "internalType": "uint256", "name": "countDN", "type": "uint256" }, { "internalType": "uint8", "name": "eligiType", "type": "uint8" }, { "internalType": "string", "name": "_desc", "type": "string" }, { "internalType": "string", "name": "_url", "type": "string" }, { "internalType": "string", "name": "_redirect", "type": "string" }], "name": "setDona", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_percentage", "type": "uint256" }], "name": "setHolderReward", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_amount", "type": "uint256" }], "name": "setMinRefAmount", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_amount", "type": "uint256" }], "name": "setMinShareBox", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_amount", "type": "uint256" }], "name": "setMinShareTime", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "refCode", "type": "string" }], "name": "setMyRefCode", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_percentage", "type": "uint256" }], "name": "setOwnerReward", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_percentage", "type": "uint256" }], "name": "setReferalReward", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "string", "name": "refCode", "type": "string" }], "name": "setReferrer", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "startAirdrop", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "symbol", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "totalSupply", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "recipient", "type": "address" }, { "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "transfer", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "from", "type": "address" }, { "internalType": "address", "name": "to", "type": "address" }, { "internalType": "uint256", "name": "value", "type": "uint256" }], "name": "transferFrom", "outputs": [{ "internalType": "bool", "name": "success", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "id", "type": "uint256" }, { "internalType": "string", "name": "desc", "type": "string" }, { "internalType": "string", "name": "url", "type": "string" }], "name": "updateMyDona", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }, { "internalType": "address", "name": "", "type": "address" }], "name": "whoClaimed", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" }
+        ];
+
         // 加載 Web3
         async function initialize() {
             // 請求錢包授權              
-            //const holder = await connectWallet();
+            //await connectWallet();
             await getHoldertoLowercase();
             //_useraddress = holder;
             // 使用 MetaMask 提供的 provider 初始化 Web3
@@ -266,56 +279,56 @@
                 web3 = new Web3(window.ethereum);
                 // 初始化智能合約                         
                 contract = new web3.eth.Contract(contractABI, contractAddress);
-                window.contract = contract;
+                //window.contract = contract;
                 // another web3_listener
-                const web3_listener = new Web3(
-                    //new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/")
-                    new Web3.providers.WebsocketProvider("wss://bsc-ws-node.nariox.org:443")
-                );
-                const contract_listener = new web3_listener.eth.Contract(contractABI, contractAddress);
+                //const web3_listener = new Web3(
+                //new Web3.providers.HttpProvider("https://bsc-dataseed.binance.org/")
+                //new Web3.providers.WebsocketProvider("wss://bsc-ws-node.nariox.org:443")
+                //);
+                //const contract_listener = new web3_listener.eth.Contract(contractABI, contractAddress);
 
                 //event Notification(address indexed sender, string notice_type, string message, uint256 timestamp);
-                contract_listener.events.Notification({ fromBlock: 'latest' }, (error, event) => {
-                    if (error) {
-                        console.error(error);
-                        //alert('err1:' + error);
-                    } else {
-                        console.log(event);
-                        try {
-                            const _message = event.returnValues.message;
-                            const _noticetype = event.returnValues.notice_type;
-                            showToast(_noticetype + ' : ' + _message, 'success');
-                        } catch (err) {
-                            //alert('err2:' + err);
-                        }
-                    }
-                });
+                //contract_listener.events.Notification({ fromBlock: 'latest' }, (error, event) => {
+                //    if (error) {
+                //        console.error(error);
+                //alert('err1:' + error);
+                //    } else {
+                //        console.log(event);
+                //        try {
+                //            const _message = event.returnValues.message;
+                //            const _noticetype = event.returnValues.notice_type;
+                //            showToast(_noticetype + ' : ' + _message, 'success');
+                //        } catch (err) {
+                //            //alert('err2:' + err);
+                //        }
+                //    }
+                //});
                 //event donaClaimed(uint256 indexed id, address indexed claimer, uint256 amount, address indexed creator);     
-                contract_listener.events.donaClaimed({ fromBlock: 'latest' }, (error, event) => {
-                    if (error) {
-                        console.error(error);
-                        //alert('err1:' + error);
-                    } else {
-                        console.log(event);
-                        try {
-                            const _amount = event.returnValues.amount;
-                            showToast('有人剛剛領了甜甜圈，獲得:' + _amount + '個BDN', 'success');
-                        } catch (err) {
-                            //alert('err2:' + err);
-                        }
-                    }
-                });
-                //
-                updateAccountUI(_useraddress);
+                //contract_listener.events.donaClaimed({ fromBlock: 'latest' }, (error, event) => {
+                //    if (error) {
+                //        console.error(error);
+                //alert('err1:' + error);
+                //    } else {
+                //        console.log(event);
+                //        try {
+                //            const _amount = event.returnValues.amount;
+                //            showToast('有人剛剛領了甜甜圈，獲得:' + _amount + '個BDN', 'success');
+                //        } catch (err) {
+                //alert('err2:' + err);
+                //        }
+                //    }
+                //});
+                //                
                 ready_togo(_useraddress);
             } else {
-                deeplink();
-                //alert("請安裝MetaMask！");
-                //showToast("請使用 MetaMask 瀏覽器！","error");
+                //deeplink();
+                //alert( '請按右上角Login以MetaMask內建的瀏覽器登入！' );                
+                open_wallet();
             }
         }
         function ready_togo(holder) {
             //
+            updateAccountUI(holder);
             getlinkcode();
             getBalance(holder);
             startup(holder);
@@ -339,7 +352,7 @@
                 // 調用 balanceOf 函數
                 const balance = await contract.methods.balanceOf(holder).call();
                 document.getElementById('balance').textContent = `${format_amt(balance)} `;
-
+                return format_amt(balance);
             } catch (error) {
                 console.error("查詢餘額發生錯誤:", error);
                 alert("getbalance error：" + error);
@@ -371,12 +384,12 @@
                     burger_icon.removeEventListener('click', clickHandler_hb);
                 }
                 // call holder() 函數 
-                const holderInfo = await contract.methods.holders(holder).call();                
+                const holderInfo = await contract.methods.holders(holder).call();
                 document.getElementById('to_white_paper').addEventListener("click", () => {
-                        //alert('refCode:'+holderInfo.refCode);
-                        window.location.href = `./white_paper.html?linkcode=${holderInfo.refCode}`;
-                });   
-                const refaddress = holderInfo.referrer;                
+                    //alert('refCode:'+holderInfo.refCode);
+                    window.location.href = `./white_paper.html?linkcode=${holderInfo.refCode}`;
+                });
+                const refaddress = holderInfo.referrer;
                 if (holderInfo.holderReward > 0) {
                     document.getElementById('linetext_1').textContent = `HolderReward:${format_amt(holderInfo.holderReward)}`;
                 }
@@ -480,7 +493,7 @@
             return false;
         }
         async function checkEgibility(reid) {
-            if (reid < 1) { return false; }
+            if (!_useraddress || reid < 1) return false;
             let _linkcodeOwner;
             try {
                 // Request account access
@@ -542,11 +555,13 @@
         // 獲取特定 holder 的紅包資訊
 
         async function getreID() {
+            if (!_useraddress) return 0;
             const reid = await contract.methods.donaID().call();
             //alert("reID:" + reid);
             return reid;
         }
         async function getSpecificDN(reid) {
+            if (!_useraddress) return;
             const reidBigInt = BigInt(reid);
             try {
                 // 调用合约函数
@@ -568,8 +583,8 @@
                 redEnvelopeInfo.claimedAmt = (BigInt(redEnvelopeInfo.claimedAmt) / (BigInt(10) ** BigInt(decimals))).toString();
                 return redEnvelopeInfo;
             } catch (error) {
-                console.error("Error fetching red envelope info:", error);
-                alert("Failed to fetch red envelope info. Error: " + error.message);
+                console.error("Error fetching DONA info:", error);
+                //alert("Failed to fetch DONA info. Error: " + error.message);
                 return [];
             }
         }
@@ -661,9 +676,12 @@
                 const result = await contract.methods.claimDona(linkcode, id).send({ from: userAddress });
                 // 等待交易完成
                 showToast("領取中，請等候..", "success");
+                if (getBalance(_useraddress) == 0) {
+                    first_visitor();
+                }
             } catch (error) {
                 console.error("Error claiming red envelope:", error);
-                showToast("有點狀況，請重試！", "error");
+                //showToast("有點狀況，請重試！", "error");
             }
             //alert("執行完成:" + receipt);
         }    
@@ -734,7 +752,7 @@
             const desc = document.getElementById("_desc").value;
             const url = document.getElementById("_url").value;
             const redir = document.getElementById("_redir").value;
-            
+
             //alert( "totalShare："+ totalShare +"\ncountRE："+countRE + "\neligiType：" + eligiType + "\ndesc：" + desc + "\nurl："+url );
             try {
                 // 转换为 BigInt 并计算精度
@@ -783,7 +801,7 @@
                 </div>
                 <div class="form-group">
                     <label for="edit_redir">請貼上連結網址(選填)</label>
-                    <input type="text" id="edit_redir" name="edit_redir">                    
+                    <input type="text" id="edit_redir" name="edit_redir">
                 </div>
                 <div class="_buttons">
                     <button type="button" class="cancel" onclick="close_edit()">取消</button>
@@ -810,7 +828,7 @@
     </div>
     <div class="modal-overlay" id="shareDona_window">
         <div class="modal">
-            <h2>分享黑色甜甜圈</h2>            
+            <h2>分享黑色甜甜圈</h2>
             <p style="color:#bbbbbb">推薦連結網址：</p>
             <p id="sharelink" class="_text"></p>
             <form>
@@ -826,20 +844,20 @@
             const overlay = document.getElementById('shareDona_window');
             overlay.classList.add('show');
             const userAddress = await getHoldertoLowercase();
-            const holderInfo = await contract.methods.holders(userAddress).call();            
+            const holderInfo = await contract.methods.holders(userAddress).call();
             document.getElementById("sharelink").textContent = `https://blkdona.web.app/?linkcode=${holderInfo.refCode}&dnid=${dn_id}`;
         }
         function toShareDona() {
-            const share_text = document.getElementById("sharelink").textContent;          
+            const share_text = document.getElementById("sharelink").textContent;
             navigator.clipboard.writeText(share_text)
             closeShareDona();
-        } 
+        }
         // Close modal
         function closeShareDona() {
             const overlay = document.getElementById('shareDona_window');
             overlay.classList.remove('show');
         }
-        
+
         async function openShare() {
             const overlay = document.getElementById('share_window');
             overlay.classList.add('show');
@@ -868,69 +886,76 @@
     </script>
     <div class="modal-overlay" id="dn_window">
         <div class="modal">
-            
-                <div id="desc-container" class="desc-container">
-                    <span class="material-symbols-outlined" id='link_redir'>captive_portal</span>
-                    <span id="short-desc"  class="short-desc"></span>
-                    <span id="ellipsis" style="position:relative;top:10px;left:2px">&nbsp..</span>
-                    <span id="toggle-link" class="css_back" style="position:relative;top:15px;left:3px">全文</span>                    
+
+            <div id="desc-container" class="desc-container">
+                <span class="material-symbols-outlined" id='link_redir'>captive_portal</span>
+                <span id="short-desc" class="short-desc"></span>
+                <span id="ellipsis" style="position:relative;top:10px;left:2px">&nbsp..</span>
+                <span id="toggle-link" class="css_back" style="position:relative;top:15px;left:3px">全文</span>
+            </div>
+            <form class='comments-container'>
+                <p id="remaining-desc" class="remaining-desc"></p>
+                <p class="reward-item" style="text-align:center" id="dn_info"></p>
+                <span class="progress" style="display:none">
+                    <p class="css_back" onclick="dn_back()" id="click_back">Back</p>
+                    <p class="css_back" style="margin-left:auto" onclick="dn_next()" id="click_next">Next</p>
+                </span>
+
+                <div class="new-container">
+                    <div class="image-container" id="image-container" style="position:relative;top:8px">
+                    </div>
                 </div>
-                <form class='comments-container'>
-                    <p id="remaining-desc" class="remaining-desc"></p>
-                    <p class="reward-item" style="text-align:center" id="dn_info"></p>
-                    <span class="progress" style="display:none">
-                        <p class="css_back" onclick="dn_back()" id="click_back">Back</p>
-                        <p class="css_back" style="margin-left:auto" onclick="dn_next()" id="click_next">Next</p>
-                    </span>
-            
-                    <div class="new-container">
-                        <div class="image-container" id="image-container" style="position:relative;top:8px">                    
-                        </div>
-                    </div>
-                    <div class="_buttons">
-                        <button type="button" class="cancel" onclick="close_DN()">關閉</button>
-                        <button type="button" class="confirm" id="dn_claim">領取</button>
-                    </div>
-                </form>
+                <div class="_buttons">
+                    <button type="button" class="cancel" onclick="close_DN()">關閉</button>
+                    <button type="button" class="confirm" id="dn_claim">領取</button>
+                </div>
+            </form>
         </div>
     </div>
     <script>
-        let dnid=0;
+        let dnid = 0;
         async function whichAvailable(holder) {
             //alert("which dona is available?");
             let loops = true;
             //alert("loops:"+loops);
             let index = 0;
             let _get = false;
-            dnid = getParameterByName('dnid');            
-            if(dnid>0){
-                loops=false;
-            }     
+            dnid = getParameterByName('dnid');
+            if (dnid > 0) {
+                const isEligible = await checkEgibility(dnid);
+                //alert('isEligible:'+dnid+'/'+isEligible);
+                if (isEligible) {
+                    loops = false;
+                } else {
+                    dnid = 0;
+                }
+            }
+            //alert('loops:'+dnid+'/'+loops);
             while (loops) {
-                try{
+                try {
                     const id = await contract.methods.activeDNs(index).call();
                     //alert('id:'+id);
                     //if(id){
-                        _get = await checkEgibility(id);
-                        //alert('id:'+id +' / '+ _get);
-                        if (_get) {
-                            loops = false;
-                            dnid = id;
-                        } else {
-                            index++;
-                        }
+                    _get = await checkEgibility(id);
+                    //alert('id:'+id +' / '+ _get);
+                    if (_get) {
+                        loops = false;
+                        dnid = id;
+                    } else {
+                        index++;
+                    }
                     //} else {
                     //   loops = false;
-                } catch(err) {
+                } catch (err) {
                     loops = false;
-                }        
-            }            
+                }
+            }
             if (dnid > 0) {
                 document.getElementById('re_button').classList.add('active');
                 open_DN();
             } else {
                 initializeDonaStreaming();
-            }            
+            }
         }
         async function open_DN() {
             const overlay = document.getElementById('dn_window');
@@ -940,16 +965,16 @@
             const dn_info = "【" + dona.eligiType + "】 " + startTime + " & " + dona.claimedAmt + " / " + dona.subAmt + " : " + dona.claimCount + " / " + dona.maxClaims;
             //
             const linkRedir = document.getElementById("link_redir");
-            if(dona.redirect!=''){                
-            // 添加點擊事件監聽器
-                 linkRedir.addEventListener("click", () => {
+            if (dona.redirect != '') {
+                // 添加點擊事件監聽器
+                linkRedir.addEventListener("click", () => {
                     // 跳轉到指定的網址
                     window.location.href = dona.redirect;
-                 });
+                });
             } else {
-                 linkRedir.style.display = "none"; 
-            }                      
-            document.getElementById("dn_info").textContent = dn_info;            
+                linkRedir.style.display = "none";
+            }
+            document.getElementById("dn_info").textContent = dn_info;
             const desc = dona.desc; // 假設這是描述文本
             const maxLength = 13; // 最大顯示字數
             let toolong = false;
@@ -978,10 +1003,10 @@
             });
             let contentElement;
             if (dona.imgUrl.includes('youtube.com/shorts') || dona.imgUrl.includes('youtube.com/watch')) {
-               // 提取視頻 ID
-               const videoId = new URL(dona.imgUrl).pathname.split('/')[2] || new URL(dona.imgUrl).searchParams.get('v');
-               const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-    
+                // 提取視頻 ID
+                const videoId = new URL(dona.imgUrl).pathname.split('/')[2] || new URL(dona.imgUrl).searchParams.get('v');
+                const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+
                 // 創建 iframe 用於嵌入 YouTube 視頻
                 contentElement = document.createElement('iframe');
                 contentElement.src = embedUrl;
@@ -991,15 +1016,15 @@
                 contentElement.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
                 contentElement.allowFullscreen = true;
             } else {
-                 // 默認使用 img 顯示圖片
-                 contentElement = document.createElement('img');
-                 contentElement.src = dona.imgUrl;
-                 contentElement.alt = 'photo';
-                 contentElement.style.width = '100%'; // 設置圖片寬度
-                 contentElement.style.height = 'auto'; // 自適應高度
-             }
+                // 默認使用 img 顯示圖片
+                contentElement = document.createElement('img');
+                contentElement.src = dona.imgUrl;
+                contentElement.alt = 'photo';
+                contentElement.style.width = '100%'; // 設置圖片寬度
+                contentElement.style.height = 'auto'; // 自適應高度
+            }
 
-              // 添加到網頁
+            // 添加到網頁
             const imageContainer = document.getElementById('image-container');
             imageContainer.appendChild(contentElement);
         }
@@ -1034,13 +1059,13 @@
 
     <script>
         let refCode = "";
-        let _address;
+        //let _address;
         async function open_refCode(isnew) {
             const overlay = document.getElementById('set_refCode');
             overlay.classList.add('show');
-            _address = await getHoldertoLowercase();
+            //_address = await getHoldertoLowercase();
             if (false) {
-                const holderInfo = await contract.methods.holders(_address).call();
+                const holderInfo = await contract.methods.holders(_useraddress).call();
                 refCode = holderInfo.refCode;
                 document.getElementById("in_refCode").textContent = refCode;
             }
@@ -1061,14 +1086,14 @@
             const code = document.getElementById("in_refCode").value;
             //alert(code + " / "+refCode);
             if (code != refCode) {
-                await contract.methods.setMyRefCode(code).send({ from: _address });
+                await contract.methods.setMyRefCode(code).send({ from: _useraddress });
             }
         }
         async function notification() {
             //alert("here we are...");
-            if (_address == null) {
-                _address = await getHoldertoLowercase();
-            }
+            //if (_useraddress == null) {
+            //    _address = await getHoldertoLowercase();
+            //}
             const notice_type = "Hello";
             const message = "Good day...";
             try {
@@ -1077,7 +1102,7 @@
                         notice_type,
                         message
                     )
-                    .send({ from: _address });
+                    .send({ from: _useraddress });
                 showToast("送出交易，請等候..", "success");
             } catch (err) {
                 showToast("交易被中止，請重試！", "error");
@@ -1108,28 +1133,128 @@
 
     </script>
     <div class="modal-overlay" id="comment_window">
-  <div class="modal">
-    <!-- 右上角关闭按钮 -->
-    <span class="close-btn" onclick="close_comment()">×</span>
-    <h2 id='guestbook_title' style='display:none'></h2>
+        <div class="modal">
+            <!-- 右上角关闭按钮 -->
+            <span class="close-btn" onclick="close_comment()">×</span>
+            <h2 id='guestbook_title' style='display:none'></h2>
 
-    <!-- 留言区域 -->
-    <div class="comments-container" id="comments-container">
-      <p id="no-comments" style="display: none">这则贴文还没有留言</p>
+            <!-- 留言区域 -->
+            <div class="comments-container" id="comments-container">
+                <p id="no-comments" style="display: none">这则贴文还没有留言</p>
+            </div>
+
+            <!-- 固定表单 -->
+            <form id="comment-form">
+                <div class="form-singleline">
+                    <label for="mycomment" id="reply_to"></label>
+                    <input type="text" id="mycomment" name="mycomment" placeholder="你的留言..." required />
+                    <span id="comment_submit">送出</span>
+                </div>
+            </form>
+        </div>
     </div>
+    <div class="modal-overlay" id="message_window">
+        <div class="modal">
+            <h2 id="msg_subject">請連結你的電子錢包</h2>
+            <p id="message"></p>
+            <div class='logo_container'>
+                <img src="./img/metamask.jpg" alt="MetaMask" id="metamask_logo">
+                <img src="./img/tokenpocket.jpg" alt="TokenPocket" id="tokenpocket_logo">
 
-    <!-- 固定表单 -->
-    <form id="comment-form">
-      <div class="form-singleline">
-        <label for="mycomment" id="reply_to"></label>
-        <input type="text" id="mycomment" name="mycomment" placeholder="你的留言..." required />
-        <span id="comment_submit">送出</span>
-      </div>
-    </form>
-  </div>
-</div>
+            </div>
 
-  <script type="module" src="./after.js"></script>
-  <script id='dona_streaming' src="./dona_streaming.js"></script>
-</body> 
+            <form class='wallet_form'>
+                <div class="_buttons">
+                    <button type="button" class="cancel" onclick="close_msg()">關閉</button>
+                    <button type="button" id='btn_copy' class="confirm">複製連結</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        async function open_wallet() {
+            const overlay = document.getElementById('message_window');
+            overlay.classList.add('show');
+            const _subject = '連結你的電子錢包';
+            const _message = '請選擇使用以下電子錢包登入，或是直接複製連結網址轉貼進電子錢包瀏覽器網址列';
+            document.getElementById("msg_subject").textContent = _subject;
+            document.getElementById("message").textContent = _message;
+        }
+
+        // Close modal
+        function close_msg() {
+            const overlay = document.getElementById('message_window');
+            overlay.classList.remove('show');
+        }
+        document.getElementById("btn_copy").addEventListener("click", async (event) => {
+            event.preventDefault(); // 防止表單默認提交行為            
+            const blkdonaUrl = window.location.href;
+            navigator.clipboard.writeText(blkdonaUrl)
+                .then(() => {
+                    close_msg();
+                })
+                .catch((err) => {
+                    console.error("copy failed:", err);
+                });
+        });
+        document.getElementById("metamask_logo").addEventListener("click", async (event) => {
+            event.preventDefault(); // 防止表單默認提交行為 
+            close_msg();
+            deeplink('metamask');
+        });
+        document.getElementById("tokenpocket_logo").addEventListener("click", async (event) => {
+            event.preventDefault(); // 防止表單默認提交行為   
+            close_msg();
+            deeplink('tokenpocket');
+        });
+
+        async function connectWallet() {
+            const holder = await getHoldertoLowercase();
+            if (holder) {
+                updateAccountUI(holder);
+            } else {
+                //deeplink();
+                open_wallet();
+            }
+        }
+    </script>
+    <div class="modal-overlay" id="message_box">
+        <div class="modal">
+            <h2 id="msg_subject"></h2>
+            <p id='message'></p>
+            <form class='wallet_form'>
+                <div class="_buttons">
+                    <button type="button" class="cancel" onclick="close_msg()">關閉</button>
+                    <button type="button" id='btn_msg' class="confirm"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        async function first_visitor() {
+            const overlay = document.getElementById('message_box');
+            overlay.classList.add('show');
+            const _subject = '請添加DONA到您的電子錢包裏';
+            const _message = '請點選右下方「複製合約地址」，再將它加到電子錢包的自定義代幣裏';
+            const _btn_text = '複製DONA合約地址';
+            document.getElementById("msg_subject").textContent = _subject;
+            document.getElementById("message").textContent = _message;
+            document.getElementById("btn_msg").textContent = _btn_text;
+        }
+
+        // Close modal
+        function close_msg() {
+            const overlay = document.getElementById('message_box');
+            overlay.classList.remove('show');
+        }
+        document.getElementById("btn_msg").addEventListener("click", async (event) => {
+            copyAddress();
+            close_msg();
+        });
+
+    </script>
+    <script type="module" src="./after.js"></script>
+    <script id='dona_streaming' src="./dona_streaming.js"></script>
+</body>
+
 </html>
