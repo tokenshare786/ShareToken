@@ -25,7 +25,7 @@
 <body>
     <header>
         <span class="material-symbols-outlined" id="hamburger">lunch_dining</span>
-        <h1>BLKDONA</h1>
+        <h1  onclick="first_visitor()">BLKDONA</h1>
         <span class="material-symbols-outlined copy-icon" onclick="copyAddress()">content_copy</span>
         <span id="copyMessage" class="copy-message">copied</span>
         <div>
@@ -545,7 +545,7 @@
                 }
             } catch (error) {
                 //console.error("Error fetching available red envelopes:", error);
-                alert("Error:" + error);
+                //alert("Error:" + error);
             }
             return false;
         }
@@ -670,13 +670,12 @@
         async function claimDona(id) {
             // 取得 linkcode 參數    
             const linkcode = getParameterByName('linkcode');
-            try {
-                const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-                const userAddress = accounts[0];
-                const result = await contract.methods.claimDona(linkcode, id).send({ from: userAddress });
+            try {                
+                //await contract.methods.claimDona(linkcode, id).send({ from: _userAddress });
                 // 等待交易完成
                 showToast("領取中，請等候..", "success");
-                if (getBalance(_useraddress) == 0) {
+                if (getBalance(_useraddress) == 0)) {
+                    alert('Balance:'+format_amt(getBalance(_useraddress)));
                     first_visitor();
                 }
             } catch (error) {
@@ -1220,11 +1219,11 @@
     </script>
     <div class="modal-overlay" id="message_box">
         <div class="modal">
-            <h2 id="msg_subject"></h2>
-            <p id='message'></p>
+            <h2 id="box_subject"></h2>
+            <p id='box_message'></p>
             <form class='wallet_form'>
                 <div class="_buttons">
-                    <button type="button" class="cancel" onclick="close_msg()">關閉</button>
+                    <button type="button" class="cancel" onclick="close_msgbox()">關閉</button>
                     <button type="button" id='btn_msg' class="confirm"></button>
                 </div>
             </form>
@@ -1237,19 +1236,19 @@
             const _subject = '請添加DONA到您的電子錢包裏';
             const _message = '請點選右下方「複製合約地址」，再將它加到電子錢包的自定義代幣裏';
             const _btn_text = '複製DONA合約地址';
-            document.getElementById("msg_subject").textContent = _subject;
-            document.getElementById("message").textContent = _message;
+            document.getElementById("box_subject").textContent = _subject;
+            document.getElementById("box_message").textContent = _message;
             document.getElementById("btn_msg").textContent = _btn_text;
         }
 
         // Close modal
-        function close_msg() {
+        function close_msgbox() {
             const overlay = document.getElementById('message_box');
             overlay.classList.remove('show');
         }
         document.getElementById("btn_msg").addEventListener("click", async (event) => {
             copyAddress();
-            close_msg();
+            close_msgbox();
         });
 
     </script>
